@@ -1,4 +1,4 @@
-# Lab 2.1
+# Lab 2
 
 
 Getting Started:
@@ -730,6 +730,8 @@ FROM  (SELECT SUM(Quantity) as units
 ```
 The query above finds the maximum of the total unit sold.
 
+
+## Outer Join
 
 
 Run the following queries, to create the schema:
