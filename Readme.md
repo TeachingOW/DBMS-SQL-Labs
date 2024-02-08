@@ -25,6 +25,8 @@
 
 
 
+https://github.com/TeachingOW/DBMS-SQL-Labs/tree/main/data
+
 
 
 
