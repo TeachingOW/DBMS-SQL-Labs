@@ -2,8 +2,8 @@
 
 
 ```sql
-CREATE  database Lecture3;
-USE Lecture3; 
+CREATE  database Lec;
+USE Lec; 
 
 create table product(
        pname        varchar(20) primary key, -- name of the product
