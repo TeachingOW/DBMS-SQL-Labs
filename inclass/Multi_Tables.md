@@ -1,4 +1,4 @@
-### Multi Table join
+### Multi Table Queries
 
 ```sql
 create table company (
