@@ -1,9 +1,9 @@
 
 | In-Class SQL Labs    |       |
 |----------|------------------|
-|  Create Database | [Lab 1](inclass/Lab1)|
-|  Foreign Keys | [Lab 1](inclass/Lab1)|
-| Join |[Lab 1](inclass/Lab1)|
+|  Create Database & One table Queries |[Lab 1](inclass/InClassExercises) & [Lab 2](inclass/Lecture_Example_1)|
+|  Foreign Keys | [Foreign Keys](inclass/Foreign_Keys)|
+| Join |[Multi Table Queries](inclass/Multi_Tables)|
 | Set | [Lab 2](inclass/Lab2)|
 |Nested Queries | [Lab2](inclass/Lab2)|
 |Aggregates | [Lab2](inclass/Lab2)|
@@ -27,6 +27,7 @@
 
 https://github.com/TeachingOW/DBMS-SQL-Labs/tree/main/data
 
+https://teachingow.github.io/DBMS-SQL-Labs/
 
 
 
