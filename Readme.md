@@ -24,10 +24,16 @@
 
 
 
+Data set:
 
 https://github.com/TeachingOW/DBMS-SQL-Labs/tree/main/data
 
+Link:
+
 https://teachingow.github.io/DBMS-SQL-Labs/
 
+Additional Tutorials:
+
+* SQLZoo [link (https://sqlzoo.net/wiki/SQL_Tutorial)]
 
 
