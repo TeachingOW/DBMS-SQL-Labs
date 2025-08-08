@@ -1,45 +1,85 @@
-# Lab 2
+# Lab 2: Advanced SQL Queries and Multi-Table Operations
 
+## 🎯 Learning Objectives
+By the end of this lab, you will be able to:
+- Work with complex multi-table database schemas
+- Master JOIN operations (INNER, LEFT, RIGHT)
+- Use aggregate functions (COUNT, SUM, AVG, MAX, MIN)
+- Apply GROUP BY and HAVING clauses effectively
+- Write nested queries and subqueries
+- Understand set operations (UNION, INTERSECT)
+- Handle NULL values in queries
 
-Getting Started:
-### Step 1: Create the database
+## 📋 Prerequisites
+- Completion of [Lab 1](InClassExercises.md) or equivalent knowledge
+- Understanding of basic SQL operations
+- Familiarity with primary and foreign keys
+
+## 🏫 Scenario: University Database System
+
+In this lab, we'll work with a university database containing information about students, courses, and enrollments. This realistic scenario will help you understand how databases are used in real-world applications.
+
+### Database Schema Overview
+
+Our database consists of three related tables:
+- **Student**: Contains student information (ID, name, GPA)
+- **Course**: Contains course details (ID, code, name, credit hours)
+- **Enrolled**: Links students to courses with grades (many-to-many relationship)
+
+## 🚀 Getting Started
+
+### Step 1: Create the Database
 ```sql
+-- Clean slate: drop existing database if it exists
 DROP DATABASE IF EXISTS lab2;
 CREATE DATABASE lab2;
 USE lab2;
 ```
-### Step 2: Add Tables
+
+### Step 2: Create the Table Structure
 ```sql
-DROP TABLE IF EXISTS Enrolled;
-DROP TABLE IF EXISTS Student;
-DROP TABLE IF EXISTS Course;
+-- Drop tables in correct order (child tables first due to foreign key constraints)
+DROP TABLE IF EXISTS Enrolled;  -- Junction table (child)
+DROP TABLE IF EXISTS Student;   -- Parent table
+DROP TABLE IF EXISTS Course;    -- Parent table
 
-CREATE TABLE  Student (
-    		sid int,
-		    fname char(20),
-		    lname char(20),
-		    gpa float,
-		    PRIMARY KEY (sid)
-);
-CREATE TABLE  Course (
-	 	cid int Primary key,
-  		code char(10),
-  		name char(40),
-  		credithours smallint
-);  
-CREATE TABLE  Enrolled (
-    sid int,
-    cid int,
-    grade char(2),
-    PRIMARY KEY (sid,cid)
+-- Create Student table
+CREATE TABLE Student (
+    sid INT PRIMARY KEY,           -- Student ID (unique identifier)
+    fname CHAR(20),               -- First name (fixed length)
+    lname CHAR(20),               -- Last name (fixed length)
+    gpa FLOAT                     -- Grade Point Average (can be NULL)
 );
 
-ALTER TABLE Enrolled ADD FOREIGN KEY (sid) references Student(sid);
-ALTER TABLE Enrolled ADD FOREIGN KEY (cid) references Course(cid);
+-- Create Course table  
+CREATE TABLE Course (
+    cid INT PRIMARY KEY,          -- Course ID (unique identifier)
+    code CHAR(10),               -- Course code (e.g., "CS101")
+    name CHAR(40),               -- Course name (e.g., "Intro to Programming")
+    credithours SMALLINT         -- Credit hours (1-4 typically)
+);
+
+-- Create Enrolled table (junction table for many-to-many relationship)
+CREATE TABLE Enrolled (
+    sid INT,                     -- Student ID (foreign key)
+    cid INT,                     -- Course ID (foreign key)
+    grade CHAR(2),               -- Letter grade (A+, A, B+, etc.)
+    PRIMARY KEY (sid, cid),      -- Composite primary key
+    FOREIGN KEY (sid) REFERENCES Student(sid),   -- Link to Student table
+    FOREIGN KEY (cid) REFERENCES Course(cid)     -- Link to Course table
+);
 ```
-### Step 3: Add data
+
+**Key Design Concepts**:
+- **Composite Primary Key**: `(sid, cid)` ensures one grade per student per course
+- **Foreign Key Constraints**: Maintain referential integrity
+- **Many-to-Many Relationship**: Students can enroll in multiple courses, courses can have multiple students
+### Step 3: Populate the Database with Sample Data
+
+#### Insert Student Data
 ```sql
-INSERT INTO Student VALUES(1,'Amie','Massey',3);
+-- Insert student records (some students have NULL GPA - not yet calculated)
+INSERT INTO Student VALUES(1,'Amie','Massey',3.0);
 INSERT INTO Student VALUES(2,'Abigail','Larsen',NULL);
 INSERT INTO Student VALUES(3,'Cora','Rowland',4);
 INSERT INTO Student VALUES(4,'Alesha','Ferrell',3.5);
@@ -54,7 +94,16 @@ INSERT INTO Student VALUES(12,'Pearl', 'Mayo',3.7);
 INSERT INTO Student VALUES(13,'Elmer', 'Cain',2.7);
 INSERT INTO Student VALUES(14,'Isla', 'Mccall',2.2);
 INSERT INTO Student VALUES(15,'Kate', 'Kimmel',NULL);
+```
 
+**Verify student data**:
+```sql
+SELECT * FROM Student ORDER BY sid;
+```
+
+#### Insert Course Data
+```sql
+-- Insert computer science courses with varying credit hours
 INSERT INTO Course VALUES(1,'CS101', 'Computer Programming I',3);
 INSERT INTO Course VALUES(2,'CS102', 'Computer Programming II',3);
 INSERT INTO Course VALUES(3,'CS321', 'Data Structures',4);
@@ -62,6 +111,16 @@ INSERT INTO Course VALUES(4,'CS5710', 'Network',4);
 INSERT INTO Course VALUES(5,'CS4550', 'Database',4);
 INSERT INTO Course VALUES(6,'CS5990', 'Capstone Project',4);
 INSERT INTO Course VALUES(7,'CS6020', 'Data Mining',4);
+```
+
+**Verify course data**:
+```sql
+SELECT * FROM Course ORDER BY cid;
+```
+
+#### Insert Enrollment Data
+```sql
+-- CS101 enrollments (all 15 students enrolled)
 
 INSERT INTO Enrolled VALUES(1,1, 'A+');
 INSERT INTO Enrolled VALUES(2,1, 'A-');
@@ -153,25 +212,79 @@ INSERT INTO Enrolled VALUES (11,6,'F');
 INSERT INTO Enrolled VALUES (12,6,'C+');
 INSERT INTO Enrolled VALUES (15,6,'F');
 ```
-### Query I
-Find all name of students that have got A or A+ in Database Course, ordered by their name.
-We need all the three tables: Student for his(her) name, Enrolled for the grade and Course for database course name.
-As we have three tables, we need two join conditions
+
+**Verify enrollment data**:
+```sql
+-- Check total enrollments
+SELECT COUNT(*) as total_enrollments FROM Enrolled;
+
+-- See sample enrollments with student and course names
+SELECT s.fname, s.lname, c.code, c.name, e.grade
+FROM Student s
+JOIN Enrolled e ON s.sid = e.sid
+JOIN Course c ON e.cid = c.cid
+LIMIT 10;
+```
+
+---
+
+## 🔍 Query Exercises
+
+Now that we have our database populated, let's practice various types of queries. Each exercise builds on previous concepts while introducing new techniques.
+
+### Exercise 1: Multi-Table JOIN with String Functions
+
+**Problem**: Find all students who received an 'A' or 'A+' in the Database course, ordered by their full name.
+
+**Analysis**: 
+- We need data from all three tables:
+  - `Student` table: for student names
+  - `Course` table: to identify the Database course
+  - `Enrolled` table: for grades
+- This requires joining three tables with two join conditions
+
+**Your Solution**:
+```sql
+-- Write your query here
+
+```
 
 <details>
-  <summary>Solution</summary>
-  
-  ```sql
-  SELECT concat(fname,' ',lname) name 
-FROM Student s, Course C, Enrolled E
-WHERE C.cid=E.cid 
-  AND s.sid=E.sid
-  AND (E.grade='A+' OR E.grade='A')
-  AND C.name like '%DATABASE' 
-  ORDER BY name
+<summary>💡 Click to see the solution</summary>
+
+```sql
+SELECT CONCAT(fname, ' ', lname) AS student_name 
+FROM Student s, Course c, Enrolled e
+WHERE c.cid = e.cid 
+  AND s.sid = e.sid
+  AND (e.grade = 'A+' OR e.grade = 'A')
+  AND c.name LIKE '%Database%' 
+ORDER BY student_name;
 ```
-  NOTE:
-Make sure to understand all parts of the solution up there.
+
+**Alternative using explicit JOIN syntax**:
+```sql
+SELECT CONCAT(s.fname, ' ', s.lname) AS student_name
+FROM Student s
+JOIN Enrolled e ON s.sid = e.sid
+JOIN Course c ON e.cid = c.cid
+WHERE (e.grade = 'A+' OR e.grade = 'A')
+  AND c.name LIKE '%Database%'
+ORDER BY student_name;
+```
+
+**Expected Output**:
+| student_name |
+|--------------|
+| Abigail Larsen |
+| Amie Massey |
+| Isla Mccall |
+
+**Key Concepts**:
+- `CONCAT()`: Combines first and last names
+- Multiple table joins: Connect related data across tables
+- `LIKE '%Database%'`: Pattern matching for course names
+- `OR` condition: Multiple grade criteria
 </details>
 
 
