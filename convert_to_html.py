@@ -274,11 +274,14 @@ def main():
     html_dir = base_dir / 'html_labs'
     html_dir.mkdir(exist_ok=True)
     
-    # Find all markdown files in labs and inclass directories
+    # Find all markdown files in all directories (excluding README files)
     lab_files = []
-    for directory in ['labs', 'inclass']:
+    for directory in ['labs', 'inclass', 'other', 'code']:
         if (base_dir / directory).exists():
-            lab_files.extend((base_dir / directory).glob('*.md'))
+            lab_files.extend((base_dir / directory).glob('**/*.md'))
+    
+    # Filter out README files
+    lab_files = [f for f in lab_files if 'readme' not in f.name.lower() and 'README' not in f.name]
     
     converted_count = 0
     total_files = len(lab_files)
