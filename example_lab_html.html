@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1: Database Creation and Basic SQL Operations - Enhanced HTML Version</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .objectives {
+            background-color: #e8f6f3;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            margin: 20px 0;
+        }
+        
+        .sql-code {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .sql-code::before {
+            content: "SQL";
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border: 2px solid #27ae60;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .result-table th {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 14px;
+        }
+        
+        .result-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+            transition: background-color 0.2s;
+        }
+        
+        .result-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .result-table tr:hover {
+            background-color: #e8f4f8;
+            transform: scale(1.01);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .exercise {
+            background-color: #fff3cd;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 25px 0;
+        }
+        
+        .solution {
+            background-color: #d1ecf1;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 15px 0;
+        }
+        
+        .solution-toggle {
+            background-color: #17a2b8;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .solution-toggle:hover {
+            background-color: #138496;
+        }
+        
+        .solution-content {
+            display: none;
+        }
+        
+        .key-concepts {
+            background-color: #e2e3e5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #6c757d;
+            margin: 15px 0;
+        }
+        
+        .note {
+            background-color: #cce5ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #007bff;
+            margin: 15px 0;
+        }
+        
+        .step {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #6c757d;
+            margin: 20px 0;
+        }
+        
+        .step-number {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 15px;
+            display: inline-block;
+            min-width: 20px;
+            text-align: center;
+        }
+        
+        .navigation {
+            background-color: #34495e;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .nav-button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-button:hover {
+            background-color: #2980b9;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, #3498db, #5dade2);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            vertical-align: top;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #e8f4f8;
+        }
+        
+        .data-type {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        
+        .constraint {
+            background-color: #f39c12;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        function toggleSolution(id) {
+            const content = document.getElementById(id);
+            const button = content.previousElementSibling;
+            
+            if (content.style.display === 'none' || content.style.display === '') {
+                content.style.display = 'block';
+                button.textContent = '🔽 Hide Solution';
+            } else {
+                content.style.display = 'none';
+                button.textContent = '💡 Show Solution';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
+            <a href="#exercises" class="nav-button">Jump to Exercises</a>
+            <a href="#getting-started" class="nav-button">Getting Started</a>
+        </div>
+
+        <h1>🗄️ Lab 1: Database Creation and Basic SQL Operations</h1>
+        
+        <div class="objectives">
+            <h3>🎯 Learning Objectives</h3>
+            <p>By the end of this lab, you will be able to:</p>
+            <ul>
+                <li>Create and manage databases in MySQL/MariaDB</li>
+                <li>Design and create tables with appropriate data types</li>
+                <li>Insert data into tables</li>
+                <li>Write basic SELECT queries with filtering and sorting</li>
+                <li>Understand primary keys and constraints</li>
+            </ul>
+        </div>
+
+        <h2 id="getting-started">🚀 Getting Started</h2>
+
+        <div class="step">
+            <h3><span class="step-number">1</span>Create Your First Database</h3>
+            <p>A database is a container that holds related tables. Let's create one for our exercises:</p>
+            
+            <div class="sql-code">-- Create a new database (only needed once)
+CREATE DATABASE lab1_exercises;</div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">2</span>Create the Product Table</h3>
+            <p>Let's create a product catalog table with proper data types and constraints:</p>
+            
+            <div class="sql-code">-- Create the product table with detailed comments
+CREATE TABLE product(
+    pname        VARCHAR(20) PRIMARY KEY,  -- Product name (unique identifier)
+    price        DECIMAL(10,2),            -- Price with 2 decimal places
+    category     VARCHAR(20),              -- Product category
+    manufacturer VARCHAR(20) NOT NULL      -- Manufacturer (required field)
+);</div>
+            
+            <div class="key-concepts">
+                <h4>🔑 Data Types and Constraints Used:</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Column</th>
+                            <th>Data Type</th>
+                            <th>Constraint</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>pname</strong></td>
+                            <td><span class="data-type">VARCHAR(20)</span></td>
+                            <td><span class="constraint">PRIMARY KEY</span></td>
+                            <td>Unique product identifier, up to 20 characters</td>
+                        </tr>
+                        <tr>
+                            <td><strong>price</strong></td>
+                            <td><span class="data-type">DECIMAL(10,2)</span></td>
+                            <td>-</td>
+                            <td>Price with up to 10 digits, 2 after decimal point</td>
+                        </tr>
+                        <tr>
+                            <td><strong>category</strong></td>
+                            <td><span class="data-type">VARCHAR(20)</span></td>
+                            <td>-</td>
+                            <td>Product category, up to 20 characters</td>
+                        </tr>
+                        <tr>
+                            <td><strong>manufacturer</strong></td>
+                            <td><span class="data-type">VARCHAR(20)</span></td>
+                            <td><span class="constraint">NOT NULL</span></td>
+                            <td>Required manufacturer name, up to 20 characters</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">3</span>Insert Sample Data</h3>
+            <p>Now let's add some products to our table:</p>
+            
+            <div class="sql-code">-- Insert sample products
+INSERT INTO product VALUES('Gizmo', 19.99, 'Gadgets', 'GizmoWorks');
+INSERT INTO product VALUES('PowerGizmo', 29.99, 'Gadgets', 'GizmoWorks');
+INSERT INTO product VALUES('MultiTouch', 203.99, 'Household', 'Hitachi');
+INSERT INTO product VALUES('SingleTouch', 149.99, 'Photography', 'Canon');</div>
+            
+            <p><strong>Verify your data:</strong></p>
+            <div class="sql-code">-- View all products
+SELECT * FROM product;</div>
+            
+            <p><strong>Expected Output:</strong></p>
+            <table class="result-table">
+                <thead>
+                    <tr>
+                        <th>pname</th>
+                        <th>price</th>
+                        <th>category</th>
+                        <th>manufacturer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gizmo</td>
+                        <td>19.99</td>
+                        <td>Gadgets</td>
+                        <td>GizmoWorks</td>
+                    </tr>
+                    <tr>
+                        <td>PowerGizmo</td>
+                        <td>29.99</td>
+                        <td>Gadgets</td>
+                        <td>GizmoWorks</td>
+                    </tr>
+                    <tr>
+                        <td>MultiTouch</td>
+                        <td>203.99</td>
+                        <td>Household</td>
+                        <td>Hitachi</td>
+                    </tr>
+                    <tr>
+                        <td>SingleTouch</td>
+                        <td>149.99</td>
+                        <td>Photography</td>
+                        <td>Canon</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 id="exercises">💡 Practice Exercises</h2>
+
+        <div class="exercise">
+            <h3>Exercise #1: Filtering and Sorting</h3>
+            <p><strong>Task:</strong> Write a query to get all products with "Touch" in the name, showing only their name and price, sorted alphabetically by manufacturer.</p>
+            
+            <p><strong>Step-by-step approach:</strong></p>
+            <ol>
+                <li>First, identify products with "Touch" in the name:
+                    <div class="sql-code">SELECT * FROM product WHERE pname LIKE '%Touch%';</div>
+                </li>
+                <li><strong>Your turn:</strong> Write the complete query here:
+                    <div class="sql-code">-- Write your solution here
+
+</div>
+                </li>
+            </ol>
+            
+            <button class="solution-toggle" onclick="toggleSolution('solution1')">💡 Show Solution</button>
+            <div id="solution1" class="solution-content">
+                <div class="solution">
+                    <div class="sql-code">SELECT pname, price 
+FROM product 
+WHERE pname LIKE '%Touch%' 
+ORDER BY manufacturer;</div>
+                    
+                    <p><strong>Expected Output:</strong></p>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>pname</th>
+                                <th>price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SingleTouch</td>
+                                <td>149.99</td>
+                            </tr>
+                            <tr>
+                                <td>MultiTouch</td>
+                                <td>203.99</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <div class="key-concepts">
+                        <h4>📝 Explanation:</h4>
+                        <ul>
+                            <li><code>LIKE '%Touch%'</code>: Finds any product name containing "Touch"</li>
+                            <li><code>ORDER BY manufacturer</code>: Sorts by manufacturer (Canon comes before Hitachi alphabetically)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise">
+            <h3>Exercise #2: Understanding DISTINCT and ORDER BY</h3>
+            <p><strong>Task:</strong> Before running these queries, predict what each will return. Then run them to check your understanding.</p>
+            
+            <div class="sql-code">-- Query A
+SELECT DISTINCT category FROM product ORDER BY category;
+
+-- Query B  
+SELECT category FROM product ORDER BY pname;
+
+-- Query C
+SELECT DISTINCT category FROM product ORDER BY pname;</div>
+            
+            <p><strong>Make your predictions first, then check the solutions!</strong></p>
+            
+            <button class="solution-toggle" onclick="toggleSolution('solution2')">💡 Show Solutions</button>
+            <div id="solution2" class="solution-content">
+                <div class="solution">
+                    <h4>Query A Results:</h4>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gadgets</td>
+                            </tr>
+                            <tr>
+                                <td>Household</td>
+                            </tr>
+                            <tr>
+                                <td>Photography</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Explanation:</strong> Returns unique categories sorted alphabetically.</p>
+                    
+                    <h4>Query B Results:</h4>
+                    <table class="result-table">
+                        <thead>
+                            <tr>
+                                <th>category</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Gadgets</td>
+                            </tr>
+                            <tr>
+                                <td>Household</td>
+                            </tr>
+                            <tr>
+                                <td>Gadgets</td>
+                            </tr>
+                            <tr>
+                                <td>Photography</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Explanation:</strong> Returns all categories (including duplicates) in the order of product names.</p>
+                    
+                    <h4>Query C Results:</h4>
+                    <div class="note">
+                        <p><strong>⚠️ ERROR!</strong> This query will produce an error because you cannot use <code>ORDER BY pname</code> when <code>pname</code> is not in the SELECT list and you're using DISTINCT.</p>
+                        <p><strong>Key Learning:</strong> When using DISTINCT, you can only ORDER BY columns that are in the SELECT clause.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation" style="margin-top: 40px;">
+            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
+            <a href="html_labs/index.html" class="nav-button">View All HTML Labs</a>
+        </div>
+    </div>
+</body>
+</html>
