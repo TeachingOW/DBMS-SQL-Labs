@@ -5,199 +5,234 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Window  Function and Recurisve Queries</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Window  Function and Recurisve Queries</h1>
+<h2>In Class Example</h2>
+<pre><code class="language-sql">drop table seq;
+create table seq(x int );
+insert into seq values(1);
+insert into seq values(1);
+insert into seq values (1);
+insert into seq values(2);
+insert into seq values(2);
+insert into seq values(3);
+insert into seq values(3);
+insert into seq values(4);
+</code></pre>
+<pre><code class="language-sql">select v, sum(v) over ()  from seq;
+</code></pre>
+<pre><code class="language-sql">select v, sum(v) over w  from seq
+WINDOW w as ()
+</code></pre>
+<pre><code class="language-sql">select v, sum(v) over w   from seq
+WINDOW w as (RANGE BETWEEN
+UNBOUNDED PRECEDING AND CURRENT ROW)
+</code></pre>
+<pre><code class="language-sql">select *, sum(x) over w  from seq
+window w as (order by x);
+</code></pre>
+<pre><code class="language-sql">select *, sum(x) over w  from seq
+window w as ( order by x range BETWEEN UNBOUNDED PRECEDING and current row);
+</code></pre>
+<pre><code class="language-sql">select *, sum(x) over w  from seq
+window w as ( Order by x  rows BETWEEN  current row and UNBOUNDED following);
+</code></pre>
+<pre><code class="language-sql">select *, sum(x) over w  from seq
+window w as ( Order by x  range BETWEEN  current row and UNBOUNDED following);
+</code></pre>
+<pre><code class="language-sql">select *, row_number() over w from seq
+window w as (   );
+</code></pre>
+<h3>SQL RANK() versus ROW_NUMBER()</h3>
+<pre><code class="language-sql">select *, rank() over  (order by x),
+ row_number() over (order by x)
+ from seq;
+</code></pre>
+<h2>Leap vs Lag</h2>
+<pre><code class="language-sql">drop table if exists sales;
+create table sales (
+product char(10),
+y int,
+sales decimal(10,2));
+
+insert into sales values ('car', 2022, 10);
+insert into sales values ('car', 2021, 9);
+insert into sales values ('car', 2020, 8);
+insert into sales values ('car', 2019, 12);
+insert into sales values ('bike', 2022, 12);
+insert into sales values ('bike', 2021, 10);
+insert into sales values ('bike', 2020, 11);
+insert into sales values ('bike', 2019, 9);
+</code></pre>
+<pre><code class="language-sql">select * from sales cur, sales prev
+where cur.product=prev.product and cur.y=prev.y+1;
+</code></pre>
+<pre><code class="language-sql">select cur.product, cur.y, cur.sales, prev.sales from sales cur left outer join  sales prev on cur.y=prev.y+1 and cur.product=prev.product ;
+</code></pre>
+<pre><code class="language-sql">select product, y, sales, lag(sales) over 
+(partition by product order by y )   from sales;
+</code></pre>
+<h2>More Example</h2>
+<pre><code class="language-sql">CREATE TABLE emp (
+id int AUTO_increment Primary key,
+ename char(50) NOT NULL,
+department char(50),
+salary decimal(10, 2)
+);
+INSERT INTO emp (ename, department, salary) VALUES
+('Andy', 'Shipping', 5400),
+('Betty', 'Marketing', 6300),
+('Tracy', 'Shipping', 4800),
+('Mike', 'Marketing', 7100),
+('Sandy', 'Sales', 5400),
+('James', 'Shipping', 6600),
+('Carol', 'Sales', 4600);
+</code></pre>
+<pre><code class="language-sql">SELECT COUNT(*), SUM(salary),
+round(AVG(salary), 2) AS avg
+FROM emp;
+</code></pre>
+<pre><code class="language-sql">SELECT department, COUNT(*), SUM(salary),
+round(AVG(salary), 2) AS avg
+FROM emp
+GROUP BY department
+ORDER BY department;
+</code></pre>
+<pre><code class="language-sql">SELECT department, COUNT(*), SUM(salary),
+round(AVG(salary), 2) AS avg
+FROM emp
+GROUP BY department with Rollup
+ORDER BY department;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary, SUM(salary) OVER ()
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary,
+round(salary / SUM(salary) OVER () * 100, 2) AS pct
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary,
+SUM(salary) OVER (ORDER BY salary DESC ROWS BETWEEN
+UNBOUNDED PRECEDING AND CURRENT ROW)
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary,
+round(AVG(salary) OVER (), 2) AS avg
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary,
+round(AVG(salary) OVER (), 2) AS avg,
+round(salary - AVG(salary) OVER (), 2) AS diff_avg
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary,
+salary - LEAD(salary, 1) OVER
+(ORDER BY salary DESC) AS diff_next
+FROM emp
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, salary,
+salary - LAST_VALUE(salary) OVER w AS more,
+round((salary - LAST_VALUE(salary) OVER w) /
+LAST_VALUE(salary) OVER w * 100) AS pct_more
+FROM emp
+WINDOW w AS (ORDER BY salary DESC ROWS BETWEEN
+UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)
+ORDER BY salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, department, salary,
+round(AVG(salary) OVER
+(PARTITION BY department), 2) AS avg,
+round(salary - AVG(salary) OVER
+(PARTITION BY department), 2) AS diff_avg
+FROM emp
+ORDER BY department, salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, department, salary,
+round(AVG(salary) OVER d, 2) AS avg,
+round(salary - AVG(salary) OVER d, 2) AS diff_avg
+FROM emp
+WINDOW d AS (PARTITION BY department)
+ORDER BY department, salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, department, salary,
+salary - LEAD(salary, 1) OVER
+(PARTITION BY department
+ORDER BY salary DESC) AS diff_next
+FROM emp
+ORDER BY department, salary DESC;
+</code></pre>
+<pre><code class="language-sql">SELECT ename, department, salary, RANK() OVER s AS dept_rank,
+RANK() OVER (ORDER BY salary DESC) AS global_rank
+FROM emp
+WINDOW s AS (PARTITION BY department ORDER BY salary DESC)
+ORDER BY department, salary DESC;
+</code></pre>
+<h2>Recursive SQL</h2>
+<pre><code class="language-sql">create table parentof
+(parent varchar(10),
+child varchar(10));
+insert into parentof values ('Alice', 'Carol');
+insert into parentof values ('Bob', 'Carol');
+insert into parentof values ('Carol', 'Dave');
+insert into parentof values ('Carol', 'George');
+insert into parentof values ('Dave', 'Mary');
+insert into parentof values ('Eve', 'Mary');
+insert into parentof values ('Mary', 'Frank');
+
+WITH RECURSIVE Ancestor as (
+SELECT parent as p FROM parentof WHERE child='Frank'
+UNION ALL
+SELECT parent from Ancestor a , parentof p
+where a.p=p.child)
+SELECT * from Ancestor
+
+
+</code></pre>
+<pre><code class="language-sql">drop table if exists parentof;
+create table parentof
+(parent varchar(10),
+child varchar(10),
+Birthyear int);
+insert into parentof values ('Alice', 'Carol',1945);
+insert into parentof values ('Bob', 'Carol',1945);
+insert into parentof values ('Carol', 'Dave',1970);
+insert into parentof values ('Carol', 'George',1972);
+insert into parentof values ('Dave', 'Mary',2000);
+insert into parentof values ('Eve', 'Mary',2000);
+insert into parentof values ('Mary', 'Frank',2020);
+
+
+WITH RECURSIVE Descendant as (
+SELECT CONCAT(parent ,'-&gt;', child) as lineage, 
+child as c, birthyear, 0 as ParentAge FROM parentof 
+WHERE parent='Alice'
+UNION ALL
+SELECT concat(parent,'-&gt;', child) as lineage, 
+child , p.birthyear, p.birthyear- d.birthyear as ParentAge
+ FROM Descendant d , parentof p
+where d.c=p.parent)
+SELECT * from Descendant;
+
+</code></pre>
+<h2>References</h2>
+<p>https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html</p>
 </body>
 </html>

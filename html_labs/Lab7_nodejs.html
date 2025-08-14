@@ -5,199 +5,599 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 7</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Lab 7</h1>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#asynchronous-node">Asynchronous node</a></li>
+<li><a href="#approach-one--coordinate-using-a-data-structure">Approach One: Coordinate using a data structure</a></li>
+<li><a href="#approach-two--using-promises">Approach Two: Using promises</a><ul>
+<li><a href="#what-is-a-promise">What is a promise</a></li>
+<li><a href="#back-to-databases">Back to databases</a></li>
+<li><a href="#bringing-in-promises">Bringing in promises</a></li>
+<li><a href="#connection-pools-and-promises">Connection pools and promises</a></li>
+<li><a href="#making-things-a-bit-cleaner">Making things a bit cleaner</a></li>
+<li><a href="#more-about-promises-in-general">More about promises in general</a></li>
+</ul>
+</li>
+<li><a href="#angular">Angular</a></li>
+<li><a href="#working-our-way-up-to-it">Working our way up to it</a></li>
+<li><a href="#an-angular-tutorial">An angular tutorial</a></li>
+<li><a href="#complicating-the-web-server">Complicating the web server</a></li>
+<li><a href="#mixing-in-a-little-database">Mixing in a little database</a></li>
+<li><a href="#adding-a-little-bit-of-functionality">Adding a little bit of functionality</a></li>
+<li><a href="#to-do">To Do</a></li>
+</ul>
+<h1>Asynchronous node</h1>
+<p>There are at many ways to deal with the asynchronous issues arising from the intersection of node and mariaDB.  I will discuss two:  Using a data structure for coordination and using promises.  Many of you used <code>async</code> which is promise-based.  There is another approach involving <code>generator functions</code>, but I don't know enough about that yet to provide good advice... so I'll just let you know it exists and if anybody is looking for an interesting project for this class-- that might fit the bill.</p>
+<h2>Approach One:  Coordinate using a data structure</h2>
+<p>Consider the fragment below which should look very similar to <code>show-databases.js</code> from the last lab:</p>
+<pre><code class="language-JavaScript">... stuff left out ...
+var connection = mysql.createConnection(credentials);
+var data={};
+var processed={}
+
+sql = &quot;SHOW DATABASES&quot;;
+connection.query(sql,function(err,rows,fields){ //connection.connect() is run automatically for a query
+  if(err){
+    console.log('Error looking up databases');
+    connection.end();
+  } else {
+     processDBFs(rows); //Gets called once... so it is safe!
+}
+});
+</code></pre>
+<p>We will use the global variables <code>data</code> and <code>processed</code> to coordinate our asynchronous database queries.  Both of these variables are hash tables.</p>
+<p>We begin the program similarly to what we did in the last lab by setting up the connection.  The <code>connection.query()</code> method sets up the SQL query and passes the anonymous callback function that will either deal with the results of the query (if successful), or deal with the consequences of a failure (if there is an error).  Notice that the anonymous function has three parameters <code>err</code>, <code>rows</code>, and <code>fields</code> which will be filled with values resulting from the interaction with MariaDB.</p>
+<p>Our logic is particularly simple-- if there is an error, report it and close the connection.  Otherwise our query has returned an array of objects which we will deal with in the function <code>processDBFs</code> (discussed below).</p>
+<p>Let's look at how <code>processDBFs</code> works: </p>
+<pre><code class="language-js">function processDBFs(dbfs){ // Asynchronous row handler
+     for(var index in dbfs){
+       var dbf = dbfs[index].Database;
+       var sql = 'SHOW TABLES IN '+dbf;
+        data[dbf] = Number.POSITIVE_INFINITY; //Exists, but not set.
+        connection.query(sql, (function(dbf){
+          return function(err,tables,fields){
+            if(err){
+              console.log('Error finding tables in dbf '+ dbf);
+              connection.end();
+            } else {
+              processTables(tables,dbf);
+            }
+           };
+        })(dbf));
+    } // do NOT put a connection.end() here.  It will kill all queued queries.
+}
+</code></pre>
+<p>The variable <code>dbfs</code> is an array of objects containing database names.  The outer <code>for</code> loop steps through each in turn.  We use the name of the dbf as a key in the global hash <code>data</code>.  Eventually <code>data</code> will hold a count of the number of tables in that database, but we don't know how many there are yet, so we store a value of <code>Number.POSITIVE_INFINITY</code>.   This reserves space in the data-structure.  IF the rest of the program works as expected, the value will change to an actual integer, but if not, then we can detect that there was a problem.</p>
+<p>For each database we want to execute a query of the form <code>SHOW TABLES IN DBF</code>.  Setting up this query should look similar to what we did when we were running SHOW DATABASES-- we create a callback function to be executed when the quey is completed.  But there is one very, important difference that makes everything work.  Look closely at what is being done:</p>
+<pre><code class="language-js">        connection.query(sql, (function(dbf){
+          return function(err,tables,fields){
+            #function body
+        })(dbf));
+
+</code></pre>
+<p>The callback function is <strong>created</strong> inside <code>processDBFs</code>.  This chunk of code:</p>
+<pre><code class="language-js">(function(dbf){
+          return function(err,tables,fields){
+            #function body
+        })(dbf)
+</code></pre>
+<p>both defines <em>and</em> executes an anonymous function that takes <code>dbf</code> as an argument, and returns yet another function, namely the interior function:</p>
+<pre><code class="language-js">function(err,tables,fields){
+    #function body
+}
+</code></pre>
+<p>This is important.  The innermost function is defined <em>inside</em> the anonymous function and thus <strong>shares its namespace</strong>.  Most importantly... it has a local copy of the value of <code>dbf</code>.</p>
+<p><strong>That</strong> function (also anonymous) is the callback given to <code>connection.query</code>.  Because of the properties of closures-- the function body will use the proper version of <code>dbf</code>.  Without using this technique, your program would find the current value of <code>dbf</code> as it exists in <code>processDBFs</code>.</p>
+<p>In a similar fashion each table can now be processed by a function.  Note the similar <strong>callback construction</strong> approach, and how all the local values are handed off to <code>processDescription(desc,table,dbf)</code> for final printing:</p>
+<pre><code class="language-js">function processTables(tables,dbf){ // Asynchronous row handler
+    data[dbf] = tables.length; // Now it is set.
+    processed[dbf] = 0;        // And has not yet been used as a label.
+    for(var index in tables){
+      var tableObj = tables[index];
+      for(key in tableObj){
+        var table = tableObj[key];
+        table = dbf+&quot;.&quot;+table;
+        var sql = 'DESCRIBE '+table;
+        connection.query(sql, (function(table,dbf){
+          return function(err,desc,fields){
+            if(err){
+              console.log('Error describing table '+ table);
+            } else {
+              processDescription(desc,table,dbf);
+            }
+          };
+          })(table,dbf));
+      }
+    }
+}
+</code></pre>
+<p>Here we finally set the <code>dbf</code> entry in <code>data</code> to be the number of tables in the database.  And set the <code>dbf</code> entry in the global hash <code>processed</code> to reflect the fact that we have not yet printed out the DBF line in our desired output.</p>
+<p>This is all fine and dandy... but we still need to print out actual results and close the connection when we are done.  This is handled by <code>processDescription</code>:</p>
+<pre><code class="language-js">function processDescription(desc,table,dbf){
+  data[dbf]--; //Processed one table
+  if(processed[dbf]==0){
+    processed[dbf] = 1
+    console.log('---|'+dbf+'&gt;');
+  }
+  console.log('.....|'+dbf+'.'+table+'&gt;');
+  desc.map(function(field){ // show the fields nicely
+     console.log(&quot;\tFieldName: `&quot;+field.Field+&quot;` \t(&quot;+field.Type+&quot;)&quot;);
+  });
+
+  if(allZero(data)){connection.end()}
+}
+</code></pre>
+<p>This function does all the printing.  It starts by decreases the table count in <code>dbf</code> by 1.  Then it checks to see if the database output line has been produced (that's what we use <code>processed</code> for).  If not, then the line is printed, and the fact recorded so that the line is not printed twice.</p>
+<p>Regardless it prints the description of a table.  The only thing left is to shut down the connection when every table has had its description printed.  The function <code>allZero</code> returns <code>true</code> if every value in <code>data</code> is 0, otherwise it returns <code>false</code>:</p>
+<pre><code class="language-js">function allZero(object){
+  allzero = true;
+  for(obj in object){
+    if(object[obj]!=0){allzero = false}
+  }
+  return(allzero);
+}
+</code></pre>
+<h2>Approach Two:  Using promises</h2>
+<p>The more I investigate this approach, the more I think it is <strong>the right thing to do</strong>.  So, at the risk of really stretching this material out... let's learn a little bit about honesty and the importance of making promises.  I am basing much of this lecture of Daniel Parker's work in "JavaScript with Promises".  Before getting into the nitty-gritty here's an overview of the JavaScript event loop, as explained by <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Philip Robers</a> (you will need about half an hour)</p>
+<h3>What is a promise</h3>
+<p>A promise is an object meant to act as a placeholder for some value.  In situations involving asynchronous callback functions, a promise-object allows the asynchronous call to return immediately and provides the programmer (you) the opportunity to register <em>more</em> callbacks that will be run when the underlying function ends successfully or generates an error.  HTML5 includes a specification for <a href="https://en.wikipedia.org/wiki/ECMAScript">EcmaScript</a>, which is javaScript (mostly) and has native support for promises.  However, we are going to use the <code>bluebird</code> library because it is</p>
+<ul>
+<li>being actively developed</li>
+<li>works on older systems</li>
+<li>has several nice online examples of its use.</li>
+</ul>
+<p>Before doing anything, install the node package using <code>npm install bluebird</code> in your projects root directory.</p>
+<p>A promise can be in one of three states:</p>
+<ol>
+<li>Pending</li>
+<li>Fulfilled</li>
+<li>Rejected</li>
+</ol>
+<p>Generally, we are not going to be changing the state of a Promise ourselves, but it helps to know what is happening behind the scenes.  A Promise can change from <em>Pending</em> to <em>Fulfilled</em> (if successful) or <em>Rejected</em> (if there was an error).  A Promise in either of these two states is called <em>submitted</em>.  Once submitted a Promise can not change state.</p>
+<p>Remember that a Promise is a placeholder for a value-- a value that is the end result of some asynchronous procedure.  We can assign handlers to a Promise to deal with the results of that procedure using the <code>.then()</code> method.  We can also use the <code>.catch()</code> method to deal with errors.  (If you're being picky, we can use <code>.then()</code> to deal with both success and failure).</p>
+<p>We can also <strong>chain</strong> promises together using <code>.then()</code>.  This allows the programmer to introduce causal steps and deal with dependency issues.  This will make more sense after the examples below.  Try this short one first:</p>
+<pre><code class="language-js">Promise=require('bluebird');
+
+var promise= new Promise(function(resolve,reject){
+  console.log('Inside resolver function');
+  resolve();
+});
+
+promise.then(function(){
+  console.log('Inside onFulfilled handler');
+});
+
+console.log('End of Script');
+</code></pre>
+<p>The output of this little program should be as follows:</p>
+<pre><code>Inside resolver function
+End of Script
+Inside onFulfilled handler
+</code></pre>
+<p>So what is happening?  Bluebird is one of several promise APIs.  Somewhat similar to an <code>import</code> command in Java, we load it using <code>require</code>:  </p>
+<pre><code class="language-js">Promise=require('bluebird');
+</code></pre>
+<p>The variable <code>Promise</code> exposes all the functionality of the bluebird API (we could have called it whatever we wanted).<br />
+The variable <code>promise</code> (notice the lower case p) is created using <code>new</code> and a constructor called <code>Promise()</code>.  This constructor expect a function that takes two arguments-- <code>resolve</code> and <code>reject</code>-- both functions in their own right (it's getting kind of meta isn't it?).  We pass the constructor just such an anonymous function:</p>
+<pre><code class="language-js">function(resolve,reject){
+  console.log('Inside resolver function');
+  resolve();
+}
+</code></pre>
+<p>This function runs immediately (it is a <strong>synchronous</strong> call). And we get our first output line:  <code>Inside resolver function</code>.  The two functoral arguments: <code>resolve</code> and <code>reject</code> are provided by bluebird.  Both are run asynchronously and set up callback functions that will be fired later.  That's what makes this whole thing work.  The <code>resolve()</code> method is designed to recursively work back along the chain of handlers (if any) starting at that current Promise.  </p>
+<p>Because <code>resolve()</code> is asynchronous it immediately returns (and it will return a promise object).  The function <code>resolve()</code> is now queued up, and will be run AFTER the main thread of execution is completed (because of the "run until completion motto" enjoyed by javaScript and node.js).   Eventually <code>resolve()</code> will attempt to resolve anything <em>hanging off</em> that original promise.  At this point however, no handlers have been attached to the promise, and there are no additional promises attached to it.  This is the beauty of making <code>resolve()</code> asynchronous-- the rest of the program now has time to assign handlers.</p>
+<p>So we get to the next chunk in the code:</p>
+<pre><code class="language-js">promise.then(function(){
+  console.log('Inside onFulfilled handler');
+});
+</code></pre>
+<p>This one assigns a handler to the initial promise using <code>.then()</code>.  This is our <code>onFulfilled handler</code>.  So... we have assigned a callback (which definitely has not yet been run) which will trigger after our initial Promise is fulfilled.</p>
+<p>Because the original <code>resolve()</code> function is waiting for the current thread of execution to finish it does not get to run yet... it is still waiting in the stack.</p>
+<p>Finally we reach <code>console.log('End of Script')</code>, and we print out <strong>second</strong> line of output.</p>
+<p>Now <code>resolve()</code> can run.  Because it had to wait until the end of our current thread of execution before being run, we had time to add things to the original promise.  The method <code>.resolve()</code> executes the <code>onFulfilled</code> handler, and our third line finally prints.</p>
+<p>In general we would set up our initial promise like this:</p>
+<pre><code class="language-js">var promise = new Promise(function(resolve, reject) {
+  // do a thing, possibly async, then…
+
+  if (/* everything turned out fine */) {
+    resolve(&quot;Stuff worked!&quot;);
+  }
+  else {
+    reject(Error(&quot;It broke&quot;));
+  }
+});
+</code></pre>
+<p>The <code>.then()</code> method expects either a Promise object or a callback function (more on that down below) as an argument.</p>
+<h3>Back to databases</h3>
+<p>Let's review our original <code>showDatabases.js</code> program:</p>
+<pre><code class="language-js">var credentials = require('./credentials.json');
+
+var mysql=require(&quot;mysql&quot;);
+
+credentials.host=&quot;ids&quot;
+var connection = mysql.createConnection(credentials);
+
+connection.connect(function(err){
+  if(err){
+    console.log(&quot;Problems with MySQL: &quot;+err);
+  } else {
+    console.log(&quot;Connected to Database.&quot;);
+  }
+});
+
+connection.query('SHOW DATABASES',function(err,rows,fields){
+  if(err){
+    console.log('Error looking up databases');
+  } else {
+    console.log('Returned values were ',rows);
+}
+});
+connection.end()
+console.log(&quot;All done now.&quot;);
+</code></pre>
+<p>We are going to start by modifying this example to make use <code>connection.pool()</code>s.  The reason we are doing this is three-fold:</p>
+<ol>
+<li>Most examples use this (and we would like to steal other people's good ideas when possible).</li>
+<li>This approach will scale better to larger projects that might require multiple concurrent connections.</li>
+<li>Creating a new connection helps insulate the user from fragile connections (connections can break)</li>
+</ol>
+<pre><code class="language-js">var credentials = require('./credentials.json');
+var mysql=require(&quot;mysql&quot;);
+credentials.host=&quot;ids&quot;
+var pool=mysql.createPool(credentials)
+pool.getConnection(function(err,conn){
+  if(!err){
+      conn.query('SHOW DATABASES',function(err,rows,fields){
+          if(err){
+            console.log('Error looking up databases');
+          } else {
+            console.log('Returned values were ',rows);
+          }
+          conn.release()
+          pool.end()
+        });
+  } else{
+      console.log('Error making connection')
+  }
+});
+console.log(&quot;All done now.&quot;);
+</code></pre>
+<p>Notice that we are using <code>.release()</code> and <code>pool.end()</code>.</p>
+<p>In our example, this is major over-kill and something of a waste of time since it makes the code harder to read.  However… if we removed the <code>pool.end()</code> … we could wrap most of our active-code in a function and have a comletely self-contained <code>sql</code> function.  We would <strong>still</strong> have to deal with the difficulties of asynchronous callbacks... but things would run very quickly indeed.</p>
+<h3>Bringing in promises</h3>
+<p>Now we're going to add in promises.  There are some new ideas floating around in this next example, so be sure to type up the next example before continuing:</p>
+<pre><code class="language-js">var credentials = require('./credentials.json');
+
+var mysql=require(&quot;mysql&quot;);
+var Promise = require('bluebird');
+var using = Promise.using;
+Promise.promisifyAll(require(&quot;mysql/lib/Connection&quot;).prototype);
+Promise.promisifyAll(require(&quot;mysql/lib/Pool&quot;).prototype);
+
+credentials.host=&quot;ids&quot;
+var pool=mysql.createPool(credentials); //Setup the pool using our credentials.
+
+var getConnection=function(){
+    return pool.getConnectionAsync().disposer(
+        function(connection){return connection.release();}
+          );
+};
+
+var query=function(command){
+    return using(getConnection(),function(connection){
+       return connection.queryAsync(command);
+    });
+};
+
+
+sql=&quot;SHOW DATABASES&quot;
+var result=query(mysql.format(sql)) //result is a promise
+result.then(function(dbfs,err){console.log(dbfs)}).then(function(){pool.end()});
+</code></pre>
+<p>The first <em>weird</em> thing in the code up above is (somewhat abridged) some of the <em>Promise</em> parts:</p>
+<pre><code class="language-js">var Promise = require('bluebird');
+Promise.promisifyAll(require(&quot;mysql/lib/Connection&quot;).prototype);
+Promise.promisifyAll(require(&quot;mysql/lib/Pool&quot;).prototype);
+</code></pre>
+<p>The first line is clear:  We are using the promise library known as <code>bluebird</code>. The next two lines are a bit mysterious.  We will examine them in more detail later.  The important thing is that these lines <em>wrap</em> the original methods from mysql in functions that return Promises.  The function <code>promisify</code> converts callback-style APIs to use promises.  You can read up on it <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md#promisification">at the bluebird documention</a>.  The key thing is that a new version of the function is made that now ends with the word <code>Async</code>.  Hence the <code>mysql</code> method <code>query</code> is now called <code>queryAsync</code> and returns a promise instead of its results.</p>
+<h3>Connection pools and promises</h3>
+<p>Things are a bit nicer now:</p>
+<pre><code class="language-js">var pool=mysql.createPool(credentials); //Setup the pool using our credentials.
+
+var getConnection=function(){
+    return pool.getConnectionAsync().disposer(
+        function(connection){return connection.release();}
+          );
+};
+</code></pre>
+<p>The <code>.disposer()</code> method is part of <code>bluebird</code>.  It is guaranteed to run after the promise returned by <code>.getConnectionAsync()</code> is resolved.... so what we're doing is over-writing the <code>getConnection</code> function with one of our own.  The <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md#resource-management">blue bird documentation on Resource Management</a> is informative  Be sure to read the entire resource Management section before continuing.  </p>
+<p>Now look at where <code>getConnection()</code> is being used:</p>
+<pre><code class="language-js">var query=function(command){
+    return using(getConnection(),function(connection){
+       return connection.queryAsync(command);
+    });
+};
+</code></pre>
+<p>The <code>query()</code> method is using <code>using</code> (which is discussed in that last link I provided).  This method will ensure that the anonymous function passed as the second argument can use the same name space as the promise returned by <code>getConnection()</code>.  It also ensures that the <code>.disposer()</code> method for <code>.getConnection()</code> isn't called until after <code>.queryAsync()</code> (which is a promise) is resolved.  </p>
+<p>We are finally in a position to understand the <em>meat of the function</em>:</p>
+<pre><code class="language-js">var result=query(mysql.format(sql)) //result is a promise
+result.then(function(dbfs,err){console.log(dbfs)}).then(function(){pool.end()});
+</code></pre>
+<p>So, the <code>query()</code> function returns a promise that is not completely resolved until the query it contains is executed.
+We use <code>.then()</code> to process the results of those queries, and then another <code>.then()</code> chained off the back, that closes down the pool of connections.</p>
+<h3>Making things a bit cleaner</h3>
+<p>I would like to clean things up a bit to show how much more readable Promises can make our code.</p>
+<p>First, create a file called <code>dbf-setup.js</code> and make certain it is in the same directory as your <code>credentials.json</code> file.  Here is what <code>dbf-setup.js</code> should contain:</p>
+<pre><code class="language-js">var credentials = require('./credentials.json');
+
+var mysql=require(&quot;mysql&quot;);
+var Promise = require('bluebird');
+var using = Promise.using;
+Promise.promisifyAll(require(&quot;mysql/lib/Connection&quot;).prototype);
+Promise.promisifyAll(require(&quot;mysql/lib/Pool&quot;).prototype);
+
+credentials.host=&quot;ids&quot;
+var connection = mysql.createConnection(credentials);
+
+var pool=mysql.createPool(credentials); //Setup the pool using our credentials.
+
+var getConnection=function(){
+  return pool.getConnectionAsync().disposer(
+    function(connection){return connection.release();}
+  );
+};
+var query=function(command){ //SQL comes in and a promise comes out.
+  return using(getConnection(),function(connection){
+    return connection.queryAsync(command);
+  });
+};
+
+var endPool=function(){
+   pool.end(function(err){});
+}
+
+exports.query = query;
+exports.releaseDBF=endPool;
+</code></pre>
+<p>We are defining a module.  Node.js allows you to use the <code>require</code> function to import information from another file, and the <code>exports.function_name=function</code>. The only new material is at the end.  It is how we export functions.  </p>
+<p>With that functionality wrapped up in a module the remaining code necessary to implement "SHOW DATABASES" is fairly short.  I have added TWO complications in preparation for the final version of the program however, so read carefully:</p>
+<pre><code class="language-js">mysql=require('mysql');
+dbf=require('./dbf-setup.js');
+
+var getDatabases=function(){//Returns a promise that can take a handler ready to process the results
+  var sql = &quot;SHOW DATABASES&quot;;
+  return dbf.query(mysql.format(sql)); //Return a promise
+}
+
+var processDBFs=function(queryResults){
+   dbfs=queryResults;
+   return(dbfs);
+}
+
+dbf=getDatabases()
+.then(processDBFs)
+.then(function(results){console.log(results)})
+.then(dbf.releaseDBF);
+</code></pre>
+<p>It is a waste to do so little work in <code>processDBFS</code>, but I wanted to point out something very important.  Each <code>.then()</code> method is returning a Promise, and by putting the <code>.then()</code>'s in order we are forcing the callback to be executed in our desired order.  The key thing to notice lives here:</p>
+<pre><code class="language-js">.then(processDBFs)
+.then(function(results){console.log(results)})
+</code></pre>
+<p>Notice that the function <code>processDBFs</code> is returning an array of JavaScript objects-- one for each database.  Which function is processing those results?  That would be the anonymous function in the next line: <code>function(results){console.log(results)}</code>.</p>
+<p>So the <code>.then()</code> methods form a chain of promises and these promises induce a chain of callback functions that hand their results off to each-other in the proper order.  This is one of the <strong>secrets</strong> to making it all work out.</p>
+<p>Another secret is using the <code>.all()</code> method. I typically call it using the object attached to the blubird module.  In my case this looks like:  <code>Promise.all(myArrayOfPromises)</code>.</p>
+<p>For this solution we are going to take advantage of <strong><a href="http://www.w3resource.com/node.js/nodejs-mysql.php#prepared-statements">prepared statements </a></strong> to make our code even more compact.</p>
+<p>Here is my solution involving Promises and prepared statements.  My Promise-Fu is still quite weak, so there are, undoubtedly, ways to do this even more cleanly.  Youl should all type this program in yourselves:</p>
+<pre><code class="language-js">Promise=require('bluebird')
+mysql=require('mysql');
+DBF=require('./dbf-setup.js');
+
+var getDatabases=function(){//Returns a promise that can take a handler ready to process the results
+  var sql = &quot;SHOW DATABASES&quot;;
+  return DBF.query(mysql.format(sql)); //Return a promise
+}
+
+var processDBFs=function(queryResults){ //Returns a promise that forces ALL dbfPromises to resolve before .thening()
+   var dbfs=queryResults;
+   return(Promise.all(dbfs.map(dbfToPromise)).then(processTables))
+}
+
+var processTables=function(results){ //Returns a promise that forces ALL table description Promises to resolve before .thening()
+  var descriptionPromises=results.map(tableAndDbfToPromise);
+  var allTables=Promise.all(descriptionPromises).then(function(results){return(results)});
+  return(allTables);
+}
+
+//Takes an object (as returned by showDatabases) and returns a promise that resolves 
+// to an array of objects containing table names for the dbf in dbfObj
+var dbfToPromise=function(dbfObj){ 
+  var dbf=dbfObj.Database
+  var sql = mysql.format(&quot;SHOW TABLES IN ??&quot;,dbf);
+  var queryPromise=DBF.query(sql)
+  queryPromise=queryPromise.then(function(results){return({table:results,dbf:dbf})});
+  return(queryPromise);
+}
+
+//Takes an object (as returned by showDatabases) and returns a promise that resolves 
+// to an array of objects containing table descriptions.  
+// This function creates helper functions:
+//     describeTable()
+//  which contains its own helper function printer(), for writing the output to console
+var tableAndDbfToPromise=function(obj){
+   var dbf=obj.dbf;
+   var tableObj=obj.table;
+   var key = &quot;Tables_in_&quot;+dbf;
+
+   var tables=tableObj.map(function(val){return(val[key])})
+
+   var describeTable=function(val,index){
+       var table=dbf+&quot;.&quot;+val;
+       var printer=function(results){
+          var desc=results;
+          if(index==0){console.log(&quot;---|&quot;,dbf,&quot;&gt;&quot;)};
+          console.log(&quot;.....|&quot;+table,&quot;&gt;&quot;);
+          desc.map(function(field){ // show the fields nicely
+             console.log(&quot;\tFieldName: `&quot;+field.Field+&quot;` \t(&quot;+field.Type+&quot;)&quot;);
+          })
+       }
+
+       var describeSQL=mysql.format(&quot;DESCRIBE ??&quot;,table);
+       var promise=DBF.query(describeSQL).then(printer);
+       return(promise);
+   }
+   var describePromises = tables.map(describeTable);
+   return(Promise.all(describePromises))
+}
+
+var dbf=getDatabases()
+.then(processDBFs)
+.then(DBF.releaseDBF)
+.catch(function(err){console.log(&quot;DANGER:&quot;,err)});
+</code></pre>
+<p>If anything is unclear or you'd like more information please let me know.</p>
+<h3>More about promises in general</h3>
+<p>Start by reading this:  <a href="https://web.archive.org/web/20160530171143/http://alexperry.io/node/2015/03/25/promises-in-node.html">Alex Perry's blog entry on promises in node</a>.</p>
+<p>Here is a short writeup on using promises with node and mySQL (which will work just fine with mariaDB)</p>
+<p><a href="https://medium.com/@alpercitak/node-js-with-mysql-a43c49bbafd3">https://medium.com/@alpercitak/node-js-with-mysql-a43c49bbafd3</a></p>
+<p><a href="https://web.archive.org/web/20150924233729/http://lestersy.io:80/2015/2/22/Callback-Hell,-Async,-and-Promises">https://web.archive.org/web/20150924233729/http://lestersy.io:80/2015/2/22/Callback-Hell,-Async,-and-Promises</a></p>
+<h1>Angular</h1>
+<p>Out goal in this lab is produce a web-page that interacts with our database.  The webpage will act as our Point of Sales (POS).  We will call it the <strong>till</strong>.  Think about what is necessary for the till to be able to do the following:</p>
+<ul>
+<li>Be locked until a user logs in</li>
+<li>Record the log-in and log-out time</li>
+<li>Allow logging out</li>
+<li>Have a collection of buttons for items</li>
+<li>When an item-button is pushed it (or a collection of items) should appear in a list</li>
+<li>The location of the buttons and their contents should be completely configurable</li>
+<li>The prices of items should reflect the values in the database</li>
+<li>Every transaction should be recorded</li>
+<li>Items in the list should be able to be selected and removed</li>
+<li>There should be a procedure that appends all the individual tills into a single permanent record and generates end of day statistics</li>
+<li>There should be a query that determihes</li>
+<li>Amount of time each employee was logged in</li>
+<li>Statistics for length of transactions</li>
+<li>Statistics for size of transactions.</li>
+</ul>
+<h2>Working our way up to it</h2>
+<p>Instead of diving head-first into the problem we will start simply and work our way up to something more complicated.</p>
+<p>We will start by using a node.js package known as <code>express.js</code> to create a very simple web server for our web pages (read a few paragraphs ahead <strong>before</strong> running this):</p>
+<pre><code class="language-js">var express=require('express'),
+app = express(),
+port = process.env.PORT || 1337;
+
+app.use(express.static(__dirname + '/public'));
+app.listen(port);
+</code></pre>
+<p>The web-server is expecting our HTML files to be in the <code>public</code> sub directory.  Go ahead and </p>
+<ul>
+<li>type the code above into a file named app.js </li>
+<li>create a <code>public</code> subdirectory</li>
+<li>add a simple <code>index.html</code> file in <code>public</code></li>
+</ul>
+<p>Now test that all your node packages are installed and working:</p>
+<pre><code class="language-js">node app.js
+</code></pre>
+<p>(typing that command will run your server and start it on port 1337.  It will keep running until you type ctl-C</p>
+<p>You should be able to see it in action by starting up a browser and typing </p>
+<pre><code class="language-js">http://localhost:1337
+</code></pre>
+<p>Please note that if you are working on a lab computer <strong>from home</strong> that <code>http://localhost:1337</code> will not work (ask me if you are not clear about why).  Even worse... <code>http://labcomputer.morris.umn.edu:1337</code> will probably not work either because of the firewall.  (If you're in the dorms it <em>might</em>... I haven't had the time to check... but don't count on it).  </p>
+<h3>An angular tutorial</h3>
+<p>Use the <code>public</code> sub-directory that was cloned with your repository for the following tutorial:
+<a href="http://www.revillweb.com/tutorials/angularjs-in-30-minutes-angularjs-tutorial/">http://www.revillweb.com/tutorials/angularjs-in-30-minutes-angularjs-tutorial/</a>.</p>
+<p>Everything is case-sensitive so pay close attention.  Do not be afraid to open the browser's console to help with debugging.  I recommend using the same version of angularJS that the author used to develop the tutorial:  I checked that the tutorial still works (Fall 2017) when using the following line in <code>index.html</code>: </p>
+<p><code>&lt;script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js" type="text/javascript"&gt;&lt;/script&gt;</code></p>
+<p>At a bare mininum your group should now have
+* The web-server <code>express.js</code> in the root directory of your repository
+* A subdirectory named <code>public</code>
+   * <code>index.html</code> (perhaps various files for different sections of the tutorial:  the content)
+   * <code>app.js</code> (for holding the angular code that orchestrates the data-binding:  the model)
+   * <code>main.ctrl.js</code> (holds the angular code that orchestrates appearance: the view)</p>
+<p>Together these three files exemplify the MVC philosophy:  </p>
+<ul>
+<li>model</li>
+<li>view</li>
+<li>content</li>
+</ul>
+<p>The idea is to separate differing concerns into differing files.  More information is available on <a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">wiki</a></p>
+<h2>Complicating the web server</h2>
+<p>Now that you have a reasonable idea of how angularJS turns the <code>index.html</code> template into a full-fledged web-page, we are going to complicate matters slightly by interacting with the database.</p>
+<p>The key idea here is that we are going to add a mechanism allowing our server to act as an intermediary between the web page and the database.  To this end we shall complicate our web server:  <strong>most</strong> of the time it will serve files from the <code>public</code> directory (this is where our angular files live), but, if we ask for the proper URL, it will also serve data that allows the cash register or the database to be updated. We could certainly separate the web-page server from the data-server, however, ports are at a premium in the dungeon, its easier to manage <strong>one</strong> server rather than two, the individual requests are light enough that we don't need to worry about using two servers to improve our performance, and we remove the possibilities of any problematic cross-site scripting security getting in our way.</p>
+<h3>Making a web API</h3>
+<p>Hidden underneath every interaction that takes place on the web is a complex exchange of information following a pre-defined set of definitions, formats, and formal expectations known as a <strong>protocol</strong>.  The protocol <code>HTTP</code> is the <code>HyperText Transmission Protocol</code>.  It's being supplanted by its cryptographic cousin <code>HTTPS</code>, but we don't need to worry too much about the distinction between the two of them.  <code>HTTP</code> is used to move web-pages from server to client.  Entering a web addresses like <code>HTTP://personal.morris.umn.edu/~dolan118</code> into a browser's window initiates a <strong>request</strong>  to the server listening on <code>personal.morris.umn.edu</code>.  The <strong>web server</strong> decides how to process that request.  Often it results in the contents of some file being sent from the server to the client, but not always (which will be important to us)</p>
+<p>Your <code>express.js</code> program is a very simple web server.  Entering the web address <code>HTTP://localhost:1337</code> in your browser results in the file <code>public/index.html</code> being transferred from the server (the machine where <code>node express.js</code> is running) to the client (the machine running the browser).  It is up to the browser to interpret the file.  Most web pages contain references to other web addresses which result in the <strong>browser</strong> making multiple <code>HTTP</code> requests.  (For example, your <code>index.html</code> file will generate requests to an external server to load the javascript that makes angularJS work and it will generate two requests designed to load the local files <code>app.js</code> and <code>maincontroller.js</code>).</p>
+<p>The web server <strong>may</strong> decide it would prefer to do something more interesting than just transferring the contents of a file.  It <strong>may</strong> choose to interpret portions of a web address as arguments and then to use these arguments to dynamically generate a web-page or even a file containing data (typically in XML or JSON).   This is how Web Application Protocol Interfaces (Web APIs) are born.</p>
+<p>Let's expand our web server so it does two things:</p>
+<ul>
+<li>Provide files from the 'public' directory</li>
+<li>Generates a web-page asking the user if they would like some buttons</li>
+</ul>
+<p>The default behavior will be to provide files, however if the requested URL look like '/buttons' then we will politely ask the user if they would like <em>some buttons</em>. </p>
+<p>Here's the basic setup:</p>
+<pre><code>var express=require('express'),
+app = express(),
+port = process.env.PORT || 1337;
+
+app.use(express.static(__dirname + '/public'));
+app.get(&quot;/buttons&quot;,function(req,res){
+  res.send(&quot;Hello World!  May I interest you in some... &lt;em&gt;buttons&lt;/em&gt;?&quot;);
+});
+
+app.listen(port);
+</code></pre>
+<p>The 'express' package makes things easy.  Your directives are applied in the order you indicate them.  The <code>app.use()</code> method is using one of express' handlers:  <code>express.static</code> looks in the specified directory for files, and provides them if it finds them.</p>
+<p>Since there is no 'buttons' subdirectory in 'public' express applies the next rule.</p>
+<h2>Mixing in a little database</h2>
+<p>Now we are going to bring everything together.  In the folder <code>first_buttons</code> you will find a file named <code>lab7server.js</code>.  It should look very similar to your <code>express.js</code> file from the last section.  The main difference is that it sends the contents of an array called <code>buttons</code>.  Go ahead and run it with <code>node lab7server.js</code> and leave it running.</p>
+<p>In your browser enter the address <code>localhost:1337</code>.  Since you did not specify a file the default file of <code>index.html</code> (which is in <code>first_buttons/public</code>) is selected.  This is (no surprise) an angular app.  There are a few differences in how I put this together from the earlier portions of the lab:</p>
+<ul>
+<li>Bootstrap is loaded (you can use that later to make things look nice)</li>
+<li>the angular code is stored in the single file <code>buttons.js</code></li>
+</ul>
+<p>Notice that each button in the web page has an HTML code chunk that looks a bit like this:</p>
+<pre><code>&lt;div style=&quot;position:absolute;left:320px;top:100px&quot;&gt;&lt;button id=&quot;1&quot; &gt;food&lt;/button&gt;&lt;/div&gt;
+</code></pre>
+<p>In the example below I've replaced explicit values with expressions of the form '#stuff#' </p>
+<pre><code>&lt;div style=&quot;position:absolute;left:#LEFT#px;top:#TOP#px&quot;&gt;&lt;button id=&quot;#BUTTON_ID#&quot; &gt;#LABEL#&lt;/button&gt;&lt;/div&gt;
+</code></pre>
+<p>Your job is to create a table called <code>till_buttons</code> that will hold all the data necessary to describe a button-- values like <code>left</code>, <code>top</code>, <code>button_id</code>, and <code>label</code>.  Then you will modify <code>lab7server.js</code> so that instead of sending the data in the array <code>buttons</code>, it will send the properly formatted results of an SQL query:</p>
+<h2>Exercise</h2>
+<p><strong>Create table <code>till_buttons</code>:</strong>  Create a table that can hold this information.  Feel free to augment the table with a few extra fields to give yourself more control over the size, etc.</p>
+<p><strong>Modify server code:</strong>  Modify the server code so that accessing the URL <code>localhost:1337/buttons</code> will return a JSON object that contains the results of querying your <code>till_buttons</code> table.  Note:  You may need to modify the files I provide to match the fields that you chose for your database.</p>
+<h2>Adding a little bit of functionality</h2>
+<p>What you are doing, as you modify the web server is implementing a REST service using node.js.</p>
+<p>This 19 minutes video:  <a href="http://www.restapitutorial.com/lessons/whatisrest.html">http://www.restapitutorial.com/lessons/whatisrest.html</a> is a decent introduction to the idea.  There will be some terminology that might be new to you (like SOAP).  You can safely ignore them.  If you look at the contents of <code>buttons.js</code> you will notice that I am using the HTTP <code>get</code> verb.  </p>
+<h1>To Do</h1>
+<p>Be sure to push the appropriate files to your group's repository.</p>
+<ul>
+<li>[ ] As individuals make the following files functional programs by <strong>typing</strong> and add them to their group repository:<ul>
+<li>[ ] <code>_name_.summarize-db.js</code> from the functions supplied in <a href="#approach-one">approach one</a>.  You will need to incorporate some other code to make it work</li>
+<li>[ ] <code>_name_.show-databases.js</code> from <a href="#back-to-databases">back to databases</a></li>
+<li>[ ] <code>_name_.dbf-setups.js</code> from [making things a big cleaner(#making-things-a-bit-cleaner)</li>
+<li>[ ] <code>_name_.dbf-summarize-db-promises.js</code> from [making things a big cleaner(#making-things-a-bit-cleaner)</li>
+</ul>
+</li>
+<li>[ ] As a group <ul>
+<li>[ ] <a href="http://www.revillweb.com/tutorials/angularjs-in-30-minutes-angularjs-tutorial/">Angular JS tutorial</a></li>
+<li>[ ] <code>express.js</code> in root directory of project/repository</li>
+<li>[ ] <code>public/index.html</code></li>
+<li>[ ] <code>public/app.js</code></li>
+<li>[ ] <code>public/main.ctrl.js</code></li>
+<li>[ ] Lab 7 Angular Exercise</li>
+<li>[ ] <code>till_buttons</code> table</li>
+<li>[ ] update <code>lab7server.js</code> to query <code>till_buttons</code></li>
+</ul>
+</li>
+</ul>
 </body>
 </html>

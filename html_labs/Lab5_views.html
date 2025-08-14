@@ -5,199 +5,274 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab3: Views, Constraints, Procedures</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Lab3: Views, Constraints, Procedures</h1>
+<p>This lab will introduce some more advanced features of SQL.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#views">Views</a></li>
+<li><a href="#stored-functions">Stored functions</a></li>
+<li><a href="#user-defined-variables">User defined variables</a></li>
+<li><a href="#stored-procedures">Stored procedures</a></li>
+<li><a href="#constraints">Constraints</a></li>
+<li><a href="#triggers">Triggers</a></li>
+<li><a href="#correlated-subqueries">Correlated Subqueries</a></li>
+</ul>
+<h2>Views</h2>
+<p>A view is a virtual table. Instead of creating an actual table, you specify a query that is run "behind-the-scenes".
+Consider this query on our <code>randA</code> and <code>randB</code> from the previous lab (don't run it... if you do then you will likely want to open another mysql session and kill it):</p>
+<pre><code class="language-sql">SELECT randA.A AS link, 
+       randA.B AS first_B,
+       randB.B AS second_B 
+FROM randA, randB 
+WHERE randA.A=randB.A 
+ORDER BY randA.A 
+</code></pre>
+<p>Let's get a sense for what the data should look like:</p>
+<pre><code class="language-sql">SELECT randA.A AS link, 
+       randA.B AS first_B,
+       randB.B AS second_B 
+FROM randA, randB 
+WHERE randA.A=randB.A 
+ORDER BY randA.A LIMIT 10;
+</code></pre>
+<p>We can take this query and create a REAL table like this:</p>
+<pre><code class="language-sql">CREATE TABLE joined 
+SELECT randA.A AS link, 
+       randA.B AS first_B, 
+       randB.B AS second_B 
+FROM randA, randB 
+WHERE randA.A=randB.A 
+ORDER BY randA.A;
+</code></pre>
+<p>You can override the columns names if you like... see about 2/3rds of the way down here for details: </p>
+<p><a href="https://mariadb.com/kb/en/create-table/">https://mariadb.com/kb/en/create-table/</a></p>
+<p>But instead of doing something that permanent, we are going to create a view instead. So drop that table first:</p>
+<pre><code class="language-sql">DROP TABLE joined;
+</code></pre>
+<p>Now let's create the view:</p>
+<pre><code class="language-sql">CREATE VIEW joined AS 
+SELECT randA.A AS link, 
+       randA.B AS first_B,
+       randB.B AS second_B 
+FROM randA, randB 
+WHERE randA.A=randB.A 
+ORDER BY randA.A;
+</code></pre>
+<p>Now you can treat joined pretty much like any table, but it's not
+actually a table, it's a virtual table that provides a <em>view</em> onto 
+this organization of the data in tables <code>randA</code> and <code>randB</code>.</p>
+<p>:warning: A word of caution: You CAN (under the right conditions) update a view--but it actually updates the corresponding, underlying tables--at least as long as mariaDB can figure out how to that correctly. (And yes--this includes deletes). This is an area about which I am far from an expert... if you want to experiment with it and show me how it works that would be cool.</p>
+<p>The nice thing about views is that you can use them to hid (or
+abstract out) complex SQL. For example, consider your inventory and prices tables. Suppose you needed to create a report and want your output to look like this:</p>
+<pre><code>&lt;10 characters worth of item--padded if necessary by *'s&gt;[&lt;amount&gt;](&lt;price&gt;)
+</code></pre>
+<p>So if you had <em>pumpkins</em> as an item, with an amount of 14 and a price of $10.13 then you would want your output to look like this:</p>
+<pre><code>pumpkin***[14]($10.13)
+</code></pre>
+<p>Okay... make that happen. You'll probably have to review the mariaDB string functions. I found it to be a bit of a pain in the butt, but still doable. But now convert your query into a view called <code>ticketItem</code> and call the calculated column output by the same name:</p>
+<pre><code>&lt;I'll wait for you to figure that out&gt;
+</code></pre>
+<p>Now you should be able to do this: </p>
+<pre><code class="language-sql">SELECT * FROM ticketItem;
+</code></pre>
+<p>You might also find it useful to create views that apply some sort of filter to your raw data. </p>
+<h2>Stored functions</h2>
+<p>If you have the <code>STORE ROUTINE</code> privilege, then you can create a function that can be called by mariaDB just like any other function. Instead of a view, let's create a function to generate <code>pumpkin***[14]($10.13)</code></p>
+<p>The basic setup requires a bit of care… first the overview.
+We create a function using <code>CREATE FUNCTION</code> and delete it using <code>DROP FUNCTION</code>. </p>
+<p>Let's start with a basic outline:</p>
+<pre><code class="language-sql">CREATE FUNCTION ticketize RETURNS TEXT DETERMINISTIC
+BEGIN
+….
+END
+</code></pre>
+<p>I hope the pieces make sense. We give the <code>CREATE FUNCTION</code> keywords, then the name of the function. That's followed by <code>RETURNS</code> and then the <em>data type</em>. The data type is, not surprisingly, the same data types you use for the columns in a table. The <code>DETERMINISTIC</code> keyword tells the DBMS that the function will always return the same value for the same inputs (you might be able to see where this information could be useful for a system that wants to build query results as efficiently as possible).</p>
+<p>The <code>BEGIN</code> and <code>END</code> (shades of Pascal... or Ruby if you're younger) act as brackets on the function's definition.</p>
+<p>You must declare variables using </p>
+<pre><code>DECLARE &lt;varname&gt; &lt;datatype&gt;;
+</code></pre>
+<p>You assign values <em>shudder</em> using </p>
+<pre><code>SET &lt;varname&gt; = &lt;value&gt;;
+</code></pre>
+<p>And when you return the value you have to return a <strong>variable</strong> of the proper type. </p>
+<p>You might think that this would work:</p>
+<pre><code class="language-sql">CREATE FUNCTION FortyTwo() RETURNS TINYINT DETERMINISTIC
+BEGIN
+    DECLARE x TINYINT;
+    SET x = 42;
+    RETURN x;
+END
+</code></pre>
+<p>Except that the ; is interpreted by the mariaDB client incorrectly. :bangbang: You need to change the command delimiter first:</p>
+<pre><code class="language-sql">DELIMITER //
+CREATE FUNCTION FortyTwo() RETURNS TINYINT DETERMINISTIC
+BEGIN
+    DECLARE x TINYINT;
+    SET x = 42;
+    RETURN x;
+END 
+//
+DELIMITER ;
+</code></pre>
+<p>Arguments are defined between the parenthesis just like columns in the <code>CREATE TABLE</code> command. </p>
+<p>Now go read the following link (and see how much of the above I pinched from that page):</p>
+<p><a href="https://mariadb.com/kb/en/stored-function-overview/">https://mariadb.com/kb/en/stored-function-overview/</a></p>
+<p>Okay… <strong>make your function</strong> work… you should be able to adapt your query from the view section. </p>
+<p>If you get it working correctly, then you should be able to do this:</p>
+<pre><code>mysql&gt; select ticketize(&quot;pumpkin&quot;,20,1.23);
++------------------------------+
+| ticketize(&quot;pumpkin&quot;,20,1.23) |
++------------------------------+
+| pumpkin***[20]($1.23)        |
++------------------------------+
+1 row in set (0.06 sec)
+</code></pre>
+<h2>User defined variables</h2>
+<p>Now read <a href="https://mariadb.com/kb/en/user-defined-variables/">the MariaDB page on user defined variables</a>, but skim over <code>PREPARE</code>.  Also read the <a href="https://mariadb.com/kb/en/assignment-operator/">page about assignment operators</a></p>
+<p>Give this a try:</p>
+<pre><code class="language-sql">SET @a=0;
+</code></pre>
+<p>And then this:</p>
+<pre><code class="language-sql">SELECT @a;
+</code></pre>
+<p>now leave MariaDB, come back in, and do it again</p>
+<pre><code class="language-sql">SELECT @a;
+</code></pre>
+<p>Now do this:</p>
+<pre><code class="language-sql">SELECT *,(@a:=@a+1) AS counter FROM inventory;
+</code></pre>
+<p>What's with all the <code>NULLS</code>? Fix it by assigning a value to <code>@a</code> BEFORE the query.</p>
+<pre><code>&lt;I'll wait&gt;
+</code></pre>
+<p>Now modify the query above so that <code>@a</code> is replaced with <code>@a+1</code> if <code>@a&lt;10</code>, but is set to 1 otherwise. (<a href="https://mariadb.com/kb/en/library/if-function/">The <code>if</code> <em>function</em></a> might be useful.) Run your query 3 or 4 times.</p>
+<pre><code>&lt;Waiting again&gt;
+</code></pre>
+<p>Modify the query above (again) so that <code>item</code> is concatenated with <code>@a</code> (you will probably want to reset the value using <code>SET @a="";</code>between queries.</p>
+<pre><code>&lt;still here&gt;
+</code></pre>
+<p>Now try to come up with some way to do what you did above, but suppress the output. I found a way to do it that just generates a blank column…. but there might be a better way. Let me know what you find.</p>
+<pre><code>&lt;waiting hopefully&gt;
+</code></pre>
+<h2>Stored procedures</h2>
+<p>This is, so to speak, the scripting language, of mariaDB... of course the technology was developed quite some time ago so it's showing its age. The ability to execute a stored procedure is distinct from the ability to create one:</p>
+<p><a href="https://mariadb.com/kb/en/grant/#procedure-privileges">https://mariadb.com/kb/en/grant/#procedure-privileges</a></p>
+<p>One stores a procedure using <code>CREATE PROCEDURE</code> (begin mindful of the delimiter issue):</p>
+<pre><code class="language-sql">DELIMITER //
+CREATE PROCEDURE averageprice()
+BEGIN
+SELECT AVG(price) AS price_avg 
+FROM prices;
+END//
+DELIMITER ;
+</code></pre>
+<p>Okay, now you call the stored procedure by name:</p>
+<pre><code class="language-sql">CALL averageprice();
+</code></pre>
+<p>You remove a stored procedure using <code>DROP PROCEDURE</code> (or <code>DROP PROCEDURE IF EXISTS</code>)</p>
+<p>Now read the topics in the link below. Skip over the one on binary logging and the one on <code>SHOW PROCEDURE CODE</code>(because I have not enabled debugging). As you read, bear in mind that the ability to call <code>CREATE PROCEDURE</code> requires the <code>CREATE ROUTINE</code> privilege (I find this naming convention disturbing... why not call the privilege the <code>CREATE PROCEDURE</code> privilege?). Also notice that we can define parameters for a procedure just as we did for functions… but we ALSO have the ability to CHANGE the contents of a parameter (read the examples carefully in the create-procedure topic). Also pay attention to the <code>INTO</code> clause (which is part of <code>SELECT</code>), which allows you to assign the output of a single value query into a variable:</p>
+<p><a href="https://mariadb.com/kb/en/library/stored-procedures/">https://mariadb.com/kb/en/library/stored-procedures/</a></p>
+<p>Also note that it is possible to have the stored-procedure run as the DEFINER rather than the INVOKER (which is occasionally useful, and occasionally a security nightmare). </p>
+<p>Procedures are, by default, associated with the current database.</p>
+<p>Let's do one that returns the min, max and average values from a table and stores them in the variables of our choosing (NOTE: I used <code>DECIMAL(5,2)</code> for my prices):</p>
+<pre><code class="language-sql">DELIMITER //
+CREATE PROCEDURE summary( 
+   OUT pmin DECIMAL(5,2), 
+   OUT pmax DECIMAL(5,2), 
+   OUT pavg DECIMAL(5,2)
+)
+BEGIN 
+   SELECT MIN(price) INTO pmin FROM prices; 
+   SELECT MAX(price) INTO pmax FROM prices; 
+   SELECT AVG(price) INTO pavg FROM prices;
+END//
+DELIMITER ;
+</code></pre>
+<p>Now call it:</p>
+<pre><code class="language-sql">CALL summary(@mymin, @mymax, @myavg);
+</code></pre>
+<p>And then check that it worked:</p>
+<pre><code class="language-sql">SELECT @mymin, @mymax, @myavg;
+</code></pre>
+<h2>Constraints</h2>
+<blockquote>
+<p>There used to be a section here on constraints, which are a way
+of telling the database that certain operations should be
+forbidden. How mariaDB handles constraints changed a <em>lot</em> in
+version 10.2, and we're currently using 10.0, making most of
+this obsolete. We'll just skip constraints for now.</p>
+</blockquote>
+<h2>Triggers</h2>
+<p>Triggers allow an action in a database (such as a <code>DELETE</code> action) to cause another action to occur as well (such as an <code>INSERT</code> action).</p>
+<p>Duke University has a good <a href="http://www-dev2.cs.duke.edu/csl/docs/mysql-refman/triggers.html">reference</a> to the syntax, and <a href="https://mariadb.com/kb/en/library/trigger-overview/#creating-a-trigger">MariaDB's documentation</a> has some good examples too.</p>
+<p><strong>Trigger Exercise</strong></p>
+<ul>
+<li>Copy your <code>prices</code> database to one called <code>TR_prices</code>.  </li>
+<li>Ensure that <code>TR_prices</code> has a <code>notes</code> field.</li>
+<li>CREATE two archive tables with the same structure as <code>TR_prices</code>:  <code>TR_archiveA</code> and <code>TR_archiveB</code></li>
+<li>Create a trigger that occurs when attempting to delete a row from TR_prices.</li>
+<li>If the row to be deleted has your name in the notes field make a copy of the record in <code>TR_archiveA</code>,</li>
+<li>Otherwise make a copy of the record in <code>TR_archiveB</code></li>
+</ul>
+<h2>Correlated Subqueries</h2>
+<p>Recall that A <strong>correlated subquery</strong> is a subquery that uses values from the outer query. The subquery is evaluated once for each row processed by the outer query. (heavily edit Wikipedia quote).  The <a href="https://en.wikipedia.org/wiki/Correlated_subquery">Wikipedia entry</a> that I had you read last lab has a couple of great examples, so do the following:</p>
+<p><strong>Correlated Subquery Exercise</strong>
+Each group (remember to tell me <em>whose</em> database has the group's works in canvas), should do the following:</p>
+<ul>
+<li>Create a table named <code>CSQ_employee</code> with the following fields:</li>
+<li>employee_number:  INT</li>
+<li>salary: FIXED(6,2)</li>
+<li>department_ID: INT</li>
+<li>employee_name: TEXT</li>
+<li>Create a table named <code>CSQ_dept_lookup</code>:</li>
+<li>department_ID: INT</li>
+<li>depatment_name: TEXT</li>
+</ul>
+<p>Add 10 departments to your <code>CSQ_dept_lookup</code> using whatever reasonable names you prefer (this means names we would not be afraid to show to the parents of prospective students).  The IDs should range from 1 to 10-- make them a primary key for the table.</p>
+<p>For the other table, it would be nice to have closer to 200 names.  You can use <a href="http://listofrandomnames.com/">random name generator</a>.  To make them.  The link I provided generates up to 50 at a time-- you'll need to generate them, and copy and paste them into a text file.  After you have the 200 names, use <code>LOAD DATA LOCAL INFILE</code> to fill the records.  The <code>SET</code> keyword will allow you to use the <code>RAND()</code>, <code>ROUND()</code> or <code>FLOOR()</code> functions to generate reasonable salaries (shoot for values between $35,000 and $120,000.  You can also use these functions to randomly generate department IDs for your fictitious people.</p>
+<p>Those of you with some knowledge of statistics will recognize that <code>RAND()</code> generates numbers according to a uniform random distribution (equally likley possibilities).  Various techniques are available for working around that issue, but we don't need to be particularly fancy for this exercise.</p>
+<p>Once you have the entries in your tables perform the examples in the Wikipedia page (suitably modified).</p>
+<h1>To Do</h1>
+<ul>
+<li>[ ] Do all the examples.  <ul>
+<li>[ ] Created the View</li>
+<li>[ ] Created the <code>Ticketize</code> function</li>
+<li>[ ] Created the summary procedure</li>
+</ul>
+</li>
+<li>
+<p>[ ] Read the following:</p>
+<ul>
+<li>https://mariadb.com/kb/en/create-table/</li>
+<li>https://mariadb.com/kb/en/stored-function-overview/</li>
+<li><a href="https://mariadb.com/kb/en/user-defined-variables/">the MariaDB page on user defined variables</a></li>
+<li><a href="https://mariadb.com/kb/en/assignment-operator/">page about assignment operators</a></li>
+<li>https://mariadb.com/kb/en/grant/#procedure-privileges</li>
+<li>https://mariadb.com/kb/en/stored-procedures/</li>
+<li>https://mariadb.com/kb/en/20-sql-constraints-and-assertions-constraint/</li>
+<li><a href="http://www.cs.duke.edu/csl/docs/mysql-refman/triggers.html">Duke University reference on triggers</a></li>
+<li><a href="https://mariadb.com/kb/en/trigger-examples/">MariaDB's documentation on triggers</a></li>
+<li>http://www.w3schools.com/xml/xml_whatis.asp</li>
+<li>https://mariadb.com/kb/en/load-xml/</li>
+<li><a href="https://mariadb.com/kb/en/mariadb/storage-engines/">MariaDB documentation on storage engines</a></li>
+<li><a href="https://mariadb.com/kb/en/mariadb/connect/">https://mariadb.com/kb/en/mariadb/connect/</a></li>
+</ul>
+</li>
+<li>
+<p>[ ] Do the following Exercises:</p>
+<ul>
+<li>[ ] The Trigger Exercise</li>
+<li>[ ] The Correlated Subquery Exercise</li>
+</ul>
+</li>
+</ul>
 </body>
 </html>

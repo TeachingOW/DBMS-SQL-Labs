@@ -5,199 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transactions</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<p>In this short tutorial, we will explore how transcations work in MySQL.</p>
+<p>Now, we would create a simple bank table;</p>
+<pre><code class="language-sql">CREATE TABLE Bank(
+name varchar(10),
+amnt decimal(10,2),
+Constraint  AmntC check (amnt&gt;=0) ); 
+</code></pre>
+<p>Add few users to the bank</p>
+<pre><code class="language-sql">insert into bank values(&quot;Bob&quot;, 40);
+Insert into bank values (&quot;Joe&quot;, 50);
+</code></pre>
+<p>By default, in mysql shell (or Workbench) each statement is a sperate transcation and it is auto commited (auto commit)</p>
+<pre><code class="language-sql">SHOW VARIABLES LIKE 'AUTOCOMMIT';
+
+</code></pre>
+<p>To set autocommit to false</p>
+<pre><code class="language-sql">SET AUTOCOMMIT = 0;
+</code></pre>
+<p>OR</p>
+<pre><code class="language-sql">SET AUTOCOMMIT = OFF;
+</code></pre>
+<p>To transfer 10$ from Bob to Joe</p>
+<pre><code class="language-sql">start transaction;
+
+update bank set amnt=amnt-10 where name='Bob';
+
+update bank set amnt=amnt+10 where name='Joe';
+
+commit;
+</code></pre>
+<p>After executing the statements
+You should get the following when executing 'select * from bank;'</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bob</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Joe</td>
+<td>60</td>
+</tr>
+</tbody>
+</table>
+<p>Execute the following statemnts</p>
+<pre><code class="language-sql">start transaction;
+select * from bank;
+update bank set amnt=amnt+10 where name='Bob';
+select * from bank;
+update bank set amnt=amnt-10 where name='Joe';
+select * from bank;
+rollback;
+</code></pre>
+<p>When we are using rollback, the table is rolled back to the previous state.</p>
+<p>Other instances (or connections would not see these updates until <strong>commit</strong> is executed.)</p>
+<p>The previous transcation can results in a several pitfalls.</p>
+<p>For eaxample, running the following statements</p>
+<pre><code class="language-sql">start transaction;
+update bank set amnt=amnt-100 where name='bob';
+update bank set amnt=amnt+100 where name='joe';
+commit;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bob</td>
+<td>30</td>
+</tr>
+<tr>
+<td>Joe</td>
+<td>160</td>
+</tr>
+</tbody>
+</table>
+<p>Basically 100$ has been magically appeared in Joe account.</p>
+<p>To handle that in mysql, we need to create a procedure (so we can use IF and or execption)</p>
+<pre><code class="language-sql">DELIMITER //
+
+CREATE PROCEDURE `TRANSFER`(  
+  IN FromACCNT VARCHAR(10),
+  IN ToACCNT VARCHAR(10),
+ IN amount decimal(10,2))
+BEGIN
+
+    IF EXISTS(select * from bank where name=FromAccnt and amnt &gt; amount) and EXISTS(select * from bank where name=ToAccnt) THEN
+       start transaction;
+      update bank set amnt=amnt-amount where name=FromAccnt;
+        update bank set amnt=amnt+amount where name=ToAccnt;
+      commit;
+
+    END IF;
+END//
+</code></pre>
+<p>TO use it </p>
+<pre><code class="language-sql">DELIMITER ;
+
+Call TRANSFER('Bob','Joe', 100);
+</code></pre>
+<p>This would not be executed.</p>
+<p>Another Approach is by using Exception, as follows:</p>
+<pre><code class="language-sql">
+DELIMITER //
+
+CREATE PROCEDURE Transfer2(
+ IN FromACCNT VARCHAR(10),
+  IN ToACCNT VARCHAR(10),
+ IN amount decimal(10,2))
+BEGIN
+ DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;  -- rollback any error in the transaction
+    END;
+
+   start transaction;
+   update bank set amnt=amnt-amount where name=FromAccnt;
+   update bank set amnt=amnt+amount where name=ToAccnt;
+   commit;
+END//
+
+DELIMITER ;
+</code></pre>
+<pre><code class="language-sql">Call TRANSFER2('Bob','Joe', 10);
+</code></pre>
+<p>AND</p>
+<pre><code class="language-sql">Call TRANSFER2('Bob','Joe', 100);
+</code></pre>
 </body>
 </html>

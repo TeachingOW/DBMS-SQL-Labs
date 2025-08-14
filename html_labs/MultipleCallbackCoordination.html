@@ -5,199 +5,154 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coordinating asynchronous calls through multiple callbacks (v2)</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Coordinating asynchronous calls through multiple callbacks (v2)</h1>
+<p>In README.md there is a discussion of coordinating asynchronous calls using a data structure and (implicitly) multiple callback
+functions. This is a second version of that
+code that breaks things up a bit more in an effort to be a little
+clearer about what's doing what, and in particular why we have to
+construct a zillion functions along the way.</p>
+<p>The initial setup is still the same:</p>
+<pre><code class="language-JavaScript">var credentials = require('./credentials.json');
+
+var mysql=require(&quot;mysql&quot;);
+
+credentials.host=&quot;ids&quot;;
+
+var connection = mysql.createConnection(credentials);
+var data={};
+var processed={}
+
+sql = &quot;SHOW DATABASES&quot;;
+connection.query(sql,function(err,rows,fields){ //connection.connect() is run automatically for a query
+  if (err) {
+    console.log('Error looking up databases');
+    connection.end();
+  } else {
+    processDBFs(rows); //Gets called once... so it is safe!
+  }
+});
+</code></pre>
+<p>Now we have a somewhat simplified version of <code>processDBFs</code> from the README:</p>
+<pre><code class="language-JavaScript">function processDBFs(dbfs){ // Asynchronous row handler
+  console.log(&quot;in processDBFs&quot;);
+  for(var index in dbfs) {
+    var dbf = dbfs[index].Database;
+    var sql = 'SHOW TABLES IN '+ dbf;
+    data[dbf] = Number.POSITIVE_INFINITY; //Exists, but not set.
+    var callback = constructTablesCallback(dbf);
+    connection.query(sql, callback);
+  } // do NOT put a connection.end() here.  It will kill all queued queries.
+}
+</code></pre>
+<p>The major change here is this uses a new function <code>constructTablesCallback</code> (provided below) to construct the 
+callback used in the query. In the README version, the callback
+function is declared anonymously in the body of <code>processDBFs</code>,
+which rather clutters things up. Here we call a function
+(<code>constructTablesCallback</code>) to construct the desired callback
+function, which is then passed to the query.</p>
+<p>One thing that this helps point out is that we aren't creating
+<em>one</em> callback function – we're creating <em>many</em>, one for
+every database returned by the <code>SHOW DATABASES</code> query. And that's
+arguably the key point here. If we have only one callback
+function, through something like:</p>
+<pre><code class="language-JavaScript">  callback = (err, tables, fields) =&gt; {
+    console.log('in inner func of processDBFs with dbf = ' + dbf);
+    if (err) {
+      console.log('Error finding tables in dbf ' + dbf);
+      connection.end();
+    } else {
+      console.log('about to process tables for DB ' + dbf);
+      console.log('with tables ' + JSON.stringify(tables));
+      processTables(tables, dbf);
+    }
+  }
+</code></pre>
+<p>then that one callback function will have <strong>only one</strong> value of
+the variable <code>dbf</code>, which will be used by <em>all</em> the calls to that
+callback. Because of the evaluation mechanism used by JavaScript,
+the one value of <code>dbf</code> will in fact be the <em>last</em> database name
+we get from <code>SHOW DATABASES</code>. This will lead ot all manner of
+problems because we'll be trying to attach tables from other
+databases to that last database, which will typically fail.</p>
+<p>And here's the code that constructs those callbacks:</p>
+<pre><code class="language-JavaScript">function constructTablesCallback(dbf) {
+  console.log('in dbf for ' + dbf);
+  return function(err,tables, fields) {
+    console.log('in inner func of processDBFs with dbf = ' + dbf);
+    if (err) {
+      console.log('Error finding tables in dbf ' + dbf);
+      connection.end();
+    } else {
+      console.log('about to process tables for DB ' + dbf);
+      processTables(tables, dbf);
+    }
+  }
+}
+</code></pre>
+<p>This constructs and returns a new function, which "captures" the
+variable <code>dbf</code> in its scope. Since that has a different value for every call to <code>constructTablesCallback</code>, each of those callback
+functions will have their own separate value for <code>dbf</code>, avoiding
+the confusing tangle of crazy we'd get if we had a single 
+callback.</p>
+<p>We can then do something similar for <code>processTables()</code>:</p>
+<pre><code class="language-JavaScript">function processTables(tables, dbf) { // Asynchronous row handler
+  data[dbf] = tables.length; // Now it is set.
+  processed[dbf] = 0;    // And has not yet been used as a label.
+  for(var index in tables){
+    var tableObj = tables[index];
+    for(key in tableObj) {
+      var table = tableObj[key];
+      table = dbf+&quot;.&quot;+table;
+      var sql = 'DESCRIBE '+table;
+      var callback = processDescribeCallback(table, dbf);
+      connection.query(sql, callback);
+    }
+  }
+}
+
+function processDescribeCallback(table, dbf) {
+  return function(err, desc, fields) {
+    if (err) {
+      console.log('Error describing table '+ table);
+    } else {
+      processDescription(desc,table,dbf);
+    }
+  };
+}
+</code></pre>
+<p>Add in the printing and bookkeeping and we have a complete working
+version, using datastructures and careful callback construction 
+to handle the asynchrony:</p>
+<pre><code class="language-JavaScript">function processDescription(desc, table, dbf) {
+  data[dbf]--; //Processed one table
+  if (processed[dbf]==0) {
+    processed[dbf] = 1;
+    console.log('---|'+dbf+'&gt;');
+  }
+  console.log('.....|'+dbf+'.'+table+'&gt;');
+  desc.map(function(field){ // show the fields nicely
+    console.log(&quot;\tFieldName: `&quot;+field.Field+&quot;` \t(&quot;+field.Type+&quot;)&quot;);
+  });
+
+  if(allZero(data)){connection.end()}
+}
+
+function allZero(object){
+  allzero = true;
+  for(obj in object){
+    if(object[obj]!=0){allzero = false}
+  }
+  return(allzero);
+}
+</code></pre>
 </body>
 </html>

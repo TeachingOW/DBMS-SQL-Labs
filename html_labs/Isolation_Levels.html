@@ -5,199 +5,445 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Isolation Levels</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<table>
+ <tr>
+   <td>
+
+
+<pre><code class="language-sql">create table product
+(id  int primary key,
+name varchar(10),
+price float
+);
+
+insert into product values (1,'phone',100);
+insert into product values (2,'tv',200);
+</code></pre>
+
+
+  </td>
+ </tr>
+</table>
+
+<table>
+<tr>
+   <td colspan="2"> READ UNCOMMITTED </td>
+  </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+BEGIN;
+SELECT * FROM product WHERE id = 1; 
+</code></pre>
+
+</td>
+  <td></td>
+</tr>
+
+<tr>
+<td> </td>
+<td>
+
+  ```sql
+Begin;
+UPDATE product SET price = 1000 WHERE id = 1;
+
+<pre><code>
+  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;   &lt;td&gt;
+
+```sql
+
+SELECT  * FROM product  WHERE id = 1;
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+</table>
+
+<p>This would return the uncommited values;</p>
+<table>
+ <tr>
+   <td colspan="2"> READ COMMITTED </td>
+ </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL READ COMMITTED;
+BEGIN;
+SELECT * FROM product; 
+</code></pre>
+
+
+</td>
+  <td></td>
+</tr>
+
+<tr>
+<td> </td>
+<td>
+
+
+<pre><code class="language-sql">BEGIN;
+UPDATE product SET price = 1000 WHERE id = 1;
+</code></pre>
+
+
+  </td>
+</tr>
+
+  <tr>
+    <td>
+
+
+<pre><code class="language-sql">
+SELECT  * FROM product;
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+ <tr>
+   <td>
+
+   </td>
+
+   <td>
+
+
+<pre><code class="language-sql">Commit;
+</code></pre>
+
+
+   </td>
+ </tr> 
+
+ <tr>
+   <td>
+
+
+<pre><code class="language-sql">SELECT * from Product;
+</code></pre>
+
+   </td>
+
+   <td>
+
+
+
+   </td>
+ </tr>   
+</table>
+
+<table>
+ <tr>
+   <td colspan="2"> Repeatable Read </td>
+ </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+BEGIN;
+SELECT COUNT(*) FROM product; 
+</code></pre>
+
+
+</td>
+  <td></td>
+</tr>
+
+<tr> <td> </td> <td>
+
+
+<pre><code class="language-sql">BEGIN;
+ INSERT INTO `product` VALUES (3,“C”, 5);
+commit;
+</code></pre>
+
+
+  </td>
+</tr> <tr> <td>
+
+
+<pre><code class="language-sql">
+SELECT  * FROM product;
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+</table>
+
+<table>
+ <tr>
+   <td colspan="2"> Serializable </td>
+ </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+SELECT COUNT(*) FROM product; 
+</code></pre>
+
+</td>
+  <td></td>
+</tr>
+<tr>
+<td> </td>
+<td>
+
+ ```sql
+BEGIN;
+ INSERT INTO `product` VALUES (4,'D', 5);
+commit;
+ ```
+ </td>
+</tr>
+ <tr> <td>
+
+
+<pre><code class="language-sql">
+SELECT  * FROM product;
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+</table>
+<p>&lt;~---~&gt;</p>
+<table>
+ <tr>
+   <td colspan="2"> Example I </td>
+ </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+
+</code></pre>
+
+</td>
+  <td></td>
+</tr>
+<tr>
+<td> </td>
+<td>
+
+ ```sql
+ SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+ SELECT COUNT(*) FROM product; 
+ INSERT INTO `product` VALUES (5,'E', 5);
+
+ ```
+ </td>
+</tr>
+ <tr> <td>
+
+
+<pre><code class="language-sql">
+SELECT  * FROM product;
+
+ INSERT INTO `product` VALUES (6,'F', 6);
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+</table>
+<p>&lt;~---~&gt;</p>
+<table>
+ <tr>
+   <td colspan="2"> Example II </td>
+ </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+
+</code></pre>
+
+</td>
+  <td></td>
+</tr>
+<tr>
+<td> </td>
+<td>
+
+ ```sql
+ SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+
+ INSERT INTO `product` VALUES (10,'G', 5);
+
+ ```
+ </td>
+</tr>
+ <tr> <td>
+
+
+<pre><code class="language-sql">
+
+ INSERT INTO `product` VALUES (10,'H', 6);
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+ <tr>
+  <td> 
+
+  ```sql
+   commit;
+   ```
+  </td>
+
+  <td> 
+
+  ```sql
+   commit;
+   ```
+  </td>
+
+ </tr>
+
+</table>
+
+<table>
+ <tr>
+   <td colspan="2"> Example III </td>
+ </tr>
+  <tr>
+    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
+<tr>
+<td>
+
+
+<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Repeatable Read;
+BEGIN;
+SELECT  count(*) from Product;
+</code></pre>
+
+</td>
+  <td></td>
+</tr>
+<tr>
+<td> </td>
+<td>
+
+ ```sql
+ SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+
+ INSERT INTO `product` VALUES (11,'G', 5);
+commit;
+ ```
+ </td>
+</tr>
+ <tr> <td>
+
+
+<pre><code class="language-sql">
+
+SELECT  count(*) from Product;
+   commit;
+</code></pre>
+
+
+ </td>
+ <td></td>
+  </tr>
+
+
+
+</table>
+
+<table>
+<thead>
+<tr>
+<th>Isolation Level</th>
+<th>dirty read</th>
+<th>non repeatable reads</th>
+<th>Phantoms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Read uncommited</td>
+<td>Y</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Read Commited</td>
+<td>N</td>
+<td>Y</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>Repeatable read</td>
+<td>N</td>
+<td>N</td>
+<td>Y*</td>
+</tr>
+<tr>
+<td>Serializable</td>
+<td>N</td>
+<td>N</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+<p>MySQL at REPEATABLE isolation level:</p>
+<ul>
+<li>When using just select statement, phantom read doesn’t happen as SQL standard mentioned.</li>
+<li>When the transaction modifies data (write/delete/update), we can write successfully to “unseen data” .the behavior is a mix of Repeatable Read (rows not modified are not visible) and Read Committed (modified rows are visible).</li>
+</ul>
 </body>
 </html>

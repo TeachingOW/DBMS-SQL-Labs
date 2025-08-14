@@ -5,199 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab 9</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Lab 9</h1>
+<p>Your Lab 9 repository should include all you relevant files (and folders) from Lab 8.  In other words I should be able to clone the repository, run your server, and test your results without any extra steps other than copying in <code>credentials.json</code>. You could accomplish this by forking your Lab 8 repo or using <a href="https://help.github.com/en/articles/duplicating-a-repository">these nifty techniques</a> to duplicate your Lab 8 repository (either the first or third option on that page would work for you). </p>
+<p>Be certain that the user <code>mcphee@146.57.33.%</code> has the appropriate privileges to execute all of the SQL commands used by your code.</p>
+<p>Now it is it time to finish off this register project.  As you implement the functionality below, remember that your primary mode of interaction is through your REST interface.</p>
+<ul>
+<li>Add a login/logout function.  If no user is logged in, then no till buttons should be useable (you can make them invisible, or just not operational.)  Use whatever technique you would like.  Be sure to document this in your manual (discussed at the end of this lab.)</li>
+<li>Think about what it would take to write a procedure (or trigger) that would identify DEALS in the current <code>till_items</code> and update your table to reflect the new pricing.  Talk it over with your partners until you are convinced that you understand what needs to be done... then relax and congratulate yourselves on a job well done.</li>
+<li>Modify your click API entry so the time stamp of a button is also recorded.</li>
+<li>
+<p>Add REST handlers to deal with SALE and VOID.  You can decide whether or not to use <code>till_buttons</code> or hard-code the buttons into your angular template.  Produce your logic and button accordingly:</p>
+</li>
+<li>
+<p>Add a <strong>void</strong> button that will erase all the curent contents in the register, </p>
+</li>
+<li>
+<p>Add a <strong>sale</strong> button.  (more on this below)</p>
+</li>
+<li>
+<p>Clicking on <strong>sale</strong> should implement special functionality that copies the till_items to a special archive (you will have to make an archive table).  The archive table should have a new field called transactionID and user.  (This is breaking some of the rules of normalization... be prepared to tell me in person what the poetential problems are and the proper way to fix them).  You can achieve this functionality however you like as long as it occurs on the DBF server.  Both procedures and triggers are viable options.  Be sure that your <em>sale</em> functionality adds an entry in the archive denoting the clicking of the sale button.</p>
+</li>
+<li>Clicking on <strong>void</strong> does not have to add an entry in the archive (although you can do so if you like as long as such entries can be clearly identfied as voided transactions)</li>
+<li>Create a a view called <code>transactionSummary</code> that summarizes the transactions in the archive table.  It should show:</li>
+</ul>
+<pre><code>|field        | Description                                         |
+|-------------|-----------------------------------------------------|
+|transactionID| The transaction ID on which you will be grouping    |
+|startTime    | earliest time stamp of a button in that transaction |
+|stopTime     | latest time stamp of a button in that transaction   |
+|duration     | difference in seconds of stopTime and startTime     |
+|user         | user's name                                         |
+|total        | total amount in sale                                |
+</code></pre>
+<ul>
+<li>EITHER</li>
+<li>Add a TICKETIZE option to your API that calls a suitably modified <code>ticketize</code> function (on the DBF side) to generate a JSON object that would, presumably, be used by a function to print out the receipt</li>
+<li>Add javascript to your HTML template that pops up a suitable "receipt"</li>
+<li>Finally, you should expand your API document into a complete user manual (preferably with a few screen shots).  Make the API details into an appendix at the end.  (Don't go crazy on this step... but don't just gloss over it either...)</li>
+</ul>
 </body>
 </html>

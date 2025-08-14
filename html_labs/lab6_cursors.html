@@ -5,199 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab6</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Lab6</h1>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#lab6">Lab6</a></li>
+<li><a href="#giving-commands-to-mariadb">Giving commands to mariaDB:</a></li>
+<li><a href="#more-advanced-procedures">More Advanced Procedures</a></li>
+<li><a href="#cursors">CURSORS</a></li>
+<li><a href="#to-do">To DO</a></li>
+</ul>
+<h2>Giving commands to mariaDB:</h2>
+<p>You know how to enter commands by hand.  You can also use the <code>SOURCE</code> command[^1]</p>
+<p>From the shell (in the same directory from which you will launch the mariadb host), create the file "test.sql".  The contents should be:</p>
+<pre><code class="language-sql">SELECT * FROM inventory;
+</code></pre>
+<p>You can also do the same thing (from the shell) via:</p>
+<pre><code class="language-sh">mysql -u &lt;your name&gt; -p --host=ids [your database] &lt; test.sql
+</code></pre>
+<h2>More Advanced Procedures</h2>
+<p>Stored procedures in mariaDB can be more than just a sequence of SQL commands.  There are also much more sophisticated flow control commands</p>
+<p><a href="https://mariadb.com/kb/en/library/control-flow-functions/">https://mariadb.com/kb/en/library/control-flow-functions/</a></p>
+<p>In addition the... <em>ahem</em> (need to change the tone of my voice).<br />
+In addition the arguments that are passed to a procedure use an antediluvian (look it up) mechanism that was old when the world was young.<br />
+You probably saw it when you read the material from the last lab... but just in case... here's one of the important parts taken from the MariaDB documentation:</p>
+<blockquote>
+<p>Each parameter is an IN parameter by default. 
+To specify otherwise for a parameter, use the keyword OUT or INOUT before the parameter name.</p>
+<p>An <strong>IN parameter</strong> passes a value into a procedure. The procedure might modify the value, but the modification is not visible to the caller when the procedure returns. </p>
+<p>An <strong>OUT parameter</strong> passes a value from the procedure back to the caller. Its initial value is NULL within the procedure, and its value is visible to the caller when the procedure returns. An INOUT parameter is initialized by the caller, can be modified by the procedure, and any change made by the procedure is visible to the caller when the procedure returns.</p>
+<p>For each OUT or INOUT parameter, pass a user-defined variable in the <strong>CALL statement</strong> that invokes the procedure so that you can obtain its value when the procedure returns. If you are calling the procedure from within another stored procedure or function, you can also pass a routine parameter or local routine variable as an IN or INOUT parameter.</p>
+</blockquote>
+<h2>CURSORS</h2>
+<p>To take full advantage we are going to need to understand CURSORS (yes... forbidden cursors).</p>
+<p>Start with this link to get a sense of how they work:</p>
+<p><a href="https://mariadb.com/kb/en/cursor-overview/">https://mariadb.com/kb/en/cursor-overview/</a></p>
+<p>When you implement the first example (and every member of your group should implement the example in their database), you will need to modify the code to use <strong>your</strong> database.  We do not have a sufficiently recent version of the mariadDB server to implement the second example... so don't worry about that.</p>
+<p>It's possible that you will accidently create an infinite loop so I've enabled our usual power user.  Review this:</p>
+<p><a href="https://mariadb.com/kb/en/show-processlist/">https://mariadb.com/kb/en/show-processlist/</a></p>
+<p>And then this:</p>
+<p><a href="https://mariadb.com/kb/en/data-manipulation-kill-connection-query/">https://mariadb.com/kb/en/data-manipulation-kill-connection-query/</a></p>
+<p>You can use the information contained therein to kill any run-away loops you make.</p>
+<p>Every member of your group should do the examples </p>
+<p>I'm going to ask you to implement a stored procedure that used cursors. Before doing this you will need to choose two dividing values based upon the prices in the prices table.  Choose these values so that they divide your prices into 3 pieces.  A few pieces of advice:</p>
+<ol>
+<li>All your <code>DECLARE</code>'s must occur at the beginning of the procedure</li>
+<li>This is a PRIMITIVE language, and you will have to know IN ADVANCE how many columns you are going to be using in your CURSOR and have the same number of variables ready for the values (<a href="https://mariadb.com/kb/en/fetch/">https://mariadb.com/kb/en/fetch/</a> contains the syntax)</li>
+<li>Do NOT make your variable names the same as your column names (trust me)</li>
+</ol>
+<p><strong>Note:</strong>  The assumption is that the ids in your <code>price</code> table link correctly to the ids in your <code>inventory</code> table.  If they don't-- you'll have to fix that.</p>
+<p><a name="cursorEx"></a><strong>Cursor Exercise:</strong></p>
+<p>Create a stored procedure called <code>mypartition</code> that takes TWO values as input and does each of the following:</p>
+<ol>
+<li>CREATE tables low, middle, and high  based off the structure of inventory (You may find the  <code>IF NOT EXISTS</code> clause and the <code>LIKE</code> clause useful)</li>
+<li>Removes the current contents of those tables (in case they already existed)… look into <code>TRUNCATE</code></li>
+<li>Create a cursor that steps through the values in prices.  If the price is below the first value  then insert it into the low table, if the price is greater than the second value then add it to the high table, otherwise add it to the middle table.  (You may find <code>INSERT ... SELECT</code> useful) , and you will definitely find the example in the cursor-overview link (from above) useful.</li>
+</ol>
+<p>Now create a stored procedure called <code>mypartition2</code> that takes 3 additional parameters and uses them to return the number of records stored in low, middle, and high respectively.</p>
+<p>After you have that working, go through and create a  third stored procedure called <code>mypartition3</code> that does the same thing as mypartition but without using a cursor (this is actually quite a bit easier) but you don't get the fun and excitement of working with a cursor.</p>
+<h2>To DO</h2>
+<ul>
+<li>[ ] All the tutorials listed above</li>
+<li>[ ] Read the following links (do sample exercises when appropriate):</li>
+<li>[ ] https://mariadb.com/kb/en/program-control/</li>
+<li>[ ] https://mariadb.com/kb/en/cursor-overview/</li>
+<li>[ ] https://mariadb.com/kb/en/show-processlist/</li>
+<li>[ ] https://mariadb.com/kb/en/data-manipulation-kill-connection-query/</li>
+<li>[ ] Cursor example in the <a href="https://mariadb.com/kb/en/cursor-overview/">mariadb cursor overview</a> done by all-- group will be lowest individual score</li>
+<li>[ ] Complete the following exercises:</li>
+<li>[ ] The <a href="#cursorEx">cursor exercise</a><ul>
+<li>[ ] Procedure <code>mypartition</code></li>
+<li>[ ] Procedure <code>mypartition2</code></li>
+<li>[ ] Procedure <code>mypartition3</code></li>
+</ul>
+</li>
+</ul>
 </body>
 </html>

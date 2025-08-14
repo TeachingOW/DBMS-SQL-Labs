@@ -5,199 +5,180 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab8</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Lab8</h1>
+<p>Be sure to get enough REST</p>
+<p>Now you are going to expand upon your work from the previous lab.  This is going to require the following components:</p>
+<ul>
+<li>A REST Interface (described in light detail below)</li>
+<li>An angular template (with javascript) to produce the web-page outputs</li>
+<li>A good understanding of how to manipulate tables </li>
+</ul>
+<h2>The REST interface</h2>
+<p>I'm purposefully leaving some of the REST interface details vague so you can decide how to implement them yourself.  I recommend the following <em>sort</em> of thing:</p>
+<ul>
+<li>USER/</li>
+<li>Get current user</li>
+<li>Change current user</li>
+<li>BUTTONS/</li>
+<li>return JSON object of current buttons</li>
+<li>modify values in till_buttons table (if you want to be fancy... NOT REQUIRED)</li>
+<li>CLICK/</li>
+<li>update the current transaction table to reflect the-item button clicked</li>
+<li>SALE/</li>
+<li>complete the current transaction and clear the transaction table</li>
+<li>VOID/</li>
+<li>abort the current transaction</li>
+<li>LIST/</li>
+<li>provide JSON object of items in current transaction</li>
+<li>DELETE/</li>
+<li>remove item(s) from current transaction</li>
+</ul>
+<p>This will be implemented by your node server which you will run by typing some variation on <code>node myserver.js</code>.  I'm choosing to call my server <code>express.js</code></p>
+<p>For example, here is a slimmed down version of <code>express.js</code>.  I have removed functional details in order to let you add those back in.  I implemented this version without Promises or connectionPools, but you probably want to to add those in.  The repository ONLY has a stub.</p>
+<pre><code class="language-js">var express=require('express'),
+mysql=require('mysql'),
+credentials=require('./credentials.json'),
+app = express(),
+port = process.env.PORT || 1337;
+
+credentials.host='ids.morris.umn.edu'; //setup database credentials
+
+var connection = mysql.createConnection(credentials); // setup the connection
+
+connection.connect(function(err){if(err){console.log(error)}});
+
+app.use(express.static(__dirname + '/public'));
+app.get(&quot;/buttons&quot;,function(req,res){
+  var sql = 'SELECT * FROM test.till_buttons';
+  connection.query(sql,(function(res){return function(err,rows,fields){
+     if(err){console.log(&quot;We have an error:&quot;);
+             console.log(err);}
+     res.send(rows);
+  }})(res));
+});
+app.get(&quot;/click&quot;,function(req,res){
+  var id = req.param('id');
+  var sql = 'YOUR SQL HERE'
+  console.log(&quot;Attempting sql -&gt;&quot;+sql+&quot;&lt;-&quot;);
+
+  connection.query(sql,(function(res){return function(err,rows,fields){
+     if(err){console.log(&quot;We have an insertion error:&quot;);
+             console.log(err);}
+     res.send(err); // Let the upstream guy know how it went
+  }})(res));
+});
+
+app.listen(port);
+</code></pre>
+<h2>The angular template</h2>
+<p>You have done the tutorials (and many of you have worked with angular in other classes), so I'll just provide a sample of the sort of thing that I used to implement "clickability" on the item buttons (note:  I did NOT add the css file that I used):</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head lang=&quot;en&quot;&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;Cash Register&lt;/title&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css&quot;&gt;
+    &lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/angularjs/1.3.4/angular.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;click.js&quot;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body ng-app=&quot;buttons&quot;&gt;
+&lt;div class=&quot;container-fluid&quot;&gt;
+    &lt;h1&gt;Cash Register (with buttons)&lt;/h1&gt;
+    &lt;div id=&quot;buttons&quot; ng-controller=&quot;buttonCtrl&quot; &gt;
+       &lt;div ng-repeat=&quot;button in buttons&quot;&gt;
+         &lt;div style=&quot;position:absolute;left:{{button.left}}px;top:{{button.top}}px&quot;&gt;&lt;button id=&quot;{{button.buttonID}}&quot; ng-click=&quot;buttonClick($event,'button.buttonID');&quot; &gt;{{button.label}}&lt;/button&gt;&lt;/div&gt;
+       &lt;/div&gt;
+       &lt;div style=&quot;position:fixed;height:50px;bottom:0px;left:0px;right:0px;margin-bottom:0px&quot;} ng-show=&quot;errorMessage != ''&quot;&gt;
+          &lt;div class=&quot;col-sm-12&quot;&gt;
+           &lt;h3 class=&quot;text-danger&quot;&gt;{{errorMessage}}&lt;/h3&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>The JavasScript</h2>
+<p>You will notice that the Angular template loads a javascript file named <code>click.js</code> (which I have included in the public subdirectory).  Most of this is boiler plate material... but notice how we use <code>$scope.</code> to make functionality defined in <code>click.js</code> available in our web-page.</p>
+<pre><code class="language-js">angular.module('buttons',[])
+  .controller('buttonCtrl',ButtonCtrl)
+  .factory('buttonApi',buttonApi)
+  .constant('apiUrl','http://146.57.34.125:1337'); //CHANGE for the lab!
+
+function ButtonCtrl($scope,buttonApi){
+   $scope.buttons=[]; //Initially all was still
+   $scope.errorMessage='';
+   $scope.isLoading=isLoading;
+   $scope.refreshButtons=refreshButtons;
+   $scope.buttonClick=buttonClick;
+
+   var loading = false;
+
+   function isLoading(){
+    return loading;
+   }
+  function refreshButtons(){
+    loading=true;
+    $scope.errorMessage='';
+    buttonApi.getButtons()
+      .success(function(data){
+         $scope.buttons=data;
+         loading=false;
+      })
+      .error(function () {
+          $scope.errorMessage=&quot;Unable to load Buttons:  Database request failed&quot;;
+          loading=false;
+      });
+ }
+  function buttonClick($event){
+     $scope.errorMessage='';
+     buttonApi.clickButton($event.target.id)
+        .success(function(){})
+        .error(function(){$scope.errorMessage=&quot;Unable click&quot;;});
+  }
+  refreshButtons();  //make sure the buttons are loaded
+
+}
+
+function buttonApi($http,apiUrl){
+  return{
+    getButtons: function(){
+      var url = apiUrl + '/buttons';
+      return $http.get(url);
+    },
+    clickButton: function(id){
+      var url = apiUrl+'/click?id='+id;
+//      console.log(&quot;Attempting with &quot;+url);
+      return $http.get(url); // Easy enough to do this way
+    }
+ };
+}
+</code></pre>
+<p>For this week's lab I would like you to add the following functionality:</p>
+<ul>
+<li>Make the buttons fully functional</li>
+<li>Create a table for keeping track of the current transaction</li>
+<li>Add a list of some sort to your cash register to keep track of items that are part of the current transaction</li>
+<li>Add a total to the list (you can do this purely in javascript if you like)</li>
+<li>Add the ability to remove an item from your list by clicking on it.</li>
+</ul>
+<p>You can look at my <a href="http://146.57.34.125:1337/listTest.html">online example</a>, to see what I'd like you to aim for.</p>
+<p>Also be certain that you create a document detailing your API (include this in your repository) as well as your group members and database.</p>
+<p>If you totally nail this you can begin preparing for next week by adding the ability to</p>
+<ul>
+<li>deal with allowing a user to log in and out,</li>
+<li>create a printable receipt (a javascript popup will suffice),</li>
+<li>create a "SALE" button, the infrastructure to support it, and implement the functionality,</li>
+<li>create a "VOID" button and implement the functionality.</li>
+</ul>
 </body>
 </html>

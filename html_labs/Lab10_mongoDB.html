@@ -5,199 +5,219 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab10</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            padding: 20px;
-            background-color: #f8f9fa;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #34495e;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
-        }
-        
-        h3 {
-            color: #2c3e50;
-            margin-top: 25px;
-            margin-bottom: 10px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background-color: white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            padding: 12px;
-            text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
-        }
-        
-        td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-        
-        tr:hover {
-            background-color: #e8f4f8;
-        }
-        
-        .result-table {
-            border: 2px solid #27ae60;
-        }
-        
-        .result-table th {
-            background-color: #27ae60;
-        }
-        
-        pre {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        pre code {
-            background-color: transparent;
-            color: inherit;
-            padding: 0;
-        }
-        
-        code {
-            background-color: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
-            color: #e83e8c;
-        }
-        
-        .sql-code {
-            background-color: #2c3e50;
-            color: #ecf0f1;
-            padding: 20px;
-            border-radius: 8px;
-            font-family: 'Courier New', monospace;
-            margin: 15px 0;
-            overflow-x: auto;
-            position: relative;
-        }
-        
-        .sql-code::before {
-            content: "SQL";
-            position: absolute;
-            top: 5px;
-            right: 10px;
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        
-        blockquote {
-            background-color: #e8f6f3;
-            padding: 15px;
-            border-left: 4px solid #27ae60;
-            margin: 15px 0;
-            border-radius: 5px;
-        }
-        
-        .note {
-            background-color: #cce5ff;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #007bff;
-            margin: 15px 0;
-        }
-        
-        .warning {
-            background-color: #fdf2e9;
-            padding: 15px;
-            border-radius: 8px;
-            border-left: 4px solid #e67e22;
-            margin: 15px 0;
-        }
-        
-        .navigation {
-            background-color: #34495e;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            text-align: center;
-        }
-        
-        .nav-button {
-            background-color: #3498db;
-            color: white;
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 0 5px;
-            text-decoration: none;
-            display: inline-block;
-        }
-        
-        .nav-button:hover {
-            background-color: #2980b9;
-        }
-        
-        ul, ol {
-            padding-left: 20px;
-        }
-        
-        li {
-            margin-bottom: 5px;
-        }
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-            <a href="#" class="nav-button">Print Version</a>
-        </div>
-        
-        {content}
-        
-        <div class="navigation" style="margin-top: 40px;">
-            <a href="html_viewer.html" class="nav-button">← Back to Labs Overview</a>
-        </div>
-    </div>
+<h1>Lab10</h1>
+<p>Mongo WANTS sandwich!</p>
+<h2>What <strong>IS</strong> NoSQL</h2>
+<p>As a first answer, it's easier to say what it is <em>not</em>.  NoSQL databases are not relational databases.  There are many database systems that fall under this description (such as MongoDB).  But that does not do full justice to the term... it's also a broad term that covers a philosophy/community of developers that coalesced around the need to develop highly scalable techniques to deal with the data arising from the growing world wide web.</p>
+<p>Many SQL database systems support a standard of data reliability called <a href="https://en.wikipedia.org/wiki/ACID"><strong>ACID</strong></a>:</p>
+<ul>
+<li>A is for <strong>Atomic</strong>:  a change is all or nothing-- this protects against things like update anomalies that could happen if multiple fields need to be updated at the same time.  (Proper data normalization fixes this too-- but that's not always desireable, nor feasible... besides there are more subtle inconsistencies that can still arise.)   MariadDb <em>can</em> support <a href="https://mariadb.com/kb/en/mariadb/transactions/"><strong>transactions</strong></a> which allow a series of SQL commands to be executed atomically.  It's all fairly self-explanatory, and you can follow the link I provided for more information.)</li>
+<li>C is for Consistency:  If you define rules (constraints, triggers, etc), then you want to be guaranteed that an update won't leave your system in an inconsistent state.  Also, if you have multiple servers, it may be important that all your servers contain the same information.  (more on that in a bit)</li>
+<li>I is for Isolated:  Performing two updates at the same time, should have the same effect as performing them serially.</li>
+<li>D is for Durability:  If the power goes out, or the system crashes, your data should be the same when you bring the system back online.</li>
+</ul>
+<p>MariaDB allows you to specify various <a href="https://mariadb.com/kb/en/mariadb/storage-engines/"><code>STORAGE ENGINES</code></a>.  Some of these are ACID compliant, others are not.  </p>
+<p>The problem is that scaling up to larger <em>distributed</em> systems introduces some new problems.  The <strong>CAP (or Brewer's) Theorem</strong> (due to University of California, Berkeley computer scientist Eric Brewer) says that a distributed system can only guarantee two of the following three characteristics:</p>
+<ul>
+<li>Consistency (all nodes see the same data at the same time)</li>
+<li>Availability (a guarantee that every request receives a response about whether it succeeded or failed)</li>
+<li>Partition tolerance (the system continues to operate despite arbitrary partitioning due to network failures)</li>
+</ul>
+<p>This is more subtle <a href="http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed">than you might think</a>, but it was a major impetus for the develpment of NoSQL databases.</p>
+<p>Because of CAP, most NoSQL database systems give up consistency (and thus ACID compliance) in favor of <strong>eventual consistency</strong>.   Which is why my father-in-law was concerned about having his Facebook comments disappear temporarily.</p>
+<h2>Starting Mongo and some initial exploration</h2>
+<p>Today we are going to begin our exploration of mongoDB.  This database is NOT a relational database, instead it is a document-oriented database "... designed for storing, retrieving, and managing document-oriented information...".  Instead of being designed around tables it is designed around the idea of a document (thanks Wikipedia).   And when I say document you really want to be thinking JSON object.</p>
+<p>We will use the javascript based shell.  You may start your mongoDB session with the command </p>
+<pre><code class="language-sh">mongo
+</code></pre>
+<p>You may specify the database to which you wish to connect this way:</p>
+<pre><code class="language-sh">mongo database_name
+</code></pre>
+<p>However, this is a local connection.  You are going to want to connect to my mongo server.  Since I'm sharing an IP address that is visible to the outside world I am NOT going to make this repository public, and I hope that you don't share the address either:</p>
+<pre><code class="language-sh"> mongo 146.57.34.125:2111
+</code></pre>
+<p>You may see a couple of server warning messages... you can safely ignore them:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/connected.png"></p>
+<h2>Mongo as a JavaScript Interpreter</h2>
+<p>This is a full-blown JavaScript interpreter that has a few extra goodies thrown in.  Let's play with that first by creating an object and reminding ourselves about how to interact with such things:</p>
+<pre><code class="language-js">var myobject={first: &quot;Peter&quot;,
+    last: &quot;Dolan&quot;,
+    age: 42,
+    freak: true,
+    currentClasses : [{name: &quot;data management&quot;, number: &quot;cs1251&quot;},
+                 {name: &quot;data bases&quot;, number: &quot;cs4453&quot;},
+                 {name: &quot;calculus II&quot;, number: &quot;math1102&quot;}],
+    sister: {name: &quot;Amy&quot;, 
+        residence: &quot;Briton&quot;,
+         children: ['Luzzeta', 'Ruthie', 'Ollie']}
+}
+</code></pre>
+<p>You don't need the tabs when you're entering-- and it's fine to use <enter> or <return> in the middle of things:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/firstObj.png"></p>
+<p>You have just created an object with 5 properties:</p>
+<p><em>last, age, freak, currentClasses, and sister</em></p>
+<p>There are two ways to access a property:</p>
+<ul>
+<li>Dot notation</li>
+<li>Bracket notation</li>
+</ul>
+<p>Here's an example of dot notation:</p>
+<pre><code class="language-js">myobject.age
+</code></pre>
+<p>And here's an example of bracket notation:</p>
+<pre><code class="language-js">myobject[&quot;age&quot;]
+</code></pre>
+<p>Javascript variables or in our case, properties, contains values.  Values can be, broadly speaking, categorized by their data type.  JavaScript has seven datatypes, but I'm only going to list five of them to avoid a non-productive, lengthy explanation:</p>
+<ul>
+<li>undefined</li>
+<li>boolean</li>
+<li>number</li>
+<li>string</li>
+<li>object</li>
+</ul>
+<p>Some constructions in JavaScript are special enough that you can think of them as being <em>subtypes</em>.  For example, it's best to think of arrays as subtypes of <em>object</em>.  (Interestingly, in JavaScript, it's best to think of <em>functions</em> as being subtypes of <em>object</em> too!)</p>
+<p>In any event, it should be clear that the following holds for our example object:</p>
+<ul>
+<li>The property <code>.last</code> contains a <em>string</em>.</li>
+<li>The property <code>.age</code> contains a <em>number</em>.</li>
+<li>The property <code>.freak</code> contains a <em>boolean</em>.</li>
+<li>The property <code>.currentClasses</code> contains an <em>array of objects</em>.</li>
+<li>The property <code>.sister</code> contains an <em>object</em>.</li>
+</ul>
+<p>The advantage of the bracket notation is that you can use a variable between the hard brackets <code>[]</code>.    </p>
+<p>The hard brackets are also used to denote an array like the following:</p>
+<pre><code class="language-js">example = [1, 2, 3, &quot;bob&quot;, false]
+</code></pre>
+<p>Arrays in javascript are not strongly typed and you can mix and match contents to your heart's content.  Also, arrays are 0-based.  Make certain the contents of the screen capture below makes sense:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/arrayOne.png"></p>
+<p>We can continue stacking  these things together:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/arrayTwo.png"></p>
+<p>It is also very important to notice that we can put objects inside of objects... ad infinitum:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/arrayThree.png"></p>
+<p>And</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/arrayFour.png"></p>
+<p>This ability to stack objects inside of objects is part of what gives mongoDB its flexibility.</p>
+<h1>Mongo as a Database System</h1>
+<h2>The Database level</h2>
+<p>Similarly to mariaDB (and mySQL), the highest level of organization is the database.  The variable 'db' contains the current database and provides a mechanism by which to interact with it.  (the variable db is an object and so has properties and methods)</p>
+<p>To see the current database use the command <code>db</code>.  Give it a try.</p>
+<p>The equivalent of <code>SHOW DATABASES</code> is </p>
+<pre><code class="language-js">show dbs
+</code></pre>
+<p>To change the default database (<code>USE &lt;database&gt;</code> in SQL-land)</p>
+<pre><code class="language-js">use &lt;name&gt;
+</code></pre>
+<p>You can use a database that does not exist.  When you insert data that database becomes real (more on that in a bit).</p>
+<h2>Tables vs Collections</h2>
+<p>Roughly speaking, the following table translates SQL nomenclature to MongoDB:</p>
+<table>
+<thead>
+<tr>
+<th>SQL</th>
+<th>Mongo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>database</td>
+<td>database (or db)</td>
+</tr>
+<tr>
+<td>table</td>
+<td>collection</td>
+</tr>
+<tr>
+<td>row</td>
+<td>document</td>
+</tr>
+</tbody>
+</table>
+<p>So, to repeat, the equivalent of a table in mongoDB is a <em>collection</em> and the equivalent of a row is a JSON object (called a <em>document</em> in mongoDB).  Unlike SQL there is no fixed schema hence no need for an elaborate <code>CREATE TABLE</code> command.  To create a collection you need merely insert something into it.  What you insert is a document (in other words an object).    Let's do that, and do it in such a way that it also creates a database for you to use as your own:</p>
+<pre><code class="language-js">use &lt;your SQL database name&gt;
+db.books.insert({book: &quot;Caves of Steel&quot;, author: &quot;Isaac Asimov&quot;})
+</code></pre>
+<p><strong>Note:</strong> We will discuss creating a bit later in this lab.</p>
+<p>The equivalent of <code>SHOW TABLES</code> is </p>
+<pre><code class="language-js">show collections
+</code></pre>
+<p>Give that a try now.  You will notice that there are two collections:</p>
+<ul>
+<li>books</li>
+<li>system.indexes</li>
+</ul>
+<p>We have a couple of... well... complications to deal with.  In SQL we did not use periods (.) in the table name.  We <em>could</em> use a construction like <code>&lt;database&gt;.&lt;table&gt;</code>, but the period was only to separate the database from the table.  Things get particularly interesting in Mongo, because JavaScript (as we were reminded above) has a dot-notation convention.  </p>
+<p>Mongo collections are allowed (and encouraged) to use periods to suggest a hierarchy, but that is <strong>only</strong> a suggestion.  So, in our set of collections we have a collection named <code>system.indexes</code>.   You should interpret this as a collection, but you could also choose to view it as a subcollection of 'system'.... or not-- it's really up to you.  </p>
+<h3>Collections contain Documents</h3>
+<p>Let's add a few more documents to our 'books' collection, but let's make <em>these</em> documents a bit different</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/bookdbOne.png"></p>
+<p>You don't have to add things that are identical to what I've shown-- but I want you to add objects that are all books, all have some similarities in their structure, but also have some differences.</p>
+<h3>Extracting Documents from Collections (Mongo Queries)</h3>
+<p>Okay, if the collection 'books' is the analog of a table named books, then the equivalent of <code>SELECT * FROM BOOKS</code> is:</p>
+<pre><code class="language-js">db.books.find()
+</code></pre>
+<p>You will notice that a <em>new</em> property named <code>_id</code> has been added to every document in the collection.  This is something that Mongodb does (it is the equivalent of a <code>PRIMARY KEY</code>).</p>
+<p>The equivalent of the <code>LIMIT n</code> clause from SQL (things like <code>SELECT * FROM books LIMIT 2</code>) is</p>
+<pre><code class="language-js">db.books.find().limit(2)
+</code></pre>
+<p>There is a special method emulating the clause <code>LIMIT 1</code>:</p>
+<pre><code class="language-js">db.books.findOne()
+</code></pre>
+<p>The method <code>.find()</code> can take an argument-- the argument is called a query object.  The mongoDB version of</p>
+<pre><code class="language-sql">SELECT * FROM books where book=&quot;Caves of Steel&quot;
+</code></pre>
+<p>is the following:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/selectOne.png"></p>
+<p>Give it a try with your own books collection.  </p>
+<p>The second argument to .find() is an object that controls which properties are displayed.  A value of 1 means display and  a value of 0 means do NOT display.  (this matters because "_id" is always included unless specifically disallowed.  The SQL </p>
+<pre><code class="language-sql">SELECT book FROM books
+</code></pre>
+<p>can be realized as</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/selectTwo.png"></p>
+<p>You can replicate</p>
+<pre><code class="language-sql">SELECT * FROM books WHERE book IN (&lt;list&gt;)
+</code></pre>
+<p>like this:</p>
+<p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/selectThree.png"></p>
+<p>The key thing to notice is that the value associated to the property book is an object with property $in whose associated value is (in this case) an array of strings.    (Recall that <code>[....]</code> refers to an array and <code>{...}</code> refers to an object in this context)</p>
+<h3>Operators</h3>
+<p>The expression $in is called an operator and there are quite a few of them.  Here is a link to a page containing several that allow us to emulate things like &gt;, &gt;=, &lt;, &lt;=, in, not in, etc:</p>
+<p><a href="http://docs.mongodb.org/manual/reference/operator/query/">http://docs.mongodb.org/manual/reference/operator/query/</a></p>
+<p>Now work through the <a href="https://docs.mongodb.com/manual/crud/">CRUD (Create, Read, Update, and Delete) tutorials</a>. Make sure you do the "sub" pages in the documentation (e.g., "Query an Array"). Stop when you get to "Bulk Write Operations" – we're not going to mess with that. Be sure to <strong>do the work in your own database</strong> so that I can give you credit. This <strong>will require you to make a few changes to the commands</strong>, since they refer to databases like <code>inventory</code>, which you do <em>not</em> want to be manipulating. <strong>Each individual should do this</strong>, although you are welcome to work together.  Pay close attention to what is an object and what is an array (especially in the part about <code>$or</code>).  Also, ctrl-J (sometimes repeated a few times) will lets you break-out of a command that you are in the middle of entering.</p>
+<p>You might find the idea of an <em>upsert</em> to be nice (particularly since it relates to a problem you had to solve when working on the node.js project)</p>
+<p>A few notes:</p>
+<ul>
+<li>The difference between <code>.save()</code> and <code>.insert()</code> is that <code>.save()</code> will do an update if your provide the <code>_id</code> and a matching document is already in the collection, whereas <code>.insert()</code> will fail.</li>
+<li>We're not going to wade into this here, but MongoDB does support <em>transactions</em> to ensure that complex actions are atom. Feel free to look at <a href="https://docs.mongodb.com/manual/core/transactions/">the documentation on transactions</a> if you'd like to learn more.</li>
+</ul>
+<h2>Reinforcement</h2>
+<p>Finally, do this tutorial:</p>
+<p><a href="http://openmymind.net/mongodb.pdf">http://openmymind.net/mongodb.pdf</a></p>
+<p>This will probably take at least one lab. Some of the material is a repeat, but the reinforcement will be helpful. (It may look like a lot of pages, but many of them are almost entirely blank. You could probably compress it to something like 1/3 the pages if you wanted to.)</p>
+<h2>To Do</h2>
+<ul>
+<li>Create a Mongo database using the same name as you did in your MariaDB database.</li>
+<li>Create a collection called <code>books</code> in your Mongo database</li>
+<li>Add several documents to your <code>books</code> collection.  At a mininimum:<ul>
+<li>All your documents should have the 'book' property</li>
+<li>Most of your documents should have an 'author' property</li>
+<li>You should have at least 10 documents</li>
+<li>It would be good to have some variety in your properties-- so not all the documents share the same properties</li>
+</ul>
+</li>
+<li>Do these tutorials:<ul>
+<li><a href="https://docs.mongodb.com/manual/crud/">https://docs.mongodb.com/manual/crud/</a></li>
+<li><a href="http://openmymind.net/mongodb.pdf">http://openmymind.net/mongodb.pdf</a></li>
+</ul>
+</li>
+</ul>
 </body>
 </html>
