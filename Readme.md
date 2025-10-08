@@ -9,8 +9,6 @@ All labs are now available in **enhanced HTML format** with superior table forma
 **Quick Start:**
 - 📱 **[Interactive Lab Browser](index.html)** - Modern interface with all labs
 - 📚 **[HTML Lab Collection](html_labs/index.html)** - All converted labs with enhanced formatting
-- 🎯 **[Example Lab](example_lab_html.html)** - See the difference HTML makes
-- ⚡ **[Advanced Query Demo](advanced_queries_demo.html)** - Complex SQL results with rich formatting
 
 ## 🎯 Learning Objectives
 
