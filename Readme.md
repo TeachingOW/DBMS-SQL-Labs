@@ -2,9 +2,6 @@
 
 A comprehensive collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. These labs provide practical experience with SQL, database design, and modern database technologies.
 
-## 🌟 **NEW: Enhanced HTML Experience**
-
-All labs are now available in **enhanced HTML format** with superior table formatting, interactive elements, and modern styling for better learning experience!
 
 **Quick Start:**
 - 📱 **[Interactive Lab Browser](index.html)** - Modern interface with all labs
@@ -161,7 +158,7 @@ We welcome contributions to improve these labs! Please:
 - New dataset examples
 - Improved explanations and documentation
 - Bug fixes and corrections
-- Translation to other languages
+
 
 ## 📄 License
 
