@@ -3,10 +3,6 @@
 A comprehensive collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. These labs provide practical experience with SQL, database design, and modern database technologies.
 
 
-**Quick Start:**
-- 📱 **[Interactive Lab Browser](index.html)** - Modern interface with all labs
-- 📚 **[HTML Lab Collection](html_labs/index.html)** - All converted labs with enhanced formatting
-
 ## 🎯 Learning Objectives
 
 By completing these labs, students will:
