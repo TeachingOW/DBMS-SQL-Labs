@@ -45,7 +45,7 @@ By completing these labs, students will:
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
 | 11 | Python Database Interface | Connect Python applications to databases using connectors | [Python Lab](html_labs/Lab_Python.html) |
-| 12 | Jupyter Notebook Integration | Interactive database analysis with Jupyter notebooks | [Jupyter Lab](inclass/Mysql-Jupyter.ipynb) |
+| 12 | Jupyter Notebook Integration | Interactive database analysis with Jupyter notebooks | [Jupyter Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb)|
 
 ### Advanced Database Concepts
 
@@ -97,10 +97,7 @@ The repository includes several real-world datasets for hands-on practice:
    USE dbms_labs;
    ```
 
-3. **Start with Lab 1**
-   - Navigate to [InClass Exercises](inclass/InClassExercises.md)
-   - Follow the step-by-step instructions
-   - Practice with the provided examples
+
 
 ### Lab Progression
 - **Beginners**: Start with Labs 1-4 (Foundational Labs)
