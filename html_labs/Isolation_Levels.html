@@ -58,14 +58,14 @@ SELECT * FROM product WHERE id = 1;
 <td> </td>
 <td>
 
-  ```sql
+  <code class="language-sql">
 Begin;
 UPDATE product SET price = 1000 WHERE id = 1;
-
+ 
 <pre><code>
-  &lt;/td&gt; &lt;/tr&gt; &lt;tr&gt;   &lt;td&gt;
+ </td> </tr> <tr>   <td>
 
-```sql
+<code class="language-sql">
 
 SELECT  * FROM product  WHERE id = 1;
 </code></pre>
@@ -182,7 +182,7 @@ SELECT COUNT(*) FROM product;
 
 
 <pre><code class="language-sql">BEGIN;
- INSERT INTO `product` VALUES (3,“C”, 5);
+ INSERT INTO `product` VALUES (3,'C', 5);
 commit;
 </code></pre>
 
@@ -224,11 +224,11 @@ SELECT COUNT(*) FROM product;
 <td> </td>
 <td>
 
- ```sql
+ <code class="language-sql">
 BEGIN;
  INSERT INTO `product` VALUES (4,'D', 5);
 commit;
- ```
+ </code>
  </td>
 </tr>
  <tr> <td>
@@ -267,13 +267,13 @@ BEGIN;
 <td> </td>
 <td>
 
- ```sql
+ <code class="language-sql">
  SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
 BEGIN;
  SELECT COUNT(*) FROM product; 
  INSERT INTO `product` VALUES (5,'E', 5);
 
- ```
+ </code>
  </td>
 </tr>
  <tr> <td>
