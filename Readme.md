@@ -51,7 +51,7 @@ By completing these labs, students will:
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 13 | Analytical Functions | Master ROLLUP, CUBE, and advanced grouping operations | [Rollup Lab](inclass/Rollup.ipynb) |
+| 13 | Analytical Functions | Master ROLLUP, CUBE, and advanced grouping operations | [Rollup Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb) |
 | 14 | Triggers & Stored Procedures | Implement database automation and business logic | [Triggers Lab](html_labs/Triggers.html) |
 | 15 | Transaction Management | Understand ACID properties and concurrency control | [Transactions](html_labs/Transactions.html) |
 | 16 | Isolation Levels | Learn about database isolation and consistency | [Isolation Levels](html_labs/Isolation_Levels.html) |
