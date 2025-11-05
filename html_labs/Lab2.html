@@ -468,9 +468,9 @@ WHERE  maker = cname
 <pre><code class="language-sql">    SELECT maker
     FROM   Product
       WHERE  factory_loc = 'US'
-     ``` 
+</code></pre> 
 Q2:
-```sql
+<pre><code class="language-sql">
 SELECT maker
       FROM   Product
       WHERE  factory_loc = 'China'
@@ -627,9 +627,9 @@ SUM(price * quantity) AS TotalSales
 FROM Purchase
 WHERE pdate &gt; '2021-10-10'
 GROUP BY product
-  ```
+</code></pre>
 Another way for the same query:
-  ```sql
+  <pre><code class="language-sql">
 SELECT DISTINCT  x.product,
 (SELECT Sum(y.price*y.quantity)  
 FROM Purchase y WHERE  x.product = y.product AND y.pdate &gt; '2021-10-10')   TotalSales FROM Purchase x WHERE  x.pdate &gt; '2021-10-10'
@@ -906,13 +906,13 @@ Find all suppliers with no product listed.</p>
 <details>
   <summary>Solution</summary>
 
-  ```sql
+  <pre><code class="language-sql">
 SELECT * from Supplier s
 WHERE NOT exists (select * from product p
   where p.supplierid=s.id)
+  </code></pre>
 
-<pre><code>
-&lt;/details&gt; 
+</details>
 
 Q3:
 For each product list the supplier information.
@@ -983,7 +983,8 @@ on p.supplierid=s.id;
   </details>
 
 <h2>Division</h2>
-<p>```sql
+<p>
+    <code></code>
  create table student (SID int primary key,Name varchar(10),Major
  varchar(4)); 
  CREATE TABLE enrolled (SID int,cid varchar(5),primary key
@@ -993,10 +994,11 @@ on p.supplierid=s.id;
 <pre><code>
 Find students who are taking all courses taken by student 40
 
-&lt;details&gt;
-  &lt;summary&gt;Solution&lt;/summary&gt;
+<details>
+    <summary>Solution</summary>
 
-```sql
+
+<pre><code class="language-sql">
 SELECT DISTINCT NAME FROM STUDENT S WHERE major='cs’ AND NOT EXISTS
  (SELECT * FROM ENROLLED E2 WHERE SID=40 and CID NOT IN (SELECT CID
  FROM ENROLLED E WHERE E.SID=S.SID) )
