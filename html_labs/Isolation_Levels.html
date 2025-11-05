@@ -58,15 +58,14 @@ SELECT * FROM product WHERE id = 1;
 <td> </td>
 <td>
 <pre>
-  <code class="language-sql">
+ <code class="language-sql">
 Begin;
 UPDATE product SET price = 1000 WHERE id = 1;
- 
-  </code></pre>
- </td> </tr> <tr>   <td>
+</code></pre>
+ </td> </tr> 
+ <tr>   <td>
 <pre>
 <code class="language-sql">
-
 SELECT  * FROM product  WHERE id = 1;
 </code></pre>
 
@@ -257,7 +256,6 @@ SELECT  * FROM product;
 
 <pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
 BEGIN;
-
 </code></pre>
 
 </td>
@@ -266,23 +264,22 @@ BEGIN;
 <tr>
 <td> </td>
 <td>
-
+<pre>
  <code class="language-sql">
  SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
 BEGIN;
  SELECT COUNT(*) FROM product; 
  INSERT INTO `product` VALUES (5,'E', 5);
-
  </code>
- </td>
+</pre> 
+</td>
 </tr>
  <tr> <td>
 
 
 <pre><code class="language-sql">
 SELECT  * FROM product;
-
- INSERT INTO `product` VALUES (6,'F', 6);
+INSERT INTO `product` VALUES (6,'F', 6);
 </code></pre>
 
 
@@ -327,7 +324,6 @@ BEGIN;
 
 
 <pre><code class="language-sql">
-
  INSERT INTO `product` VALUES (10,'H', 6);
 </code></pre>
 
@@ -377,13 +373,13 @@ SELECT  count(*) from Product;
 <td> </td>
 <td>
 
- ```sql
+ <pre><code class="language-sql">
  SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
 BEGIN;
 
  INSERT INTO `product` VALUES (11,'G', 5);
 commit;
- ```
+ </code></pre>
  </td>
 </tr>
  <tr> <td>
