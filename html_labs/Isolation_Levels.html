@@ -57,14 +57,14 @@ SELECT * FROM product WHERE id = 1;
 <tr>
 <td> </td>
 <td>
-
+<pre>
   <code class="language-sql">
 Begin;
 UPDATE product SET price = 1000 WHERE id = 1;
  
-<pre><code>
+  </code></pre>
  </td> </tr> <tr>   <td>
-
+<pre>
 <code class="language-sql">
 
 SELECT  * FROM product  WHERE id = 1;
@@ -244,7 +244,7 @@ SELECT  * FROM product;
   </tr>
 
 </table>
-<p>&lt;~---~&gt;</p>
+
 <table>
  <tr>
    <td colspan="2"> Example I </td>
@@ -291,7 +291,7 @@ SELECT  * FROM product;
   </tr>
 
 </table>
-<p>&lt;~---~&gt;</p>
+
 <table>
  <tr>
    <td colspan="2"> Example II </td>
@@ -314,13 +314,13 @@ BEGIN;
 <td> </td>
 <td>
 
- ```sql
+ <pre><code class="language-sql">
  SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
 BEGIN;
 
  INSERT INTO `product` VALUES (10,'G', 5);
-
- ```
+</code></pre>
+ 
  </td>
 </tr>
  <tr> <td>
@@ -339,16 +339,16 @@ BEGIN;
  <tr>
   <td> 
 
-  ```sql
+  <pre><code class="language-sql">
    commit;
-   ```
+   </code></pre>
   </td>
 
   <td> 
 
-  ```sql
+    <pre><code class="language-sql">
    commit;
-   ```
+   </code></pre>
   </td>
 
  </tr>
