@@ -18,6 +18,10 @@
       --link-dark: #00bcd4;
       --mermaid-light: #e0f7fa;
       --mermaid-dark: #2c2c3e;
+      --table-border-light: #ccc;
+      --table-border-dark: #555;
+      --table-row-light: #f9f9f9;
+      --table-row-dark: #2a2a2a;
     }
 
     /* Base Styles */
@@ -51,7 +55,30 @@
       transition: background-color 0.3s;
     }
 
-    /* Dark Mode Class */
+    /* TABLE STYLING */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.5em 0;
+      font-size: 1rem;
+    }
+
+    th, td {
+      border: 1px solid var(--table-border-light);
+      padding: 0.6em 1em;
+      text-align: left;
+    }
+
+    tr:nth-child(even) {
+      background-color: var(--table-row-light);
+    }
+
+    th {
+      background-color: #e6f2e6;
+      font-weight: bold;
+    }
+
+    /* Dark Mode */
     body.dark-mode {
       background-color: var(--bg-dark);
       color: var(--text-dark);
@@ -70,6 +97,20 @@
 
     body.dark-mode .mermaid {
       background-color: var(--mermaid-dark);
+    }
+
+    /* Dark Mode Table */
+    body.dark-mode th, 
+    body.dark-mode td {
+      border: 1px solid var(--table-border-dark);
+    }
+
+    body.dark-mode tr:nth-child(even) {
+      background-color: var(--table-row-dark);
+    }
+
+    body.dark-mode th {
+      background-color: #224422;
     }
 
     /* Toggle Button */
@@ -100,10 +141,33 @@
 </head>
 <body>
   <!-- Mode Toggle Button -->
- 
+  <button id="mode-toggle">Toggle Mode</button>
 
   <main>
     {{ content }}
+
+    <!-- Example Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Apples</td>
+          <td>5</td>
+          <td>$4.00</td>
+        </tr>
+        <tr>
+          <td>Bananas</td>
+          <td>8</td>
+          <td>$3.20</td>
+        </tr>
+      </tbody>
+    </table>
   </main>
 
   <script>
