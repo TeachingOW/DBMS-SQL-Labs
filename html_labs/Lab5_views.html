@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab3: Views, Constraints, Procedures</title>
+    <title>Lab5: Views, Constraints, Procedures</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
@@ -202,77 +202,5 @@ DELIMITER ;
 <p>And then check that it worked:</p>
 <pre><code class="language-sql">SELECT @mymin, @mymax, @myavg;
 </code></pre>
-<h2>Constraints</h2>
-<blockquote>
-<p>There used to be a section here on constraints, which are a way
-of telling the database that certain operations should be
-forbidden. How mariaDB handles constraints changed a <em>lot</em> in
-version 10.2, and we're currently using 10.0, making most of
-this obsolete. We'll just skip constraints for now.</p>
-</blockquote>
-<h2>Triggers</h2>
-<p>Triggers allow an action in a database (such as a <code>DELETE</code> action) to cause another action to occur as well (such as an <code>INSERT</code> action).</p>
-<p>Duke University has a good <a href="http://www-dev2.cs.duke.edu/csl/docs/mysql-refman/triggers.html">reference</a> to the syntax, and <a href="https://mariadb.com/kb/en/library/trigger-overview/#creating-a-trigger">MariaDB's documentation</a> has some good examples too.</p>
-<p><strong>Trigger Exercise</strong></p>
-<ul>
-<li>Copy your <code>prices</code> database to one called <code>TR_prices</code>.  </li>
-<li>Ensure that <code>TR_prices</code> has a <code>notes</code> field.</li>
-<li>CREATE two archive tables with the same structure as <code>TR_prices</code>:  <code>TR_archiveA</code> and <code>TR_archiveB</code></li>
-<li>Create a trigger that occurs when attempting to delete a row from TR_prices.</li>
-<li>If the row to be deleted has your name in the notes field make a copy of the record in <code>TR_archiveA</code>,</li>
-<li>Otherwise make a copy of the record in <code>TR_archiveB</code></li>
-</ul>
-<h2>Correlated Subqueries</h2>
-<p>Recall that A <strong>correlated subquery</strong> is a subquery that uses values from the outer query. The subquery is evaluated once for each row processed by the outer query. (heavily edit Wikipedia quote).  The <a href="https://en.wikipedia.org/wiki/Correlated_subquery">Wikipedia entry</a> that I had you read last lab has a couple of great examples, so do the following:</p>
-<p><strong>Correlated Subquery Exercise</strong>
-Each group (remember to tell me <em>whose</em> database has the group's works in canvas), should do the following:</p>
-<ul>
-<li>Create a table named <code>CSQ_employee</code> with the following fields:</li>
-<li>employee_number:  INT</li>
-<li>salary: FIXED(6,2)</li>
-<li>department_ID: INT</li>
-<li>employee_name: TEXT</li>
-<li>Create a table named <code>CSQ_dept_lookup</code>:</li>
-<li>department_ID: INT</li>
-<li>depatment_name: TEXT</li>
-</ul>
-<p>Add 10 departments to your <code>CSQ_dept_lookup</code> using whatever reasonable names you prefer (this means names we would not be afraid to show to the parents of prospective students).  The IDs should range from 1 to 10-- make them a primary key for the table.</p>
-<p>For the other table, it would be nice to have closer to 200 names.  You can use <a href="http://listofrandomnames.com/">random name generator</a>.  To make them.  The link I provided generates up to 50 at a time-- you'll need to generate them, and copy and paste them into a text file.  After you have the 200 names, use <code>LOAD DATA LOCAL INFILE</code> to fill the records.  The <code>SET</code> keyword will allow you to use the <code>RAND()</code>, <code>ROUND()</code> or <code>FLOOR()</code> functions to generate reasonable salaries (shoot for values between $35,000 and $120,000.  You can also use these functions to randomly generate department IDs for your fictitious people.</p>
-<p>Those of you with some knowledge of statistics will recognize that <code>RAND()</code> generates numbers according to a uniform random distribution (equally likley possibilities).  Various techniques are available for working around that issue, but we don't need to be particularly fancy for this exercise.</p>
-<p>Once you have the entries in your tables perform the examples in the Wikipedia page (suitably modified).</p>
-<h1>To Do</h1>
-<ul>
-<li>[ ] Do all the examples.  <ul>
-<li>[ ] Created the View</li>
-<li>[ ] Created the <code>Ticketize</code> function</li>
-<li>[ ] Created the summary procedure</li>
-</ul>
-</li>
-<li>
-<p>[ ] Read the following:</p>
-<ul>
-<li>https://mariadb.com/kb/en/create-table/</li>
-<li>https://mariadb.com/kb/en/stored-function-overview/</li>
-<li><a href="https://mariadb.com/kb/en/user-defined-variables/">the MariaDB page on user defined variables</a></li>
-<li><a href="https://mariadb.com/kb/en/assignment-operator/">page about assignment operators</a></li>
-<li>https://mariadb.com/kb/en/grant/#procedure-privileges</li>
-<li>https://mariadb.com/kb/en/stored-procedures/</li>
-<li>https://mariadb.com/kb/en/20-sql-constraints-and-assertions-constraint/</li>
-<li><a href="http://www.cs.duke.edu/csl/docs/mysql-refman/triggers.html">Duke University reference on triggers</a></li>
-<li><a href="https://mariadb.com/kb/en/trigger-examples/">MariaDB's documentation on triggers</a></li>
-<li>http://www.w3schools.com/xml/xml_whatis.asp</li>
-<li>https://mariadb.com/kb/en/load-xml/</li>
-<li><a href="https://mariadb.com/kb/en/mariadb/storage-engines/">MariaDB documentation on storage engines</a></li>
-<li><a href="https://mariadb.com/kb/en/mariadb/connect/">https://mariadb.com/kb/en/mariadb/connect/</a></li>
-</ul>
-</li>
-<li>
-<p>[ ] Do the following Exercises:</p>
-<ul>
-<li>[ ] The Trigger Exercise</li>
-<li>[ ] The Correlated Subquery Exercise</li>
-</ul>
-</li>
-</ul>
 </body>
 </html>
