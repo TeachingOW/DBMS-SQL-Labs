@@ -272,11 +272,8 @@ BEGIN;
 SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
 BEGIN;
 SELECT COUNT(*) FROM product;
-INSERT INTO `product` VALUES (5, 'E', 5);
+
 </code></pre>
-      <div class="note">
-        📝 <strong>Note:</strong> Terminal 2 has inserted a new row (5, 'E', 5) and is still holding the transaction open.
-      </div>
     </td>
   </tr>
 
@@ -293,8 +290,8 @@ INSERT INTO `product` VALUES (6, 'F', 6);
     </td>
     <td></td>
   </tr>
-
   <!-- Step 4 -->
+  
   <tr>
     <td></td>
     <td>
