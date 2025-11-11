@@ -245,49 +245,70 @@ SELECT  * FROM product;
 </table>
 
 <table>
- <tr>
-   <td colspan="2"> Example I </td>
- </tr>
   <tr>
-    <td> Terminal 1 </td> <td> Terminal 2 </td> </tr>
-<tr>
-<td>
-
-
-<pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
-BEGIN;
-</code></pre>
-
-</td>
-  <td></td>
-</tr>
-<tr>
-<td> </td>
-<td>
-<pre>
- <code class="language-sql">
- SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
-BEGIN;
- SELECT COUNT(*) FROM product; 
- INSERT INTO `product` VALUES (5,'E', 5);
- </code>
-</pre> 
-</td>
-</tr>
- <tr> <td>
-
-
-<pre><code class="language-sql">
-SELECT  * FROM product;
-INSERT INTO `product` VALUES (6,'F', 6);
-</code></pre>
-
-
- </td>
- <td></td>
+    <td colspan="2"><strong>Example I</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Terminal 1</strong></td>
+    <td><strong>Terminal 2</strong></td>
   </tr>
 
+  <!-- Step 1 -->
+  <tr>
+    <td>
+      <pre><code class="language-sql">
+SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+</code></pre>
+    </td>
+    <td></td>
+  </tr>
+
+  <!-- Step 2 -->
+  <tr>
+    <td></td>
+    <td>
+      <pre><code class="language-sql">
+SET SESSION TRANSACTION ISOLATION LEVEL Serializable;
+BEGIN;
+SELECT COUNT(*) FROM product;
+INSERT INTO `product` VALUES (5, 'E', 5);
+</code></pre>
+      <div class="note">
+        📝 <strong>Note:</strong> Terminal 2 has inserted a new row (5, 'E', 5) and is still holding the transaction open.
+      </div>
+    </td>
+  </tr>
+
+  <!-- Step 3 -->
+  <tr>
+    <td>
+      <pre><code class="language-sql">
+SELECT * FROM product;
+INSERT INTO `product` VALUES (6, 'F', 6);
+</code></pre>
+      <div class="note">
+        ⚠️ <strong>Note:</strong> After this insert, Terminal 1 will be blocked (it’s waiting for Terminal 2’s lock).
+      </div>
+    </td>
+    <td></td>
+  </tr>
+
+  <!-- Step 4 -->
+  <tr>
+    <td></td>
+    <td>
+      <pre><code class="language-sql">
+INSERT INTO `product` VALUES (7, 'G', 7);
+</code></pre>
+      <div class="note">
+        ⚠️ <strong>Note:</strong> This will cause a <strong>deadlock</strong> between Terminal 1 and Terminal 2, 
+        because both are waiting on each other’s locks under <code>Serializable</code> isolation level.
+      </div>
+    </td>
+  </tr>
 </table>
+
 
 <table>
  <tr>
