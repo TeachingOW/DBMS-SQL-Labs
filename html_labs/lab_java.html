@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interacting with Python</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+<h1>Interacting with Python</h1>
+<p>We will use mysql connector with python</p>
+<pre><code>pip install mysql-connector-python
+</code></pre>
+<p>Connect to DB</p>
+<pre><code class="language-python">import mysql.connector 
+cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', database='dbms')
+</code></pre>
+<p>You may need to create a non-root account to access the DBMS (you can allow root to remotely access DB but this is not a great idea).</p>
+<p>To create a user </p>
+<pre><code class="language-sql">CREATE USER 'sammy'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'sammy'@'localhost' WITH GRANT OPTION;
+
+</code></pre>
+<p>Make sure to use a database in your local dbms.</p>
+<p>To run a query</p>
+<pre><code class="language-python">query='select * from company;'
+cursor = cnx.cursor()
+cursor.execute(query)
+</code></pre>
+<p>Print the results:</p>
+<pre><code class="language-python">for (o) in cursor:
+  print(o)
+</code></pre>
+<p>Closing the connection</p>
+<pre><code class="language-python">cnx.close()
+</code></pre>
+<p>Insert data into database</p>
+<pre><code class="language-python">iquery=&quot;insert into  company values('BMW',10,'Germany');&quot;
+cursor = cnx.cursor()
+cursor.execute(iquery)
+</code></pre>
+<p>If you execute the following, you will see the newly inserted tuple. </p>
+<pre><code class="language-python">query='select * from company;'
+cursor = cnx.cursor()
+cursor.execute(query)
+for (o) in cursor:
+  print(o)
+</code></pre>
+<p>if you reconnect to the database
+You will see the updates are not committed.</p>
+<p>To make sure the updates is commited</p>
+<pre><code class="language-python">iquery='insert into  company values('BMW',10,'Germany');commit;'
+cursor = cnx.cursor()
+cursor.execute(iquery)
+</code></pre>
+<p>Becuase we have commited the changes, it would presist.</p>
+</body>
+</html>
