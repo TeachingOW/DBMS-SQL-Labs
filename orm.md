@@ -187,7 +187,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 ```
 
 This generates SQL automatically:
-
+å
 ```sql
 SELECT * FROM student WHERE year = ?
 ```

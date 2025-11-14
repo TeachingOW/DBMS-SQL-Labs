@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interacting with Databases in Java – JDBC, ORM, and JPA</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 40px;
+            line-height: 1.6;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 12px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        code {
+            font-family: Consolas, monospace;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Interacting with Databases in Java: JDBC, ORM, and JPA</h1>
+
+<p>
+A <strong>Database Management System (DBMS)</strong> is software used to store, manage, and retrieve data efficiently. 
+Examples include MySQL, PostgreSQL, Oracle, MariaDB, and SQL Server. 
+For decades, Java developers connected to these systems using raw SQL and the <strong>JDBC API</strong>, 
+but as applications became more complex, the need for automation, object mapping, and data abstraction led to the rise 
+of <strong>Object-Relational Mapping (ORM)</strong> frameworks and later the creation of the 
+<strong>Java Persistence API (JPA)</strong> standard.
+</p>
+
+<hr>
+
+<h2>1. JDBC (Java Database Connectivity)</h2>
+
+<p>
+JDBC is the low-level Java API for interacting with relational databases.  
+It provides explicit control over SQL execution, connection management, and result processing.
+</p>
+
+<h3>JDBC Core Example – Connecting, Inserting, Querying</h3>
+
+<pre><code class="language-java">
+// 1. Open a connection
+String url = "jdbc:mysql://localhost:3306/school";
+String user = "appuser";
+String pass = "secret";
+
+Connection conn = DriverManager.getConnection(url, user, pass);
+
+// 2. Insert example
+String insert = "INSERT INTO student (name, year) VALUES (?, ?)";
+PreparedStatement stmt = conn.prepareStatement(insert);
+stmt.setString(1, "Alice");
+stmt.setInt(2, 2025);
+stmt.executeUpdate();
+
+// 3. Query example
+String query = "SELECT id, name, year FROM student WHERE year = ?";
+PreparedStatement q = conn.prepareStatement(query);
+q.setInt(1, 2025);
+
+ResultSet rs = q.executeQuery();
+while (rs.next()) {
+    System.out.println(rs.getLong("id") + " " +
+                       rs.getString("name") + " " +
+                       rs.getInt("year"));
+}
+</code></pre>
+
+<h3>JDBC Transaction Example</h3>
+<pre><code class="language-java">
+try {
+    conn.setAutoCommit(false);
+
+    PreparedStatement s1 = conn.prepareStatement(
+        "UPDATE accounts SET balance = balance - 100 WHERE id = 1"
+    );
+    PreparedStatement s2 = conn.prepareStatement(
+        "UPDATE accounts SET balance = balance + 100 WHERE id = 2"
+    );
+
+    s1.executeUpdate();
+    s2.executeUpdate();
+
+    conn.commit();
+} catch (Exception ex) {
+    conn.rollback();
+}
+</code></pre>
+
+<hr>
+
+<h2>2. Object-Relational Mapping (ORM)</h2>
+
+<p>
+ORM frameworks map Java classes to database tables and Java objects to rows.  
+Instead of writing SQL manually, developers work with objects.  
+This reduces boilerplate, improves readability, and centralizes mappings, caching, transactions, and relationships.
+</p>
+
+<h3>Why ORM Exists</h3>
+<ul>
+    <li>Reduce boilerplate from JDBC</li>
+    <li>Automatic mapping of rows → objects</li>
+    <li>Strong typing</li>
+    <li>Cleaner transaction management</li>
+    <li>Built-in caching and lazy loading</li>
+    <li>Portability across database vendors</li>
+</ul>
+
+<h3>Simple ORM Example (Generic)</h3>
+
+<pre><code class="language-java">
+User u = new User();
+u.setName("Bob");
+u.setEmail("bob@example.com");
+
+entityManager.persist(u);
+</code></pre>
+
+<p>The ORM generates SQL automatically:</p>
+
+<pre><code class="language-sql">
+INSERT INTO users (name, email) VALUES (?, ?);
+</code></pre>
+
+<hr>
+
+<h2>3. JPA (Java Persistence API)</h2>
+
+<p>
+JPA is the standardized ORM API in Java.  
+Hibernate, EclipseLink, and OpenJPA implement it.  
+JPA provides annotations, entity management, JPQL querying, relationships, and lifecycle handling.
+</p>
+
+<h3>3.1 Basic JPA Entity</h3>
+
+<pre><code class="language-java">
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "student")
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private int year;
+
+    // getters & setters
+}
+</code></pre>
+
+<h3>3.2 Persisting an Entity</h3>
+
+<pre><code class="language-java">
+EntityManager em = emf.createEntityManager();
+em.getTransaction().begin();
+
+Student s = new Student();
+s.setName("Alice");
+s.setYear(2025);
+
+em.persist(s);
+
+em.getTransaction().commit();
+em.close();
+</code></pre>
+
+<h3>3.3 JPQL Query</h3>
+
+<pre><code class="language-java">
+String jpql = "SELECT s FROM Student s WHERE s.year = :yr";
+
+List&lt;Student&gt; list = em.createQuery(jpql, Student.class)
+                         .setParameter("yr", 2025)
+                         .getResultList();
+</code></pre>
+
+<hr>
+
+<h2>4. Relationships in JPA</h2>
+
+<p>
+JPA supports one-to-one, one-to-many, many-to-one, and many-to-many mappings.
+</p>
+
+<h3>4.1 One-to-Many with Lazy Loading</h3>
+
+<pre><code class="language-java">
+@Entity
+public class User {
+
+    @Id @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List&lt;Order&gt; orders = new ArrayList<>();
+}
+
+@Entity
+public class Order {
+
+    @Id @GeneratedValue
+    private Long id;
+
+    private double total;
+
+    @ManyToOne
+    private User user;
+}
+</code></pre>
+
+<h3>Lazy Load Behavior</h3>
+
+<p>Lazy relationships are **not loaded until accessed**.</p>
+
+<pre><code class="language-java">
+User u = em.find(User.class, 1L);
+
+// orders are NOT loaded yet
+
+List&lt;Order&gt; orders = u.getOrders(); 
+// Lazy loading triggers SELECT query here!
+</code></pre>
+
+<hr>
+
+<h2>5. JPA Transaction Example</h2>
+
+<pre><code class="language-java">
+EntityManager em = emf.createEntityManager();
+
+try {
+    em.getTransaction().begin();
+
+    Account a = em.find(Account.class, 1L);
+    Account b = em.find(Account.class, 2L);
+
+    a.withdraw(100);
+    b.deposit(100);
+
+    em.getTransaction().commit();
+} catch (Exception e) {
+    em.getTransaction().rollback();
+}
+</code></pre>
+
+<hr>
+
+<h2>6. Spring Data JPA Repository Example</h2>
+
+<pre><code class="language-java">
+public interface StudentRepository 
+       extends JpaRepository&lt;Student, Long&gt; {
+
+    List&lt;Student&gt; findByYear(int year);
+}
+</code></pre>
+
+<p>
+Spring Data automatically generates:
+</p>
+
+<pre><code class="language-sql">
+SELECT * FROM student WHERE year = ?;
+</code></pre>
+
+<hr>
+
+<h2>7. What Happens Under the Hood (JPA/Hibernate)</h2>
+
+<ul>
+    <li>Annotation scanning builds metadata maps</li>
+    <li>EntityManager tracks object state</li>
+    <li>Dirty checking detects modified objects</li>
+    <li>SQL is generated automatically and cached</li>
+    <li>Lazy loading uses proxies / bytecode enhancement</li>
+    <li>Dialect classes adapt SQL to MySQL/Postgres/Oracle</li>
+</ul>
+
+<hr>
+
+<h2>8. When to Use JDBC vs ORM vs JPA</h2>
+
+<table border="1" cellpadding="8">
+<tr>
+    <th>Feature</th>
+    <th>JDBC</th>
+    <th>ORM</th>
+    <th>JPA</th>
+</tr>
+<tr>
+    <td>SQL Control</td>
+    <td>Full</td>
+    <td>Medium</td>
+    <td>Low</td>
+</tr>
+<tr>
+    <td>Boilerplate</td>
+    <td>High</td>
+    <td>Medium</td>
+    <td>Low</td>
+</tr>
+<tr>
+    <td>Mapping</td>
+    <td>No</td>
+    <td>Yes</td>
+    <td>Yes (standard)</td>
+</tr>
+<tr>
+    <td>Best Use</td>
+    <td>High-performance, custom SQL</td>
+    <td>General applications</td>
+    <td>Enterprise / Spring apps</td>
+</tr>
+</table>
+
+<hr>
+
+<p><strong>End of merged and expanded content.</strong></p>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interacting with Python</title>
+    <title>Interacting with Java and MySQL</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
@@ -14,52 +14,87 @@
     </style>
 </head>
 <body>
-<h1>Interacting with Python</h1>
-<p>We will use mysql connector with python</p>
-<pre><code>pip install mysql-connector-python
-</code></pre>
-<p>Connect to DB</p>
-<pre><code class="language-python">import mysql.connector 
-cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', database='dbms')
-</code></pre>
-<p>You may need to create a non-root account to access the DBMS (you can allow root to remotely access DB but this is not a great idea).</p>
-<p>To create a user </p>
-<pre><code class="language-sql">CREATE USER 'sammy'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'sammy'@'localhost' WITH GRANT OPTION;
+<h1>Interacting with MySQL Using Java (JDBC)</h1>
+<p>This lab demonstrates how to connect to a MySQL database using Java and JDBC. Instead of Python and <code>mysql-connector-python</code>, we will use the official MySQL Connector/J driver.</p>
 
+<h2>Install MySQL Connector/J</h2>
+<p>If you are using Maven, include the following dependency:</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-j&lt;/artifactId&gt;
+    &lt;version&gt;8.0.33&lt;/version&gt;
+&lt;/dependency&gt;
 </code></pre>
-<p>Make sure to use a database in your local dbms.</p>
-<p>To run a query</p>
-<pre><code class="language-python">query='select * from company;'
-cursor = cnx.cursor()
-cursor.execute(query)
+<p>If using a standalone JAR, download it from the MySQL website and add it to your classpath.</p>
+
+<h2>Create a MySQL User</h2>
+<p>You should avoid connecting as <code>root</code> from your applications. Below is how to create a dedicated user with required permissions:</p>
+<pre><code class="language-sql">CREATE USER 'sammy'@'localhost' IDENTIFIED BY 'password';
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT ON *.* TO 'sammy'@'localhost';
+FLUSH PRIVILEGES;
 </code></pre>
-<p>Print the results:</p>
-<pre><code class="language-python">for (o) in cursor:
-  print(o)
+<p>This user will have permissions to create, insert, update, and retrieve data across databases.</p>
+
+<h2>Connecting to MySQL Using Java</h2>
+<p>The following Java code connects to a local MySQL database named <code>dbms</code>:</p>
+<pre><code class="language-java">import java.sql.*;
+
+public class ConnectExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/dbms";
+        String user = "sammy";
+        String password = "password";
+
+        try (Connection conn = DriverManager.getConnection(url, user, password)) {
+            System.out.println("Connected to database!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
 </code></pre>
-<p>Closing the connection</p>
-<pre><code class="language-python">cnx.close()
+<p><strong>Explanation:</strong> JDBC uses a URL-based system to determine which driver to load. The MySQL driver is automatically detected when the Connector/J library is in your classpath.</p>
+
+<h2>Running a SELECT Query</h2>
+<pre><code class="language-java">String query = "SELECT * FROM company";
+try (Connection conn = DriverManager.getConnection(url, user, password);
+     Statement stmt = conn.createStatement();
+     ResultSet rs = stmt.executeQuery(query)) {
+
+    while (rs.next()) {
+        System.out.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
+    }
+}
 </code></pre>
-<p>Insert data into database</p>
-<pre><code class="language-python">iquery=&quot;insert into  company values('BMW',10,'Germany');&quot;
-cursor = cnx.cursor()
-cursor.execute(iquery)
+<p><strong>Explanation:</strong> JDBC's <code>ResultSet</code> allows you to iterate over each row returned from a query.</p>
+
+<h2>Insert Data Into the Database</h2>
+<pre><code class="language-java">String insert = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
+try (Connection conn = DriverManager.getConnection(url, user, password);
+     Statement stmt = conn.createStatement()) {
+
+    stmt.executeUpdate(insert);
+    conn.commit();
+
+    System.out.println("Insert committed.");
+}
 </code></pre>
-<p>If you execute the following, you will see the newly inserted tuple. </p>
-<pre><code class="language-python">query='select * from company;'
-cursor = cnx.cursor()
-cursor.execute(query)
-for (o) in cursor:
-  print(o)
+<p><strong>Important:</strong> Some JDBC configurations require <code>conn.setAutoCommit(false)</code> if you want manual control. If autocommit is enabled (default), inserts commit automatically.</p>
+
+<h2>Printing After Insert</h2>
+<p>If the insert is committed, reconnecting and selecting again will show the updated data.</p>
+<pre><code class="language-java">String query = "SELECT * FROM company";
+try (Connection conn = DriverManager.getConnection(url, user, password);
+     Statement stmt = conn.createStatement();
+     ResultSet rs = stmt.executeQuery(query)) {
+
+    while (rs.next()) {
+        System.out.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
+    }
+}
 </code></pre>
-<p>if you reconnect to the database
-You will see the updates are not committed.</p>
-<p>To make sure the updates is commited</p>
-<pre><code class="language-python">iquery='insert into  company values('BMW',10,'Germany');commit;'
-cursor = cnx.cursor()
-cursor.execute(iquery)
-</code></pre>
-<p>Becuase we have commited the changes, it would presist.</p>
+
+<p>Because changes were committed, they will persist even after reconnect.</p>
+
 </body>
 </html>
