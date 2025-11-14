@@ -44,25 +44,26 @@ By completing these labs, students will:
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 11 | Python Database Interface | Connect Python applications to databases using connectors | [Python Lab](html_labs/Lab_Python.html) |
-| 12 | Jupyter Notebook Integration | Interactive database analysis with Jupyter notebooks | [Jupyter Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb)|
+| 11 | Java Database Interface | Connect Java applications to databases  | [Java Lab](html_labs/lab_java_3.html) |
+| 12 | Python Database Interface | Connect Python applications to databases using connectors | [Python Lab](html_labs/Lab_Python.html) |
+| 13 | Jupyter Notebook Integration | Interactive database analysis with Jupyter notebooks | [Jupyter Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb)|
 
 ### Advanced Database Concepts
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 13 | Analytical Functions | Master ROLLUP, CUBE, and advanced grouping operations | [Rollup Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb) |
-| 14 | Triggers & Stored Procedures | Implement database automation and business logic | [Triggers Lab](html_labs/Triggers.html) |
-| 15 | Transaction Management | Understand ACID properties and concurrency control | [Transactions](html_labs/Transactions.html) |
-| 16 | Isolation Levels | Learn about database isolation and consistency | [Isolation Levels](html_labs/Isolation_Levels.html) |
+| 14 | Analytical Functions | Master ROLLUP, CUBE, and advanced grouping operations | [Rollup Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb) |
+| 15 | Triggers & Stored Procedures | Implement database automation and business logic | [Triggers Lab](html_labs/Triggers.html) |
+| 16 | Transaction Management | Understand ACID properties and concurrency control | [Transactions](html_labs/Transactions.html) |
+| 17 | Isolation Levels | Learn about database isolation and consistency | [Isolation Levels](html_labs/Isolation_Levels.html) |
 
 ### Modern Database Technologies
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 17 | JSON & XML Processing | Handle semi-structured data in relational databases | [JSON/XML Lab](html_labs/Lab_JSON-XML.html) |
-| 18 | MongoDB (NoSQL) | Introduction to document-based databases | [MongoDB Lab](html_labs/Lab10_mongoDB.html) |
-| 19 | Neo4j (Graph Database) | Explore graph database concepts and Cypher queries | [Neo4j Lab](html_labs/Lab11_neo4j.html) |
+| 18 | JSON & XML Processing | Handle semi-structured data in relational databases | [JSON/XML Lab](html_labs/Lab_JSON-XML.html) |
+| 19 | MongoDB (NoSQL) | Introduction to document-based databases | [MongoDB Lab](html_labs/Lab10_mongoDB.html) |
+| 20 | Neo4j (Graph Database) | Explore graph database concepts and Cypher queries | [Neo4j Lab](html_labs/Lab11_neo4j.html) |
 
 ## 🗃️ Data Sets
 
