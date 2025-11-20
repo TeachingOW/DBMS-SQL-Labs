@@ -1,6 +1,3 @@
-Sure! Here's a school assignment that asks students to implement overdraft fees when an account balance goes below zero. The overdraft fee should be added to the transaction table as a separate line.
-
----
 
 ### Assignment: Implement Overdraft Fees in a Bank Account System
 
