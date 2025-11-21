@@ -78,10 +78,10 @@ The repository includes several real-world datasets for hands-on practice:
 | [Student Grades](data/grades.csv) | Academic performance data | Statistical analysis, ranking functions |
 | [Drivers Database](data/drivers.sql) | Complete database schema with sample data | Full database operations, complex relationships |
 
-### Lab Progression
-- **Beginners**: Start with Labs 1-4 (Foundational Labs)
-- **Intermediate**: Continue with Labs 5-8 (Advanced SQL)
-- **Advanced**: Explore Labs 9+ (Database Design & Modern Technologies)
+
+## Sheet Cheat
+
+- [Mysql Sheet Cheat](https://gemini.google.com/share/d3fa0a47a9d0)
 
 ## 🛠️ Tools and Technologies
 
