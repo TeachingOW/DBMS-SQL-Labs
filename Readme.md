@@ -113,6 +113,7 @@ The repository includes several real-world datasets for hands-on practice:
 - [NoSQL Databases](https://www.mongodb.com/nosql-explained) - Understanding document and graph databases
 
 ### Practice Platforms
+- [DataLemur](https://datalemur.com/)
 - [HackerRank SQL](https://www.hackerrank.com/domains/sql) - SQL coding challenges
 - [LeetCode Database](https://leetcode.com/problemset/database/) - Database problem solving
 - [SQLBolt](https://sqlbolt.com/) - Interactive SQL lessons
@@ -132,9 +133,7 @@ We welcome contributions to improve these labs! Please:
 - Bug fixes and corrections
 
 
-## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🌐 Project Website
 
