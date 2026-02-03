@@ -79,9 +79,9 @@ The repository includes several real-world datasets for hands-on practice:
 | [Drivers Database](data/drivers.sql) | Complete database schema with sample data | Full database operations, complex relationships |
 
 
-## Sheet Cheat
+## Cheat Sheet
 
-- [Mysql Sheet Cheat](https://gemini.google.com/share/d3fa0a47a9d0)
+- [Mysql Cheat Sheet](https://gemini.google.com/share/d3fa0a47a9d0)
 
 ## 🛠️ Tools and Technologies
 
