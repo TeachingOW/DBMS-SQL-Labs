@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """
 Script to enhance HTML files:
-1. Convert markdown tables to HTML tables
-2. Add copy buttons to code blocks
+1. Fix markdown links (.md to .html)
+2. Convert markdown headings in paragraphs (### to <h3>)
+3. Convert bold markdown (**text** to <strong>text</strong>)
+4. Convert markdown tables to HTML tables
+5. Add copy buttons to code blocks
+6. Add CSS to prevent code blocks from spanning full page width
 """
 
 import re
@@ -78,6 +82,46 @@ def add_copy_buttons_to_code_blocks(html_content):
     return re.sub(pattern, replacer, html_content, flags=re.DOTALL)
 
 
+def convert_bold_markdown(html_content):
+    """Convert **text** to <strong>text</strong> in HTML content."""
+    # Replace **text** with <strong>text</strong>
+    # Simple pattern that matches **text** not inside HTML tags
+    pattern = r'\*\*([^\*\n]+?)\*\*'
+    
+    def replacer(match):
+        text = match.group(1)
+        # Don't replace if inside an HTML tag (basic check)
+        return f'<strong>{text}</strong>'
+    
+    html_content = re.sub(pattern, replacer, html_content)
+    return html_content
+
+
+def convert_markdown_headings_in_paragraphs(html_content):
+    """Convert ### Heading in <p> tags to proper <h3> tags."""
+    # Match <p>### followed by text
+    pattern = r'<p>###\s+([^<\n]+?)(?:\s*\n|</p>)'
+    
+    def replacer(match):
+        heading_text = match.group(1).strip()
+        return f'<h3>{heading_text}</h3>\n<p>'
+    
+    html_content = re.sub(pattern, replacer, html_content)
+    
+    # Clean up any <p> tags that are now empty or just have closing tags
+    html_content = re.sub(r'<p>\s*</p>', '', html_content)
+    
+    return html_content
+
+
+def fix_markdown_links(html_content):
+    """Convert .md links to .html links in HTML files."""
+    # Replace href="*.md" with href="*.html"
+    # Handle both regular links and links with paths
+    html_content = re.sub(r'href="([^"]*?)\.md"', r'href="\1.html"', html_content)
+    return html_content
+
+
 def convert_markdown_tables_in_html(html_content):
     """Find and convert markdown tables in HTML content."""
     
@@ -139,10 +183,13 @@ def add_css_and_js(html_content):
     .code-block-wrapper {
       position: relative;
       margin: 20px 0;
+      max-width: 100%;
     }
     
     .code-block-wrapper pre {
       margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
     }
     
     .copy-button {
@@ -227,25 +274,36 @@ def process_html_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
     
-    # Check if already processed
-    if 'code-block-wrapper' in content or 'copyCode' in content:
-        print(f"⚠ Skipping {file_path} - already processed")
-        return
+    original_content = content
     
-    # Step 1: Convert markdown tables to HTML
+    # Step 1: Fix markdown links (.md to .html)
+    content = fix_markdown_links(content)
+    
+    # Step 2: Convert markdown headings in paragraphs
+    content = convert_markdown_headings_in_paragraphs(content)
+    
+    # Step 3: Convert bold markdown (**text** to <strong>text</strong>)
+    content = convert_bold_markdown(content)
+    
+    # Step 4: Convert markdown tables to HTML
     content = convert_markdown_tables_in_html(content)
     
-    # Step 2: Add copy buttons to code blocks
-    content = add_copy_buttons_to_code_blocks(content)
+    # Step 5: Add copy buttons to code blocks (if not already added)
+    if 'code-block-wrapper' not in content:
+        content = add_copy_buttons_to_code_blocks(content)
     
-    # Step 3: Add CSS and JavaScript
-    content = add_css_and_js(content)
+    # Step 6: Add CSS and JavaScript (if not already added)
+    if 'copyCode' not in content:
+        content = add_css_and_js(content)
     
-    # Write back
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(content)
-    
-    print(f"✓ Completed {file_path}")
+    # Only write if content changed
+    if content != original_content:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        print(f"✓ Completed {file_path}")
+    else:
+        print(f"⚠ No changes needed for {file_path}")
+
 
 
 def main():

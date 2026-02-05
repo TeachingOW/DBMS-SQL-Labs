@@ -30,10 +30,13 @@
     .code-block-wrapper {
       position: relative;
       margin: 20px 0;
+      max-width: 100%;
     }
     
     .code-block-wrapper pre {
       margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
     }
     
     .copy-button {
@@ -380,7 +383,7 @@ public class Order {
 
 <h3>Lazy Load Behavior</h3>
 
-<p>Lazy relationships are **not loaded until accessed**.</p>
+<p>Lazy relationships are <strong>not loaded until accessed</strong>.</p>
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
