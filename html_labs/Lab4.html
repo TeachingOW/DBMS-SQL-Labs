@@ -12,50 +12,7 @@
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     
-    /* Code block wrapper with copy button */
-    .code-block-wrapper {
-      position: relative;
-      margin: 20px 0;
-    }
     
-    .code-block-wrapper pre {
-      margin: 0;
-    }
-    
-    .copy-button {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 6px 8px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.2s, background-color 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .copy-button:hover {
-      opacity: 1;
-      background-color: #fff;
-    }
-    
-    .copy-button:active {
-      background-color: #e0e0e0;
-    }
-    
-    .copy-button.copied {
-      background-color: #4caf50;
-      color: white;
-      border-color: #4caf50;
-    }
-    
-    .copy-button svg {
-      display: block;
-    }
     
     
     /* Code block wrapper with copy button */
@@ -109,7 +66,6 @@
 <h1>Window  Function and Recurisve Queries</h1>
 <h2>In Class Example</h2>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">drop table seq;
 create table seq(x int );
 insert into seq values(1);
@@ -134,7 +90,6 @@ insert into seq values(4);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select v, sum(v) over ()  from seq;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -150,7 +105,6 @@ insert into seq values(4);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select v, sum(v) over w  from seq
 WINDOW w as ()
 </code></pre>
@@ -167,7 +121,6 @@ WINDOW w as ()
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select v, sum(v) over w   from seq
 WINDOW w as (RANGE BETWEEN
 UNBOUNDED PRECEDING AND CURRENT ROW)
@@ -185,7 +138,6 @@ UNBOUNDED PRECEDING AND CURRENT ROW)
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select *, sum(x) over w  from seq
 window w as (order by x);
 </code></pre>
@@ -202,7 +154,6 @@ window w as (order by x);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select *, sum(x) over w  from seq
 window w as ( order by x range BETWEEN UNBOUNDED PRECEDING and current row);
 </code></pre>
@@ -219,7 +170,6 @@ window w as ( order by x range BETWEEN UNBOUNDED PRECEDING and current row);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select *, sum(x) over w  from seq
 window w as ( Order by x  rows BETWEEN  current row and UNBOUNDED following);
 </code></pre>
@@ -236,7 +186,6 @@ window w as ( Order by x  rows BETWEEN  current row and UNBOUNDED following);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select *, sum(x) over w  from seq
 window w as ( Order by x  range BETWEEN  current row and UNBOUNDED following);
 </code></pre>
@@ -253,7 +202,6 @@ window w as ( Order by x  range BETWEEN  current row and UNBOUNDED following);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select *, row_number() over w from seq
 window w as (   );
 </code></pre>
@@ -271,7 +219,6 @@ window w as (   );
 </div>
 <h3>SQL RANK() versus ROW_NUMBER()</h3>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select *, rank() over  (order by x),
  row_number() over (order by x)
  from seq;
@@ -290,7 +237,6 @@ window w as (   );
 </div>
 <h2>Leap vs Lag</h2>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">drop table if exists sales;
 create table sales (
 product char(10),
@@ -319,7 +265,6 @@ insert into sales values ('bike', 2019, 9);
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select * from sales cur, sales prev
 where cur.product=prev.product and cur.y=prev.y+1;
 </code></pre>
@@ -336,7 +281,6 @@ where cur.product=prev.product and cur.y=prev.y+1;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select cur.product, cur.y, cur.sales, prev.sales from sales cur left outer join  sales prev on cur.y=prev.y+1 and cur.product=prev.product ;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -352,7 +296,6 @@ where cur.product=prev.product and cur.y=prev.y+1;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">select product, y, sales, lag(sales) over 
 (partition by product order by y )   from sales;
 </code></pre>
@@ -370,7 +313,6 @@ where cur.product=prev.product and cur.y=prev.y+1;
 </div>
 <h2>More Example</h2>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE TABLE emp (
 id int AUTO_increment Primary key,
 ename char(50) NOT NULL,
@@ -399,7 +341,6 @@ INSERT INTO emp (ename, department, salary) VALUES
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT COUNT(*), SUM(salary),
 round(AVG(salary), 2) AS avg
 FROM emp;
@@ -417,7 +358,6 @@ FROM emp;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT department, COUNT(*), SUM(salary),
 round(AVG(salary), 2) AS avg
 FROM emp
@@ -437,7 +377,6 @@ ORDER BY department;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT department, COUNT(*), SUM(salary),
 round(AVG(salary), 2) AS avg
 FROM emp
@@ -457,7 +396,6 @@ ORDER BY department;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary
 FROM emp
 ORDER BY salary DESC;
@@ -475,7 +413,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary, SUM(salary) OVER ()
 FROM emp
 ORDER BY salary DESC;
@@ -493,7 +430,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary,
 round(salary / SUM(salary) OVER () * 100, 2) AS pct
 FROM emp
@@ -512,7 +448,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary,
 SUM(salary) OVER (ORDER BY salary DESC ROWS BETWEEN
 UNBOUNDED PRECEDING AND CURRENT ROW)
@@ -532,7 +467,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary,
 round(AVG(salary) OVER (), 2) AS avg
 FROM emp
@@ -551,7 +485,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary,
 round(AVG(salary) OVER (), 2) AS avg,
 round(salary - AVG(salary) OVER (), 2) AS diff_avg
@@ -571,7 +504,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary,
 salary - LEAD(salary, 1) OVER
 (ORDER BY salary DESC) AS diff_next
@@ -591,7 +523,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, salary,
 salary - LAST_VALUE(salary) OVER w AS more,
 round((salary - LAST_VALUE(salary) OVER w) /
@@ -614,7 +545,6 @@ ORDER BY salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, department, salary,
 round(AVG(salary) OVER
 (PARTITION BY department), 2) AS avg,
@@ -636,7 +566,6 @@ ORDER BY department, salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, department, salary,
 round(AVG(salary) OVER d, 2) AS avg,
 round(salary - AVG(salary) OVER d, 2) AS diff_avg
@@ -657,7 +586,6 @@ ORDER BY department, salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, department, salary,
 salary - LEAD(salary, 1) OVER
 (PARTITION BY department
@@ -678,7 +606,6 @@ ORDER BY department, salary DESC;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT ename, department, salary, RANK() OVER s AS dept_rank,
 RANK() OVER (ORDER BY salary DESC) AS global_rank
 FROM emp
@@ -699,7 +626,6 @@ ORDER BY department, salary DESC;
 </div>
 <h2>Recursive SQL</h2>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">create table parentof
 (parent varchar(10),
 child varchar(10));
@@ -733,7 +659,6 @@ SELECT * from Ancestor
   </button>
 </div>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">drop table if exists parentof;
 create table parentof
 (parent varchar(10),
@@ -774,32 +699,7 @@ SELECT * from Descendant;
 </div>
 <h2>References</h2>
 <p>https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html</p>
-<script>
 
-    function copyCode(button) {
-      const wrapper = button.closest('.code-block-wrapper');
-      const codeBlock = wrapper.querySelector('code');
-      const text = codeBlock.textContent;
-      
-      // Copy to clipboard
-      navigator.clipboard.writeText(text).then(() => {
-        // Show success feedback
-        button.classList.add('copied');
-        const originalHTML = button.innerHTML;
-        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        
-        // Reset after 2 seconds
-        setTimeout(() => {
-          button.classList.remove('copied');
-          button.innerHTML = originalHTML;
-        }, 2000);
-      }).catch(err => {
-        console.error('Failed to copy:', err);
-        alert('Failed to copy code');
-      });
-    }
-    
-  </script>
 <script>
 
     function copyCode(button) {

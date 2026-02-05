@@ -12,50 +12,7 @@
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     
-    /* Code block wrapper with copy button */
-    .code-block-wrapper {
-      position: relative;
-      margin: 20px 0;
-    }
     
-    .code-block-wrapper pre {
-      margin: 0;
-    }
-    
-    .copy-button {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 6px 8px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.2s, background-color 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .copy-button:hover {
-      opacity: 1;
-      background-color: #fff;
-    }
-    
-    .copy-button:active {
-      background-color: #e0e0e0;
-    }
-    
-    .copy-button.copied {
-      background-color: #4caf50;
-      color: white;
-      border-color: #4caf50;
-    }
-    
-    .copy-button svg {
-      display: block;
-    }
     
     
     /* Code block wrapper with copy button */
@@ -132,7 +89,6 @@
 <p>A view is a virtual table. Instead of creating an actual table, you specify a query that is run "behind-the-scenes".
 Consider this query on our <code>randA</code> and <code>randB</code> from the previous lab (don't run it... if you do then you will likely want to open another mysql session and kill it):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT randA.A AS link, 
        randA.B AS first_B,
        randB.B AS second_B 
@@ -154,7 +110,6 @@ ORDER BY randA.A
 </div>
 <p>Let's get a sense for what the data should look like:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT randA.A AS link, 
        randA.B AS first_B,
        randB.B AS second_B 
@@ -176,7 +131,6 @@ ORDER BY randA.A LIMIT 10;
 </div>
 <p>We can take this query and create a REAL table like this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE TABLE joined 
 SELECT randA.A AS link, 
        randA.B AS first_B, 
@@ -201,7 +155,6 @@ ORDER BY randA.A;
 <p><a href="https://mariadb.com/kb/en/create-table/">https://mariadb.com/kb/en/create-table/</a></p>
 <p>But instead of doing something that permanent, we are going to create a view instead. So drop that table first:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">DROP TABLE joined;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -218,7 +171,6 @@ ORDER BY randA.A;
 </div>
 <p>Now let's create the view:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE VIEW joined AS 
 SELECT randA.A AS link, 
        randA.B AS first_B,
@@ -246,7 +198,6 @@ this organization of the data in tables <code>randA</code> and <code>randB</code
 <p>The nice thing about views is that you can use them to hid (or
 abstract out) complex SQL. For example, consider your inventory and prices tables. Suppose you needed to create a report and want your output to look like this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>&lt;10 characters worth of item--padded if necessary by *'s&gt;[&lt;amount&gt;](&lt;price&gt;)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -263,7 +214,6 @@ abstract out) complex SQL. For example, consider your inventory and prices table
 </div>
 <p>So if you had <em>pumpkins</em> as an item, with an amount of 14 and a price of $10.13 then you would want your output to look like this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>pumpkin***[14]($10.13)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -280,7 +230,6 @@ abstract out) complex SQL. For example, consider your inventory and prices table
 </div>
 <p>Okay... make that happen. You'll probably have to review the mariaDB string functions. I found it to be a bit of a pain in the butt, but still doable. But now convert your query into a view called <code>ticketItem</code> and call the calculated column output by the same name:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>&lt;I'll wait for you to figure that out&gt;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -297,7 +246,6 @@ abstract out) complex SQL. For example, consider your inventory and prices table
 </div>
 <p>Now you should be able to do this: </p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT * FROM ticketItem;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -319,7 +267,6 @@ abstract out) complex SQL. For example, consider your inventory and prices table
 We create a function using <code>CREATE FUNCTION</code> and delete it using <code>DROP FUNCTION</code>. </p>
 <p>Let's start with a basic outline:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE FUNCTION ticketize RETURNS TEXT DETERMINISTIC
 BEGIN
 ….
@@ -341,7 +288,6 @@ END
 <p>The <code>BEGIN</code> and <code>END</code> (shades of Pascal... or Ruby if you're younger) act as brackets on the function's definition.</p>
 <p>You must declare variables using </p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>DECLARE &lt;varname&gt; &lt;datatype&gt;;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -358,7 +304,6 @@ END
 </div>
 <p>You assign values <em>shudder</em> using </p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SET &lt;varname&gt; = &lt;value&gt;;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -376,7 +321,6 @@ END
 <p>And when you return the value you have to return a <strong>variable</strong> of the proper type. </p>
 <p>You might think that this would work:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE FUNCTION FortyTwo() RETURNS TINYINT DETERMINISTIC
 BEGIN
     DECLARE x TINYINT;
@@ -398,7 +342,6 @@ END
 </div>
 <p>Except that the ; is interpreted by the mariaDB client incorrectly. :bangbang: You need to change the command delimiter first:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">DELIMITER //
 CREATE FUNCTION FortyTwo() RETURNS TINYINT DETERMINISTIC
 BEGIN
@@ -427,7 +370,6 @@ DELIMITER ;
 <p>Okay… <strong>make your function</strong> work… you should be able to adapt your query from the view section. </p>
 <p>If you get it working correctly, then you should be able to do this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>mysql&gt; select ticketize(&quot;pumpkin&quot;,20,1.23);
 +------------------------------+
 | ticketize(&quot;pumpkin&quot;,20,1.23) |
@@ -452,7 +394,6 @@ DELIMITER ;
 <p>Now read <a href="https://mariadb.com/kb/en/user-defined-variables/">the MariaDB page on user defined variables</a>, but skim over <code>PREPARE</code>.  Also read the <a href="https://mariadb.com/kb/en/assignment-operator/">page about assignment operators</a></p>
 <p>Give this a try:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SET @a=0;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -469,7 +410,6 @@ DELIMITER ;
 </div>
 <p>And then this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT @a;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -486,7 +426,6 @@ DELIMITER ;
 </div>
 <p>now leave MariaDB, come back in, and do it again</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT @a;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -503,7 +442,6 @@ DELIMITER ;
 </div>
 <p>Now do this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT *,(@a:=@a+1) AS counter FROM inventory;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -520,7 +458,6 @@ DELIMITER ;
 </div>
 <p>What's with all the <code>NULLS</code>? Fix it by assigning a value to <code>@a</code> BEFORE the query.</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>&lt;I'll wait&gt;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -537,7 +474,6 @@ DELIMITER ;
 </div>
 <p>Now modify the query above so that <code>@a</code> is replaced with <code>@a+1</code> if <code>@a&lt;10</code>, but is set to 1 otherwise. (<a href="https://mariadb.com/kb/en/library/if-function/">The <code>if</code> <em>function</em></a> might be useful.) Run your query 3 or 4 times.</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>&lt;Waiting again&gt;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -554,7 +490,6 @@ DELIMITER ;
 </div>
 <p>Modify the query above (again) so that <code>item</code> is concatenated with <code>@a</code> (you will probably want to reset the value using <code>SET @a="";</code>between queries.</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>&lt;still here&gt;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -571,7 +506,6 @@ DELIMITER ;
 </div>
 <p>Now try to come up with some way to do what you did above, but suppress the output. I found a way to do it that just generates a blank column…. but there might be a better way. Let me know what you find.</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>&lt;waiting hopefully&gt;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -591,7 +525,6 @@ DELIMITER ;
 <p><a href="https://mariadb.com/kb/en/grant/#procedure-privileges">https://mariadb.com/kb/en/grant/#procedure-privileges</a></p>
 <p>One stores a procedure using <code>CREATE PROCEDURE</code> (begin mindful of the delimiter issue):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">DELIMITER //
 CREATE PROCEDURE averageprice()
 BEGIN
@@ -614,7 +547,6 @@ DELIMITER ;
 </div>
 <p>Okay, now you call the stored procedure by name:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CALL averageprice();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -636,7 +568,6 @@ DELIMITER ;
 <p>Procedures are, by default, associated with the current database.</p>
 <p>Let's do one that returns the min, max and average values from a table and stores them in the variables of our choosing (NOTE: I used <code>DECIMAL(5,2)</code> for my prices):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">DELIMITER //
 CREATE PROCEDURE summary( 
    OUT pmin DECIMAL(5,2), 
@@ -664,7 +595,6 @@ DELIMITER ;
 </div>
 <p>Now call it:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">CALL summary(@mymin, @mymax, @myavg);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -681,7 +611,6 @@ DELIMITER ;
 </div>
 <p>And then check that it worked:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT @mymin, @mymax, @myavg;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -738,7 +667,6 @@ Each group (remember to tell me <em>whose</em> database has the group's works in
 <p>There is more than one way to communicate commands or receive results from a database server.  You have entered commands by hand using a text-based client.  You can also use the SOURCE command</p>
 <p>From the shell (in the same directory from which you will launch the mariadb host), create the file "test.sql".  The contents should be:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT * FROM &lt;dbf&gt;.inventory;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -755,7 +683,6 @@ Each group (remember to tell me <em>whose</em> database has the group's works in
 </div>
 <p>Now start mariadb and execute this command:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SOURCE test.sql; 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -772,7 +699,6 @@ Each group (remember to tell me <em>whose</em> database has the group's works in
 </div>
 <p>You can also do the same thing (from the shell) via:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sh">mysql -u[your name] -p --host=ids --port=[your port] [your database] &lt; test.sql 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -790,7 +716,6 @@ Each group (remember to tell me <em>whose</em> database has the group's works in
 <p>NOTE:  I usually use angle brackets to denote things that you will replace... but in the example above I needed to use the <code>&lt;</code> symbol as a pipe character, so I used <code>[]</code> instead of <code>&lt;&gt;</code>.</p>
 <p>You can also do something like this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sh">mysql -u[your name] -p --host=ids --port=[your port] [your database] -e &quot;SELECT * FROM [dbf].inventory&quot;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -817,7 +742,6 @@ Each group (remember to tell me <em>whose</em> database has the group's works in
 <h3>Intro to JSON</h3>
 <p>The trick behind JSON, is to turn the object into a string that is syntactically correct JavasSript.  Since JavaScript is an evaluated language, the string can be transferred and then evaluated upon receipt.  Here's an example compliments of Wikipedia:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-json">{    &quot;firstName&quot;: &quot;John&quot;,
      &quot;lastName&quot;: &quot;Smith&quot;,
      &quot;age&quot;: 25,
@@ -862,7 +786,6 @@ Each group (remember to tell me <em>whose</em> database has the group's works in
 </ul>
 <p>The dot notation is often easier to read, but lacks the flexibility of the bracket notation; In particular, the bracket notation allows the use of variables:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-js">property=&quot;lastName&quot;
 example[property]
 </code></pre>
@@ -880,7 +803,6 @@ example[property]
 </div>
 <p>If the return value isn't atomic you'll get back something that can be clicked or otherwise manipulated to open an object or array browers:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-js">example.phoneNumbers[0] example.phoneNumbers[&quot;0&quot;]
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -897,7 +819,6 @@ example[property]
 </div>
 <p>An array (in Javascript) is really just a special type of object.  It has some extra methods, but under the hood it is just a collection of attribute:value pairs (just like all the other objects):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-js">example.phoneNumber[0]
 example.phoneNumbers[&quot;0&quot;]
 </code></pre>
@@ -915,7 +836,6 @@ example.phoneNumbers[&quot;0&quot;]
 </div>
 <p>But the dot notation does not allow attributes (or properties as they tend to be called in Javascript) to start with a number.  so</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-js">example.phoneNumber.0
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -949,7 +869,6 @@ Each group should do the examples in the tutorial below in a database of one of 
 <p>I truncated the tree before reaching the actual data... but I think it's enough to give you a sense of how the structure works.  Think about how you would express this information in an SQL database in 3rd normal form.  (Don't actually make these tables... just think about it).</p>
 <p>We can actually turn any of our queries into XML.  Try this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sh">mysql --xml -u &lt;your name&gt; -p --host=ids -e 'show databases'
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -966,7 +885,6 @@ Each group should do the examples in the tutorial below in a database of one of 
 </div>
 <p>And then this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sh">mysql --xml -u &lt;your name&gt; -p --host=ids -e 'select * from &lt;your dbf&gt;.inventory' 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -986,7 +904,6 @@ Each group should do the examples in the tutorial below in a database of one of 
 <p><a href="https://mariadb.com/kb/en/load-xml/">https://mariadb.com/kb/en/load-xml/</a></p>
 <p>Let's scrape the cd information our online source.  Do this from the shell: </p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sh">wget http://www.w3schools.com/xml/cd_catalog.xml 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -1003,7 +920,6 @@ Each group should do the examples in the tutorial below in a database of one of 
 </div>
 <p>Now you are going to actually have to go in and make the table CD.  For now, let's just set it up like this (make all the fields text):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>cds
    PRICE 
    TITLE 
@@ -1027,7 +943,6 @@ Each group should do the examples in the tutorial below in a database of one of 
 <p>They should all be text.   See if you can use the <code>-e</code> parameter and do it from the command line.</p>
 <p>This will pull the contents of the webpage to the directory that you are in.  Log in as usual, and check that the <code>cd_catalog.xml</code> file has been created.  Let's convert the data in the XML file into records in the table:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">LOAD XML LOCAL INFILE 'cd_catalog.xml' INTO TABLE cds ROWS IDENTIFIED BY '&lt;CD&gt;';
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -1049,7 +964,6 @@ Each group should do the examples in the tutorial below in a database of one of 
 <p>The <a href="https://mariadb.com/kb/en/mariadb/storage-engines/">MariaDB dcoumentation on storage engines</a>  provides a decent overview of the various available engines, but it's a bit confusing at first so just skim over the entries.</p>
 <p>The command <code>SHOW ENGINES</code>.  Will reveal what engines are currently available (more may be loaded or unloaded) and which engine is the default.  The particular engine that is used by default in my server is InnoDB which (as you can see) supports transactions.  The <code>CREATE TABLE</code> command supports a <code>STORAGE ENGINE</code> clause which allows you to determine which storage engine that the table uses (we will play around with this a bit using the CSV  option).  To determine the storage engine you may use this command:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code class="language-sql">SHOW TABLE STATUS WHERE Name='&lt;table name&gt;';
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -1107,32 +1021,7 @@ Each group should do the examples in the tutorial below in a database of one of 
 </ul>
 </li>
 </ul>
-<script>
 
-    function copyCode(button) {
-      const wrapper = button.closest('.code-block-wrapper');
-      const codeBlock = wrapper.querySelector('code');
-      const text = codeBlock.textContent;
-      
-      // Copy to clipboard
-      navigator.clipboard.writeText(text).then(() => {
-        // Show success feedback
-        button.classList.add('copied');
-        const originalHTML = button.innerHTML;
-        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        
-        // Reset after 2 seconds
-        setTimeout(() => {
-          button.classList.remove('copied');
-          button.innerHTML = originalHTML;
-        }, 2000);
-      }).catch(err => {
-        console.error('Failed to copy:', err);
-        alert('Failed to copy code');
-      });
-    }
-    
-  </script>
 <script>
 
     function copyCode(button) {

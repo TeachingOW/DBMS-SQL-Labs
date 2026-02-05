@@ -12,50 +12,7 @@
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
     
-    /* Code block wrapper with copy button */
-    .code-block-wrapper {
-      position: relative;
-      margin: 20px 0;
-    }
     
-    .code-block-wrapper pre {
-      margin: 0;
-    }
-    
-    .copy-button {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      padding: 6px 8px;
-      background-color: rgba(255, 255, 255, 0.9);
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 0.2s, background-color 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .copy-button:hover {
-      opacity: 1;
-      background-color: #fff;
-    }
-    
-    .copy-button:active {
-      background-color: #e0e0e0;
-    }
-    
-    .copy-button.copied {
-      background-color: #4caf50;
-      color: white;
-      border-color: #4caf50;
-    }
-    
-    .copy-button svg {
-      display: block;
-    }
     
     
     /* Code block wrapper with copy button */
@@ -135,7 +92,6 @@
 <p>The next level of understanding (this is  the first one you learn <em>after</em> Magic Missile [^dnd]) comes from the <code>ORDER BY</code> 
 clause.  As you might expect, this controls the order of the entries in the table.  Try these:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory ORDER BY item;
 SELECT * FROM inventory order by amount;
 </code></pre>
@@ -153,7 +109,6 @@ SELECT * FROM inventory order by amount;
 </div>
 <p>It works with more complicated queries too:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory, prices WHERE inventory.id=prices.id ORDER BY unit;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -170,7 +125,6 @@ SELECT * FROM inventory order by amount;
 </div>
 <p>Additionally, just on the off chance you have enough entries in your tables for this to make sense, you can order by more than one column:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory, prices WHERE inventory.id=prices.id ORDER BY unit, item;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -189,7 +143,6 @@ SELECT * FROM inventory order by amount;
 <p>The next clause on our magical mystery tour is the GROUP BY clause (now we're at Fireball level)</p>
 <p>SOME functions are designed to work with <strong>aggregates</strong>.  Try these two commands:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM poorDesign;
 SELECT comboName,count(*) AS count FROM poorDesign GROUP BY comboCode;
 </code></pre>
@@ -211,7 +164,6 @@ SELECT comboName,count(*) AS count FROM poorDesign GROUP BY comboCode;
 <h2>The <code>HAVING</code> clause</h2>
 <p>Here's something a bit more interesting... try these:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT comboCode, count(*) FROM poorDesign WHERE item &gt;=3 GROUP BY comboCode;
 SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode;
 </code></pre>
@@ -231,7 +183,6 @@ SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode;
 <p>And of course, by saying that, I've highlighted what I wanted to point out... namely that the <code>WHERE</code> clause filters rows <strong>before</strong> grouping.  This means it affects just exactly WHAT gets grouped and can affect the output of the aggregating functions.  </p>
 <p>Now what happens if we want to restrict the <code>GROUPS</code> that we see?  That's where the <code>HAVING</code> clause comes into play.  It controls what GROUPS are displayed.... and even cooler, it can use aggregate functions of its own. Here's a perfectly valid command (which may, or may not, produce anything interesting – depending upon the contents of your tables):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode HAVING sum(comboCode)&gt;3;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -253,7 +204,6 @@ SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode;
 <h2>SubQueries</h2>
 <p>So... next level are subqueries (we're looking at Wizard's Eye here).  Here's an example:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory WHERE id IN (SELECT item FROM poorDesign);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -273,7 +223,6 @@ SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode;
 And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http://en.wikipedia.org/wiki/Correlated_subquery</a></p>
 <p>Now try this, rather stupid, example of a <strong>correlated subquery</strong>:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT (SELECT unit FROM inventory WHERE inventory.id=bob.id) FROM inventory AS bob;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -290,7 +239,6 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 </div>
 <p>The key to understanding what is happening is to realize that for EVERY row in the outer <code>SELECT</code> statement the INNER query is run.  In order for this sort of nested command to work correctly the inner <code>SELECT</code> needs to return <strong>one value</strong>.  This might make things a bit clearer:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT item,unit,amount,(SELECT unit FROM inventory WHERE inventory.id=bob.id) AS sub 
    FROM inventory AS bob;
 </code></pre>
@@ -308,7 +256,6 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 </div>
 <p>Pay special attention to giving aliases to the table names.  The outer query and inner query need some sort of common reference to be correlated… of course they don't HAVE to be correlated:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT item,unit,amount,(SELECT 'bob' ) AS sub FROM inventory AS bob;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -325,7 +272,6 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 </div>
 <p>This sort of thing is useful for including aggregate information:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT item,unit,amount,(SELECT avg(amount) FROM inventory WHERE unit=bob.unit GROUP by unit) AS sub FROM inventory AS bob;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -343,7 +289,6 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 <h2>The <code>UNION</code> keyword</h2>
 <p>So far we have been looking at various ways to combine columns of tables. We can also use functions that transform the contents of a column, or use a function to calculate a value derived from the value of several different columns:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT concat(item,unit) AS together FROM inventory;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -360,7 +305,6 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 </div>
 <p>But what if we want to merge ROWS? That's where <code>UNION</code> comes in:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id;
 SELECT * FROM inventory RIGHT JOIN prices ON inventory.id=prices.id;
 
@@ -381,7 +325,6 @@ SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id UNION
 </div>
 <p>Pretty spiffy isn't it… and it really DOES act like the union… there were a few rows shared by both of the component queries and they didn't show up more than once in the final output.  You can get around this behavior (which can matter sometimes by adding the option keyword ALL:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id UNION ALL
     SELECT * FROM inventory RIGHT JOIN prices ON inventory.id=prices.id;
 </code></pre>
@@ -442,7 +385,6 @@ SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id UNION
 <p><strong>B-trees</strong> are a data-structure (perhaps more accurately a family of data-structures) that were designed to optimize typical data-base style manipulations; lookup data is stored in a way that tries to efficiently use relatively slow physical disk access and minimize the time spent necessary to keep the tree's order in place.  Lookups are <code>O(log n)</code>:  For more information check out the <a href="https://en.wikipedia.org/wiki/B-tree">wikipedia page on B-trees</a>.  I am <strong>not</strong> expecting you to know all the ins-and-outs, but it is worth having an idea of what's going on.  For those of you that have had Algorithms, your text from that class (CLSR) has a good writeup on B-Trees.  B-tree indexes are used for column comparisons using the &gt;, &gt;=, =, &gt;=, &lt; or BETWEEN operators, as well as for LIKE comparisons that begin with a constant.
 For example, the query </p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM Employees WHERE First_Name LIKE 'Maria%'
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -474,7 +416,6 @@ text files called <code>rndA</code> and <code>rndB</code>. Both will contain two
 and each will be 2000 lines long. Since I'm not 100% certain what we have on-hand we'll just use stock
 commands:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>for i in `seq 1 2000`;
 do
  echo &quot;scale=0; $RANDOM/32.767&quot;|bc
@@ -496,7 +437,6 @@ done &gt; col1A
 <p>Now repeat for <code>col2A</code>, <code>col1B</code>, and <code>col2B</code>.</p>
 <p>At this point you should have 4 files: col1A, col1B, col2A, col2B.  Now we are going to use them to make the files  <code>randA</code> and <code>randB</code>:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>paste col1A col2A &gt; randA
 paste col1B col2B &gt; randB
 </code></pre>
@@ -514,7 +454,6 @@ paste col1B col2B &gt; randB
 </div>
 <p>Now each group should make two <strong>TABLES</strong> <code>randA</code> and <code>randB</code> with columns A and B both of which contain integers and no primary key. Then use</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>LOAD DATA LOCAL INFILE 'randA' INTO TABLE randA;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -535,7 +474,6 @@ from <code>randB</code>.</p>
 seconds for me)</p>
 <p>Now preface that with EXPLAIN:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>EXPLAIN SELECT * FROM randA WHERE A BETWEEN 1 AND 10;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -554,7 +492,6 @@ seconds for me)</p>
 <p>Now try this one (it took me FAR too long to come up with a query that confuses the built-in optimizer
 that MariaDB uses):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT count(*) FROM randA, randB, randA AS C 
    WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.B) AND
          C.B=randB.B;
@@ -574,7 +511,6 @@ that MariaDB uses):</p>
 <p>This one takes some time to run... so this is a good time <strong>in another terminal</strong> to open up another connection to the database and use the command <code>SHOW PROCESSLIST;</code>  You can watch your query run.  When you get tired of waiting note the Id (mine was 481) and then use the <code>KILL</code> command.  I used <code>Kill 481;</code></p>
 <p>I got tired after about 5 minutes Now add indices to the relevant columns (well... all of them)</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>ALTER TABLE randA ADD INDEX A (A);
 ALTER TABLE randB ADD INDEX A (A);
 ALTER TABLE randA ADD INDEX B (B);
@@ -596,7 +532,6 @@ ALTER TABLE randB ADD INDEX B (B);
 After you've run it a second time, preface it with <code>EXPLAIN</code> and examine the rows. Now go back, remove
 the keys and run it again (just to make sure it's not a side effect of caching):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>ALTER TABLE randA DROP INDEX A;
 ALTER TABLE randB DROP INDEX A;
 ALTER TABLE randA DROP INDEX B;
@@ -626,7 +561,6 @@ SELECT count(*) FROM randA, randB, randA AS C
 <p>Now, let's drop the tables and recreate them (this time with the keys). Then we'll fill the data (our data
 set is so small this won't make much of a difference-- but it's good for you to know how to do this):</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>DROP TABLE randA; DROP TABLE randB;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -644,7 +578,6 @@ set is so small this won't make much of a difference-- but it's good for you to 
 <p>Now recreate them, but this time with indexes from the beginning (hint:  that's something you'll need to do yourself).</p>
 <p>Now fill the first one without disabling the indexes:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>LOAD DATA LOCAL INFILE 'randA' INTO TABLE randA;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -661,7 +594,6 @@ set is so small this won't make much of a difference-- but it's good for you to 
 </div>
 <p>Before filling the second one, disable the keys:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>ALTER TABLE randB DISABLE KEYS;
 LOAD DATA LOCAL INFILE 'randB' INTO TABLE randB;
 ALTER TABLE randB ENABLE KEYS;
@@ -686,7 +618,6 @@ before importing saved over half an hour of time.</p>
 <p>We have already seen how to use <code>UNION</code> to combine the results of two queries with similar structures.  Let's practice.  </p>
 <p>First make sure these toy queries don't return anything too long:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA where A BETWEEN 2 AND 9;
 SELECT * FROM randB where B BETWEEN 2 AND 9;
 </code></pre>
@@ -704,7 +635,6 @@ SELECT * FROM randB where B BETWEEN 2 AND 9;
 </div>
 <p>Now join them into one:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 UNION 
 SELECT * FROM randB where B BETWEEN 2 AND 9;
@@ -723,7 +653,6 @@ SELECT * FROM randB where B BETWEEN 2 AND 9;
 </div>
 <p>Now try this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 UNION 
 SELECT * FROM randA where A BETWEEN 2 AND 9;
@@ -745,7 +674,6 @@ SELECT * FROM randA where A BETWEEN 2 AND 9;
 allowed) – in other words the output is, by default, at least in Type 1 Normal Form. </p>
 <p>You can force it to include everything like this:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA where A BETWEEN 2 AND 9 
 UNION ALL 
 SELECT * FROM randA where A BETWEEN 2 AND 9;
@@ -765,7 +693,6 @@ SELECT * FROM randA where A BETWEEN 2 AND 9;
 <p>If you are using <code>UNION</code>, then you are allowed one <code>ORDER BY</code> clause and it must come AFTER the last <code>SELECT</code> (no
 ordering the pieces then joining them together). This will work:</p>
 <div class="code-block-wrapper">
-  <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA where A BETWEEN 2 AND 9 
 UNION ALL 
 SELECT * FROM randA where A BETWEEN 2 AND 9 
@@ -815,32 +742,7 @@ ORDER BY B;
    - [ ] <a href="#foreign-key-exercise">Foreign Key Exercise</a>
    - [ ] Make sure your tables exist for the shell/mysql index and union examples (where applicable).</p>
 <p>[^dnd]: There are several Dungeons and Dragons references in this lab that I had to look up. Don't worry if you don't get them. :-) – Nic</p>
-<script>
 
-    function copyCode(button) {
-      const wrapper = button.closest('.code-block-wrapper');
-      const codeBlock = wrapper.querySelector('code');
-      const text = codeBlock.textContent;
-      
-      // Copy to clipboard
-      navigator.clipboard.writeText(text).then(() => {
-        // Show success feedback
-        button.classList.add('copied');
-        const originalHTML = button.innerHTML;
-        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-        
-        // Reset after 2 seconds
-        setTimeout(() => {
-          button.classList.remove('copied');
-          button.innerHTML = originalHTML;
-        }, 2000);
-      }).catch(err => {
-        console.error('Failed to copy:', err);
-        alert('Failed to copy code');
-      });
-    }
-    
-  </script>
 <script>
 
     function copyCode(button) {

@@ -227,6 +227,11 @@ def process_html_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as f:
         content = f.read()
     
+    # Check if already processed
+    if 'code-block-wrapper' in content or 'copyCode' in content:
+        print(f"⚠ Skipping {file_path} - already processed")
+        return
+    
     # Step 1: Convert markdown tables to HTML
     content = convert_markdown_tables_in_html(content)
     
