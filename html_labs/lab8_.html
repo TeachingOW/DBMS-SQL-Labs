@@ -11,6 +11,55 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
     </style>
 </head>
 <body>
@@ -44,7 +93,8 @@
 </ul>
 <p>This will be implemented by your node server which you will run by typing some variation on <code>node myserver.js</code>.  I'm choosing to call my server <code>express.js</code></p>
 <p>For example, here is a slimmed down version of <code>express.js</code>.  I have removed functional details in order to let you add those back in.  I implemented this version without Promises or connectionPools, but you probably want to to add those in.  The repository ONLY has a stub.</p>
-<pre><code class="language-js">var express=require('express'),
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var express=require('express'),
 mysql=require('mysql'),
 credentials=require('./credentials.json'),
 app = express(),
@@ -79,9 +129,22 @@ app.get(&quot;/click&quot;,function(req,res){
 
 app.listen(port);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h2>The angular template</h2>
 <p>You have done the tutorials (and many of you have worked with angular in other classes), so I'll just provide a sample of the sort of thing that I used to implement "clickability" on the item buttons (note:  I did NOT add the css file that I used):</p>
-<pre><code class="language-html">&lt;!doctype html&gt;
+<div class="code-block-wrapper">
+  <pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html&gt;
 &lt;head lang=&quot;en&quot;&gt;
     &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -107,9 +170,22 @@ app.listen(port);
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h2>The JavasScript</h2>
 <p>You will notice that the Angular template loads a javascript file named <code>click.js</code> (which I have included in the public subdirectory).  Most of this is boiler plate material... but notice how we use <code>$scope.</code> to make functionality defined in <code>click.js</code> available in our web-page.</p>
-<pre><code class="language-js">angular.module('buttons',[])
+<div class="code-block-wrapper">
+  <pre><code class="language-js">angular.module('buttons',[])
   .controller('buttonCtrl',ButtonCtrl)
   .factory('buttonApi',buttonApi)
   .constant('apiUrl','http://146.57.34.125:1337'); //CHANGE for the lab!
@@ -163,6 +239,18 @@ function buttonApi($http,apiUrl){
  };
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>For this week's lab I would like you to add the following functionality:</p>
 <ul>
 <li>Make the buttons fully functional</li>
@@ -180,5 +268,32 @@ function buttonApi($http,apiUrl){
 <li>create a "SALE" button, the infrastructure to support it, and implement the functionality,</li>
 <li>create a "VOID" button and implement the functionality.</li>
 </ul>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
 </body>
 </html>

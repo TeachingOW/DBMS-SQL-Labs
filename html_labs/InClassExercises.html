@@ -11,6 +11,55 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
     </style>
 </head>
 <body>
@@ -31,19 +80,46 @@
 <h2>🚀 Getting Started</h2>
 <h3>Step 1: Create Your First Database</h3>
 <p>A database is a container that holds related tables. Let's create one for our exercises:</p>
-<pre><code class="language-sql">-- Create a new database (only needed once)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Create a new database (only needed once)
 CREATE DATABASE lab1_exercises;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Note</strong>: Database names are case-sensitive on some systems. Use lowercase for consistency.</p>
 <h3>Step 2: Select the Database</h3>
 <p>Before creating tables, you must specify which database to use:</p>
-<pre><code class="language-sql">-- Switch to our new database
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Switch to our new database
 USE lab1_exercises;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Important</strong>: You need to run <code>USE database_name;</code> every time you start a new session.</p>
 <h3>Step 3: Create Your First Table</h3>
 <p>Let's create a product catalog table with proper data types and constraints:</p>
-<pre><code class="language-sql">-- Create the product table with detailed comments
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Create the product table with detailed comments
 CREATE TABLE product(
     pname        VARCHAR(20) PRIMARY KEY,  -- Product name (unique identifier)
     price        DECIMAL(10,2),            -- Price with 2 decimal places
@@ -51,6 +127,18 @@ CREATE TABLE product(
     manufacturer VARCHAR(20) NOT NULL      -- Manufacturer (required field)
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Key Concepts</strong>:
 - <code>PRIMARY KEY</code>: Ensures each product name is unique
 - <code>DECIMAL(10,2)</code>: Stores numbers with up to 10 digits, 2 after decimal point
@@ -58,23 +146,80 @@ CREATE TABLE product(
 - <code>VARCHAR(20)</code>: Variable-length string up to 20 characters</p>
 <h3>Step 4: Insert Sample Data</h3>
 <p>Now let's add some products to our table:</p>
-<pre><code class="language-sql">-- Insert sample products
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert sample products
 INSERT INTO product VALUES('Gizmo', 19.99, 'Gadgets', 'GizmoWorks');
 INSERT INTO product VALUES('PowerGizmo', 29.99, 'Gadgets', 'GizmoWorks');
 INSERT INTO product VALUES('MultiTouch', 203.99, 'Household', 'Hitachi');
 INSERT INTO product VALUES('SingleTouch', 149.99, 'Photography', 'Canon');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify your data</strong>:</p>
-<pre><code class="language-sql">-- View all products
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- View all products
 SELECT * FROM product;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Expected Output</strong>:
-| pname | price | category | manufacturer |
-|-------|-------|----------|--------------|
-| Gizmo | 19.99 | Gadgets | GizmoWorks |
-| PowerGizmo | 29.99 | Gadgets | GizmoWorks |
-| MultiTouch | 203.99 | Household | Hitachi |
-| SingleTouch | 149.99 | Photography | Canon |</p>
+<table>
+  <thead>
+    <tr>
+      <th>pname</th>
+      <th>price</th>
+      <th>category</th>
+      <th>manufacturer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gizmo</td>
+      <td>19.99</td>
+      <td>Gadgets</td>
+      <td>GizmoWorks</td>
+    </tr>
+    <tr>
+      <td>PowerGizmo</td>
+      <td>29.99</td>
+      <td>Gadgets</td>
+      <td>GizmoWorks</td>
+    </tr>
+    <tr>
+      <td>MultiTouch</td>
+      <td>203.99</td>
+      <td>Household</td>
+      <td>Hitachi</td>
+    </tr>
+    <tr>
+      <td>SingleTouch</td>
+      <td>149.99</td>
+      <td>Photography</td>
+      <td>Canon</td>
+      <td></p></td>
+    </tr>
+  </tbody>
+</table>
 <h2>💡 Practice Exercises</h2>
 <h3>Exercise #1: Filtering and Sorting</h3>
 <p><strong>Task</strong>: Write a query to get all products with "Touch" in the name, showing only their name and price, sorted alphabetically by manufacturer.</p>
@@ -99,18 +244,45 @@ SELECT * FROM product;
 <summary>💡 Click to see the solution</summary>
 
 
-<pre><code class="language-sql">SELECT pname, price 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT pname, price 
 FROM product 
 WHERE pname LIKE '%Touch%' 
 ORDER BY manufacturer;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Expected Output**:
-| pname | price |
-|-------|-------|
-| SingleTouch | 149.99 |
-| MultiTouch | 203.99 |
+<table>
+  <thead>
+    <tr>
+      <th>pname</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SingleTouch</td>
+      <td>149.99</td>
+    </tr>
+    <tr>
+      <td>MultiTouch</td>
+      <td>203.99</td>
+    </tr>
+  </tbody>
+</table>
 
 **Explanation**:
 - `LIKE '%Touch%'`: Finds any product name containing "Touch"
@@ -120,23 +292,58 @@ ORDER BY manufacturer;
 <h3>Exercise #1b: Distinct Values</h3>
 <p><strong>Task</strong>: Write a query that returns the distinct names of manufacturers that make products with "Gizmo" in the name.</p>
 <p><strong>Your solution</strong>:</p>
-<pre><code class="language-sql">-- Write your solution here
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Write your solution here
 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <details>
 <summary>💡 Click to see the solution</summary>
 
 
-<pre><code class="language-sql">SELECT DISTINCT manufacturer 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT manufacturer 
 FROM product 
 WHERE pname LIKE '%Gizmo%';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Expected Output**:
-| manufacturer |
-|--------------|
-| GizmoWorks |
+<table>
+  <thead>
+    <tr>
+      <th>manufacturer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GizmoWorks</td>
+    </tr>
+  </tbody>
+</table>
 
 **Explanation**:
 - `DISTINCT`: Removes duplicate manufacturer names
@@ -145,7 +352,8 @@ WHERE pname LIKE '%Gizmo%';
 
 <h3>Exercise #2: Understanding DISTINCT and ORDER BY</h3>
 <p><strong>Task</strong>: Before running these queries, predict what each will return. Then run them to check your understanding.</p>
-<pre><code class="language-sql">-- Query A
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Query A
 SELECT DISTINCT category FROM product ORDER BY category;
 
 -- Query B  
@@ -154,6 +362,18 @@ SELECT category FROM product ORDER BY pname;
 -- Query C
 SELECT DISTINCT category FROM product ORDER BY pname;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Predictions</strong>:
 - Query A will return: <strong><em>_</em></strong><strong><em>_</em></strong><strong>
 - Query B will return: <strong><em>_</em></strong><strong><em>_</em></strong></strong><br />
@@ -162,21 +382,49 @@ SELECT DISTINCT category FROM product ORDER BY pname;
 <summary>💡 Click to see the answers</summary>
 
 **Query A Results**:
-| category |
-|----------|
-| Gadgets |
-| Household |
-| Photography |
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gadgets</td>
+    </tr>
+    <tr>
+      <td>Household</td>
+    </tr>
+    <tr>
+      <td>Photography</td>
+    </tr>
+  </tbody>
+</table>
 
 **Explanation**: Returns unique categories sorted alphabetically.
 
 **Query B Results**:
-| category |
-|----------|
-| Gadgets |
-| Household |
-| Photography |
-| Gadgets |
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gadgets</td>
+    </tr>
+    <tr>
+      <td>Household</td>
+    </tr>
+    <tr>
+      <td>Photography</td>
+    </tr>
+    <tr>
+      <td>Gadgets</td>
+    </tr>
+  </tbody>
+</table>
 
 **Explanation**: Returns all categories (including duplicates) in the order of product names.
 
@@ -190,7 +438,8 @@ This query will produce an **ERROR**! You cannot use `ORDER BY pname` when `pnam
 <p><strong>Learning Focus</strong>: Understanding table relationships, foreign keys, and multi-table queries.</p>
 <h4>Setting Up the Database Schema</h4>
 <p>We need to recreate our tables to demonstrate foreign key relationships:</p>
-<pre><code class="language-sql">-- Clean up existing tables (order matters due to foreign key constraints!)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Clean up existing tables (order matters due to foreign key constraints!)
 DROP TABLE IF EXISTS product;  -- Drop child table first
 DROP TABLE IF EXISTS company;   -- Then drop parent table
 
@@ -206,11 +455,37 @@ INSERT INTO company VALUES ('ToyWorks', 25.0, 'USA');
 INSERT INTO company VALUES ('ToyFriends', 65.0, 'China');
 INSERT INTO company VALUES ('ToyCo', 15.0, 'China');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify company data</strong>:</p>
-<pre><code class="language-sql">SELECT * FROM company;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM company;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Now create the product table with a foreign key relationship:</p>
-<pre><code class="language-sql">-- Create the child table (product) with foreign key constraint
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Create the child table (product) with foreign key constraint
 CREATE TABLE product(
     pname VARCHAR(10),                -- Product name
     price DECIMAL(10,2),              -- Product price
@@ -228,6 +503,18 @@ INSERT INTO product VALUES('Bulbasaur', 149.99, 'Toy', 'ToyFriends');
 INSERT INTO product VALUES('Charizard', 203.99, 'Toy', 'ToyCo');
 INSERT INTO product VALUES('PokeCamera', 19.99, 'Electronic', 'ToyWorks');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Key Concepts Explained</strong>:
 - <strong>Composite Primary Key</strong>: <code>(pname, manufacturer)</code> together uniquely identify each row
 - <strong>Foreign Key</strong>: <code>manufacturer</code> must exist in the <code>company</code> table
@@ -257,27 +544,64 @@ INSERT INTO product VALUES('PokeCamera', 19.99, 'Electronic', 'ToyWorks');
 
 **Solution using JOIN**:
 
-<pre><code class="language-sql">SELECT DISTINCT p.category
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT p.category
 FROM product p
 JOIN company c ON p.manufacturer = c.cname
 WHERE c.country = 'China';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Alternative solution using WHERE clause**:
 
-<pre><code class="language-sql">SELECT DISTINCT category
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT category
 FROM product, company
 WHERE manufacturer = cname 
   AND country = 'China';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Expected Output**:
-| category |
-|----------|
-| Toy |
-| Electronic |
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Toy</td>
+    </tr>
+    <tr>
+      <td>Electronic</td>
+    </tr>
+  </tbody>
+</table>
 
 **Explanation**:
 - We need to connect the `product` and `company` tables
@@ -288,27 +612,68 @@ WHERE manufacturer = cname
 
 <h4>Bonus Challenge</h4>
 <p><strong>Task</strong>: Find the names of all products made by companies with stock price &gt; $20.</p>
-<pre><code class="language-sql">-- Write your solution here
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Write your solution here
 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <details>
 <summary>💡 Click to see the bonus solution</summary>
 
 
-<pre><code class="language-sql">SELECT p.pname
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT p.pname
 FROM product p
 JOIN company c ON p.manufacturer = c.cname
 WHERE c.stockprice &gt; 20;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Expected Output**:
-| pname |
-|-------|
-| Pikachu |
-| Pikachu |
-| Bulbasaur |
-| PokeCamera |
+<table>
+  <thead>
+    <tr>
+      <th>pname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pikachu</td>
+    </tr>
+    <tr>
+      <td>Pikachu</td>
+    </tr>
+    <tr>
+      <td>Bulbasaur</td>
+    </tr>
+    <tr>
+      <td>PokeCamera</td>
+    </tr>
+  </tbody>
+</table>
 
 **Note**: Pikachu appears twice because it's made by two different companies (ToyWorks and ToyFriends), both with stock prices > $20.
 </details>
@@ -384,5 +749,32 @@ WHERE c.stockprice &gt; 20;
 <li>Ensure correct spelling of keywords</li>
 </ol>
 <p>Need help? Check the <a href="../Readme.md">main README</a> for additional resources and support options.</p>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
 </body>
 </html>

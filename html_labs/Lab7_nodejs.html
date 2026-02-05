@@ -11,6 +11,55 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
     </style>
 </head>
 <body>
@@ -40,7 +89,8 @@
 <p>There are at many ways to deal with the asynchronous issues arising from the intersection of node and mariaDB.  I will discuss two:  Using a data structure for coordination and using promises.  Many of you used <code>async</code> which is promise-based.  There is another approach involving <code>generator functions</code>, but I don't know enough about that yet to provide good advice... so I'll just let you know it exists and if anybody is looking for an interesting project for this class-- that might fit the bill.</p>
 <h2>Approach One:  Coordinate using a data structure</h2>
 <p>Consider the fragment below which should look very similar to <code>show-databases.js</code> from the last lab:</p>
-<pre><code class="language-JavaScript">... stuff left out ...
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">... stuff left out ...
 var connection = mysql.createConnection(credentials);
 var data={};
 var processed={}
@@ -55,11 +105,24 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
 }
 });
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>We will use the global variables <code>data</code> and <code>processed</code> to coordinate our asynchronous database queries.  Both of these variables are hash tables.</p>
 <p>We begin the program similarly to what we did in the last lab by setting up the connection.  The <code>connection.query()</code> method sets up the SQL query and passes the anonymous callback function that will either deal with the results of the query (if successful), or deal with the consequences of a failure (if there is an error).  Notice that the anonymous function has three parameters <code>err</code>, <code>rows</code>, and <code>fields</code> which will be filled with values resulting from the interaction with MariaDB.</p>
 <p>Our logic is particularly simple-- if there is an error, report it and close the connection.  Otherwise our query has returned an array of objects which we will deal with in the function <code>processDBFs</code> (discussed below).</p>
 <p>Let's look at how <code>processDBFs</code> works: </p>
-<pre><code class="language-js">function processDBFs(dbfs){ // Asynchronous row handler
+<div class="code-block-wrapper">
+  <pre><code class="language-js">function processDBFs(dbfs){ // Asynchronous row handler
      for(var index in dbfs){
        var dbf = dbfs[index].Database;
        var sql = 'SHOW TABLES IN '+dbf;
@@ -77,29 +140,81 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
     } // do NOT put a connection.end() here.  It will kill all queued queries.
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The variable <code>dbfs</code> is an array of objects containing database names.  The outer <code>for</code> loop steps through each in turn.  We use the name of the dbf as a key in the global hash <code>data</code>.  Eventually <code>data</code> will hold a count of the number of tables in that database, but we don't know how many there are yet, so we store a value of <code>Number.POSITIVE_INFINITY</code>.   This reserves space in the data-structure.  IF the rest of the program works as expected, the value will change to an actual integer, but if not, then we can detect that there was a problem.</p>
 <p>For each database we want to execute a query of the form <code>SHOW TABLES IN DBF</code>.  Setting up this query should look similar to what we did when we were running SHOW DATABASES-- we create a callback function to be executed when the quey is completed.  But there is one very, important difference that makes everything work.  Look closely at what is being done:</p>
-<pre><code class="language-js">        connection.query(sql, (function(dbf){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">        connection.query(sql, (function(dbf){
           return function(err,tables,fields){
             #function body
         })(dbf));
 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The callback function is <strong>created</strong> inside <code>processDBFs</code>.  This chunk of code:</p>
-<pre><code class="language-js">(function(dbf){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">(function(dbf){
           return function(err,tables,fields){
             #function body
         })(dbf)
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>both defines <em>and</em> executes an anonymous function that takes <code>dbf</code> as an argument, and returns yet another function, namely the interior function:</p>
-<pre><code class="language-js">function(err,tables,fields){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">function(err,tables,fields){
     #function body
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>This is important.  The innermost function is defined <em>inside</em> the anonymous function and thus <strong>shares its namespace</strong>.  Most importantly... it has a local copy of the value of <code>dbf</code>.</p>
 <p><strong>That</strong> function (also anonymous) is the callback given to <code>connection.query</code>.  Because of the properties of closures-- the function body will use the proper version of <code>dbf</code>.  Without using this technique, your program would find the current value of <code>dbf</code> as it exists in <code>processDBFs</code>.</p>
 <p>In a similar fashion each table can now be processed by a function.  Note the similar <strong>callback construction</strong> approach, and how all the local values are handed off to <code>processDescription(desc,table,dbf)</code> for final printing:</p>
-<pre><code class="language-js">function processTables(tables,dbf){ // Asynchronous row handler
+<div class="code-block-wrapper">
+  <pre><code class="language-js">function processTables(tables,dbf){ // Asynchronous row handler
     data[dbf] = tables.length; // Now it is set.
     processed[dbf] = 0;        // And has not yet been used as a label.
     for(var index in tables){
@@ -121,9 +236,22 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
     }
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Here we finally set the <code>dbf</code> entry in <code>data</code> to be the number of tables in the database.  And set the <code>dbf</code> entry in the global hash <code>processed</code> to reflect the fact that we have not yet printed out the DBF line in our desired output.</p>
 <p>This is all fine and dandy... but we still need to print out actual results and close the connection when we are done.  This is handled by <code>processDescription</code>:</p>
-<pre><code class="language-js">function processDescription(desc,table,dbf){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">function processDescription(desc,table,dbf){
   data[dbf]--; //Processed one table
   if(processed[dbf]==0){
     processed[dbf] = 1
@@ -137,9 +265,22 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
   if(allZero(data)){connection.end()}
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>This function does all the printing.  It starts by decreases the table count in <code>dbf</code> by 1.  Then it checks to see if the database output line has been produced (that's what we use <code>processed</code> for).  If not, then the line is printed, and the fact recorded so that the line is not printed twice.</p>
 <p>Regardless it prints the description of a table.  The only thing left is to shut down the connection when every table has had its description printed.  The function <code>allZero</code> returns <code>true</code> if every value in <code>data</code> is 0, otherwise it returns <code>false</code>:</p>
-<pre><code class="language-js">function allZero(object){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">function allZero(object){
   allzero = true;
   for(obj in object){
     if(object[obj]!=0){allzero = false}
@@ -147,6 +288,18 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
   return(allzero);
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h2>Approach Two:  Using promises</h2>
 <p>The more I investigate this approach, the more I think it is <strong>the right thing to do</strong>.  So, at the risk of really stretching this material out... let's learn a little bit about honesty and the importance of making promises.  I am basing much of this lecture of Daniel Parker's work in "JavaScript with Promises".  Before getting into the nitty-gritty here's an overview of the JavaScript event loop, as explained by <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">Philip Robers</a> (you will need about half an hour)</p>
 <h3>What is a promise</h3>
@@ -166,7 +319,8 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
 <p>Generally, we are not going to be changing the state of a Promise ourselves, but it helps to know what is happening behind the scenes.  A Promise can change from <em>Pending</em> to <em>Fulfilled</em> (if successful) or <em>Rejected</em> (if there was an error).  A Promise in either of these two states is called <em>submitted</em>.  Once submitted a Promise can not change state.</p>
 <p>Remember that a Promise is a placeholder for a value-- a value that is the end result of some asynchronous procedure.  We can assign handlers to a Promise to deal with the results of that procedure using the <code>.then()</code> method.  We can also use the <code>.catch()</code> method to deal with errors.  (If you're being picky, we can use <code>.then()</code> to deal with both success and failure).</p>
 <p>We can also <strong>chain</strong> promises together using <code>.then()</code>.  This allows the programmer to introduce causal steps and deal with dependency issues.  This will make more sense after the examples below.  Try this short one first:</p>
-<pre><code class="language-js">Promise=require('bluebird');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">Promise=require('bluebird');
 
 var promise= new Promise(function(resolve,reject){
   console.log('Inside resolver function');
@@ -179,34 +333,99 @@ promise.then(function(){
 
 console.log('End of Script');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The output of this little program should be as follows:</p>
-<pre><code>Inside resolver function
+<div class="code-block-wrapper">
+  <pre><code>Inside resolver function
 End of Script
 Inside onFulfilled handler
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>So what is happening?  Bluebird is one of several promise APIs.  Somewhat similar to an <code>import</code> command in Java, we load it using <code>require</code>:  </p>
-<pre><code class="language-js">Promise=require('bluebird');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">Promise=require('bluebird');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The variable <code>Promise</code> exposes all the functionality of the bluebird API (we could have called it whatever we wanted).<br />
 The variable <code>promise</code> (notice the lower case p) is created using <code>new</code> and a constructor called <code>Promise()</code>.  This constructor expect a function that takes two arguments-- <code>resolve</code> and <code>reject</code>-- both functions in their own right (it's getting kind of meta isn't it?).  We pass the constructor just such an anonymous function:</p>
-<pre><code class="language-js">function(resolve,reject){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">function(resolve,reject){
   console.log('Inside resolver function');
   resolve();
 }
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>This function runs immediately (it is a <strong>synchronous</strong> call). And we get our first output line:  <code>Inside resolver function</code>.  The two functoral arguments: <code>resolve</code> and <code>reject</code> are provided by bluebird.  Both are run asynchronously and set up callback functions that will be fired later.  That's what makes this whole thing work.  The <code>resolve()</code> method is designed to recursively work back along the chain of handlers (if any) starting at that current Promise.  </p>
 <p>Because <code>resolve()</code> is asynchronous it immediately returns (and it will return a promise object).  The function <code>resolve()</code> is now queued up, and will be run AFTER the main thread of execution is completed (because of the "run until completion motto" enjoyed by javaScript and node.js).   Eventually <code>resolve()</code> will attempt to resolve anything <em>hanging off</em> that original promise.  At this point however, no handlers have been attached to the promise, and there are no additional promises attached to it.  This is the beauty of making <code>resolve()</code> asynchronous-- the rest of the program now has time to assign handlers.</p>
 <p>So we get to the next chunk in the code:</p>
-<pre><code class="language-js">promise.then(function(){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">promise.then(function(){
   console.log('Inside onFulfilled handler');
 });
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>This one assigns a handler to the initial promise using <code>.then()</code>.  This is our <code>onFulfilled handler</code>.  So... we have assigned a callback (which definitely has not yet been run) which will trigger after our initial Promise is fulfilled.</p>
 <p>Because the original <code>resolve()</code> function is waiting for the current thread of execution to finish it does not get to run yet... it is still waiting in the stack.</p>
 <p>Finally we reach <code>console.log('End of Script')</code>, and we print out <strong>second</strong> line of output.</p>
 <p>Now <code>resolve()</code> can run.  Because it had to wait until the end of our current thread of execution before being run, we had time to add things to the original promise.  The method <code>.resolve()</code> executes the <code>onFulfilled</code> handler, and our third line finally prints.</p>
 <p>In general we would set up our initial promise like this:</p>
-<pre><code class="language-js">var promise = new Promise(function(resolve, reject) {
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var promise = new Promise(function(resolve, reject) {
   // do a thing, possibly async, then…
 
   if (/* everything turned out fine */) {
@@ -217,10 +436,23 @@ The variable <code>promise</code> (notice the lower case p) is created using <co
   }
 });
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The <code>.then()</code> method expects either a Promise object or a callback function (more on that down below) as an argument.</p>
 <h3>Back to databases</h3>
 <p>Let's review our original <code>showDatabases.js</code> program:</p>
-<pre><code class="language-js">var credentials = require('./credentials.json');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var credentials = require('./credentials.json');
 
 var mysql=require(&quot;mysql&quot;);
 
@@ -245,13 +477,26 @@ connection.query('SHOW DATABASES',function(err,rows,fields){
 connection.end()
 console.log(&quot;All done now.&quot;);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>We are going to start by modifying this example to make use <code>connection.pool()</code>s.  The reason we are doing this is three-fold:</p>
 <ol>
 <li>Most examples use this (and we would like to steal other people's good ideas when possible).</li>
 <li>This approach will scale better to larger projects that might require multiple concurrent connections.</li>
 <li>Creating a new connection helps insulate the user from fragile connections (connections can break)</li>
 </ol>
-<pre><code class="language-js">var credentials = require('./credentials.json');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var credentials = require('./credentials.json');
 var mysql=require(&quot;mysql&quot;);
 credentials.host=&quot;ids&quot;
 var pool=mysql.createPool(credentials)
@@ -272,11 +517,24 @@ pool.getConnection(function(err,conn){
 });
 console.log(&quot;All done now.&quot;);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Notice that we are using <code>.release()</code> and <code>pool.end()</code>.</p>
 <p>In our example, this is major over-kill and something of a waste of time since it makes the code harder to read.  However… if we removed the <code>pool.end()</code> … we could wrap most of our active-code in a function and have a comletely self-contained <code>sql</code> function.  We would <strong>still</strong> have to deal with the difficulties of asynchronous callbacks... but things would run very quickly indeed.</p>
 <h3>Bringing in promises</h3>
 <p>Now we're going to add in promises.  There are some new ideas floating around in this next example, so be sure to type up the next example before continuing:</p>
-<pre><code class="language-js">var credentials = require('./credentials.json');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var credentials = require('./credentials.json');
 
 var mysql=require(&quot;mysql&quot;);
 var Promise = require('bluebird');
@@ -304,15 +562,41 @@ sql=&quot;SHOW DATABASES&quot;
 var result=query(mysql.format(sql)) //result is a promise
 result.then(function(dbfs,err){console.log(dbfs)}).then(function(){pool.end()});
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The first <em>weird</em> thing in the code up above is (somewhat abridged) some of the <em>Promise</em> parts:</p>
-<pre><code class="language-js">var Promise = require('bluebird');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var Promise = require('bluebird');
 Promise.promisifyAll(require(&quot;mysql/lib/Connection&quot;).prototype);
 Promise.promisifyAll(require(&quot;mysql/lib/Pool&quot;).prototype);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The first line is clear:  We are using the promise library known as <code>bluebird</code>. The next two lines are a bit mysterious.  We will examine them in more detail later.  The important thing is that these lines <em>wrap</em> the original methods from mysql in functions that return Promises.  The function <code>promisify</code> converts callback-style APIs to use promises.  You can read up on it <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md#promisification">at the bluebird documention</a>.  The key thing is that a new version of the function is made that now ends with the word <code>Async</code>.  Hence the <code>mysql</code> method <code>query</code> is now called <code>queryAsync</code> and returns a promise instead of its results.</p>
 <h3>Connection pools and promises</h3>
 <p>Things are a bit nicer now:</p>
-<pre><code class="language-js">var pool=mysql.createPool(credentials); //Setup the pool using our credentials.
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var pool=mysql.createPool(credentials); //Setup the pool using our credentials.
 
 var getConnection=function(){
     return pool.getConnectionAsync().disposer(
@@ -320,25 +604,64 @@ var getConnection=function(){
           );
 };
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The <code>.disposer()</code> method is part of <code>bluebird</code>.  It is guaranteed to run after the promise returned by <code>.getConnectionAsync()</code> is resolved.... so what we're doing is over-writing the <code>getConnection</code> function with one of our own.  The <a href="https://github.com/petkaantonov/bluebird/blob/master/API.md#resource-management">blue bird documentation on Resource Management</a> is informative  Be sure to read the entire resource Management section before continuing.  </p>
 <p>Now look at where <code>getConnection()</code> is being used:</p>
-<pre><code class="language-js">var query=function(command){
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var query=function(command){
     return using(getConnection(),function(connection){
        return connection.queryAsync(command);
     });
 };
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The <code>query()</code> method is using <code>using</code> (which is discussed in that last link I provided).  This method will ensure that the anonymous function passed as the second argument can use the same name space as the promise returned by <code>getConnection()</code>.  It also ensures that the <code>.disposer()</code> method for <code>.getConnection()</code> isn't called until after <code>.queryAsync()</code> (which is a promise) is resolved.  </p>
 <p>We are finally in a position to understand the <em>meat of the function</em>:</p>
-<pre><code class="language-js">var result=query(mysql.format(sql)) //result is a promise
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var result=query(mysql.format(sql)) //result is a promise
 result.then(function(dbfs,err){console.log(dbfs)}).then(function(){pool.end()});
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>So, the <code>query()</code> function returns a promise that is not completely resolved until the query it contains is executed.
 We use <code>.then()</code> to process the results of those queries, and then another <code>.then()</code> chained off the back, that closes down the pool of connections.</p>
 <h3>Making things a bit cleaner</h3>
 <p>I would like to clean things up a bit to show how much more readable Promises can make our code.</p>
 <p>First, create a file called <code>dbf-setup.js</code> and make certain it is in the same directory as your <code>credentials.json</code> file.  Here is what <code>dbf-setup.js</code> should contain:</p>
-<pre><code class="language-js">var credentials = require('./credentials.json');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var credentials = require('./credentials.json');
 
 var mysql=require(&quot;mysql&quot;);
 var Promise = require('bluebird');
@@ -369,9 +692,22 @@ var endPool=function(){
 exports.query = query;
 exports.releaseDBF=endPool;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>We are defining a module.  Node.js allows you to use the <code>require</code> function to import information from another file, and the <code>exports.function_name=function</code>. The only new material is at the end.  It is how we export functions.  </p>
 <p>With that functionality wrapped up in a module the remaining code necessary to implement "SHOW DATABASES" is fairly short.  I have added TWO complications in preparation for the final version of the program however, so read carefully:</p>
-<pre><code class="language-js">mysql=require('mysql');
+<div class="code-block-wrapper">
+  <pre><code class="language-js">mysql=require('mysql');
 dbf=require('./dbf-setup.js');
 
 var getDatabases=function(){//Returns a promise that can take a handler ready to process the results
@@ -389,16 +725,42 @@ dbf=getDatabases()
 .then(function(results){console.log(results)})
 .then(dbf.releaseDBF);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>It is a waste to do so little work in <code>processDBFS</code>, but I wanted to point out something very important.  Each <code>.then()</code> method is returning a Promise, and by putting the <code>.then()</code>'s in order we are forcing the callback to be executed in our desired order.  The key thing to notice lives here:</p>
-<pre><code class="language-js">.then(processDBFs)
+<div class="code-block-wrapper">
+  <pre><code class="language-js">.then(processDBFs)
 .then(function(results){console.log(results)})
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Notice that the function <code>processDBFs</code> is returning an array of JavaScript objects-- one for each database.  Which function is processing those results?  That would be the anonymous function in the next line: <code>function(results){console.log(results)}</code>.</p>
 <p>So the <code>.then()</code> methods form a chain of promises and these promises induce a chain of callback functions that hand their results off to each-other in the proper order.  This is one of the <strong>secrets</strong> to making it all work out.</p>
 <p>Another secret is using the <code>.all()</code> method. I typically call it using the object attached to the blubird module.  In my case this looks like:  <code>Promise.all(myArrayOfPromises)</code>.</p>
 <p>For this solution we are going to take advantage of <strong><a href="http://www.w3resource.com/node.js/nodejs-mysql.php#prepared-statements">prepared statements </a></strong> to make our code even more compact.</p>
 <p>Here is my solution involving Promises and prepared statements.  My Promise-Fu is still quite weak, so there are, undoubtedly, ways to do this even more cleanly.  Youl should all type this program in yourselves:</p>
-<pre><code class="language-js">Promise=require('bluebird')
+<div class="code-block-wrapper">
+  <pre><code class="language-js">Promise=require('bluebird')
 mysql=require('mysql');
 DBF=require('./dbf-setup.js');
 
@@ -464,6 +826,18 @@ var dbf=getDatabases()
 .then(DBF.releaseDBF)
 .catch(function(err){console.log(&quot;DANGER:&quot;,err)});
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>If anything is unclear or you'd like more information please let me know.</p>
 <h3>More about promises in general</h3>
 <p>Start by reading this:  <a href="https://web.archive.org/web/20160530171143/http://alexperry.io/node/2015/03/25/promises-in-node.html">Alex Perry's blog entry on promises in node</a>.</p>
@@ -491,13 +865,26 @@ var dbf=getDatabases()
 <h2>Working our way up to it</h2>
 <p>Instead of diving head-first into the problem we will start simply and work our way up to something more complicated.</p>
 <p>We will start by using a node.js package known as <code>express.js</code> to create a very simple web server for our web pages (read a few paragraphs ahead <strong>before</strong> running this):</p>
-<pre><code class="language-js">var express=require('express'),
+<div class="code-block-wrapper">
+  <pre><code class="language-js">var express=require('express'),
 app = express(),
 port = process.env.PORT || 1337;
 
 app.use(express.static(__dirname + '/public'));
 app.listen(port);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The web-server is expecting our HTML files to be in the <code>public</code> sub directory.  Go ahead and </p>
 <ul>
 <li>type the code above into a file named app.js </li>
@@ -505,12 +892,38 @@ app.listen(port);
 <li>add a simple <code>index.html</code> file in <code>public</code></li>
 </ul>
 <p>Now test that all your node packages are installed and working:</p>
-<pre><code class="language-js">node app.js
+<div class="code-block-wrapper">
+  <pre><code class="language-js">node app.js
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>(typing that command will run your server and start it on port 1337.  It will keep running until you type ctl-C</p>
 <p>You should be able to see it in action by starting up a browser and typing </p>
-<pre><code class="language-js">http://localhost:1337
+<div class="code-block-wrapper">
+  <pre><code class="language-js">http://localhost:1337
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Please note that if you are working on a lab computer <strong>from home</strong> that <code>http://localhost:1337</code> will not work (ask me if you are not clear about why).  Even worse... <code>http://labcomputer.morris.umn.edu:1337</code> will probably not work either because of the firewall.  (If you're in the dorms it <em>might</em>... I haven't had the time to check... but don't count on it).  </p>
 <h3>An angular tutorial</h3>
 <p>Use the <code>public</code> sub-directory that was cloned with your repository for the following tutorial:
@@ -544,7 +957,8 @@ app.listen(port);
 </ul>
 <p>The default behavior will be to provide files, however if the requested URL look like '/buttons' then we will politely ask the user if they would like <em>some buttons</em>. </p>
 <p>Here's the basic setup:</p>
-<pre><code>var express=require('express'),
+<div class="code-block-wrapper">
+  <pre><code>var express=require('express'),
 app = express(),
 port = process.env.PORT || 1337;
 
@@ -555,6 +969,18 @@ app.get(&quot;/buttons&quot;,function(req,res){
 
 app.listen(port);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The 'express' package makes things easy.  Your directives are applied in the order you indicate them.  The <code>app.use()</code> method is using one of express' handlers:  <code>express.static</code> looks in the specified directory for files, and provides them if it finds them.</p>
 <p>Since there is no 'buttons' subdirectory in 'public' express applies the next rule.</p>
 <h2>Mixing in a little database</h2>
@@ -565,11 +991,37 @@ app.listen(port);
 <li>the angular code is stored in the single file <code>buttons.js</code></li>
 </ul>
 <p>Notice that each button in the web page has an HTML code chunk that looks a bit like this:</p>
-<pre><code>&lt;div style=&quot;position:absolute;left:320px;top:100px&quot;&gt;&lt;button id=&quot;1&quot; &gt;food&lt;/button&gt;&lt;/div&gt;
+<div class="code-block-wrapper">
+  <pre><code>&lt;div style=&quot;position:absolute;left:320px;top:100px&quot;&gt;&lt;button id=&quot;1&quot; &gt;food&lt;/button&gt;&lt;/div&gt;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>In the example below I've replaced explicit values with expressions of the form '#stuff#' </p>
-<pre><code>&lt;div style=&quot;position:absolute;left:#LEFT#px;top:#TOP#px&quot;&gt;&lt;button id=&quot;#BUTTON_ID#&quot; &gt;#LABEL#&lt;/button&gt;&lt;/div&gt;
+<div class="code-block-wrapper">
+  <pre><code>&lt;div style=&quot;position:absolute;left:#LEFT#px;top:#TOP#px&quot;&gt;&lt;button id=&quot;#BUTTON_ID#&quot; &gt;#LABEL#&lt;/button&gt;&lt;/div&gt;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Your job is to create a table called <code>till_buttons</code> that will hold all the data necessary to describe a button-- values like <code>left</code>, <code>top</code>, <code>button_id</code>, and <code>label</code>.  Then you will modify <code>lab7server.js</code> so that instead of sending the data in the array <code>buttons</code>, it will send the properly formatted results of an SQL query:</p>
 <h2>Exercise</h2>
 <p><strong>Create table <code>till_buttons</code>:</strong>  Create a table that can hold this information.  Feel free to augment the table with a few extra fields to give yourself more control over the size, etc.</p>
@@ -599,5 +1051,32 @@ app.listen(port);
 </ul>
 </li>
 </ul>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
 </body>
 </html>

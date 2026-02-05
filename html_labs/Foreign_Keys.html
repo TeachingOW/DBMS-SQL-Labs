@@ -11,6 +11,55 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
     </style>
 </head>
 <body>
@@ -41,15 +90,29 @@
 <h3>Alternative Setup</h3>
 <p>If MySQL is not available, you can use <a href="http://sqlfiddle.com/">SQLFiddle</a> for online practice.</p>
 <h3>Step 1: Create the Database</h3>
-<pre><code class="language-sql">-- Create a clean database for foreign key experiments
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Create a clean database for foreign key experiments
 DROP DATABASE IF EXISTS foreign_key_lab;
 CREATE DATABASE foreign_key_lab;
 USE foreign_key_lab;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h2>🏗️ Building Tables with Foreign Key Relationships</h2>
 <h3>Step 2: Create Tables with Foreign Key Constraints</h3>
 <p><strong>Important</strong>: Always create parent tables before child tables!</p>
-<pre><code class="language-sql">-- Drop tables in correct order (child first, then parent)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Drop tables in correct order (child first, then parent)
 DROP TABLE IF EXISTS Enrolled;  -- Child table
 DROP TABLE IF EXISTS Students;  -- Parent table
 
@@ -69,18 +132,44 @@ CREATE TABLE Enrolled (
     FOREIGN KEY (sid) REFERENCES Students(sid)  -- Foreign key constraint
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>🤔 Why create Students before Enrolled?</strong>
 The foreign key in <code>Enrolled</code> references the primary key in <code>Students</code>. MySQL needs the referenced table to exist first to validate the constraint.</p>
 <h3>Step 3: Insert Data and Test Foreign Key Constraints</h3>
 <h4>Insert Parent Table Data First</h4>
-<pre><code class="language-sql">-- Insert students (parent table data)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert students (parent table data)
 INSERT INTO Students VALUES('s1', 'Alice Johnson', 3.1);
 INSERT INTO Students VALUES('s2', 'Bob Smith', 3.2);
 INSERT INTO Students VALUES('s3', 'Carol Davis', 2.2);
 INSERT INTO Students VALUES('s4', 'David Wilson', NULL);  -- NULL GPA allowed
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h4>Insert Child Table Data</h4>
-<pre><code class="language-sql">-- Insert enrollments (child table data)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert enrollments (child table data)
 INSERT INTO Enrolled VALUES('s1','cs101', 'A+');
 INSERT INTO Enrolled VALUES('s1','cs102', 'A-');
 INSERT INTO Enrolled VALUES('s1','cs103', 'B');
@@ -91,9 +180,22 @@ INSERT INTO Enrolled VALUES('s3','cs101', 'A-');
 INSERT INTO Enrolled VALUES('s3','cs102', 'C');
 INSERT INTO Enrolled VALUES('s3','cs105', 'B');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>🔑 Key Point</strong>: Students must be inserted before their enrollments due to the foreign key constraint.</p>
 <h4>Verify the Data</h4>
-<pre><code class="language-sql">-- Check students table
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Check students table
 SELECT * FROM Students;
 
 -- Check enrollments table  
@@ -105,45 +207,149 @@ FROM Students s
 JOIN Enrolled e ON s.sid = e.sid
 ORDER BY s.name, e.cid;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h2>🚫 Testing Foreign Key Constraint Violations</h2>
 <h3>Exercise 1: Invalid Foreign Key Insert</h3>
 <p><strong>Try this command</strong> (it should fail):</p>
-<pre><code class="language-sql">INSERT INTO Enrolled VALUES('s5','cs105', 'B');
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">INSERT INTO Enrolled VALUES('s5','cs105', 'B');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Expected Error</strong>:</p>
-<pre><code>Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails
+<div class="code-block-wrapper">
+  <pre><code>Error Code: 1452. Cannot add or update a child row: a foreign key constraint fails
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Why it fails</strong>: Student 's5' doesn't exist in the Students table, violating referential integrity.</p>
 <h3>Exercise 2: Attempting to Delete Referenced Records</h3>
 <p><strong>Try to delete a student who has enrollments</strong>:</p>
-<pre><code class="language-sql">DELETE FROM Students WHERE sid='s3';
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DELETE FROM Students WHERE sid='s3';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Expected Error</strong>:</p>
-<pre><code>Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails
+<div class="code-block-wrapper">
+  <pre><code>Error Code: 1451. Cannot delete or update a parent row: a foreign key constraint fails
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Why it fails</strong>: Student 's3' has enrollment records. Deleting the parent would leave orphaned child records.</p>
 <h3>Exercise 3: Successful Deletion (No Dependencies)</h3>
 <p><strong>Delete a student with no enrollments</strong>:</p>
-<pre><code class="language-sql">DELETE FROM Students WHERE sid='s4';  -- David Wilson has no enrollments
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DELETE FROM Students WHERE sid='s4';  -- David Wilson has no enrollments
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>This works</strong> because 's4' has no dependent records in the Enrolled table.</p>
 <h3>Exercise 4: Manual Cascade Delete</h3>
 <p><strong>To delete a student with enrollments, delete child records first</strong>:</p>
-<pre><code class="language-sql">-- Step 1: Delete the student's enrollments
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Step 1: Delete the student's enrollments
 DELETE FROM Enrolled WHERE sid='s3';
 
 -- Step 2: Now delete the student
 DELETE FROM Students WHERE sid='s3';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify the deletion</strong>:</p>
-<pre><code class="language-sql">SELECT * FROM Students;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM Students;
 SELECT * FROM Enrolled;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <hr />
 <h2>⚡ CASCADE Operations</h2>
 <p>Manual deletion is tedious. MySQL provides CASCADE options to automatically handle dependent records.</p>
 <h3>Step 4: Create Tables with CASCADE DELETE</h3>
-<pre><code class="language-sql">-- Drop existing tables
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Drop existing tables
 DROP TABLE IF EXISTS Enrolled;
 DROP TABLE IF EXISTS Students;
 
@@ -162,9 +368,22 @@ CREATE TABLE Enrolled (
     FOREIGN KEY (sid) REFERENCES Students(sid) ON DELETE CASCADE
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>Step 5: Test CASCADE DELETE</h3>
 <h4>Insert Test Data</h4>
-<pre><code class="language-sql">-- Insert fresh data
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert fresh data
 INSERT INTO Students VALUES('s1', 'Alice Johnson', 3.1);
 INSERT INTO Students VALUES('s2', 'Bob Smith', 3.2);
 INSERT INTO Students VALUES('s3', 'Carol Davis', 2.2);
@@ -175,19 +394,58 @@ INSERT INTO Enrolled VALUES('s2','cs101', 'A+');
 INSERT INTO Enrolled VALUES('s3','cs101', 'A-');
 INSERT INTO Enrolled VALUES('s3','cs102', 'C');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h4>Test CASCADE DELETE</h4>
-<pre><code class="language-sql">-- This will now work and automatically delete related enrollments
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- This will now work and automatically delete related enrollments
 DELETE FROM Students WHERE sid='s3';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify the cascade effect</strong>:</p>
-<pre><code class="language-sql">-- Check both tables - Carol Davis and her enrollments should be gone
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Check both tables - Carol Davis and her enrollments should be gone
 SELECT * FROM Students;
 SELECT * FROM Enrolled;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>🎉 Success!</strong> The CASCADE DELETE automatically removed Carol's enrollment records when we deleted her student record.</p>
 <h2>🔄 Other CASCADE Options</h2>
 <h3>ON UPDATE CASCADE</h3>
-<pre><code class="language-sql">CREATE TABLE Enrolled (
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE TABLE Enrolled (
     sid CHAR(10),
     cid CHAR(10),
     grade CHAR(2),
@@ -197,6 +455,18 @@ SELECT * FROM Enrolled;
         ON UPDATE CASCADE
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>CASCADE Options Summary</h3>
 <ul>
 <li><strong>ON DELETE CASCADE</strong>: Automatically delete child records when parent is deleted</li>
@@ -212,7 +482,8 @@ SELECT * FROM Enrolled;
 <li><strong>Use RESTRICT</strong>: When you want explicit control over deletions</li>
 </ul>
 <h3>2. Common Patterns</h3>
-<pre><code class="language-sql">-- User and their posts (delete posts when user is deleted)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- User and their posts (delete posts when user is deleted)
 FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE
 
 -- Order and customer (keep orders when customer is deleted, set to NULL)
@@ -221,6 +492,18 @@ FOREIGN KEY (customer_id) REFERENCES Customers(id) ON DELETE SET NULL
 -- Critical relationships (prevent accidental deletions)
 FOREIGN KEY (department_id) REFERENCES Departments(id) ON DELETE RESTRICT
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h2>🎓 Summary</h2>
 <p>You've learned how to:
 ✅ Create foreign key constraints
@@ -242,11 +525,51 @@ FOREIGN KEY (department_id) REFERENCES Departments(id) ON DELETE RESTRICT
 <li><strong>CASCADE not working</strong>: Verify CASCADE option is specified in constraint</li>
 </ol>
 <p><strong>Useful Commands</strong>:</p>
-<pre><code class="language-sql">-- Show table structure and constraints
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Show table structure and constraints
 DESCRIBE table_name;
 
 -- Show foreign key constraints
 SHOW CREATE TABLE table_name;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
 </body>
 </html>
