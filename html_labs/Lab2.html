@@ -11,6 +11,52 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
     </style>
 </head>
 <body>
@@ -39,13 +85,21 @@
 - <strong>Enrolled</strong>: Links students to courses with grades (many-to-many relationship)</p>
 <h2>🚀 Getting Started</h2>
 <h3>Step 1: Create the Database</h3>
-<pre><code class="language-sql">-- Clean slate: drop existing database if it exists
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Clean slate: drop existing database if it exists
 DROP DATABASE IF EXISTS lab2;
 CREATE DATABASE lab2;
 USE lab2;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>Step 2: Create the Table Structure</h3>
-<pre><code class="language-sql">-- Drop tables in correct order (child tables first due to foreign key constraints)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Drop tables in correct order (child tables first due to foreign key constraints)
 DROP TABLE IF EXISTS Enrolled;  -- Junction table (child)
 DROP TABLE IF EXISTS Student;   -- Parent table
 DROP TABLE IF EXISTS Course;    -- Parent table
@@ -76,13 +130,20 @@ CREATE TABLE Enrolled (
     FOREIGN KEY (cid) REFERENCES Course(cid)     -- Link to Course table
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Key Design Concepts</strong>:
 - <strong>Composite Primary Key</strong>: <code>(sid, cid)</code> ensures one grade per student per course
 - <strong>Foreign Key Constraints</strong>: Maintain referential integrity
 - <strong>Many-to-Many Relationship</strong>: Students can enroll in multiple courses, courses can have multiple students</p>
 <h3>Step 3: Populate the Database with Sample Data</h3>
 <h4>Insert Student Data</h4>
-<pre><code class="language-sql">-- Insert student records (some students have NULL GPA - not yet calculated)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert student records (some students have NULL GPA - not yet calculated)
 INSERT INTO Student VALUES(1,'Amie','Massey',3.0);
 INSERT INTO Student VALUES(2,'Abigail','Larsen',NULL);
 INSERT INTO Student VALUES(3,'Cora','Rowland',4);
@@ -99,11 +160,25 @@ INSERT INTO Student VALUES(13,'Elmer', 'Cain',2.7);
 INSERT INTO Student VALUES(14,'Isla', 'Mccall',2.2);
 INSERT INTO Student VALUES(15,'Kate', 'Kimmel',NULL);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify student data</strong>:</p>
-<pre><code class="language-sql">SELECT * FROM Student ORDER BY sid;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM Student ORDER BY sid;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h4>Insert Course Data</h4>
-<pre><code class="language-sql">-- Insert computer science courses with varying credit hours
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert computer science courses with varying credit hours
 INSERT INTO Course VALUES(1,'CS101', 'Computer Programming I',3);
 INSERT INTO Course VALUES(2,'CS102', 'Computer Programming II',3);
 INSERT INTO Course VALUES(3,'CS321', 'Data Structures',4);
@@ -112,11 +187,25 @@ INSERT INTO Course VALUES(5,'CS4550', 'Database',4);
 INSERT INTO Course VALUES(6,'CS5990', 'Capstone Project',4);
 INSERT INTO Course VALUES(7,'CS6020', 'Data Mining',4);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify course data</strong>:</p>
-<pre><code class="language-sql">SELECT * FROM Course ORDER BY cid;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM Course ORDER BY cid;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h4>Insert Enrollment Data</h4>
-<pre><code class="language-sql">-- CS101 enrollments (all 15 students enrolled)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- CS101 enrollments (all 15 students enrolled)
 
 INSERT INTO Enrolled VALUES(1,1, 'A+');
 INSERT INTO Enrolled VALUES(2,1, 'A-');
@@ -208,8 +297,15 @@ INSERT INTO Enrolled VALUES (11,6,'F');
 INSERT INTO Enrolled VALUES (12,6,'C+');
 INSERT INTO Enrolled VALUES (15,6,'F');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><strong>Verify enrollment data</strong>:</p>
-<pre><code class="language-sql">-- Check total enrollments
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Check total enrollments
 SELECT COUNT(*) as total_enrollments FROM Enrolled;
 
 -- See sample enrollments with student and course names
@@ -219,6 +315,12 @@ JOIN Enrolled e ON s.sid = e.sid
 JOIN Course c ON e.cid = c.cid
 LIMIT 10;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <hr />
 <h2>🔍 Query Exercises</h2>
 <p>Now that we have our database populated, let's practice various types of queries. Each exercise builds on previous concepts while introducing new techniques.</p>
@@ -231,14 +333,22 @@ LIMIT 10;
   - <code>Enrolled</code> table: for grades
 - This requires joining three tables with two join conditions</p>
 <p><strong>Your Solution</strong>:</p>
-<pre><code class="language-sql">-- Write your query here
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Write your query here
 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <details>
 <summary>💡 Click to see the solution</summary>
 
 
-<pre><code class="language-sql">SELECT CONCAT(fname, ' ', lname) AS student_name 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT CONCAT(fname, ' ', lname) AS student_name 
 FROM Student s, Course c, Enrolled e
 WHERE c.cid = e.cid 
   AND s.sid = e.sid
@@ -246,11 +356,18 @@ WHERE c.cid = e.cid
   AND c.name LIKE '%Database%' 
 ORDER BY student_name;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Alternative using explicit JOIN syntax**:
 
-<pre><code class="language-sql">SELECT CONCAT(s.fname, ' ', s.lname) AS student_name
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT CONCAT(s.fname, ' ', s.lname) AS student_name
 FROM Student s
 JOIN Enrolled e ON s.sid = e.sid
 JOIN Course c ON e.cid = c.cid
@@ -258,14 +375,33 @@ WHERE (e.grade = 'A+' OR e.grade = 'A')
   AND c.name LIKE '%Database%'
 ORDER BY student_name;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 **Expected Output**:
-| student_name |
-|--------------|
-| Abigail Larsen |
-| Amie Massey |
-| Isla Mccall |
+<table>
+  <thead>
+    <tr>
+      <th>student_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Abigail Larsen</td>
+    </tr>
+    <tr>
+      <td>Amie Massey</td>
+    </tr>
+    <tr>
+      <td>Isla Mccall</td>
+    </tr>
+  </tbody>
+</table>
 
 **Key Concepts**:
 - `CONCAT()`: Combines first and last names
@@ -277,7 +413,8 @@ ORDER BY student_name;
 <h3>Query 2</h3>
 <p>Find all countries that manufacture some product in the ‘Gadgets’ category.
 Assume you have the following data:</p>
-<pre><code class="language-sql">DROP TABLE IF EXISTS Company;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE IF EXISTS Company;
 DROP TABLE IF EXISTS Product;
 
 CREATE TABLE Product(
@@ -306,6 +443,12 @@ INSERT INTO Product VALUES('MultiTouch',203.99,'Household','Hitachi');
 SELECT Country FROM Product, Company
 WHERE Manufacturer=CName AND Category='Gadgets'
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>This would return:
 Country
 USA
@@ -313,7 +456,8 @@ USA
 How to get USA only once.</p>
 <h3>Query 3: An Unintuitive Query</h3>
 <p>Prepare the database as follows:</p>
-<pre><code class="language-sql">DROP TABLE IF EXISTS R;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE IF EXISTS R;
 DROP TABLE IF EXISTS T;
 DROP TABLE IF EXISTS S;
 
@@ -340,33 +484,76 @@ INSERT INTO T VALUES (2);
 INSERT INTO T VALUES (3);
 INSERT INTO T VALUES (7);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Run this query</p>
-<pre><code class="language-sql">SELECT  DISTINCT R.A
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT  DISTINCT R.A
 FROM R, S, T
 WHERE R.A=S.A OR R.A=T.A
 </code></pre>
-<p>This would return the following
-| A |
-|---|
-| 1 |
-| 2 |
-| 3 |
-| 7 |</p>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This would return the following</p>
+<table>
+  <thead>
+    <tr>
+      <th>A</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
 <p>Remove all tuples from S</p>
-<pre><code class="language-sql">SET SQL_SAFE_UPDATES = 0;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SET SQL_SAFE_UPDATES = 0;
 DELETE FROM S;
 SET SQL_SAFE_UPDATES = 1;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>MySQL has something called safe mode, to disable it. We run SET SQL_SAFE_UPDATES = 0; and to enable it again SET SQL_SAFE_UPDATES = 1;
 Rerun the query</p>
-<pre><code class="language-sql">SELECT DISTINCT R.A
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT R.A
 FROM   R, S, T
 WHERE  R.A=S.A OR R.A=T.A
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>Multiset Operations</h3>
 <p>MySQL does not have INTERSECT or EXCEPT keyword. In the next lecture, we will explain an alternative.
 *Compare these two queries *</p>
-<pre><code class="language-sql">SELECT  R.A 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT  R.A 
 FROM   R, S 
 WHERE  R.A=S.A
 UNION  
@@ -374,7 +561,14 @@ SELECT R.A
 FROM   R, T  
 WHERE  R.A=T.A 
 </code></pre>
-<pre><code class="language-sql">SELECT  R.A
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT  R.A
 FROM   R, S
 WHERE  R.A=S.A
 UNION ALL
@@ -382,8 +576,15 @@ SELECT R.A
 FROM   R, T
 WHERE  R.A=T.A
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h4>Try the following SQL code</h4>
-<pre><code class="language-sql">DROP TABLE IF EXISTS Product;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Company;
 
 CREATE TABLE Product(
@@ -407,8 +608,15 @@ INSERT INTO Product VALUES('A','A co.','China');
 INSERT INTO Product VALUES('A+','A co.','US');
 INSERT INTO Product VALUES('Y','Y inc.','China');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Compare the three queries below:</p>
-<pre><code class="language-sql">SELECT hq_city
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT hq_city
 FROM   Company, Product
 WHERE  maker = cname 
   AND factory_loc='US'
@@ -419,7 +627,14 @@ WHERE  maker = cname
 AND factory_loc='China'
 );
 </code></pre>
-<pre><code class="language-sql">SELECT maker, hq_city
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT maker, hq_city
 FROM   Company, Product
 WHERE  maker = cname 
   AND factory_loc='US'
@@ -430,7 +645,14 @@ WHERE  maker = cname
 AND factory_loc='China'
 );
 </code></pre>
-<pre><code class="language-sql">SELECT DISTINCT hq_city
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
 FROM   Company, Product
 WHERE  maker = cname 
        AND cname IN (
@@ -442,16 +664,37 @@ WHERE  maker = cname
         FROM   Product
         WHERE  factory_loc = 'China');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>To Delete or update multiple rows</h3>
 <p>To disable safe updates or delete</p>
-<pre><code class="language-sql">SET SQL_SAFE_UPDATES=0;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SET SQL_SAFE_UPDATES=0;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>To enable them back</p>
-<pre><code class="language-sql">SET SQL_SAFE_UPDATES=0;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SET SQL_SAFE_UPDATES=0;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h1>Lab2.2</h1>
 <p>Run the following query</p>
-<pre><code class="language-sql">SELECT DISTINCT hq_city
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
 FROM   Company, Product
 WHERE  maker = cname 
        AND cname IN (
@@ -463,25 +706,53 @@ WHERE  maker = cname
       FROM   Product
       WHERE  factory_loc = 'China')
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>To understand the previous query, you may break it into three parts.</p>
 <p>Q1:</p>
-<pre><code class="language-sql">    SELECT maker
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">    SELECT maker
     FROM   Product
       WHERE  factory_loc = 'US'
-</code></pre> 
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div> 
 Q2:
-<pre><code class="language-sql">
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">
 SELECT maker
       FROM   Product
       WHERE  factory_loc = 'China'
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Q3:</p>
-<pre><code class="language-sql">SELECT *
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT *
 FROM   Company, Product
 WHERE  maker = cname 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Another way:</p>
-<pre><code class="language-sql">SELECT DISTINCT hq_city
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
 FROM   Company, (SELECT maker
       FROM   Product
       WHERE  factory_loc = 'US') US, 
@@ -491,16 +762,30 @@ FROM   Company, (SELECT maker
 WHERE  us.maker = cname 
 AND    ch.maker= cname 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Another one:</p>
-<pre><code class="language-sql">SELECT DISTINCT hq_city
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
 FROM   Company, Product p1,   Product p2
 WHERE  p1.maker = cname 
 AND    p2.maker= cname 
 AND  p1.factory_loc = 'US'
 AND  p2.factory_loc = 'China';
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>Example</h3>
-<pre><code class="language-sql">DROP table if exists company;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP table if exists company;
 DROP table if exists Product;
 DROP table if exists Purchase;
 
@@ -548,10 +833,17 @@ INSERT INTO Purchase VALUES(7,'A','Joe Blow');
 INSERT INTO Purchase VALUES(8,'A','Joe Blow');
 INSERT INTO Purchase VALUES(9,'A','Joe Blow');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <h3>Query Q1</h3>
 <p>Cities where one can find companies that manufacture products bought
 by "Joe Blow”.</p>
-<pre><code class="language-sql">SELECT  c.city
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT  c.city
 FROM   Company c
 WHERE  c.cname  IN (
   SELECT pr.maker
@@ -559,9 +851,16 @@ WHERE  c.cname  IN (
       WHERE  p.product = pr.pname 
      AND p.buyer = 'Joe Blow')
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Note that we got Seattle twice for X co and A co</p>
 <h3>Query Q2</h3>
-<pre><code class="language-sql">SELECT c.city
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT c.city
  FROM   Company c, 
         Product p, 
         Purchase pu
@@ -569,6 +868,12 @@ WHERE  c.cname  IN (
    AND  p.pname = pu.product
    AND  pu.buyer = 'Joe Blow'
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Compare the  previous two queries.</p>
 <h3>Question 1</h3>
 <p>Find products that are more expensive than all those produced by “X co”</p>
@@ -577,13 +882,20 @@ WHERE  c.cname  IN (
 
 
 
-<pre><code class="language-sql">SELECT pname
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT pname
 FROM   Product
 WHERE  price &gt; ALL(
   SELECT price
      FROM   Product
      WHERE  maker = 'X co')
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
   </details>
 
@@ -593,7 +905,8 @@ Find ‘copycat’ products, i.e. products made by competitors with the same nam
   <summary>Solution</summary>
 
 
-<pre><code class="language-sql"> SELECT p1.pname
+<div class="code-block-wrapper">
+  <pre><code class="language-sql"> SELECT p1.pname
 FROM   Product p1
 WHERE  p1.maker = 'A co'
    AND EXISTS(
@@ -602,10 +915,17 @@ WHERE  p1.maker = 'A co'
       WHERE  p2.maker &lt;&gt; 'A co'
      AND p1.pname = p2.pname)
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 </details>
 
-<pre><code class="language-sql">DROP TABLE Purchase;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE Purchase;
 CREATE TABLE Purchase (
 product char(20), 
 pdate date, 
@@ -617,23 +937,43 @@ INSERT INTO Purchase VALUES('banana','2021-10-3',0.5,10);
 INSERT INTO Purchase VALUES('banana','2021-10-10',1,10);
 INSERT INTO Purchase VALUES('bagel','2021-10-25',1.5,20);
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Note that we do not have a primary key.</p>
 <p>Get the number of purchases.</p>
 <p><code>sql
   select count(*) from purchase</code></p>
 <p>Find the sales after ‘10/10/2021’</p>
-<pre><code class="language-sql">  SELECT product,
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">  SELECT product,
 SUM(price * quantity) AS TotalSales
 FROM Purchase
 WHERE pdate &gt; '2021-10-10'
 GROUP BY product
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 Another way for the same query:
+  <div class="code-block-wrapper">
   <pre><code class="language-sql">
 SELECT DISTINCT  x.product,
 (SELECT Sum(y.price*y.quantity)  
 FROM Purchase y WHERE  x.product = y.product AND y.pdate &gt; '2021-10-10')   TotalSales FROM Purchase x WHERE  x.pdate &gt; '2021-10-10'
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>### HAVING Clause 
 Same query as before, except that we consider only products that have more than 100 buyers
   <code>sql
@@ -703,7 +1043,8 @@ HAVING   SUM(quantity) &gt; 100</code></p>
 </tr>
 </tbody>
 </table>
-<pre><code class="language-sql">
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">
 DROP TABLE IF Exists Purchase;
 CREATE TABLE Purchase (
   ID int PRIMARY KEY AUTO_INCREMENT,
@@ -718,12 +1059,25 @@ INSERT INTO Purchase(Product, Price, Quantity) values('bagel',1.0,5),
 ('banana',1.0,4),('banana',1,3), ('juice',3.0,5)
 ;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p><em>NOTE:</em>
 AUTO_INCREMENT, and how we insert into the table.</p>
-<pre><code class="language-sql">SELECT SUM(Price*Quantity) as Total_sales
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT SUM(Price*Quantity) as Total_sales
 FROM Purchase
 WHERE product='bagel'
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <ol>
 <li>Executing from &amp; WHERE</li>
 </ol>
@@ -782,42 +1136,91 @@ WHERE product='bagel'
 </table>
 <h3>COUNT() vs COUNT(DISTINCT)</h3>
 <p>Run the following two queries:</p>
-<pre><code class="language-sql">SELECT COUNT(*) 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT COUNT(*) 
 FROM Purchase;
 </code></pre>
-<pre><code class="language-sql">SELECT COUNT(DISTINCT product)
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT COUNT(DISTINCT product)
 FROM Purchase;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>First query returns 8 while the second returns 4.</p>
 <h3>Group By clause</h3>
 <p>The following query would find the total number of the units sold from all products.</p>
-<pre><code class="language-sql">SELECT SUM(Quantity) 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT SUM(Quantity) 
 FROM Purchase
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The query returns 36.
 To find the number of units sold for each product.</p>
-<pre><code class="language-sql">SELECT Product, SUM(Quantity) 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT Product, SUM(Quantity) 
 FROM Purchase
 GROUP BY Product
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Find products and the sales that has sold more than 10 units.</p>
 <details>
   <summary>Solution</summary>
 
 
-<pre><code class="language-sql">SELECT Product, SUM(Quantity*Price)
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT Product, SUM(Quantity*Price)
 FROM Purchase
 GROUP BY Product
 HAVING SUM(Quantity)&gt; 10
 
 
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
-|Product | SUM(Quantity*Price)|
-|--------|-------|
-| bagel  | 15.50 |
-| banana | 10.00 |
+<table>
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>SUM(Quantity*Price)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>bagel</td>
+      <td>15.50</td>
+    </tr>
+    <tr>
+      <td>banana</td>
+      <td>10.00</td>
+    </tr>
+  </tbody>
+</table>
 
 </details>
 
@@ -827,7 +1230,8 @@ HAVING SUM(Quantity)&gt; 10
 
 
 
-<pre><code class="language-sql">
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">
   SELECT Product, SUM(Quantity*Price)
 FROM Purchase
 GROUP BY Product
@@ -839,23 +1243,44 @@ HAVING SUM(Quantity)= (
    GROUP BY Product) t
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
 </details>
 
 <p>To understand the query, let us start with:</p>
-<pre><code class="language-sql">SELECT SUM(Quantity) 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT SUM(Quantity) 
 FROM Purchase
 GROUP BY Product
 </code></pre>
-<pre><code class="language-sql">SELECT MAX(t.units) 
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT MAX(t.units) 
 FROM  (SELECT SUM(Quantity) as units 
      FROM Purchase
      GROUP BY Product) t
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The query above finds the maximum of the total unit sold.</p>
 <p>Run the following queries, to create the schema:</p>
-<pre><code class="language-sql">drop table if exists product;
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">drop table if exists product;
 drop table if exists supplier;
 
 create table supplier(
@@ -873,8 +1298,15 @@ supplierid int,
 foreign key (supplierid) references supplier(id)
 );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Insert Data</p>
-<pre><code class="language-sql">insert into supplier(id, sname) values (1, 'bike Ltd');
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">insert into supplier(id, sname) values (1, 'bike Ltd');
 insert into supplier(id, sname) values (2, 'bike USA');
 insert into supplier(id, sname) values (3, 'bikes4all');
 
@@ -884,9 +1316,22 @@ insert into product values (3,'mountain bike', 510, 2);
 insert into product values (4,'bike', 180, NULL );
 insert into product values (5,'ebike', 280, NULL );
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Try to insert the following</p>
-<pre><code>insert into supplier(id, sname) values (4, 'bike Ltd');
+<div class="code-block-wrapper">
+  <pre><code>insert into supplier(id, sname) values (4, 'bike Ltd');
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>The previous SQL insert should not work, as we have specified that  the supplier name to be unique.</p>
 <p>Q1:</p>
 <p>Find all products with unknown supplier.</p>
@@ -896,8 +1341,15 @@ to find out products with unknown supplier, we need to find those that are NULL.
   <summary>Solution</summary>
 
 
-<pre><code class="language-sql">  SELECT * from product where supplierid IS NULL
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">  SELECT * from product where supplierid IS NULL
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 </details>
 
@@ -906,11 +1358,18 @@ Find all suppliers with no product listed.</p>
 <details>
   <summary>Solution</summary>
 
+  <div class="code-block-wrapper">
   <pre><code class="language-sql">
 SELECT * from Supplier s
 WHERE NOT exists (select * from product p
   where p.supplierid=s.id)
   </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 </details>
 
@@ -937,10 +1396,17 @@ on p.supplierid=s.id;
  However, running the above query, you are not returning
 information about Products with no supplier information (e.g., products with id 4 and 5).
 
-<pre><code class="language-sql">  select * from product p 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">  select * from product p 
 left outer join supplier s 
 on p.supplierid=s.id;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 
  </details>
@@ -951,10 +1417,17 @@ Find supplier (along with the supplied products)</p>
   <summary>Solution</summary>
 
 
-<pre><code class="language-sql">select * from product p
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">select * from product p
 right outer join supplier s 
 on p.supplierid=s.id;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 </details>
 <p>Q5
@@ -963,15 +1436,23 @@ Find supplier and products including not matched</p>
   <summary>Solution</summary>
 
 
-<pre><code class="language-sql">select * from product p 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">select * from product p 
 full outer join supplier s 
 on p.supplierid=s.id;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 Mysql does not support full outer join. It is can executed as follow:
 
 
-<pre><code class="language-sql">select * from product p 
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">select * from product p 
 left outer join supplier s 
 on p.supplierid=s.id
 union
@@ -979,12 +1460,19 @@ select * from product p
 right outer join supplier s 
 on p.supplierid=s.id;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
   </details>
 
 <h2>Division</h2>
 <p>
-    <pre><code class="language-sql">
+    <div class="code-block-wrapper">
+  <pre><code class="language-sql">
  create table student (SID int primary key,Name varchar(10),Major
  varchar(4)); 
  CREATE TABLE enrolled (SID int,cid varchar(5),primary key
@@ -992,6 +1480,12 @@ on p.supplierid=s.id;
  insert into student values (40,'alex','cs'), (41, 'john','cs'), (42, 'mat', 'cs'), (43, 'zack', 'math');
  insert into Enrolled values (40,'cs101'),(40,  'cs102'),(41, 'cs101'),(41,  'cs404'),(41,'cs405'), (42,'cs101'),(42,'cs102'),(42,'cs203'),(43,'cs101'),(43,'cs102');</p>
     </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 Find students who are taking all courses taken by student 40
 
     <summary>Solution</summary>
@@ -999,16 +1493,56 @@ Find students who are taking all courses taken by student 40
     
 
 
-<pre><code class="language-sql">
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">
 SELECT DISTINCT NAME FROM STUDENT S WHERE major='cs’ AND NOT EXISTS
  (SELECT * FROM ENROLLED E2 WHERE SID=40 and CID NOT IN (SELECT CID
  FROM ENROLLED E WHERE E.SID=S.SID) )
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
     
-<pre><code class="language-sql">  SELECT DISTINCT NAME FROM STUDENT S WHERE major=‘cs’ AND  NOT EXISTS
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">  SELECT DISTINCT NAME FROM STUDENT S WHERE major=‘cs’ AND  NOT EXISTS
      (SELECT * FROM ENROLLED E2  WHERE SID=40 AND NOT EXISTS ( SELECT *
      FROM ENROLLED E WHERE E.SID=S.SID AND E2.CID=E.CID) )
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 </details>
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
 </body>
 </html>

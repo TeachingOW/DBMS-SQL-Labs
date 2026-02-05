@@ -11,6 +11,98 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
     </style>
 </head>
 <body>
@@ -21,8 +113,22 @@
 <p>Recall, that a graph can be thought of as a collection of nodes connected by edges.  These edges can be directed or undirected.  For the purposes of this database, the edges are directed.  You'll recall how this works from data structures, but here's a picture  (again from wikipedia) of a typical directed graph:</p>
 <p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/DAG.png"></p>
 <p>The Neo4J people have provided this handy reference graphic:</p>
-<pre><code>http://visual.ly/whats-graph-database
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>http://visual.ly/whats-graph-database
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>It probably won't make much sense until AFTER you do the first set of tutorials that I suggest below.</p>
 <h2>Getting things running</h2>
 <p>It's relatively easy to set-up a Neo4J server but allowing multiple people to use it simultaneously without accidently changing somebody else's data ends up being a real problem, so instead each group is going to spin-up their own copy on their current machine.  Here's how:</p>
@@ -57,27 +163,125 @@
 <p>In some ways, labels play the same role as tables in SQL and collections in mongo; however, labels are more general since the same node may be given multiple labels.  </p>
 <p>Relationships in neo4J are similar to the idea of relationships that we developed when drawing our ER diagrams (remember that?)… however, again, the idea is more flexible and abstract in neo4J.</p>
 <p>Now go forward and try out the Cypher query language tutorial.  I want EVERYBODY to type this stuff in at least once.  To keep out of each other's way, whenever you are asked to add a node you should provide an extra label specifying who <strong>you</strong> are.  So if the tutorial says:</p>
-<pre><code>    CREATE (ee:Person { name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 })
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    CREATE (ee:Person { name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 })
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Then you need to change the labels to look like this:</p>
-<pre><code>    CREATE (ee:Person:Dolan { name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 })
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    CREATE (ee:Person:Dolan { name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 })
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Where you will replace <code>Dolan</code> with your own last name.  Technically, you only need to do this for the CREATE commands, but if you don't add your last name to the <code>MATCH</code> commands then you will start picking up nodes created by other students as well.  Please note that there is a SPACE after the command names it is NOT <code>CREATE(blah)</code> NOR is it <code>MATCH(blah)</code> more blah.  Just to be explicit… if you want your examples to look like those in the tutorial (or at least as close as possible), then you will want your <code>MATCH</code> commands to look like this:</p>
-<pre><code>    Match (ee:Person:Dolan) WHERE ee.name=&quot;Emil&quot; RETURN ee;
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    Match (ee:Person:Dolan) WHERE ee.name=&quot;Emil&quot; RETURN ee;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>instead of like this:</p>
-<pre><code>    Match (ee:Person) WHERE ee.name=&quot;Emil&quot; RETURN ee;
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    Match (ee:Person) WHERE ee.name=&quot;Emil&quot; RETURN ee;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Note:  the order of the labels does not matter.  This will work just as well:</p>
-<pre><code>    Match (ee:Dolan:Person) WHERE ee.name=&quot;Emil&quot; RETURN ee;
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    Match (ee:Dolan:Person) WHERE ee.name=&quot;Emil&quot; RETURN ee;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>A WARNING.  Although you can have the tutorial type the command for you, it will be MUCH more enlightening if you type the commands yourself.</p>
 <p>A few words on the syntax too (do the tutorial first or read what I have to say concurrently, but I doubt this will make much sense if you don't try to do the commands yourself first).  One thing to notice is that a node looks like a node in the syntax.  Look for expressions of the form:   <code>(stuff)</code>.  They represent nodes.   The only place this breaks down is in the <code>RETURN</code> clause of a <code>MATCH</code>. Look closely at this expression:</p>
-<pre><code>    MATCH (ee:Person)-[:KNOWS]-(friends) WHERE ee.name = &quot;Emil&quot; RETURN ee, friends
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    MATCH (ee:Person)-[:KNOWS]-(friends) WHERE ee.name = &quot;Emil&quot; RETURN ee, friends
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>the <code>(ee:Person)</code> is, kinda-sorta like specifying a COLUMN in SQL.  Also notice that syntax involving edges (which capture the idea of a relationship between nodes) looks a lot like an edge.  Consider that last example again:</p>
-<pre><code>    MATCH (ee:Person)-[:KNOWS]-(friends) WHERE ee.name = &quot;Emil&quot; RETURN ee, friends
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    MATCH (ee:Person)-[:KNOWS]-(friends) WHERE ee.name = &quot;Emil&quot; RETURN ee, friends
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>You have two nodes <code>(ee:Person)</code> and <code>(friends)</code>.  One of the nodes can be thought of as being named <code>ee</code>, and the other as being named <code>friends</code>.  The colon after <code>ee</code> requires that any node to be associated with <code>(ee)</code> must have a <code>Person</code> label.  <br />
 The edge <code>-[:KNOWS]-&gt;</code> means that the <code>ee</code> node must be joined to the friends node by a relation with a <code>KNOWS</code> label.</p>
 <p>Notice some of the similarities between neo4J syntax and SQL:</p>
@@ -97,26 +301,162 @@ The edge <code>-[:KNOWS]-&gt;</code> means that the <code>ee</code> node must be
 <li>Do NOT delete the nodes at the end of the tutorial (else I will not be able to give you credit for it), instead, call me over and show me your work.</li>
 </ul>
 <p>If you've followed the meaning of the syntax, then modifying the command, as provided in the tutorial, to only include nodes labelled with your last name will be pretty easy.  For example, I would modify </p>
-<pre><code>    MATCH (tom {name: &quot;Tom Hanks&quot;}) RETURN tom
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    MATCH (tom {name: &quot;Tom Hanks&quot;}) RETURN tom
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>To read:</p>
-<pre><code>    MATCH (tom:Dolan {name: &quot;Tom Hanks&quot;}) RETURN tom
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    MATCH (tom:Dolan {name: &quot;Tom Hanks&quot;}) RETURN tom
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Pay close attention to the syntax.  In particular, be sure you understand the usage of  <code>--&gt;</code> , <code>&lt;--</code>, and <code>--</code>
 Also notice the ability to name an edge an extract data from it in the <code>RETURN</code> clause.</p>
 <p>Now let's test your understanding.  I'm going to ask you to modify two of the queries.<br />
     1. Modify the following query so that it also returns the name of the movie:</p>
-<pre><code>        MATCH (tom:Person {name:&quot;Tom Hanks&quot;})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors) RETURN coActors.name
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>        MATCH (tom:Person {name:&quot;Tom Hanks&quot;})-[:ACTED_IN]-&gt;(m)&lt;-[:ACTED_IN]-(coActors) RETURN coActors.name
 </code></pre>
-<pre><code>2. Modify the following query to find the PEOPLE who acted within 3 hops of Keanu Reeves:
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>2. Modify the following query to find the PEOPLE who acted within 3 hops of Keanu Reeves:
 </code></pre>
-<pre><code>        MATCH (bacon:Person {name:&quot;Kevin Bacon&quot;})-[*1..4]-(hollywood)
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>        MATCH (bacon:Person {name:&quot;Kevin Bacon&quot;})-[*1..4]-(hollywood)
         RETURN DISTINCT hollywood
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Here's a great, condensed reference:  http://docs.neo4j.org/refcard/2.0/.  Pay close attention to the overlap in the neo4J language and SQL.  (There's a LOT here.  I expect you to skim)</p>
 <p>With that beginning out of the way, you are now ready go into the slower-paced, but more detailed sets of tutorials.  The first tutorial in this section again uses a movie database so I want you to add a label not just for your last name, but ALSO label nodes with Tutorial.  That way you can keep this work separate from your earlier work.  You will get the opportunity to try out more clauses in these tutorials:</p>
-<pre><code>    http://docs.neo4j.org/chunked/stable/tutorials.html
+<div class="code-block-wrapper">
+  <div class="code-block-wrapper">
+  <pre><code>    http://docs.neo4j.org/chunked/stable/tutorials.html
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 <p>Start with 4.  See how far you get. (I'd like us to get to the end of 5 by the end of the week).  Remember to modify the commands so that a label with YOUR last name also gets created.  Also notice that in THIS tutorial, the actors are described with the label Actor instead of Person.  So you WILL need to add some more nodes.</p>
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
 </body>
 </html>
