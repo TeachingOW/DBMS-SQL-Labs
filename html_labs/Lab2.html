@@ -16,10 +16,13 @@
     .code-block-wrapper {
       position: relative;
       margin: 20px 0;
+      max-width: 100%;
     }
     
     .code-block-wrapper pre {
       margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
     }
     
     .copy-button {
@@ -72,7 +75,7 @@
 - Handle NULL values in queries</p>
 <h2>📋 Prerequisites</h2>
 <ul>
-<li>Completion of <a href="InClassExercises.md">Lab 1</a> or equivalent knowledge</li>
+<li>Completion of <a href="InClassExercises.html">Lab 1</a> or equivalent knowledge</li>
 <li>Understanding of basic SQL operations</li>
 <li>Familiarity with primary and foreign keys</li>
 </ul>
@@ -364,7 +367,7 @@ ORDER BY student_name;
 </div>
 
 
-**Alternative using explicit JOIN syntax**:
+<strong>Alternative using explicit JOIN syntax</strong>:
 
 <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT CONCAT(s.fname, ' ', s.lname) AS student_name
@@ -383,7 +386,7 @@ ORDER BY student_name;
 </div>
 
 
-**Expected Output**:
+<strong>Expected Output</strong>:
 <table>
   <thead>
     <tr>
@@ -403,7 +406,7 @@ ORDER BY student_name;
   </tbody>
 </table>
 
-**Key Concepts**:
+<strong>Key Concepts</strong>:
 - `CONCAT()`: Combines first and last names
 - Multiple table joins: Connect related data across tables
 - `LIKE '%Database%'`: Pattern matching for course names
@@ -899,8 +902,8 @@ WHERE  price &gt; ALL(
 
   </details>
 
-<p>### Question 2 
-Find ‘copycat’ products, i.e. products made by competitors with the same names as products made by ‘A co’</p>
+<h3>Question 2</h3>
+<p>Find ‘copycat’ products, i.e. products made by competitors with the same names as products made by ‘A co’</p>
 <details>
   <summary>Solution</summary>
 
@@ -974,8 +977,8 @@ FROM Purchase y WHERE  x.product = y.product AND y.pdate &gt; '2021-10-10')   To
     </svg>
   </button>
 </div>
-<p>### HAVING Clause 
-Same query as before, except that we consider only products that have more than 100 buyers
+<h3>HAVING Clause</h3>
+<p>Same query as before, except that we consider only products that have more than 100 buyers
   <code>sql
 SELECT   product, SUM(price*quantity)
 FROM     Purchase

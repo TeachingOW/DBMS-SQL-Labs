@@ -19,10 +19,13 @@
     .code-block-wrapper {
       position: relative;
       margin: 20px 0;
+      max-width: 100%;
     }
     
     .code-block-wrapper pre {
       margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
     }
     
     .copy-button {
@@ -264,7 +267,7 @@ ORDER BY manufacturer;
 </div>
 
 
-**Expected Output**:
+<strong>Expected Output</strong>:
 <table>
   <thead>
     <tr>
@@ -284,7 +287,7 @@ ORDER BY manufacturer;
   </tbody>
 </table>
 
-**Explanation**:
+<strong>Explanation</strong>:
 - `LIKE '%Touch%'`: Finds any product name containing "Touch"
 - `ORDER BY manufacturer`: Sorts by manufacturer (Canon comes before Hitachi alphabetically)
 </details>
@@ -331,7 +334,7 @@ WHERE pname LIKE '%Gizmo%';
 </div>
 
 
-**Expected Output**:
+<strong>Expected Output</strong>:
 <table>
   <thead>
     <tr>
@@ -345,7 +348,7 @@ WHERE pname LIKE '%Gizmo%';
   </tbody>
 </table>
 
-**Explanation**:
+<strong>Explanation</strong>:
 - `DISTINCT`: Removes duplicate manufacturer names
 - Only GizmoWorks makes products with "Gizmo" in the name
 </details>
@@ -381,7 +384,7 @@ SELECT DISTINCT category FROM product ORDER BY pname;
 <details>
 <summary>💡 Click to see the answers</summary>
 
-**Query A Results**:
+<strong>Query A Results</strong>:
 <table>
   <thead>
     <tr>
@@ -401,9 +404,9 @@ SELECT DISTINCT category FROM product ORDER BY pname;
   </tbody>
 </table>
 
-**Explanation**: Returns unique categories sorted alphabetically.
+<strong>Explanation</strong>: Returns unique categories sorted alphabetically.
 
-**Query B Results**:
+<strong>Query B Results</strong>:
 <table>
   <thead>
     <tr>
@@ -426,12 +429,12 @@ SELECT DISTINCT category FROM product ORDER BY pname;
   </tbody>
 </table>
 
-**Explanation**: Returns all categories (including duplicates) in the order of product names.
+<strong>Explanation</strong>: Returns all categories (including duplicates) in the order of product names.
 
-**Query C Results**:
-This query will produce an **ERROR**! You cannot use `ORDER BY pname` when `pname` is not in the SELECT list and you're using DISTINCT.
+<strong>Query C Results</strong>:
+This query will produce an <strong>ERROR</strong>! You cannot use `ORDER BY pname` when `pname` is not in the SELECT list and you're using DISTINCT.
 
-**Key Learning**: When using DISTINCT, you can only ORDER BY columns that are in the SELECT clause.
+<strong>Key Learning</strong>: When using DISTINCT, you can only ORDER BY columns that are in the SELECT clause.
 </details>
 
 <h3>Exercise #3: Multi-Table Relationships and Foreign Keys</h3>
@@ -542,7 +545,7 @@ INSERT INTO product VALUES('PokeCamera', 19.99, 'Electronic', 'ToyWorks');
 <details>
 <summary>💡 Click to see the solution</summary>
 
-**Solution using JOIN**:
+<strong>Solution using JOIN</strong>:
 
 <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT DISTINCT p.category
@@ -564,7 +567,7 @@ WHERE c.country = 'China';
 </div>
 
 
-**Alternative solution using WHERE clause**:
+<strong>Alternative solution using WHERE clause</strong>:
 
 <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT DISTINCT category
@@ -586,7 +589,7 @@ WHERE manufacturer = cname
 </div>
 
 
-**Expected Output**:
+<strong>Expected Output</strong>:
 <table>
   <thead>
     <tr>
@@ -603,7 +606,7 @@ WHERE manufacturer = cname
   </tbody>
 </table>
 
-**Explanation**:
+<strong>Explanation</strong>:
 - We need to connect the `product` and `company` tables
 - Filter for companies where `country = 'China'`
 - Use `DISTINCT` to avoid duplicate categories
@@ -652,7 +655,7 @@ WHERE c.stockprice &gt; 20;
 </div>
 
 
-**Expected Output**:
+<strong>Expected Output</strong>:
 <table>
   <thead>
     <tr>
@@ -675,7 +678,7 @@ WHERE c.stockprice &gt; 20;
   </tbody>
 </table>
 
-**Note**: Pikachu appears twice because it's made by two different companies (ToyWorks and ToyFriends), both with stock prices > $20.
+<strong>Note</strong>: Pikachu appears twice because it's made by two different companies (ToyWorks and ToyFriends), both with stock prices > $20.
 </details>
 
 <h2>🎓 Summary</h2>
@@ -715,9 +718,9 @@ WHERE c.stockprice &gt; 20;
 </ul>
 <h3>Next Steps</h3>
 <p>Ready for more advanced topics? Continue with:
-- <strong><a href="Lab2.md">Lab 2</a></strong>: Advanced queries, joins, and aggregations
-- <strong><a href="Foreign_Keys.md">Foreign Keys Lab</a></strong>: Deep dive into referential integrity
-- <strong><a href="Multi_Tables.md">Multi-table Queries</a></strong>: Complex JOIN operations</p>
+- <strong><a href="Lab2.html">Lab 2</a></strong>: Advanced queries, joins, and aggregations
+- <strong><a href="Foreign_Keys.html">Foreign Keys Lab</a></strong>: Deep dive into referential integrity
+- <strong><a href="Multi_Tables.html">Multi-table Queries</a></strong>: Complex JOIN operations</p>
 <h2>🐛 Troubleshooting</h2>
 <p><strong>Common Issues and Solutions</strong>:</p>
 <ol>
