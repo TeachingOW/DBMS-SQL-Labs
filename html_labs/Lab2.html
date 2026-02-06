@@ -61,6 +61,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Lab 2: Advanced SQL Queries and Multi-Table Operations</h1>
@@ -89,7 +95,7 @@
 <h2>🚀 Getting Started</h2>
 <h3>Step 1: Create the Database</h3>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Clean slate: drop existing database if it exists
+  <pre><code class="language-sql">-- Clean slate: DROP existing DATABASE IF it EXISTS
 DROP DATABASE IF EXISTS lab2;
 CREATE DATABASE lab2;
 USE lab2;
@@ -102,35 +108,35 @@ USE lab2;
 </div>
 <h3>Step 2: Create the Table Structure</h3>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Drop tables in correct order (child tables first due to foreign key constraints)
-DROP TABLE IF EXISTS Enrolled;  -- Junction table (child)
-DROP TABLE IF EXISTS Student;   -- Parent table
-DROP TABLE IF EXISTS Course;    -- Parent table
+  <pre><code class="language-sql">-- DROP TABLES IN correct ORDER (child TABLES first due to FOREIGN KEY constraints)
+DROP TABLE IF EXISTS Enrolled;  -- Junction TABLE (child)
+DROP TABLE IF EXISTS Student;   -- Parent TABLE
+DROP TABLE IF EXISTS Course;    -- Parent TABLE
 
--- Create Student table
+-- CREATE Student TABLE
 CREATE TABLE Student (
-    sid INT PRIMARY KEY,           -- Student ID (unique identifier)
-    fname CHAR(20),               -- First name (fixed length)
-    lname CHAR(20),               -- Last name (fixed length)
+    sid INT PRIMARY KEY,           -- Student ID (UNIQUE identifier)
+    fname CHAR(20),               -- First name (fixed LENGTH)
+    lname CHAR(20),               -- Last name (fixed LENGTH)
     gpa FLOAT                     -- Grade Point Average (can be NULL)
 );
 
--- Create Course table  
+-- CREATE Course TABLE  
 CREATE TABLE Course (
-    cid INT PRIMARY KEY,          -- Course ID (unique identifier)
+    cid INT PRIMARY KEY,          -- Course ID (UNIQUE identifier)
     code CHAR(10),               -- Course code (e.g., &quot;CS101&quot;)
     name CHAR(40),               -- Course name (e.g., &quot;Intro to Programming&quot;)
     credithours SMALLINT         -- Credit hours (1-4 typically)
 );
 
--- Create Enrolled table (junction table for many-to-many relationship)
+-- CREATE Enrolled TABLE (junction TABLE FOR many-to-many relationship)
 CREATE TABLE Enrolled (
-    sid INT,                     -- Student ID (foreign key)
-    cid INT,                     -- Course ID (foreign key)
+    sid INT,                     -- Student ID (FOREIGN KEY)
+    cid INT,                     -- Course ID (FOREIGN KEY)
     grade CHAR(2),               -- Letter grade (A+, A, B+, etc.)
-    PRIMARY KEY (sid, cid),      -- Composite primary key
-    FOREIGN KEY (sid) REFERENCES Student(sid),   -- Link to Student table
-    FOREIGN KEY (cid) REFERENCES Course(cid)     -- Link to Course table
+    PRIMARY KEY (sid, cid),      -- Composite PRIMARY KEY
+    FOREIGN KEY (sid) REFERENCES Student(sid),   -- Link to Student TABLE
+    FOREIGN KEY (cid) REFERENCES Course(cid)     -- Link to Course TABLE
 );
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -146,7 +152,7 @@ CREATE TABLE Enrolled (
 <h3>Step 3: Populate the Database with Sample Data</h3>
 <h4>Insert Student Data</h4>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Insert student records (some students have NULL GPA - not yet calculated)
+  <pre><code class="language-sql">-- INSERT student records (SOME students have NULL GPA - NOT yet calculated)
 INSERT INTO Student VALUES(1,'Amie','Massey',3.0);
 INSERT INTO Student VALUES(2,'Abigail','Larsen',NULL);
 INSERT INTO Student VALUES(3,'Cora','Rowland',4);
@@ -181,12 +187,12 @@ INSERT INTO Student VALUES(15,'Kate', 'Kimmel',NULL);
 </div>
 <h4>Insert Course Data</h4>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Insert computer science courses with varying credit hours
+  <pre><code class="language-sql">-- INSERT computer science courses WITH varying credit hours
 INSERT INTO Course VALUES(1,'CS101', 'Computer Programming I',3);
 INSERT INTO Course VALUES(2,'CS102', 'Computer Programming II',3);
 INSERT INTO Course VALUES(3,'CS321', 'Data Structures',4);
 INSERT INTO Course VALUES(4,'CS5710', 'Network',4);
-INSERT INTO Course VALUES(5,'CS4550', 'Database',4);
+INSERT INTO Course VALUES(5,'CS4550', 'DATABASE',4);
 INSERT INTO Course VALUES(6,'CS5990', 'Capstone Project',4);
 INSERT INTO Course VALUES(7,'CS6020', 'Data Mining',4);
 </code></pre>
@@ -208,7 +214,7 @@ INSERT INTO Course VALUES(7,'CS6020', 'Data Mining',4);
 </div>
 <h4>Insert Enrollment Data</h4>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- CS101 enrollments (all 15 students enrolled)
+  <pre><code class="language-sql">-- CS101 enrollments (ALL 15 students enrolled)
 
 INSERT INTO Enrolled VALUES(1,1, 'A+');
 INSERT INTO Enrolled VALUES(2,1, 'A-');
@@ -308,10 +314,10 @@ INSERT INTO Enrolled VALUES (15,6,'F');
 </div>
 <p><strong>Verify enrollment data</strong>:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Check total enrollments
-SELECT COUNT(*) as total_enrollments FROM Enrolled;
+  <pre><code class="language-sql">-- CHECK total enrollments
+SELECT COUNT(*) AS total_enrollments FROM Enrolled;
 
--- See sample enrollments with student and course names
+-- See sample enrollments WITH student AND course names
 SELECT s.fname, s.lname, c.code, c.name, e.grade
 FROM Student s
 JOIN Enrolled e ON s.sid = e.sid
@@ -356,7 +362,7 @@ FROM Student s, Course c, Enrolled e
 WHERE c.cid = e.cid 
   AND s.sid = e.sid
   AND (e.grade = 'A+' OR e.grade = 'A')
-  AND c.name LIKE '%Database%' 
+  AND c.name LIKE '%DATABASE%' 
 ORDER BY student_name;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -375,7 +381,7 @@ FROM Student s
 JOIN Enrolled e ON s.sid = e.sid
 JOIN Course c ON e.cid = c.cid
 WHERE (e.grade = 'A+' OR e.grade = 'A')
-  AND c.name LIKE '%Database%'
+  AND c.name LIKE '%DATABASE%'
 ORDER BY student_name;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -421,19 +427,19 @@ Assume you have the following data:</p>
 DROP TABLE IF EXISTS Product;
 
 CREATE TABLE Product(
-    PName char(20) Primary key,
-    Price double,
-    category char(20),
-    Manufacturer char(20)
+    PName CHAR(20) PRIMARY KEY,
+    Price DOUBLE,
+    category CHAR(20),
+    Manufacturer CHAR(20)
 );
 
 CREATE TABLE Company(
-    CName char(20) Primary key,
-    StockPrice double,
-    Country char(20)
+    CName CHAR(20) PRIMARY KEY,
+    StockPrice DOUBLE,
+    Country CHAR(20)
 );
 
-ALTER TABLE Product ADD FOREIGN KEY (Manufacturer) references Company(CName);
+ALTER TABLE Product ADD FOREIGN KEY (Manufacturer) REFERENCES Company(CName);
 
 INSERT INTO Company VALUES('GizmoWorks',25,'USA');
 INSERT INTO Company VALUES('Canon',65,'Japan');
@@ -464,9 +470,9 @@ How to get USA only once.</p>
 DROP TABLE IF EXISTS T;
 DROP TABLE IF EXISTS S;
 
-CREATE TABLE R(A int);
-CREATE TABLE S(A int);
-CREATE TABLE T(A int);
+CREATE TABLE R(A INT);
+CREATE TABLE S(A INT);
+CREATE TABLE T(A INT);
 
 INSERT INTO R VALUES (1);
 INSERT INTO R VALUES (1);
@@ -591,16 +597,16 @@ WHERE  R.A=T.A
 DROP TABLE IF EXISTS Company;
 
 CREATE TABLE Product(
-  PName char(20) Primary key,
-    maker char(20),
-    factory_loc char(20)
+  PName CHAR(20) PRIMARY KEY,
+    maker CHAR(20),
+    factory_loc CHAR(20)
 );
 CREATE TABLE Company(
-  CName char(20) Primary key,
-    hq_city char(20)
+  CName CHAR(20) PRIMARY KEY,
+    hq_city CHAR(20)
 );
 
-ALTER TABLE Product ADD FOREIGN KEY (maker) references Company(CName);
+ALTER TABLE Product ADD FOREIGN KEY (maker) REFERENCES Company(CName);
 
 INSERT INTO Company VALUES('X co.','Seattle');
 INSERT INTO Company VALUES('Y inc.','Seattle');
@@ -623,7 +629,7 @@ INSERT INTO Product VALUES('Y','Y inc.','China');
 FROM   Company, Product
 WHERE  maker = cname 
   AND factory_loc='US'
-AND hq_city in (
+AND hq_city IN (
 SELECT hq_city
 FROM   Company, Product
 WHERE  maker = cname
@@ -641,7 +647,7 @@ AND factory_loc='China'
 FROM   Company, Product
 WHERE  maker = cname 
   AND factory_loc='US'
-AND (maker,hq_city) in (
+AND (maker,hq_city) IN (
 SELECT maker, hq_city
 FROM   Company, Product
 WHERE  maker = cname
@@ -788,28 +794,28 @@ AND  p2.factory_loc = 'China';
 </div>
 <h3>Example</h3>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">DROP table if exists company;
-DROP table if exists Product;
-DROP table if exists Purchase;
+  <pre><code class="language-sql">DROP TABLE IF EXISTS company;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Purchase;
 
 CREATE TABLE Company (
-cname char(20) Primary key,
-city char(20)
+cname CHAR(20) PRIMARY KEY,
+city CHAR(20)
 );
 
 CREATE TABLE Product (
-  pname char(20) ,
-  maker char(20),
-  price double,
-  Foreign key (maker) REFERENCES company(cname),
-  primary key (pname, maker)
+  pname CHAR(20) ,
+  maker CHAR(20),
+  price DOUBLE,
+  FOREIGN KEY (maker) REFERENCES company(cname),
+  PRIMARY KEY (pname, maker)
 );
 
 CREATE TABLE Purchase 
-(id int primary key,
- product char(20),
- buyer varchar(30),
-Foreign key (product) REFERENCES Product(pname)
+(id INT PRIMARY KEY,
+ product CHAR(20),
+ buyer VARCHAR(30),
+FOREIGN KEY (product) REFERENCES Product(pname)
  );
 
 INSERT INTO Company VALUES('X co','Seattle');
@@ -930,10 +936,10 @@ WHERE  p1.maker = 'A co'
 <div class="code-block-wrapper">
   <pre><code class="language-sql">DROP TABLE Purchase;
 CREATE TABLE Purchase (
-product char(20), 
-pdate date, 
-price double,
- quantity int
+product CHAR(20), 
+pdate DATE, 
+price DOUBLE,
+ quantity INT
 );
 INSERT INTO Purchase VALUES('bagel','2021-10-21',1,20);
 INSERT INTO Purchase VALUES('banana','2021-10-3',0.5,10);
@@ -949,7 +955,7 @@ INSERT INTO Purchase VALUES('bagel','2021-10-25',1.5,20);
 <p>Note that we do not have a primary key.</p>
 <p>Get the number of purchases.</p>
 <p><code>sql
-  select count(*) from purchase</code></p>
+  SELECT COUNT(*) FROM purchase</code></p>
 <p>Find the sales after ‘10/10/2021’</p>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">  SELECT product,
@@ -968,7 +974,7 @@ Another way for the same query:
   <div class="code-block-wrapper">
   <pre><code class="language-sql">
 SELECT DISTINCT  x.product,
-(SELECT Sum(y.price*y.quantity)  
+(SELECT SUM(y.price*y.quantity)  
 FROM Purchase y WHERE  x.product = y.product AND y.pdate &gt; '2021-10-10')   TotalSales FROM Purchase x WHERE  x.pdate &gt; '2021-10-10'
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -1048,15 +1054,15 @@ HAVING   SUM(quantity) &gt; 100</code></p>
 </table>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
-DROP TABLE IF Exists Purchase;
+DROP TABLE IF EXISTS Purchase;
 CREATE TABLE Purchase (
-  ID int PRIMARY KEY AUTO_INCREMENT,
-  Product char(20),
-  Price Decimal(10,2),
-  Quantity int
+  ID INT PRIMARY KEY AUTO_INCREMENT,
+  Product CHAR(20),
+  Price DECIMAL(10,2),
+  Quantity INT
   );
 
-INSERT INTO Purchase(Product, Price, Quantity) values('bagel',1.0,5),
+INSERT INTO Purchase(Product, Price, Quantity) VALUES('bagel',1.0,5),
 ('banana',.5,6), ('juice',1.0,4),
 ('donuts', 1.5,8), ('bagel', 1.5,7),
 ('banana',1.0,4),('banana',1,3), ('juice',3.0,5)
@@ -1071,7 +1077,7 @@ INSERT INTO Purchase(Product, Price, Quantity) values('bagel',1.0,5),
 <p><em>NOTE:</em>
 AUTO_INCREMENT, and how we insert into the table.</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">SELECT SUM(Price*Quantity) as Total_sales
+  <pre><code class="language-sql">SELECT SUM(Price*Quantity) AS Total_sales
 FROM Purchase
 WHERE product='bagel'
 </code></pre>
@@ -1241,7 +1247,7 @@ GROUP BY Product
 HAVING SUM(Quantity)= (
   SELECT MAX(t.units) 
   FROM  
-  (SELECT SUM(Quantity) as units 
+  (SELECT SUM(Quantity) AS units 
    FROM Purchase
    GROUP BY Product) t
 );
@@ -1270,7 +1276,7 @@ GROUP BY Product
 </div>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">SELECT MAX(t.units) 
-FROM  (SELECT SUM(Quantity) as units 
+FROM  (SELECT SUM(Quantity) AS units 
      FROM Purchase
      GROUP BY Product) t
 </code></pre>
@@ -1283,22 +1289,22 @@ FROM  (SELECT SUM(Quantity) as units
 <p>The query above finds the maximum of the total unit sold.</p>
 <p>Run the following queries, to create the schema:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">drop table if exists product;
-drop table if exists supplier;
+  <pre><code class="language-sql">DROP TABLE IF EXISTS product;
+DROP TABLE IF EXISTS supplier;
 
-create table supplier(
-id int,
-sname varchar(30) not null,
-primary key (id),
-unique(sname)
+CREATE TABLE supplier(
+id INT,
+sname VARCHAR(30) NOT NULL,
+PRIMARY KEY (id),
+UNIQUE(sname)
 );
 
-create table product(
-id int primary key, 
-pname varchar(30) not null,
-price float,
-supplierid int,
-foreign key (supplierid) references supplier(id)
+CREATE TABLE product(
+id INT PRIMARY KEY, 
+pname VARCHAR(30) NOT NULL,
+price FLOAT,
+supplierid INT,
+FOREIGN KEY (supplierid) REFERENCES supplier(id)
 );
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -1309,15 +1315,15 @@ foreign key (supplierid) references supplier(id)
 </div>
 <p>Insert Data</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">insert into supplier(id, sname) values (1, 'bike Ltd');
-insert into supplier(id, sname) values (2, 'bike USA');
-insert into supplier(id, sname) values (3, 'bikes4all');
+  <pre><code class="language-sql">INSERT INTO supplier(id, sname) VALUES (1, 'bike Ltd');
+INSERT INTO supplier(id, sname) VALUES (2, 'bike USA');
+INSERT INTO supplier(id, sname) VALUES (3, 'bikes4all');
 
-insert into product values (1,'girl bike', 110, 1);
-insert into product values (2,'boy bike', 110, 2);
-insert into product values (3,'mountain bike', 510, 2);
-insert into product values (4,'bike', 180, NULL );
-insert into product values (5,'ebike', 280, NULL );
+INSERT INTO product VALUES (1,'girl bike', 110, 1);
+INSERT INTO product VALUES (2,'boy bike', 110, 2);
+INSERT INTO product VALUES (3,'mountain bike', 510, 2);
+INSERT INTO product VALUES (4,'bike', 180, NULL );
+INSERT INTO product VALUES (5,'ebike', 280, NULL );
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1327,7 +1333,7 @@ insert into product values (5,'ebike', 280, NULL );
 </div>
 <p>Try to insert the following</p>
 <div class="code-block-wrapper">
-  <pre><code>insert into supplier(id, sname) values (4, 'bike Ltd');
+  <pre><code>INSERT INTO supplier(id, sname) VALUES (4, 'bike Ltd');
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1345,7 +1351,7 @@ to find out products with unknown supplier, we need to find those that are NULL.
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">  SELECT * from product where supplierid IS NULL
+  <pre><code class="language-sql">  SELECT * FROM product WHERE supplierid IS NULL
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1363,9 +1369,9 @@ Find all suppliers with no product listed.</p>
 
   <div class="code-block-wrapper">
   <pre><code class="language-sql">
-SELECT * from Supplier s
-WHERE NOT exists (select * from product p
-  where p.supplierid=s.id)
+SELECT * FROM Supplier s
+WHERE NOT EXISTS (SELECT * FROM product p
+  WHERE p.supplierid=s.id)
   </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1400,9 +1406,9 @@ on p.supplierid=s.id;
 information about Products with no supplier information (e.g., products with id 4 and 5).
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">  select * from product p 
-left outer join supplier s 
-on p.supplierid=s.id;
+  <pre><code class="language-sql">  SELECT * FROM product p 
+LEFT OUTER JOIN supplier s 
+ON p.supplierid=s.id;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1421,9 +1427,9 @@ Find supplier (along with the supplied products)</p>
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">select * from product p
-right outer join supplier s 
-on p.supplierid=s.id;
+  <pre><code class="language-sql">SELECT * FROM product p
+RIGHT OUTER JOIN supplier s 
+ON p.supplierid=s.id;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1440,9 +1446,9 @@ Find supplier and products including not matched</p>
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">select * from product p 
-full outer join supplier s 
-on p.supplierid=s.id;
+  <pre><code class="language-sql">SELECT * FROM product p 
+full OUTER JOIN supplier s 
+ON p.supplierid=s.id;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1455,13 +1461,13 @@ Mysql does not support full outer join. It is can executed as follow:
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">select * from product p 
-left outer join supplier s 
-on p.supplierid=s.id
-union
-select * from product p 
-right outer join supplier s 
-on p.supplierid=s.id;
+  <pre><code class="language-sql">SELECT * FROM product p 
+LEFT OUTER JOIN supplier s 
+ON p.supplierid=s.id
+UNION
+SELECT * FROM product p 
+RIGHT OUTER JOIN supplier s 
+ON p.supplierid=s.id;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1476,12 +1482,12 @@ on p.supplierid=s.id;
 <p>
     <div class="code-block-wrapper">
   <pre><code class="language-sql">
- create table student (SID int primary key,Name varchar(10),Major
- varchar(4)); 
- CREATE TABLE enrolled (SID int,cid varchar(5),primary key
+ CREATE TABLE student (SID INT PRIMARY KEY,Name VARCHAR(10),Major
+ VARCHAR(4)); 
+ CREATE TABLE enrolled (SID INT,cid VARCHAR(5),PRIMARY KEY
  (sid,cid)); 
- insert into student values (40,'alex','cs'), (41, 'john','cs'), (42, 'mat', 'cs'), (43, 'zack', 'math');
- insert into Enrolled values (40,'cs101'),(40,  'cs102'),(41, 'cs101'),(41,  'cs404'),(41,'cs405'), (42,'cs101'),(42,'cs102'),(42,'cs203'),(43,'cs101'),(43,'cs102');</p>
+ INSERT INTO student VALUES (40,'alex','cs'), (41, 'john','cs'), (42, 'mat', 'cs'), (43, 'zack', 'math');
+ INSERT INTO Enrolled VALUES (40,'cs101'),(40,  'cs102'),(41, 'cs101'),(41,  'cs404'),(41,'cs405'), (42,'cs101'),(42,'cs102'),(42,'cs203'),(43,'cs101'),(43,'cs102');</p>
     </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -1499,7 +1505,7 @@ Find students who are taking all courses taken by student 40
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
 SELECT DISTINCT NAME FROM STUDENT S WHERE major='cs’ AND NOT EXISTS
- (SELECT * FROM ENROLLED E2 WHERE SID=40 and CID NOT IN (SELECT CID
+ (SELECT * FROM ENROLLED E2 WHERE SID=40 AND CID NOT IN (SELECT CID
  FROM ENROLLED E WHERE E.SID=S.SID) )
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

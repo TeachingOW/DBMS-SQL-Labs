@@ -64,17 +64,23 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h3>Multi Table Queries</h3>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">create table company (
-    cname varchar(20) primary key, -- company name uniquely identifies the company.
-    stockprice decimal(10,2), -- stock price is in money 
-    country varchar(10)); -- country is just a string
-insert into company values ('GizmoWorks', 25.0, 'USA');
-insert into company values ('Canon', 65.0, 'Japan');
-insert into company values ('Hitachi', 15.0, 'Japan');
+  <pre><code class="language-sql">CREATE TABLE company (
+    cname VARCHAR(20) PRIMARY KEY, -- company name uniquely identifies the company.
+    stockprice DECIMAL(10,2), -- stock price IS IN money 
+    country VARCHAR(10)); -- country IS just a string
+INSERT INTO company VALUES ('GizmoWorks', 25.0, 'USA');
+INSERT INTO company VALUES ('Canon', 65.0, 'Japan');
+INSERT INTO company VALUES ('Hitachi', 15.0, 'Japan');
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -90,30 +96,30 @@ insert into company values ('Hitachi', 15.0, 'Japan');
 </div>
 <h2>Another Example</h2>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">drop table if exists product; 
-drop table if exists company;
+  <pre><code class="language-sql">DROP TABLE IF EXISTS product; 
+DROP TABLE IF EXISTS company;
 
-create table company (
-    cname varchar(20) primary key, -- company name uniquely identifies the company.
-    stockprice decimal(10,2), -- stock price is in money 
-    country varchar(10)); -- country is just a string
-insert into company values ('ToyWorks', 25.0, 'USA');
-insert into company values ('ToyFriends', 65.0, 'China');
-insert into company values ('ToyCo', 15.0, 'China');
+CREATE TABLE company (
+    cname VARCHAR(20) PRIMARY KEY, -- company name uniquely identifies the company.
+    stockprice DECIMAL(10,2), -- stock price IS IN money 
+    country VARCHAR(10)); -- country IS just a string
+INSERT INTO company VALUES ('ToyWorks', 25.0, 'USA');
+INSERT INTO company VALUES ('ToyFriends', 65.0, 'China');
+INSERT INTO company VALUES ('ToyCo', 15.0, 'China');
 
-create table product(
-       pname varchar(10), -- name of the product
-       price decimal(10,2), -- price of the product
-       category varchar(10), -- category
-       manufacturer varchar(10), -- manufacturer
-       primary key (pname, manufacturer),
-       foreign key (manufacturer) references company(cname));
-insert into product values('Pikachu', 19.99, 'Toy', 'ToyWorks');
-insert into product values('Pikachu', 19.99, 'Toy', 'ToyFriends');
-insert into product values('Pokeball', 29.99, 'Electronic', 'ToyCo');
-insert into product values('Bulbasaur', 149.99, 'Toy', 'ToyFriends');
-insert into product values('Charizard', 203.99, 'Toy', 'ToyCo');
-insert into product values('PokeCamera', 19.99, 'Electronic', 'ToyWorks');
+CREATE TABLE product(
+       pname VARCHAR(10), -- name of the product
+       price DECIMAL(10,2), -- price of the product
+       category VARCHAR(10), -- category
+       manufacturer VARCHAR(10), -- manufacturer
+       PRIMARY KEY (pname, manufacturer),
+       FOREIGN KEY (manufacturer) REFERENCES company(cname));
+INSERT INTO product VALUES('Pikachu', 19.99, 'Toy', 'ToyWorks');
+INSERT INTO product VALUES('Pikachu', 19.99, 'Toy', 'ToyFriends');
+INSERT INTO product VALUES('Pokeball', 29.99, 'Electronic', 'ToyCo');
+INSERT INTO product VALUES('Bulbasaur', 149.99, 'Toy', 'ToyFriends');
+INSERT INTO product VALUES('Charizard', 203.99, 'Toy', 'ToyCo');
+INSERT INTO product VALUES('PokeCamera', 19.99, 'Electronic', 'ToyWorks');
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -132,10 +138,10 @@ Find all categories of products that are made by Chinese companies</p>
 <h2>In Class Exerices</h2>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">DROP TABLE IF EXISTS Movies;
-CREATE TABLE Movies(title VARCHAR(50), year INT, director VARCHAR(50), length INT);
-INSERT INTO Movies VALUES('Database Wars', 1967, 'John Joe', 123);
+CREATE TABLE Movies(title VARCHAR(50), YEAR INT, director VARCHAR(50), LENGTH INT);
+INSERT INTO Movies VALUES('DATABASE Wars', 1967, 'John Joe', 123);
 INSERT INTO Movies VALUES('The Databaser', 1992, 'John Bob', 190);
-INSERT INTO Movies VALUES('Database Wars', 1998, 'John Jim', 176);
+INSERT INTO Movies VALUES('DATABASE Wars', 1998, 'John Jim', 176);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,9 +160,9 @@ INSERT INTO Movies VALUES('Database Wars', 1998, 'John Jim', 176);
 <p>Recall that we are trying to find all movie titles that were used for more than one movie, and our schema for the movies table is:</p>
 <div class="code-block-wrapper">
   <pre><code>title VARCHAR(50)
-year INT
+YEAR INT
 director VARCHAR(50)
-length INT
+LENGTH INT
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -176,10 +182,10 @@ length INT
 <h1>Another example</h1>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">DROP TABLE IF EXISTS Movies;
-CREATE TABLE Movies(title VARCHAR(50), year INT, director VARCHAR(50), length INT);
-INSERT INTO Movies VALUES('Database Wars', 1967, 'John Joe', 123);
+CREATE TABLE Movies(title VARCHAR(50), YEAR INT, director VARCHAR(50), LENGTH INT);
+INSERT INTO Movies VALUES('DATABASE Wars', 1967, 'John Joe', 123);
 INSERT INTO Movies VALUES('The Databaser', 1992, 'John Bob', 190);
-INSERT INTO Movies VALUES('Database Wars', 1998, 'John Jim', 176);
+INSERT INTO Movies VALUES('DATABASE Wars', 1998, 'John Jim', 176);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

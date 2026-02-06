@@ -77,6 +77,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 
@@ -139,7 +145,7 @@ public class ConnectExample {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connected to database!");
+            System.OUT.println("Connected to DATABASE!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -169,8 +175,8 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery(query)) {
 
-    while (rs.next()) {
-        System.out.println(rs.getString(1) + " " 
+    WHILE (rs.next()) {
+        System.OUT.println(rs.getString(1) + " " 
                          + rs.getInt(2) + " " 
                          + rs.getString(3));
     }
@@ -193,13 +199,13 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-String insert = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
+String INSERT = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
 
 try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement()) {
 
-    stmt.executeUpdate(insert);
-    conn.commit();  // or automatic if autocommit=true
+    stmt.executeUpdate(INSERT);
+    conn.COMMIT();  // OR automatic IF AUTOCOMMIT=TRUE
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -287,7 +293,7 @@ ORM frameworks like Hibernate, EclipseLink, and OpenJPA are <strong>implementati
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "student")
+@TABLE(name = "student")
 public class Student {
 
     @Id
@@ -295,9 +301,9 @@ public class Student {
     private Long id;
 
     private String name;
-    private int year;
+    private INT YEAR;
 
-    // getters and setters
+    // getters AND setters
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -318,16 +324,16 @@ public class Student {
 <div class="code-block-wrapper">
   <pre><code class="language-java">
 EntityManager em = emf.createEntityManager();
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 
-Student s = new Student();
+Student s = NEW Student();
 s.setName("Alice");
 s.setYear(2025);
 
 em.persist(s);
 
-em.getTransaction().commit();
-em.close();
+em.getTransaction().COMMIT();
+em.CLOSE();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,7 +351,7 @@ em.close();
 <p><strong>Generated SQL under the hood:</strong></p>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
-INSERT INTO student (name, year) VALUES (?, ?);
+INSERT INTO student (name, YEAR) VALUES (?, ?);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -364,7 +370,7 @@ INSERT INTO student (name, year) VALUES (?, ?);
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-String jpql = "SELECT s FROM Student s WHERE s.year = :yr";
+String jpql = "SELECT s FROM Student s WHERE s.YEAR = :yr";
 
 List<Student> list = em.createQuery(jpql, Student.class)
                        .setParameter("yr", 2025)
@@ -387,10 +393,10 @@ List<Student> list = em.createQuery(jpql, Student.class)
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 Student s = em.find(Student.class, 1L);
-s.setName("Alicia");   // Hibernate detects this change automatically
-em.getTransaction().commit();
+s.setName("Alicia");   // Hibernate detects this CHANGE automatically
+em.getTransaction().COMMIT();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -409,10 +415,10 @@ em.getTransaction().commit();
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 Student s = em.find(Student.class, 1L);
 em.remove(s);
-em.getTransaction().commit();
+em.getTransaction().COMMIT();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -443,17 +449,17 @@ public class User {
 
     private String name;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Order> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "user", FETCH = FetchType.LAZY)
+    private List<ORDER> orders = NEW ArrayList<>();
 }
 
 @Entity
-public class Order {
+public class ORDER {
 
     @Id @GeneratedValue
     private Long id;
 
-    private double total;
+    private DOUBLE total;
 
     @ManyToOne
     private User user;
@@ -480,7 +486,7 @@ public class Order {
   <pre><code class="language-java">
 public interface StudentRepository 
        extends JpaRepository<Student, Long> {
-    List<Student> findByYear(int year);
+    List<Student> findByYear(INT YEAR);
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

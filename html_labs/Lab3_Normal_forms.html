@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Lab 3: Normal Forms</h1>
@@ -297,7 +303,7 @@
 </tr>
 </tbody>
 </table>
-<p>The sale of, for example, three <code>Double Slam</code>s would create a single entry in <code>master</code> but <em>two</em> entries in <code>t_items</code>. Assuming the transaction id (<code>tid</code>) for this transaction was 57, the two entries in <code>t_items</code> might look like:</p>
+<p>The sale of, for example, three <code>DOUBLE Slam</code>s would create a single entry in <code>master</code> but <em>two</em> entries in <code>t_items</code>. Assuming the transaction id (<code>tid</code>) for this transaction was 57, the two entries in <code>t_items</code> might look like:</p>
 <table>
 <thead>
 <tr>
@@ -336,8 +342,8 @@
 </ul>
 <p>So, for example, if item 2 was <code>Brawndo</code>, and item 3 was <code>Human Kidneys</code>, then your query should return the following:</p>
 <div class="code-block-wrapper">
-  <pre><code>Double Slam 1.99    Brawndo
-Double Slam 1.99    Human Kidneys
+  <pre><code>DOUBLE Slam 1.99    Brawndo
+DOUBLE Slam 1.99    Human Kidneys
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -761,9 +767,9 @@ Double Slam 1.99    Human Kidneys
 </table>
 
 <p>This is clearly in First Normal Form:  The attributes are atomic and there are no repeated rows.   To figure out if the table is in second normal form we need to identify any partial dependencies.  We start by finding all 
-non-prime attributes (if any) by first identifying all the candidate keys.  For this data there is only one: <code>{Employee, Skill}</code>.  That means <code>Current Work Location</code> is a non-prime attribute.  (Tables without non-prime attributes are automatically in second normal form). </p>
-<p>Having identified all non-prime attributes, we check to see if any are functionally dependent upon <em>any</em> subset of <em>any</em> candidate key.  This check is pretty easy – there's only one non-prime attribute (<code>Current Work Location</code>), and only two (proper) subsets (<code>{Employee}</code> and <code>{Skill}</code>).  It's pretty clear that <code>Employee-&gt;Current Work Location</code> (knowing <code>Employee</code> allows us to determine <code>Current Work Location</code>) so <code>Current Work Location</code> is functionally dependent upon <code>Employee</code>.  On the other hand, <code>Current Work Location</code> is NOT functionally dependent upon <code>Skill</code> since the skill 'Typing' occurs with both '73 Industrial Way' and with '114 Main Street'.  The functional dependency of a non-prime attribute (<code>Current World Location</code>) upon a proper subset of a candidate key (<code>{Employee}</code>) means the table is <strong>not</strong> in second normal form.</p>
-<p>It's important here to understand the difference between using data and using "situational knowledge" to make inferences about functional dependencies. In our discussion of the <code>Employees' Skill</code> table above, we are using the table (data) to infer something about the functional dependencies by assuming that "if the data doesn't violate the rule – no new data will every violate it".  This may, or may not, be a good idea.  If the company employing this database has employees working in only one assigned location, then the situation supports the conclusion that <code>Current Work Location</code> depends on <code>Employee</code>.  On the other hand, if some employees work in different locations during different shifts, then there is <strong>not</strong> a functional dependency of the form <code>Employee-&gt;Current Work Location</code>.  I'm not trying to overwhelm you – I just want to make certain you are clear about the subtleties.</p>
+non-prime attributes (if any) by first identifying all the candidate keys.  For this data there is only one: <code>{Employee, Skill}</code>.  That means <code>CURRENT WORK Location</code> is a non-prime attribute.  (Tables without non-prime attributes are automatically in second normal form). </p>
+<p>Having identified all non-prime attributes, we check to see if any are functionally dependent upon <em>any</em> subset of <em>any</em> candidate key.  This check is pretty easy – there's only one non-prime attribute (<code>CURRENT WORK Location</code>), and only two (proper) subsets (<code>{Employee}</code> and <code>{Skill}</code>).  It's pretty clear that <code>Employee-&gt;CURRENT WORK Location</code> (knowing <code>Employee</code> allows us to determine <code>CURRENT WORK Location</code>) so <code>CURRENT WORK Location</code> is functionally dependent upon <code>Employee</code>.  On the other hand, <code>CURRENT WORK Location</code> is NOT functionally dependent upon <code>Skill</code> since the skill 'Typing' occurs with both '73 Industrial Way' and with '114 Main Street'.  The functional dependency of a non-prime attribute (<code>CURRENT World Location</code>) upon a proper subset of a candidate key (<code>{Employee}</code>) means the table is <strong>not</strong> in second normal form.</p>
+<p>It's important here to understand the difference between using data and using "situational knowledge" to make inferences about functional dependencies. In our discussion of the <code>Employees' Skill</code> table above, we are using the table (data) to infer something about the functional dependencies by assuming that "if the data doesn't violate the rule – no new data will every violate it".  This may, or may not, be a good idea.  If the company employing this database has employees working in only one assigned location, then the situation supports the conclusion that <code>CURRENT WORK Location</code> depends on <code>Employee</code>.  On the other hand, if some employees work in different locations during different shifts, then there is <strong>not</strong> a functional dependency of the form <code>Employee-&gt;CURRENT WORK Location</code>.  I'm not trying to overwhelm you – I just want to make certain you are clear about the subtleties.</p>
 <p>More informally, we look to see if a non-prime attribute depends upon only part of a multi-valued key and remove it into a separate table if it does:</p>
 <table>
 <tr><th colspan=2 align="center">Employees</th></tr>
@@ -810,19 +816,19 @@ non-prime attributes (if any) by first identifying all the candidate keys.  For 
 </table>
 
 <p>As always, the key to checking normality lies in figuring out the candidate keys.  No individual attribute suffices for this table, so we turn our attention to pairs.  Let's start by consider pairs containing <code>Tournament</code>.  The only replication keeping <code>Tournament</code> from being a key in its own right is 'Indiana Invitational', which occurs twice.  </p>
-<p>The pair <code>{Tournament,Year}</code> is a candidate key.  The data potentially allows for other candidate keys, but situationally speaking, this is the only candidate key.  From this point of view, that means that the attribute <code>Winner Date of Birth</code> is NOT part of any candidate key and hence a non-prime attribute.  Notice the following:</p>
+<p>The pair <code>{Tournament,YEAR}</code> is a candidate key.  The data potentially allows for other candidate keys, but situationally speaking, this is the only candidate key.  From this point of view, that means that the attribute <code>Winner DATE of Birth</code> is NOT part of any candidate key and hence a non-prime attribute.  Notice the following:</p>
 <ul>
-<li><code>{Tournament, Year} -&gt; Winner</code></li>
-<li><code>Winner does NOT determine {Tournament,Year}</code>  </li>
-<li><code>Winner -&gt; Winner Date of Birth</code>.</li>
+<li><code>{Tournament, YEAR} -&gt; Winner</code></li>
+<li><code>Winner does NOT determine {Tournament,YEAR}</code>  </li>
+<li><code>Winner -&gt; Winner DATE of Birth</code>.</li>
 </ul>
-<p>Thus the <code>Winner Date of Birth</code> is <em>transitively dependent</em> upon the candidate key, and the table is not in Third Normal Form.</p>
+<p>Thus the <code>Winner DATE of Birth</code> is <em>transitively dependent</em> upon the candidate key, and the table is not in Third Normal Form.</p>
 <p>I'm going to quote Wikipedia's article on this topic:</p>
 <blockquote>
-<p>The breach of 3NF occurs because the non-prime attribute <code>Winner Date of Birth</code> is transitively dependent on the candidate key <code>{Tournament, Year}</code> via the non-prime attribute <code>Winner</code>. The fact that <code>Winner Date of Birth</code> is functionally dependent on <code>Winner</code> makes the table vulnerable to logical inconsistencies, as there is nothing to stop the same person from being shown with different dates of birth on different records.</p>
+<p>The breach of 3NF occurs because the non-prime attribute <code>Winner DATE of Birth</code> is transitively dependent on the candidate key <code>{Tournament, YEAR}</code> via the non-prime attribute <code>Winner</code>. The fact that <code>Winner DATE of Birth</code> is functionally dependent on <code>Winner</code> makes the table vulnerable to logical inconsistencies, as there is nothing to stop the same person from being shown with different dates of birth on different records.</p>
 </blockquote>
 <h4>Easy Way to make a table Third Normal Form</h4>
-<p>If attributes do not contribute to a description of the key, remove them to a separate table. In this case the key is <code>{Tournament, Year}</code> is the key. <code>Winner Date of Birth</code>, however, doesn't tell us anything (directly) about either the <code>Tournament</code> or the <code>Year</code>; it describes the <code>Winner</code>, which isn't part of the key. So let's move that info to a separate table:</p>
+<p>If attributes do not contribute to a description of the key, remove them to a separate table. In this case the key is <code>{Tournament, YEAR}</code> is the key. <code>Winner DATE of Birth</code>, however, doesn't tell us anything (directly) about either the <code>Tournament</code> or the <code>YEAR</code>; it describes the <code>Winner</code>, which isn't part of the key. So let's move that info to a separate table:</p>
 <table>
 <tr><th colspan=3 align="center">Tournament Winners</th></tr>
 <tr><th>Tournament</th><th>Year</th><th>Winner</th></tr>

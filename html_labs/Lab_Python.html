@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Interacting with Python</h1>
@@ -86,7 +92,7 @@
 <p>Connect to DB</p>
 <div class="code-block-wrapper">
   <pre><code class="language-python">import mysql.connector 
-cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', database='dbms')
+cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', DATABASE='dbms')
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -104,7 +110,7 @@ cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', data
 <p>To create a user </p>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE USER 'sammy'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on *.* TO 'sammy'@'localhost' WITH GRANT OPTION;
+GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD ON *.* TO 'sammy'@'localhost' WITH GRANT OPTION;
 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -122,9 +128,9 @@ GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD on
 <p>Make sure to use a database in your local dbms.</p>
 <p>To run a query</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">query='select * from company;'
-cursor = cnx.cursor()
-cursor.execute(query)
+  <pre><code class="language-python">query='SELECT * FROM company;'
+CURSOR = cnx.CURSOR()
+CURSOR.execute(query)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -140,7 +146,7 @@ cursor.execute(query)
 </div>
 <p>Print the results:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">for (o) in cursor:
+  <pre><code class="language-python">FOR (o) IN CURSOR:
   print(o)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -157,7 +163,7 @@ cursor.execute(query)
 </div>
 <p>Closing the connection</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">cnx.close()
+  <pre><code class="language-python">cnx.CLOSE()
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -173,9 +179,9 @@ cursor.execute(query)
 </div>
 <p>Insert data into database</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">iquery=&quot;insert into  company values('BMW',10,'Germany');&quot;
-cursor = cnx.cursor()
-cursor.execute(iquery)
+  <pre><code class="language-python">iquery=&quot;INSERT INTO  company VALUES('BMW',10,'Germany');&quot;
+CURSOR = cnx.CURSOR()
+CURSOR.execute(iquery)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -191,10 +197,10 @@ cursor.execute(iquery)
 </div>
 <p>If you execute the following, you will see the newly inserted tuple. </p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">query='select * from company;'
-cursor = cnx.cursor()
-cursor.execute(query)
-for (o) in cursor:
+  <pre><code class="language-python">query='SELECT * FROM company;'
+CURSOR = cnx.CURSOR()
+CURSOR.execute(query)
+FOR (o) IN CURSOR:
   print(o)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -213,9 +219,9 @@ for (o) in cursor:
 You will see the updates are not committed.</p>
 <p>To make sure the updates is commited</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">iquery='insert into  company values('BMW',10,'Germany');commit;'
-cursor = cnx.cursor()
-cursor.execute(iquery)
+  <pre><code class="language-python">iquery='INSERT INTO  company VALUES('BMW',10,'Germany');COMMIT;'
+CURSOR = cnx.CURSOR()
+CURSOR.execute(iquery)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

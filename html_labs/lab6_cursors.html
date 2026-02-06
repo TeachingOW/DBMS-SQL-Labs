@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Lab6</h1>
@@ -95,7 +101,7 @@
 </div>
 <p>You can also do the same thing (from the shell) via:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sh">mysql -u &lt;your name&gt; -p --host=ids [your database] &lt; test.sql
+  <pre><code class="language-sh">mysql -u &lt;your name&gt; -p --host=ids [your DATABASE] &lt; test.sql
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

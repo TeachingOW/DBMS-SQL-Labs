@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Neo4J</h1>
@@ -74,7 +80,7 @@
 <p><img src="http://personal.morris.umn.edu/~dolan118/cs4453/images/DAG.png"></p>
 <p>The Neo4J people have provided this handy reference graphic:</p>
 <div class="code-block-wrapper">
-  <pre><code>http://visual.ly/whats-graph-database
+  <pre><code>http://visual.ly/whats-graph-DATABASE
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -123,7 +129,7 @@
 <p>Relationships in neo4J are similar to the idea of relationships that we developed when drawing our ER diagrams (remember that?)… however, again, the idea is more flexible and abstract in neo4J.</p>
 <p>Now go forward and try out the Cypher query language tutorial.  I want EVERYBODY to type this stuff in at least once.  To keep out of each other's way, whenever you are asked to add a node you should provide an extra label specifying who <strong>you</strong> are.  So if the tutorial says:</p>
 <div class="code-block-wrapper">
-  <pre><code>    CREATE (ee:Person { name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 })
+  <pre><code>    CREATE (ee:Person { name: &quot;Emil&quot;, FROM: &quot;Sweden&quot;, klout: 99 })
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -139,7 +145,7 @@
 </div>
 <p>Then you need to change the labels to look like this:</p>
 <div class="code-block-wrapper">
-  <pre><code>    CREATE (ee:Person:Dolan { name: &quot;Emil&quot;, from: &quot;Sweden&quot;, klout: 99 })
+  <pre><code>    CREATE (ee:Person:Dolan { name: &quot;Emil&quot;, FROM: &quot;Sweden&quot;, klout: 99 })
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -244,7 +250,7 @@ The edge <code>-[:KNOWS]-&gt;</code> means that the <code>ee</code> node must be
 <li>A bothersome amount of case-sensitivity in unexpected locations</li>
 <li>A strong order-dependency on the clauses (a <code>LIMIT</code> clause occurs AFTER a <code>RETURN</code> clause)</li>
 </ul>
-<p>In just a moment I will ask you to do the final tutorial-- <code>The Movie Database</code>-- <strong>BUT PAY CLOSE ATTENTION TO WHAT I HAVE TO SAY FIRST</strong>:</p>
+<p>In just a moment I will ask you to do the final tutorial-- <code>The Movie DATABASE</code>-- <strong>BUT PAY CLOSE ATTENTION TO WHAT I HAVE TO SAY FIRST</strong>:</p>
 <ul>
 <li>Typing everything in this tutorial is unreasonable, however just using the data as provided in the tutorial won't get you credit. </li>
 <li>For the movie database, copy and paste the rather large amount of text into a text document and make the following two global replacements:
@@ -304,7 +310,7 @@ Also notice the ability to name an edge an extract data from it in the <code>RET
   </button>
 </div>
 <div class="code-block-wrapper">
-  <pre><code>2. Modify the following query to find the PEOPLE who acted within 3 hops of Keanu Reeves:
+  <pre><code>2. MODIFY the FOLLOWING query to find the PEOPLE who acted within 3 hops of Keanu Reeves:
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

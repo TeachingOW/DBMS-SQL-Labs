@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 
@@ -167,7 +173,7 @@ FROM products;
 
 <div class="code-block-wrapper">
   <pre><code class="language-sql">INSERT INTO simple_view (id, name, price)
-VALUES (10, 'New Item', 14.99);
+VALUES (10, 'NEW Item', 14.99);
 
 UPDATE simple_view
 SET price = 19.99

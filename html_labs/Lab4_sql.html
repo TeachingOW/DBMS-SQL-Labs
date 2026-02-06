@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Lab 4: SQL 2</h1>
@@ -96,7 +102,7 @@
 clause.  As you might expect, this controls the order of the entries in the table.  Try these:</p>
 <div class="code-block-wrapper">
   <pre><code>SELECT * FROM inventory ORDER BY item;
-SELECT * FROM inventory order by amount;
+SELECT * FROM inventory ORDER BY amount;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -147,7 +153,7 @@ SELECT * FROM inventory order by amount;
 <p>SOME functions are designed to work with <strong>aggregates</strong>.  Try these two commands:</p>
 <div class="code-block-wrapper">
   <pre><code>SELECT * FROM poorDesign;
-SELECT comboName,count(*) AS count FROM poorDesign GROUP BY comboCode;
+SELECT comboName,COUNT(*) AS COUNT FROM poorDesign GROUP BY comboCode;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -162,13 +168,13 @@ SELECT comboName,count(*) AS count FROM poorDesign GROUP BY comboCode;
   </button>
 </div>
 <p>There are several aggregate functions, but the mariaDB manuals certainly doesn't make it easy to figure out exactly what they are.  <a href="http://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html">The list from the mySQL documentation</a> is perhaps more useful. I checked them and they all work.  You should try a few.  Pay attention to the difference between </p>
-<p><code>count(*)`, `count(&lt;col name&gt;)` and `count(DISTINCT &lt;col name&gt;)</code></p>
+<p><code>COUNT(*)`, `COUNT(&lt;col name&gt;)` AND `COUNT(DISTINCT &lt;col name&gt;)</code></p>
 <p>These differences are subtle, but useful.</p>
 <h2>The <code>HAVING</code> clause</h2>
 <p>Here's something a bit more interesting... try these:</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT comboCode, count(*) FROM poorDesign WHERE item &gt;=3 GROUP BY comboCode;
-SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode;
+  <pre><code>SELECT comboCode, COUNT(*) FROM poorDesign WHERE item &gt;=3 GROUP BY comboCode;
+SELECT comboCode, COUNT(*) FROM poorDesign GROUP BY comboCode;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -186,7 +192,7 @@ SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode;
 <p>And of course, by saying that, I've highlighted what I wanted to point out... namely that the <code>WHERE</code> clause filters rows <strong>before</strong> grouping.  This means it affects just exactly WHAT gets grouped and can affect the output of the aggregating functions.  </p>
 <p>Now what happens if we want to restrict the <code>GROUPS</code> that we see?  That's where the <code>HAVING</code> clause comes into play.  It controls what GROUPS are displayed.... and even cooler, it can use aggregate functions of its own. Here's a perfectly valid command (which may, or may not, produce anything interesting – depending upon the contents of your tables):</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT comboCode, count(*) FROM poorDesign GROUP BY comboCode HAVING sum(comboCode)&gt;3;
+  <pre><code>SELECT comboCode, COUNT(*) FROM poorDesign GROUP BY comboCode HAVING SUM(comboCode)&gt;3;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -275,7 +281,7 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 </div>
 <p>This sort of thing is useful for including aggregate information:</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT item,unit,amount,(SELECT avg(amount) FROM inventory WHERE unit=bob.unit GROUP by unit) AS sub FROM inventory AS bob;
+  <pre><code>SELECT item,unit,amount,(SELECT AVG(amount) FROM inventory WHERE unit=bob.unit GROUP BY unit) AS sub FROM inventory AS bob;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -292,7 +298,7 @@ And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http:/
 <h2>The <code>UNION</code> keyword</h2>
 <p>So far we have been looking at various ways to combine columns of tables. We can also use functions that transform the contents of a column, or use a function to calculate a value derived from the value of several different columns:</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT concat(item,unit) AS together FROM inventory;
+  <pre><code>SELECT CONCAT(item,unit) AS together FROM inventory;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -371,7 +377,7 @@ SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id UNION
 <h4>Foreign Key Exercise</h4>
 <p>Each group should create two tables, one named <code>fk_A</code>, the other <code>fk_B</code>:</p>
 <ul>
-<li>The first table should have a column named <code>idA</code> and <code>foreignID</code>.  The second table should have a column named <code>idB</code> and <code>text</code>.</li>
+<li>The first table should have a column named <code>idA</code> and <code>foreignID</code>.  The second table should have a column named <code>idB</code> and <code>TEXT</code>.</li>
 <li>The columns <code>idA</code> and <code>idB</code> should be primary keys, and <code>foreignID</code> should be a foreign key that refers to <code>idB</code> in <code>fk_B</code>.  </li>
 <li>Experiment with creating the tables, inserting records, deleting records, and modifying values.</li>
 </ul>
@@ -419,8 +425,8 @@ text files called <code>rndA</code> and <code>rndB</code>. Both will contain two
 and each will be 2000 lines long. Since I'm not 100% certain what we have on-hand we'll just use stock
 commands:</p>
 <div class="code-block-wrapper">
-  <pre><code>for i in `seq 1 2000`;
-do
+  <pre><code>FOR i IN `seq 1 2000`;
+DO
  echo &quot;scale=0; $RANDOM/32.767&quot;|bc
 done &gt; col1A
 </code></pre>
@@ -495,7 +501,7 @@ seconds for me)</p>
 <p>Now try this one (it took me FAR too long to come up with a query that confuses the built-in optimizer
 that MariaDB uses):</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT count(*) FROM randA, randB, randA AS C 
+  <pre><code>SELECT COUNT(*) FROM randA, randB, randA AS C 
    WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.B) AND
          C.B=randB.B;
 </code></pre>
@@ -540,12 +546,12 @@ ALTER TABLE randB DROP INDEX A;
 ALTER TABLE randA DROP INDEX B;
 ALTER TABLE randB DROP INDEX B;
 
-SELECT count(*) FROM randA, randB, randA AS C 
+SELECT COUNT(*) FROM randA, randB, randA AS C 
    WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.b) AND
          C.B=randB.b;
 
 EXPLAIN
-SELECT count(*) FROM randA, randB, randA AS C 
+SELECT COUNT(*) FROM randA, randB, randA AS C 
    WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.b) AND
          C.B=randB.b;
 </code></pre>
@@ -621,8 +627,8 @@ before importing saved over half an hour of time.</p>
 <p>We have already seen how to use <code>UNION</code> to combine the results of two queries with similar structures.  Let's practice.  </p>
 <p>First make sure these toy queries don't return anything too long:</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT * FROM randA where A BETWEEN 2 AND 9;
-SELECT * FROM randB where B BETWEEN 2 AND 9;
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9;
+SELECT * FROM randB WHERE B BETWEEN 2 AND 9;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -640,7 +646,7 @@ SELECT * FROM randB where B BETWEEN 2 AND 9;
 <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 UNION 
-SELECT * FROM randB where B BETWEEN 2 AND 9;
+SELECT * FROM randB WHERE B BETWEEN 2 AND 9;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -658,7 +664,7 @@ SELECT * FROM randB where B BETWEEN 2 AND 9;
 <div class="code-block-wrapper">
   <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 UNION 
-SELECT * FROM randA where A BETWEEN 2 AND 9;
+SELECT * FROM randA WHERE A BETWEEN 2 AND 9;
 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -677,9 +683,9 @@ SELECT * FROM randA where A BETWEEN 2 AND 9;
 allowed) – in other words the output is, by default, at least in Type 1 Normal Form. </p>
 <p>You can force it to include everything like this:</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT * FROM randA where A BETWEEN 2 AND 9 
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 UNION ALL 
-SELECT * FROM randA where A BETWEEN 2 AND 9;
+SELECT * FROM randA WHERE A BETWEEN 2 AND 9;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -696,9 +702,9 @@ SELECT * FROM randA where A BETWEEN 2 AND 9;
 <p>If you are using <code>UNION</code>, then you are allowed one <code>ORDER BY</code> clause and it must come AFTER the last <code>SELECT</code> (no
 ordering the pieces then joining them together). This will work:</p>
 <div class="code-block-wrapper">
-  <pre><code>SELECT * FROM randA where A BETWEEN 2 AND 9 
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 UNION ALL 
-SELECT * FROM randA where A BETWEEN 2 AND 9 
+SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
 ORDER BY B;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

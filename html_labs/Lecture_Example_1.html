@@ -64,23 +64,29 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h2>Lecture Example</h2>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">CREATE  database Lec;
+  <pre><code class="language-sql">CREATE  DATABASE Lec;
 USE Lec; 
 
-create table product(
-       pname        varchar(20) primary key, -- name of the product
-       price        decimal(10,2),               -- price of the product
-       category     varchar(20),             -- category
-       manufacturer varchar(20) NOT NULL     -- manufacturer
+CREATE TABLE product(
+       pname        VARCHAR(20) PRIMARY KEY, -- name of the product
+       price        DECIMAL(10,2),               -- price of the product
+       category     VARCHAR(20),             -- category
+       manufacturer VARCHAR(20) NOT NULL     -- manufacturer
 );
-insert into product values('Gizmo', 19.99, 'Gadgets', 'GizmoWorks');    
-insert into product values('PowerGizmo', 29.99, 'Gadgets', 'GizmoWorks');  
-insert into product values('MultiTouch', 203.99, 'Household', 'Hitachi'); 
-insert into product values('SingleTouch', 149.99, 'Photography', 'Canon')
+INSERT INTO product VALUES('Gizmo', 19.99, 'Gadgets', 'GizmoWorks');    
+INSERT INTO product VALUES('PowerGizmo', 29.99, 'Gadgets', 'GizmoWorks');  
+INSERT INTO product VALUES('MultiTouch', 203.99, 'Household', 'Hitachi'); 
+INSERT INTO product VALUES('SingleTouch', 149.99, 'Photography', 'Canon')
 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

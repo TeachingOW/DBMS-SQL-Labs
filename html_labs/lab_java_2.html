@@ -75,6 +75,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 
@@ -102,30 +108,30 @@ It provides explicit control over SQL execution, connection management, and resu
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-// 1. Open a connection
+// 1. OPEN a connection
 String url = "jdbc:mysql://localhost:3306/school";
 String user = "appuser";
 String pass = "secret";
 
 Connection conn = DriverManager.getConnection(url, user, pass);
 
-// 2. Insert example
-String insert = "INSERT INTO student (name, year) VALUES (?, ?)";
-PreparedStatement stmt = conn.prepareStatement(insert);
+// 2. INSERT example
+String INSERT = "INSERT INTO student (name, YEAR) VALUES (?, ?)";
+PreparedStatement stmt = conn.prepareStatement(INSERT);
 stmt.setString(1, "Alice");
 stmt.setInt(2, 2025);
 stmt.executeUpdate();
 
 // 3. Query example
-String query = "SELECT id, name, year FROM student WHERE year = ?";
+String query = "SELECT id, name, YEAR FROM student WHERE YEAR = ?";
 PreparedStatement q = conn.prepareStatement(query);
 q.setInt(1, 2025);
 
 ResultSet rs = q.executeQuery();
-while (rs.next()) {
-    System.out.println(rs.getLong("id") + " " +
+WHILE (rs.next()) {
+    System.OUT.println(rs.getLong("id") + " " +
                        rs.getString("name") + " " +
-                       rs.getInt("year"));
+                       rs.getInt("YEAR"));
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -145,7 +151,7 @@ while (rs.next()) {
 <div class="code-block-wrapper">
   <pre><code class="language-java">
 try {
-    conn.setAutoCommit(false);
+    conn.setAutoCommit(FALSE);
 
     PreparedStatement s1 = conn.prepareStatement(
         "UPDATE accounts SET balance = balance - 100 WHERE id = 1"
@@ -157,9 +163,9 @@ try {
     s1.executeUpdate();
     s2.executeUpdate();
 
-    conn.commit();
+    conn.COMMIT();
 } catch (Exception ex) {
-    conn.rollback();
+    conn.ROLLBACK();
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -199,7 +205,7 @@ This reduces boilerplate, improves readability, and centralizes mappings, cachin
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-User u = new User();
+User u = NEW User();
 u.setName("Bob");
 u.setEmail("bob@example.com");
 
@@ -254,7 +260,7 @@ JPA provides annotations, entity management, JPQL querying, relationships, and l
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "student")
+@TABLE(name = "student")
 public class Student {
 
     @Id
@@ -262,7 +268,7 @@ public class Student {
     private Long id;
 
     private String name;
-    private int year;
+    private INT YEAR;
 
     // getters & setters
 }
@@ -285,16 +291,16 @@ public class Student {
 <div class="code-block-wrapper">
   <pre><code class="language-java">
 EntityManager em = emf.createEntityManager();
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 
-Student s = new Student();
+Student s = NEW Student();
 s.setName("Alice");
 s.setYear(2025);
 
 em.persist(s);
 
-em.getTransaction().commit();
-em.close();
+em.getTransaction().COMMIT();
+em.CLOSE();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,7 +319,7 @@ em.close();
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-String jpql = "SELECT s FROM Student s WHERE s.year = :yr";
+String jpql = "SELECT s FROM Student s WHERE s.YEAR = :yr";
 
 List&lt;Student&gt; list = em.createQuery(jpql, Student.class)
                          .setParameter("yr", 2025)
@@ -352,17 +358,17 @@ public class User {
 
     private String name;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List&lt;Order&gt; orders = new ArrayList<>();
+    @OneToMany(mappedBy = "user", FETCH = FetchType.LAZY)
+    private List&lt;ORDER&gt; orders = NEW ArrayList<>();
 }
 
 @Entity
-public class Order {
+public class ORDER {
 
     @Id @GeneratedValue
     private Long id;
 
-    private double total;
+    private DOUBLE total;
 
     @ManyToOne
     private User user;
@@ -391,7 +397,7 @@ User u = em.find(User.class, 1L);
 
 // orders are NOT loaded yet
 
-List&lt;Order&gt; orders = u.getOrders(); 
+List&lt;ORDER&gt; orders = u.getOrders(); 
 // Lazy loading triggers SELECT query here!
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -416,7 +422,7 @@ List&lt;Order&gt; orders = u.getOrders();
 EntityManager em = emf.createEntityManager();
 
 try {
-    em.getTransaction().begin();
+    em.getTransaction().BEGIN();
 
     Account a = em.find(Account.class, 1L);
     Account b = em.find(Account.class, 2L);
@@ -424,9 +430,9 @@ try {
     a.withdraw(100);
     b.deposit(100);
 
-    em.getTransaction().commit();
+    em.getTransaction().COMMIT();
 } catch (Exception e) {
-    em.getTransaction().rollback();
+    em.getTransaction().ROLLBACK();
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -451,7 +457,7 @@ try {
 public interface StudentRepository 
        extends JpaRepository&lt;Student, Long&gt; {
 
-    List&lt;Student&gt; findByYear(int year);
+    List&lt;Student&gt; findByYear(INT YEAR);
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -473,7 +479,7 @@ Spring Data automatically generates:
 
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
-SELECT * FROM student WHERE year = ?;
+SELECT * FROM student WHERE YEAR = ?;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

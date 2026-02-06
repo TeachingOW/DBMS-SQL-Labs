@@ -68,6 +68,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
   <header>
@@ -112,7 +118,7 @@ SELECT JSON_PRETTY(attrs) FROM products;
 
   <section class="section">
     <h2>4. Modifying JSON data</h2>
-    <pre id="code-3">-- Update a key's value
+    <pre id="code-3">-- UPDATE a KEY's value
 UPDATE products
 SET attrs = JSON_SET(attrs, '$.color', 'green')
 WHERE sku = 'SKU-100';
@@ -122,7 +128,7 @@ UPDATE products
 SET attrs = JSON_ARRAY_APPEND(attrs, '$.price_points', JSON_OBJECT('amount', 150, 'currency', 'USD'))
 WHERE sku = 'SKU-200';
 
--- Remove a key
+-- Remove a KEY
 UPDATE products
 SET attrs = JSON_REMOVE(attrs, '$.weight')
 WHERE sku = 'SKU-100';</pre>
@@ -171,7 +177,7 @@ JSON_TABLE(p.attrs, '$.price_points[*]'
 
   <section class="section">
     <h2>8. Common JSON functions (8.0+)</h2>
-    <pre id="code-7">JSON_OBJECT(key, value, ...)
+    <pre id="code-7">JSON_OBJECT(KEY, value, ...)
 JSON_ARRAY(value, ...)
 JSON_SET(json_doc, path, val)
 JSON_REPLACE(json_doc, path, val)

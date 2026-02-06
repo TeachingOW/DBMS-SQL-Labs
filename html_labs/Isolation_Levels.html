@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <table>
@@ -72,14 +78,14 @@
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">create table product
-(id  int primary key,
-name varchar(10),
-price float
+  <pre><code class="language-sql">CREATE TABLE product
+(id  INT PRIMARY KEY,
+name VARCHAR(10),
+price FLOAT
 );
 
-insert into product values (1,'phone',100);
-insert into product values (2,'tv',200);
+INSERT INTO product VALUES (1,'phone',100);
+INSERT INTO product VALUES (2,'tv',200);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -137,7 +143,7 @@ SELECT * FROM product WHERE id = 1;
 <td>
 <pre>
  <code class="language-sql">
-Begin;
+BEGIN;
 UPDATE product SET price = 1000 WHERE id = 1;
 </code></pre>
  </td> </tr> 
@@ -250,7 +256,7 @@ SELECT  * FROM product;
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">Commit;
+  <pre><code class="language-sql">COMMIT;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -274,7 +280,7 @@ SELECT  * FROM product;
 
 
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">SELECT * from Product;
+  <pre><code class="language-sql">SELECT * FROM Product;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -339,7 +345,7 @@ SELECT COUNT(*) FROM product;
 <div class="code-block-wrapper">
   <pre><code class="language-sql">BEGIN;
  INSERT INTO `product` VALUES (3,'C', 5);
-commit;
+COMMIT;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -421,7 +427,7 @@ SELECT COUNT(*) FROM product;
  <code class="language-sql">
 BEGIN;
  INSERT INTO `product` VALUES (4,'D', 5);
-commit;
+COMMIT;
  </code>
  </td>
 </tr>
@@ -654,7 +660,7 @@ BEGIN;
 
   <div class="code-block-wrapper">
   <pre><code class="language-sql">
-   commit;
+   COMMIT;
    </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -674,7 +680,7 @@ BEGIN;
 
     <div class="code-block-wrapper">
   <pre><code class="language-sql">
-   commit;
+   COMMIT;
    </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -707,7 +713,7 @@ BEGIN;
 <div class="code-block-wrapper">
   <pre><code class="language-sql">SET SESSION TRANSACTION ISOLATION LEVEL Repeatable Read;
 BEGIN;
-SELECT  count(*) from Product;
+SELECT  COUNT(*) FROM Product;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -735,7 +741,7 @@ SELECT  count(*) from Product;
 BEGIN;
 
  INSERT INTO `product` VALUES (11,'G', 5);
-commit;
+COMMIT;
  </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -757,8 +763,8 @@ commit;
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
 
-SELECT  count(*) from Product;
-   commit;
+SELECT  COUNT(*) FROM Product;
+   COMMIT;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

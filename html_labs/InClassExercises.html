@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Lab 1: Database Creation and Basic SQL Operations</h1>
@@ -84,7 +90,7 @@
 <h3>Step 1: Create Your First Database</h3>
 <p>A database is a container that holds related tables. Let's create one for our exercises:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Create a new database (only needed once)
+  <pre><code class="language-sql">-- CREATE a NEW DATABASE (only needed once)
 CREATE DATABASE lab1_exercises;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -103,7 +109,7 @@ CREATE DATABASE lab1_exercises;
 <h3>Step 2: Select the Database</h3>
 <p>Before creating tables, you must specify which database to use:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Switch to our new database
+  <pre><code class="language-sql">-- Switch to our NEW DATABASE
 USE lab1_exercises;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -122,10 +128,10 @@ USE lab1_exercises;
 <h3>Step 3: Create Your First Table</h3>
 <p>Let's create a product catalog table with proper data types and constraints:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Create the product table with detailed comments
+  <pre><code class="language-sql">-- CREATE the product TABLE WITH detailed comments
 CREATE TABLE product(
-    pname        VARCHAR(20) PRIMARY KEY,  -- Product name (unique identifier)
-    price        DECIMAL(10,2),            -- Price with 2 decimal places
+    pname        VARCHAR(20) PRIMARY KEY,  -- Product name (UNIQUE identifier)
+    price        DECIMAL(10,2),            -- Price WITH 2 DECIMAL places
     category     VARCHAR(20),              -- Product category
     manufacturer VARCHAR(20) NOT NULL      -- Manufacturer (required field)
 );
@@ -150,7 +156,7 @@ CREATE TABLE product(
 <h3>Step 4: Insert Sample Data</h3>
 <p>Now let's add some products to our table:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Insert sample products
+  <pre><code class="language-sql">-- INSERT sample products
 INSERT INTO product VALUES('Gizmo', 19.99, 'Gadgets', 'GizmoWorks');
 INSERT INTO product VALUES('PowerGizmo', 29.99, 'Gadgets', 'GizmoWorks');
 INSERT INTO product VALUES('MultiTouch', 203.99, 'Household', 'Hitachi');
@@ -170,7 +176,7 @@ INSERT INTO product VALUES('SingleTouch', 149.99, 'Photography', 'Canon');
 </div>
 <p><strong>Verify your data</strong>:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- View all products
+  <pre><code class="language-sql">-- VIEW ALL products
 SELECT * FROM product;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -442,18 +448,18 @@ This query will produce an <strong>ERROR</strong>! You cannot use `ORDER BY pnam
 <h4>Setting Up the Database Schema</h4>
 <p>We need to recreate our tables to demonstrate foreign key relationships:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Clean up existing tables (order matters due to foreign key constraints!)
-DROP TABLE IF EXISTS product;  -- Drop child table first
-DROP TABLE IF EXISTS company;   -- Then drop parent table
+  <pre><code class="language-sql">-- Clean up existing TABLES (ORDER matters due to FOREIGN KEY constraints!)
+DROP TABLE IF EXISTS product;  -- DROP child TABLE first
+DROP TABLE IF EXISTS company;   -- THEN DROP parent TABLE
 
--- Create the parent table (company)
+-- CREATE the parent TABLE (company)
 CREATE TABLE company (
-    cname VARCHAR(20) PRIMARY KEY,    -- Company name (unique identifier)
-    stockprice DECIMAL(10,2),         -- Stock price in dollars
+    cname VARCHAR(20) PRIMARY KEY,    -- Company name (UNIQUE identifier)
+    stockprice DECIMAL(10,2),         -- Stock price IN dollars
     country VARCHAR(10)               -- Country of origin
 );
 
--- Insert company data
+-- INSERT company data
 INSERT INTO company VALUES ('ToyWorks', 25.0, 'USA');
 INSERT INTO company VALUES ('ToyFriends', 65.0, 'China');
 INSERT INTO company VALUES ('ToyCo', 15.0, 'China');
@@ -488,17 +494,17 @@ INSERT INTO company VALUES ('ToyCo', 15.0, 'China');
 </div>
 <p>Now create the product table with a foreign key relationship:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">-- Create the child table (product) with foreign key constraint
+  <pre><code class="language-sql">-- CREATE the child TABLE (product) WITH FOREIGN KEY CONSTRAINT
 CREATE TABLE product(
     pname VARCHAR(10),                -- Product name
     price DECIMAL(10,2),              -- Product price
     category VARCHAR(10),             -- Product category
-    manufacturer VARCHAR(10),         -- Manufacturer (references company)
-    PRIMARY KEY (pname, manufacturer), -- Composite primary key
-    FOREIGN KEY (manufacturer) REFERENCES company(cname)  -- Foreign key constraint
+    manufacturer VARCHAR(10),         -- Manufacturer (REFERENCES company)
+    PRIMARY KEY (pname, manufacturer), -- Composite PRIMARY KEY
+    FOREIGN KEY (manufacturer) REFERENCES company(cname)  -- FOREIGN KEY CONSTRAINT
 );
 
--- Insert product data
+-- INSERT product data
 INSERT INTO product VALUES('Pikachu', 19.99, 'Toy', 'ToyWorks');
 INSERT INTO product VALUES('Pikachu', 19.99, 'Toy', 'ToyFriends');
 INSERT INTO product VALUES('Pokeball', 29.99, 'Electronic', 'ToyCo');
@@ -727,14 +733,14 @@ WHERE c.stockprice &gt; 20;
 <li>
 <p><strong>"Database doesn't exist" error</strong>:
    <code>sql
-   -- Make sure you created and selected the database
+   -- Make sure you created AND selected the DATABASE
    CREATE DATABASE lab1_exercises;
    USE lab1_exercises;</code></p>
 </li>
 <li>
 <p><strong>"Table already exists" error</strong>:
    <code>sql
-   -- Drop the table first, then recreate
+   -- DROP the TABLE first, THEN recreate
    DROP TABLE IF EXISTS table_name;</code></p>
 </li>
 <li>

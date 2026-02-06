@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Coordinating asynchronous calls through multiple callbacks (v2)</h1>
@@ -85,12 +91,12 @@ var data={};
 var processed={}
 
 sql = &quot;SHOW DATABASES&quot;;
-connection.query(sql,function(err,rows,fields){ //connection.connect() is run automatically for a query
-  if (err) {
-    console.log('Error looking up databases');
-    connection.end();
-  } else {
-    processDBFs(rows); //Gets called once... so it is safe!
+connection.query(sql,FUNCTION(err,ROWS,fields){ //connection.connect() IS run automatically FOR a query
+  IF (err) {
+    console.log('Error looking up DATABASES');
+    connection.END();
+  } ELSE {
+    processDBFs(ROWS); //Gets called once... so it IS safe!
   }
 });
 </code></pre>
@@ -108,15 +114,15 @@ connection.query(sql,function(err,rows,fields){ //connection.connect() is run au
 </div>
 <p>Now we have a somewhat simplified version of <code>processDBFs</code> from the README:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-JavaScript">function processDBFs(dbfs){ // Asynchronous row handler
-  console.log(&quot;in processDBFs&quot;);
-  for(var index in dbfs) {
-    var dbf = dbfs[index].Database;
+  <pre><code class="language-JavaScript">FUNCTION processDBFs(dbfs){ // Asynchronous ROW HANDLER
+  console.log(&quot;IN processDBFs&quot;);
+  FOR(var INDEX IN dbfs) {
+    var dbf = dbfs[INDEX].DATABASE;
     var sql = 'SHOW TABLES IN '+ dbf;
-    data[dbf] = Number.POSITIVE_INFINITY; //Exists, but not set.
+    data[dbf] = Number.POSITIVE_INFINITY; //EXISTS, but NOT SET.
     var callback = constructTablesCallback(dbf);
     connection.query(sql, callback);
-  } // do NOT put a connection.end() here.  It will kill all queued queries.
+  } // DO NOT put a connection.END() here.  It will kill ALL queued queries.
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -143,15 +149,15 @@ every database returned by the <code>SHOW DATABASES</code> query. And that's
 arguably the key point here. If we have only one callback
 function, through something like:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-JavaScript">  callback = (err, tables, fields) =&gt; {
-    console.log('in inner func of processDBFs with dbf = ' + dbf);
-    if (err) {
-      console.log('Error finding tables in dbf ' + dbf);
-      connection.end();
-    } else {
-      console.log('about to process tables for DB ' + dbf);
-      console.log('with tables ' + JSON.stringify(tables));
-      processTables(tables, dbf);
+  <pre><code class="language-JavaScript">  callback = (err, TABLES, fields) =&gt; {
+    console.log('IN INNER func of processDBFs WITH dbf = ' + dbf);
+    IF (err) {
+      console.log('Error finding TABLES IN dbf ' + dbf);
+      connection.END();
+    } ELSE {
+      console.log('about to process TABLES FOR DB ' + dbf);
+      console.log('WITH TABLES ' + JSON.stringify(TABLES));
+      processTables(TABLES, dbf);
     }
   }
 </code></pre>
@@ -176,16 +182,16 @@ problems because we'll be trying to attach tables from other
 databases to that last database, which will typically fail.</p>
 <p>And here's the code that constructs those callbacks:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-JavaScript">function constructTablesCallback(dbf) {
-  console.log('in dbf for ' + dbf);
-  return function(err,tables, fields) {
-    console.log('in inner func of processDBFs with dbf = ' + dbf);
-    if (err) {
-      console.log('Error finding tables in dbf ' + dbf);
-      connection.end();
-    } else {
-      console.log('about to process tables for DB ' + dbf);
-      processTables(tables, dbf);
+  <pre><code class="language-JavaScript">FUNCTION constructTablesCallback(dbf) {
+  console.log('IN dbf FOR ' + dbf);
+  RETURN FUNCTION(err,TABLES, fields) {
+    console.log('IN INNER func of processDBFs WITH dbf = ' + dbf);
+    IF (err) {
+      console.log('Error finding TABLES IN dbf ' + dbf);
+      connection.END();
+    } ELSE {
+      console.log('about to process TABLES FOR DB ' + dbf);
+      processTables(TABLES, dbf);
     }
   }
 }
@@ -209,27 +215,27 @@ the confusing tangle of crazy we'd get if we had a single
 callback.</p>
 <p>We can then do something similar for <code>processTables()</code>:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-JavaScript">function processTables(tables, dbf) { // Asynchronous row handler
-  data[dbf] = tables.length; // Now it is set.
-  processed[dbf] = 0;    // And has not yet been used as a label.
-  for(var index in tables){
-    var tableObj = tables[index];
-    for(key in tableObj) {
-      var table = tableObj[key];
-      table = dbf+&quot;.&quot;+table;
-      var sql = 'DESCRIBE '+table;
-      var callback = processDescribeCallback(table, dbf);
+  <pre><code class="language-JavaScript">FUNCTION processTables(TABLES, dbf) { // Asynchronous ROW HANDLER
+  data[dbf] = TABLES.LENGTH; // Now it IS SET.
+  processed[dbf] = 0;    // AND has NOT yet been used AS a label.
+  FOR(var INDEX IN TABLES){
+    var tableObj = TABLES[INDEX];
+    FOR(KEY IN tableObj) {
+      var TABLE = tableObj[KEY];
+      TABLE = dbf+&quot;.&quot;+TABLE;
+      var sql = 'DESCRIBE '+TABLE;
+      var callback = processDescribeCallback(TABLE, dbf);
       connection.query(sql, callback);
     }
   }
 }
 
-function processDescribeCallback(table, dbf) {
-  return function(err, desc, fields) {
-    if (err) {
-      console.log('Error describing table '+ table);
-    } else {
-      processDescription(desc,table,dbf);
+FUNCTION processDescribeCallback(TABLE, dbf) {
+  RETURN FUNCTION(err, DESC, fields) {
+    IF (err) {
+      console.log('Error describing TABLE '+ TABLE);
+    } ELSE {
+      processDescription(DESC,TABLE,dbf);
     }
   };
 }
@@ -250,26 +256,26 @@ function processDescribeCallback(table, dbf) {
 version, using datastructures and careful callback construction 
 to handle the asynchrony:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-JavaScript">function processDescription(desc, table, dbf) {
-  data[dbf]--; //Processed one table
-  if (processed[dbf]==0) {
+  <pre><code class="language-JavaScript">FUNCTION processDescription(DESC, TABLE, dbf) {
+  data[dbf]--; //Processed one TABLE
+  IF (processed[dbf]==0) {
     processed[dbf] = 1;
     console.log('---|'+dbf+'&gt;');
   }
-  console.log('.....|'+dbf+'.'+table+'&gt;');
-  desc.map(function(field){ // show the fields nicely
+  console.log('.....|'+dbf+'.'+TABLE+'&gt;');
+  DESC.map(FUNCTION(field){ // SHOW the fields nicely
     console.log(&quot;\tFieldName: `&quot;+field.Field+&quot;` \t(&quot;+field.Type+&quot;)&quot;);
   });
 
-  if(allZero(data)){connection.end()}
+  IF(allZero(data)){connection.END()}
 }
 
-function allZero(object){
-  allzero = true;
-  for(obj in object){
-    if(object[obj]!=0){allzero = false}
+FUNCTION allZero(object){
+  allzero = TRUE;
+  FOR(obj IN object){
+    IF(object[obj]!=0){allzero = FALSE}
   }
-  return(allzero);
+  RETURN(allzero);
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

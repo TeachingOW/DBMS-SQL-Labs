@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Interacting with MySQL Using Java (JDBC)</h1>
@@ -125,7 +131,7 @@ public class ConnectExample {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connected to database!");
+            System.OUT.println("Connected to DATABASE!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -153,8 +159,8 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery(query)) {
 
-    while (rs.next()) {
-        System.out.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
+    WHILE (rs.next()) {
+        System.OUT.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
     }
 }
 </code></pre>
@@ -174,14 +180,14 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
 
 <h2>Insert Data Into the Database</h2>
 <div class="code-block-wrapper">
-  <pre><code class="language-java">String insert = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
+  <pre><code class="language-java">String INSERT = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
 try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement()) {
 
-    stmt.executeUpdate(insert);
-    conn.commit();
+    stmt.executeUpdate(INSERT);
+    conn.COMMIT();
 
-    System.out.println("Insert committed.");
+    System.OUT.println("INSERT committed.");
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -196,7 +202,7 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
     </svg>
   </button>
 </div>
-<p><strong>Important:</strong> Some JDBC configurations require <code>conn.setAutoCommit(false)</code> if you want manual control. If autocommit is enabled (default), inserts commit automatically.</p>
+<p><strong>Important:</strong> Some JDBC configurations require <code>conn.setAutoCommit(FALSE)</code> if you want manual control. If autocommit is enabled (default), inserts commit automatically.</p>
 
 <h2>Printing After Insert</h2>
 <p>If the insert is committed, reconnecting and selecting again will show the updated data.</p>
@@ -206,8 +212,8 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery(query)) {
 
-    while (rs.next()) {
-        System.out.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
+    WHILE (rs.next()) {
+        System.OUT.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
     }
 }
 </code></pre>

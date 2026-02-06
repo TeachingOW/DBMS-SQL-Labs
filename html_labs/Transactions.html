@@ -64,15 +64,21 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <p>In this short tutorial, we will explore how transcations work in MySQL.</p>
 <p>Now, we would create a simple bank table;</p>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">CREATE TABLE Bank(
-name varchar(10),
-amnt decimal(10,2),
-Constraint  AmntC check (amnt&gt;=0) ); 
+name VARCHAR(10),
+amnt DECIMAL(10,2),
+CONSTRAINT  AmntC CHECK (amnt&gt;=0) ); 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -88,8 +94,8 @@ Constraint  AmntC check (amnt&gt;=0) );
 </div>
 <p>Add few users to the bank</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">insert into bank values(&quot;Bob&quot;, 40);
-Insert into bank values (&quot;Joe&quot;, 50);
+  <pre><code class="language-sql">INSERT INTO bank VALUES(&quot;Bob&quot;, 40);
+INSERT INTO bank VALUES (&quot;Joe&quot;, 50);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,13 +160,13 @@ Insert into bank values (&quot;Joe&quot;, 50);
 </div>
 <p>To transfer 10$ from Bob to Joe</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">start transaction;
+  <pre><code class="language-sql">START TRANSACTION;
 
-update bank set amnt=amnt-10 where name='Bob';
+UPDATE bank SET amnt=amnt-10 WHERE name='Bob';
 
-update bank set amnt=amnt+10 where name='Joe';
+UPDATE bank SET amnt=amnt+10 WHERE name='Joe';
 
-commit;
+COMMIT;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -196,13 +202,13 @@ You should get the following when executing 'select * from bank;'</p>
 </table>
 <p>Execute the following statemnts</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">start transaction;
-select * from bank;
-update bank set amnt=amnt+10 where name='Bob';
-select * from bank;
-update bank set amnt=amnt-10 where name='Joe';
-select * from bank;
-rollback;
+  <pre><code class="language-sql">START TRANSACTION;
+SELECT * FROM bank;
+UPDATE bank SET amnt=amnt+10 WHERE name='Bob';
+SELECT * FROM bank;
+UPDATE bank SET amnt=amnt-10 WHERE name='Joe';
+SELECT * FROM bank;
+ROLLBACK;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -221,10 +227,10 @@ rollback;
 <p>The previous transcation can results in a several pitfalls.</p>
 <p>For eaxample, running the following statements</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">start transaction;
-update bank set amnt=amnt-100 where name='bob';
-update bank set amnt=amnt+100 where name='joe';
-commit;
+  <pre><code class="language-sql">START TRANSACTION;
+UPDATE bank SET amnt=amnt-100 WHERE name='bob';
+UPDATE bank SET amnt=amnt+100 WHERE name='joe';
+COMMIT;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -264,14 +270,14 @@ commit;
 CREATE PROCEDURE `TRANSFER`(  
   IN FromACCNT VARCHAR(10),
   IN ToACCNT VARCHAR(10),
- IN amount decimal(10,2))
+ IN amount DECIMAL(10,2))
 BEGIN
 
-    IF EXISTS(select * from bank where name=FromAccnt and amnt &gt; amount) and EXISTS(select * from bank where name=ToAccnt) THEN
-       start transaction;
-      update bank set amnt=amnt-amount where name=FromAccnt;
-        update bank set amnt=amnt+amount where name=ToAccnt;
-      commit;
+    IF EXISTS(SELECT * FROM bank WHERE name=FromAccnt AND amnt &gt; amount) AND EXISTS(SELECT * FROM bank WHERE name=ToAccnt) THEN
+       START TRANSACTION;
+      UPDATE bank SET amnt=amnt-amount WHERE name=FromAccnt;
+        UPDATE bank SET amnt=amnt+amount WHERE name=ToAccnt;
+      COMMIT;
 
     END IF;
 END//
@@ -292,7 +298,7 @@ END//
 <div class="code-block-wrapper">
   <pre><code class="language-sql">DELIMITER ;
 
-Call TRANSFER('Bob','Joe', 100);
+CALL TRANSFER('Bob','Joe', 100);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -315,17 +321,17 @@ DELIMITER //
 CREATE PROCEDURE Transfer2(
  IN FromACCNT VARCHAR(10),
   IN ToACCNT VARCHAR(10),
- IN amount decimal(10,2))
+ IN amount DECIMAL(10,2))
 BEGIN
  DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
-        ROLLBACK;  -- rollback any error in the transaction
+        ROLLBACK;  -- ROLLBACK ANY error IN the TRANSACTION
     END;
 
-   start transaction;
-   update bank set amnt=amnt-amount where name=FromAccnt;
-   update bank set amnt=amnt+amount where name=ToAccnt;
-   commit;
+   START TRANSACTION;
+   UPDATE bank SET amnt=amnt-amount WHERE name=FromAccnt;
+   UPDATE bank SET amnt=amnt+amount WHERE name=ToAccnt;
+   COMMIT;
 END//
 
 DELIMITER ;
@@ -343,7 +349,7 @@ DELIMITER ;
   </button>
 </div>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">Call TRANSFER2('Bob','Joe', 10);
+  <pre><code class="language-sql">CALL TRANSFER2('Bob','Joe', 10);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -359,7 +365,7 @@ DELIMITER ;
 </div>
 <p>AND</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">Call TRANSFER2('Bob','Joe', 100);
+  <pre><code class="language-sql">CALL TRANSFER2('Bob','Joe', 100);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
