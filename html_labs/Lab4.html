@@ -700,6 +700,48 @@ SELECT * from Descendant;
     </svg>
   </button>
 </div>
+Another Example
+
+    <code>
+
+        create table employee(id char, managerid char);
+
+insert into employee values ('a', null);
+insert into employee values ('b', 'a');
+insert into employee values ('c', 'a');
+insert into employee values ('d', 'b');
+insert into employee values ('e', 'c');
+insert into employee values ('f', 'e');
+
+
+find employee that a manages
+WITH RECURSIVE M as (
+        SELECT id from Employee where managerid  in ('a')
+        UNION ALL
+        SELECT id from Employee where managerid  in (select id from M)
+               )
+
+SELECT * from M;
+
+
+WITH RECURSIVE M as (
+        SELECT id, managerid   from Employee 
+        UNION ALL
+        SELECT id, managerid   from Employee where managerid  in (select id from M)
+               )
+
+SELECT * from M;
+
+
+WITH RECURSIVE M as (
+        SELECT id, managerid   from Employee 
+        UNION ALL
+        SELECT E.id, M.managerid   from Employee E, M  where E.managerid= M.id
+               )
+
+SELECT * from M;
+    </code>
+    
 <h2>References</h2>
 <p>https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html</p>
 
