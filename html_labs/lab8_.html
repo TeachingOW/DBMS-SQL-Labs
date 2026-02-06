@@ -121,7 +121,7 @@ app.get(&quot;/buttons&quot;,function(req,res){
   connection.query(sql,(function(res){return function(err,ROWS,fields){
      if(err){console.log(&quot;We have an error:&quot;);
              console.log(err);}
-     res.send(ROWS);
+     res.send(rows);
   }})(res));
 });
 app.get(&quot;/click&quot;,function(req,res){
@@ -206,22 +206,22 @@ function ButtonCtrl($scope,buttonApi){
    $scope.refreshButtons=refreshButtons;
    $scope.buttonClick=buttonClick;
 
-   var loading = FALSE;
+   var loading = false;
 
    function isLoading(){
     return loading;
    }
   function refreshButtons(){
-    loading=TRUE;
+    loading=true;
     $scope.errorMessage='';
     buttonApi.getButtons()
       .success(function(data){
          $scope.buttons=data;
-         loading=FALSE;
+         loading=false;
       })
       .error(function () {
           $scope.errorMessage=&quot;Unable to load Buttons:  DATABASE request failed&quot;;
-          loading=FALSE;
+          loading=false;
       });
  }
   function buttonClick($EVENT){

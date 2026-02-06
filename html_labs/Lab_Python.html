@@ -92,7 +92,7 @@
 <p>Connect to DB</p>
 <div class="code-block-wrapper">
   <pre><code class="language-python">import mysql.connector 
-cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', DATABASE='dbms')
+cnx=mysql.connector.connect(user='root', password='1234', host='127.0.0.1', database ='dbms')
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,7 +146,7 @@ cursor.execute(query)
 </div>
 <p>Print the results:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">for (o) IN cursor:
+  <pre><code class="language-python">for (o) in cursor:
   print(o)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -163,7 +163,7 @@ cursor.execute(query)
 </div>
 <p>Closing the connection</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">cnx.CLOSE()
+  <pre><code class="language-python">cnx.close()
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -200,7 +200,7 @@ cursor.execute(iquery)
   <pre><code class="language-python">query='SELECT * FROM company;'
 cursor = cnx.cursor()
 cursor.execute(query)
-for (o) IN cursor:
+for (o) in cursor:
   print(o)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

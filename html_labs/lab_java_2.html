@@ -116,14 +116,14 @@ String pass = "secret";
 Connection conn = DriverManager.getConnection(url, user, pass);
 
 // 2. INSERT example
-String INSERT = "INSERT INTO student (name, YEAR) VALUES (?, ?)";
+String insert = "INSERT INTO student (name, YEAR) VALUES (?, ?)";
 PreparedStatement stmt = conn.prepareStatement(INSERT);
 stmt.setString(1, "Alice");
 stmt.setInt(2, 2025);
 stmt.executeUpdate();
 
 // 3. Query example
-String query = "SELECT id, name, YEAR FROM student WHERE YEAR = ?";
+String query = "SELECT id, name, YEAR FROM student WHERE year = ?";
 PreparedStatement q = conn.prepareStatement(query);
 q.setInt(1, 2025);
 
@@ -319,7 +319,7 @@ em.CLOSE();
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-String jpql = "SELECT s FROM Student s WHERE s.YEAR = :yr";
+String jpql = "SELECT s FROM Student s WHERE s.year = :yr";
 
 List&lt;Student&gt; list = em.createQuery(jpql, Student.class)
                          .setParameter("yr", 2025)
@@ -358,17 +358,17 @@ public class User {
 
     private String name;
 
-    @OneToMany(mappedBy = "user", FETCH = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List&lt;ORDER&gt; orders = new ArrayList<>();
 }
 
 @Entity
-public class ORDER {
+public class Order {
 
     @Id @GeneratedValue
     private Long id;
 
-    private DOUBLE total;
+    private double total;
 
     @ManyToOne
     private User user;
@@ -457,7 +457,7 @@ try {
 public interface StudentRepository 
        extends JpaRepository&lt;Student, Long&gt; {
 
-    List&lt;Student&gt; findByYear(INT YEAR);
+    List&lt;Student&gt; findByYear(int YEAR);
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -479,7 +479,7 @@ Spring Data automatically generates:
 
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
-SELECT * FROM student WHERE YEAR = ?;
+SELECT * FROM student WHERE year = ?;
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -145,7 +145,7 @@ public class ConnectExample {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connected to DATABASE!");
+            System.out.println("Connected to database!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -205,7 +205,7 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement()) {
 
     stmt.executeUpdate(INSERT);
-    conn.COMMIT();  // OR automatic IF AUTOCOMMIT=true
+    conn.COMMIT();  // or automatic IF AUTOCOMMIT=true
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -370,7 +370,7 @@ INSERT INTO student (name, YEAR) VALUES (?, ?);
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-String jpql = "SELECT s FROM Student s WHERE s.YEAR = :yr";
+String jpql = "SELECT s FROM Student s WHERE s.year = :yr";
 
 List<Student> list = em.createQuery(jpql, Student.class)
                        .setParameter("yr", 2025)
@@ -449,17 +449,17 @@ public class User {
 
     private String name;
 
-    @OneToMany(mappedBy = "user", FETCH = FetchType.LAZY)
-    private List<ORDER> orders = new ArrayList<>();
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
 }
 
 @Entity
-public class ORDER {
+public class Order {
 
     @Id @GeneratedValue
     private Long id;
 
-    private DOUBLE total;
+    private double total;
 
     @ManyToOne
     private User user;
@@ -486,7 +486,7 @@ public class ORDER {
   <pre><code class="language-java">
 public interface StudentRepository 
        extends JpaRepository<Student, Long> {
-    List<Student> findByYear(INT YEAR);
+    List<Student> findByYear(int YEAR);
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">

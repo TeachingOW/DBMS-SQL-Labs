@@ -131,7 +131,7 @@ public class ConnectExample {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("Connected to DATABASE!");
+            System.out.println("Connected to database!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -180,7 +180,7 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
 
 <h2>Insert Data Into the Database</h2>
 <div class="code-block-wrapper">
-  <pre><code class="language-java">String INSERT = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
+  <pre><code class="language-java">String insert = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
 try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement()) {
 
