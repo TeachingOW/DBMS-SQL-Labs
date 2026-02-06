@@ -30,7 +30,7 @@ By completing these labs, students will:
 |-----|-------|-------------|----------|
 | 5 | Set Operations & Nested Queries | Learn UNION, INTERSECT, and subquery techniques | [Lab 2 Advanced](html_labs/Lab2.html) |
 | 6 | Aggregate Functions & Grouping | Master COUNT, SUM, AVG, GROUP BY, and HAVING clauses | [Lab 2 Aggregates](html_labs/Lab2.html) |
-| 7 | Window Functions | Learn advanced analytical functions and partitioning | [Window Functions](html_labs/Lab4.html) |
+| 7 | Window Functions  & Recursive Query| Learn advanced analytical functions and partitioning  | [Window Functions](html_labs/Lab4.html) |
 | 8 | Views & Virtual Tables | Create and manage database views for data abstraction | [Views Lab](html_labs/Lab5_views.html) |
 
 ### Database Design Labs
