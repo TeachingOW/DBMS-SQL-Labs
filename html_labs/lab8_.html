@@ -113,24 +113,24 @@ credentials.host='ids.morris.umn.edu'; //setup DATABASE credentials
 
 var connection = mysql.createConnection(credentials); // setup the connection
 
-connection.connect(FUNCTION(err){IF(err){console.log(error)}});
+connection.connect(function(err){if(err){console.log(error)}});
 
 app.USE(express.static(__dirname + '/public'));
-app.get(&quot;/buttons&quot;,FUNCTION(req,res){
+app.get(&quot;/buttons&quot;,function(req,res){
   var sql = 'SELECT * FROM test.till_buttons';
-  connection.query(sql,(FUNCTION(res){RETURN FUNCTION(err,ROWS,fields){
-     IF(err){console.log(&quot;We have an error:&quot;);
+  connection.query(sql,(function(res){return function(err,ROWS,fields){
+     if(err){console.log(&quot;We have an error:&quot;);
              console.log(err);}
      res.send(ROWS);
   }})(res));
 });
-app.get(&quot;/click&quot;,FUNCTION(req,res){
+app.get(&quot;/click&quot;,function(req,res){
   var id = req.param('id');
   var sql = 'YOUR SQL HERE'
   console.log(&quot;Attempting sql -&gt;&quot;+sql+&quot;&lt;-&quot;);
 
-  connection.query(sql,(FUNCTION(res){RETURN FUNCTION(err,ROWS,fields){
-     IF(err){console.log(&quot;We have an insertion error:&quot;);
+  connection.query(sql,(function(res){return function(err,ROWS,fields){
+     if(err){console.log(&quot;We have an insertion error:&quot;);
              console.log(err);}
      res.send(err); // Let the upstream guy know how it went
   }})(res));
@@ -199,7 +199,7 @@ app.listen(port);
   .factory('buttonApi',buttonApi)
   .constant('apiUrl','http://146.57.34.125:1337'); //CHANGE FOR the lab!
 
-FUNCTION ButtonCtrl($scope,buttonApi){
+function ButtonCtrl($scope,buttonApi){
    $scope.buttons=[]; //Initially ALL was still
    $scope.errorMessage='';
    $scope.isLoading=isLoading;
@@ -208,42 +208,42 @@ FUNCTION ButtonCtrl($scope,buttonApi){
 
    var loading = FALSE;
 
-   FUNCTION isLoading(){
-    RETURN loading;
+   function isLoading(){
+    return loading;
    }
-  FUNCTION refreshButtons(){
+  function refreshButtons(){
     loading=TRUE;
     $scope.errorMessage='';
     buttonApi.getButtons()
-      .success(FUNCTION(data){
+      .success(function(data){
          $scope.buttons=data;
          loading=FALSE;
       })
-      .error(FUNCTION () {
+      .error(function () {
           $scope.errorMessage=&quot;Unable to load Buttons:  DATABASE request failed&quot;;
           loading=FALSE;
       });
  }
-  FUNCTION buttonClick($EVENT){
+  function buttonClick($EVENT){
      $scope.errorMessage='';
      buttonApi.clickButton($EVENT.target.id)
-        .success(FUNCTION(){})
-        .error(FUNCTION(){$scope.errorMessage=&quot;Unable click&quot;;});
+        .success(function(){})
+        .error(function(){$scope.errorMessage=&quot;Unable click&quot;;});
   }
   refreshButtons();  //make sure the buttons are loaded
 
 }
 
-FUNCTION buttonApi($http,apiUrl){
-  RETURN{
-    getButtons: FUNCTION(){
+function buttonApi($http,apiUrl){
+  return{
+    getButtons: function(){
       var url = apiUrl + '/buttons';
-      RETURN $http.get(url);
+      return $http.get(url);
     },
-    clickButton: FUNCTION(id){
+    clickButton: function(id){
       var url = apiUrl+'/click?id='+id;
 //      console.log(&quot;Attempting WITH &quot;+url);
-      RETURN $http.get(url); // Easy enough to DO this way
+      return $http.get(url); // Easy enough to DO this way
     }
  };
 }

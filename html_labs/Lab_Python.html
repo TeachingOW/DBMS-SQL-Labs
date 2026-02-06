@@ -129,8 +129,8 @@ GRANT CREATE, ALTER, DROP, INSERT, UPDATE, DELETE, SELECT, REFERENCES, RELOAD ON
 <p>To run a query</p>
 <div class="code-block-wrapper">
   <pre><code class="language-python">query='SELECT * FROM company;'
-CURSOR = cnx.CURSOR()
-CURSOR.execute(query)
+cursor = cnx.cursor()
+cursor.execute(query)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,7 +146,7 @@ CURSOR.execute(query)
 </div>
 <p>Print the results:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-python">FOR (o) IN CURSOR:
+  <pre><code class="language-python">for (o) IN cursor:
   print(o)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -180,8 +180,8 @@ CURSOR.execute(query)
 <p>Insert data into database</p>
 <div class="code-block-wrapper">
   <pre><code class="language-python">iquery=&quot;INSERT INTO  company VALUES('BMW',10,'Germany');&quot;
-CURSOR = cnx.CURSOR()
-CURSOR.execute(iquery)
+cursor = cnx.cursor()
+cursor.execute(iquery)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -198,9 +198,9 @@ CURSOR.execute(iquery)
 <p>If you execute the following, you will see the newly inserted tuple. </p>
 <div class="code-block-wrapper">
   <pre><code class="language-python">query='SELECT * FROM company;'
-CURSOR = cnx.CURSOR()
-CURSOR.execute(query)
-FOR (o) IN CURSOR:
+cursor = cnx.cursor()
+cursor.execute(query)
+for (o) IN cursor:
   print(o)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -220,8 +220,8 @@ You will see the updates are not committed.</p>
 <p>To make sure the updates is commited</p>
 <div class="code-block-wrapper">
   <pre><code class="language-python">iquery='INSERT INTO  company VALUES('BMW',10,'Germany');COMMIT;'
-CURSOR = cnx.CURSOR()
-CURSOR.execute(iquery)
+cursor = cnx.cursor()
+cursor.execute(iquery)
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

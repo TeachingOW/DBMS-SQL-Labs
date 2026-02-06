@@ -128,8 +128,8 @@ PreparedStatement q = conn.prepareStatement(query);
 q.setInt(1, 2025);
 
 ResultSet rs = q.executeQuery();
-WHILE (rs.next()) {
-    System.OUT.println(rs.getLong("id") + " " +
+while (rs.next()) {
+    System.out.println(rs.getLong("id") + " " +
                        rs.getString("name") + " " +
                        rs.getInt("YEAR"));
 }
@@ -151,7 +151,7 @@ WHILE (rs.next()) {
 <div class="code-block-wrapper">
   <pre><code class="language-java">
 try {
-    conn.setAutoCommit(FALSE);
+    conn.setAutoCommit(false);
 
     PreparedStatement s1 = conn.prepareStatement(
         "UPDATE accounts SET balance = balance - 100 WHERE id = 1"
@@ -205,7 +205,7 @@ This reduces boilerplate, improves readability, and centralizes mappings, cachin
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-User u = NEW User();
+User u = new User();
 u.setName("Bob");
 u.setEmail("bob@example.com");
 
@@ -260,7 +260,7 @@ JPA provides annotations, entity management, JPQL querying, relationships, and l
 import jakarta.persistence.*;
 
 @Entity
-@TABLE(name = "student")
+@Table(name = "student")
 public class Student {
 
     @Id
@@ -268,7 +268,7 @@ public class Student {
     private Long id;
 
     private String name;
-    private INT YEAR;
+    private int year;
 
     // getters & setters
 }
@@ -293,7 +293,7 @@ public class Student {
 EntityManager em = emf.createEntityManager();
 em.getTransaction().BEGIN();
 
-Student s = NEW Student();
+Student s = new Student();
 s.setName("Alice");
 s.setYear(2025);
 
@@ -359,7 +359,7 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "user", FETCH = FetchType.LAZY)
-    private List&lt;ORDER&gt; orders = NEW ArrayList<>();
+    private List&lt;ORDER&gt; orders = new ArrayList<>();
 }
 
 @Entity

@@ -145,7 +145,7 @@ public class ConnectExample {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.OUT.println("Connected to DATABASE!");
+            System.out.println("Connected to DATABASE!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -175,8 +175,8 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery(query)) {
 
-    WHILE (rs.next()) {
-        System.OUT.println(rs.getString(1) + " " 
+    while (rs.next()) {
+        System.out.println(rs.getString(1) + " " 
                          + rs.getInt(2) + " " 
                          + rs.getString(3));
     }
@@ -199,13 +199,13 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-String INSERT = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
+String insert = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
 
 try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement()) {
 
     stmt.executeUpdate(INSERT);
-    conn.COMMIT();  // OR automatic IF AUTOCOMMIT=TRUE
+    conn.COMMIT();  // OR automatic IF AUTOCOMMIT=true
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -293,7 +293,7 @@ ORM frameworks like Hibernate, EclipseLink, and OpenJPA are <strong>implementati
 import jakarta.persistence.*;
 
 @Entity
-@TABLE(name = "student")
+@Table(name = "student")
 public class Student {
 
     @Id
@@ -301,7 +301,7 @@ public class Student {
     private Long id;
 
     private String name;
-    private INT YEAR;
+    private int year;
 
     // getters AND setters
 }
@@ -326,7 +326,7 @@ public class Student {
 EntityManager em = emf.createEntityManager();
 em.getTransaction().BEGIN();
 
-Student s = NEW Student();
+Student s = new Student();
 s.setName("Alice");
 s.setYear(2025);
 
@@ -450,7 +450,7 @@ public class User {
     private String name;
 
     @OneToMany(mappedBy = "user", FETCH = FetchType.LAZY)
-    private List<ORDER> orders = NEW ArrayList<>();
+    private List<ORDER> orders = new ArrayList<>();
 }
 
 @Entity

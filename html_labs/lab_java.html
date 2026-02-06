@@ -131,7 +131,7 @@ public class ConnectExample {
         String password = "password";
 
         try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.OUT.println("Connected to DATABASE!");
+            System.out.println("Connected to DATABASE!");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -159,8 +159,8 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery(query)) {
 
-    WHILE (rs.next()) {
-        System.OUT.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
+    while (rs.next()) {
+        System.out.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
     }
 }
 </code></pre>
@@ -187,7 +187,7 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
     stmt.executeUpdate(INSERT);
     conn.COMMIT();
 
-    System.OUT.println("INSERT committed.");
+    System.out.println("INSERT committed.");
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -202,7 +202,7 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
     </svg>
   </button>
 </div>
-<p><strong>Important:</strong> Some JDBC configurations require <code>conn.setAutoCommit(FALSE)</code> if you want manual control. If autocommit is enabled (default), inserts commit automatically.</p>
+<p><strong>Important:</strong> Some JDBC configurations require <code>conn.setAutoCommit(false)</code> if you want manual control. If autocommit is enabled (default), inserts commit automatically.</p>
 
 <h2>Printing After Insert</h2>
 <p>If the insert is committed, reconnecting and selecting again will show the updated data.</p>
@@ -212,8 +212,8 @@ try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery(query)) {
 
-    WHILE (rs.next()) {
-        System.OUT.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
+    while (rs.next()) {
+        System.out.println(rs.getString(1) + " " + rs.getInt(2) + " " + rs.getString(3));
     }
 }
 </code></pre>
