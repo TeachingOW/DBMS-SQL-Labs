@@ -19,45 +19,45 @@ You are required to implement the following:
 You are provided with the following code to get started. This code creates the necessary table (`TR`) to store transactions and a trigger that calculates the running balance after each transaction.
 
 ```sql
-create table TR (
-	tid int auto_increment primary key,
-	userid int,
-	amount decimal(10,2),
-	type char(10)
+CREATE TABLE TR (
+	tid INT AUTO_INCREMENT PRIMARY KEY,
+	userid INT,
+	amount DECIMAL(10,2),
+	type CHAR(10)
 );
 
-alter table TR add column balance decimal(10,2);
+ALTER TABLE TR ADD COLUMN balance DECIMAL(10,2);
 
 DELIMITER //
-create trigger running_balance 
-BEFORE INSERT on TR
+CREATE TRIGGER running_balance 
+BEFORE INSERT ON TR
 FOR EACH ROW
 BEGIN
-DECLARE user_balance decimal(10,2);
+DECLARE user_balance DECIMAL(10,2);
 
-select balance into user_balance from TR  where userid=new.userid order by tid desc limit 1;
-IF user_balance is null then 
-set user_balance=0;
-end if;
-IF new.type='withdraw' THEN
-set user_balance=user_balance -new.amount;
+SELECT balance INTO user_balance FROM TR  WHERE userid=NEW.userid ORDER BY tid DESC LIMIT 1;
+IF user_balance IS NULL THEN 
+SET user_balance=0;
+END IF;
+IF NEW.type='withdraw' THEN
+SET user_balance=user_balance -NEW.amount;
 END IF;
 
-IF new.type='deposit' THEN
-	set user_balance=user_balance + new.amount;
+IF NEW.type='deposit' THEN
+	SET user_balance=user_balance + NEW.amount;
 END IF;
 
-set new.balance=user_balance;
+SET NEW.balance=user_balance;
 
 END //
 DELIMITER ;
 
-insert into TR (userid, amount, type) values (1,20,'deposit');
-insert into TR (userid, amount, type) values (2,30,'deposit');
-insert into TR (userid, amount, type) values (2,10,'withdraw');
-insert into TR (userid, amount, type) values (2,30,'withdraw');
+INSERT INTO TR (userid, amount, type) VALUES (1,20,'deposit');
+INSERT INTO TR (userid, amount, type) VALUES (2,30,'deposit');
+INSERT INTO TR (userid, amount, type) VALUES (2,10,'withdraw');
+INSERT INTO TR (userid, amount, type) VALUES (2,30,'withdraw');
 
-select * from TR;
+SELECT * FROM TR;
 ```
 
 #### Instructions:
@@ -76,9 +76,9 @@ select * from TR;
 After running the following series of transactions:
 
 ```sql
-insert into TR (userid, amount, type) values (1, 50, 'deposit');  -- User 1 deposits $50
-insert into TR (userid, amount, type) values (1, 70, 'withdraw'); -- User 1 withdraws $70
-insert into TR (userid, amount, type) values (1, 10, 'withdraw'); -- User 1 withdraws another $10 (total balance -30)
+INSERT INTO TR (userid, amount, type) VALUES (1, 50, 'deposit');  -- User 1 deposits $50
+INSERT INTO TR (userid, amount, type) VALUES (1, 70, 'withdraw'); -- User 1 withdraws $70
+INSERT INTO TR (userid, amount, type) VALUES (1, 10, 'withdraw'); -- User 1 withdraws another $10 (total balance -30)
 ```
 
 The expected output in the `TR` table should look like:

@@ -70,6 +70,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
   <header>
@@ -87,33 +93,33 @@
 
   <section class="section">
     <h2>2. Starting MongoDB and Connecting</h2>
-    <pre id="code-1"># Start the MongoDB service
+    <pre id="code-1"># START the MongoDB service
 mongod --dbpath /data/db
 
-# Connect using Mongo Shell
+# Connect USING Mongo Shell
 mongosh
 
-# Check the current database
+# CHECK the CURRENT DATABASE
 > db</pre>
     <button class="copy" data-target="code-1">Copy Commands</button>
   </section>
 
   <section class="section">
     <h2>3. Creating and Using Databases</h2>
-    <pre id="code-2"># Switch or create a new database
-> use shop
+    <pre id="code-2"># Switch OR CREATE a NEW DATABASE
+> USE shop
 
-# Show all databases
-> show dbs</pre>
+# SHOW ALL DATABASES
+> SHOW dbs</pre>
     <button class="copy" data-target="code-2">Copy Commands</button>
   </section>
 
   <section class="section">
     <h2>4. Inserting Documents</h2>
-    <pre id="code-3"># Insert a single document
+    <pre id="code-3"># INSERT a single document
 > db.products.insertOne({ name: "Laptop", price: 1200, tags: ["electronics", "sale"] })
 
-# Insert multiple documents
+# INSERT multiple documents
 > db.products.insertMany([
   { name: "Phone", price: 800, specs: { color: "black", memory: "128GB" } },
   { name: "Tablet", price: 600, specs: { color: "white", memory: "256GB" } }
@@ -123,45 +129,45 @@ mongosh
 
   <section class="section">
     <h2>5. Querying Documents</h2>
-    <pre id="code-4"># Return all documents
+    <pre id="code-4"># RETURN ALL documents
 > db.products.find()
 
-# Find with a filter
+# Find WITH a filter
 > db.products.find({ price: { $gt: 700 } })
 
 # Project specific fields
 > db.products.find({}, { name: 1, price: 1 })
 
-# Find using nested field
+# Find USING nested field
 > db.products.find({ "specs.memory": "128GB" })</pre>
     <button class="copy" data-target="code-4">Copy Commands</button>
   </section>
 
   <section class="section">
     <h2>6. Updating and Deleting Documents</h2>
-    <pre id="code-5"># Update one document
+    <pre id="code-5"># UPDATE one document
 > db.products.updateOne(
   { name: "Phone" },
-  { $set: { price: 850, "specs.color": "blue" } }
+  { $SET: { price: 850, "specs.color": "blue" } }
 )
 
-# Update many
+# UPDATE many
 > db.products.updateMany({ price: { $lt: 1000 } }, { $inc: { price: 50 } })
 
-# Delete a document
+# DELETE a document
 > db.products.deleteOne({ name: "Tablet" })</pre>
     <button class="copy" data-target="code-5">Copy Commands</button>
   </section>
 
   <section class="section">
     <h2>7. Indexing and Query Optimization</h2>
-    <pre id="code-6"># Create an index on price
+    <pre id="code-6"># CREATE an INDEX ON price
 > db.products.createIndex({ price: 1 })
 
-# Create a compound index
+# CREATE a compound INDEX
 > db.products.createIndex({ name: 1, price: -1 })
 
-# View indexes
+# VIEW indexes
 > db.products.getIndexes()</pre>
     <button class="copy" data-target="code-6">Copy Commands</button>
   </section>
@@ -171,13 +177,13 @@ mongosh
     <pre id="code-7"># Simple aggregation
 > db.products.aggregate([
   { $match: { price: { $gt: 700 } } },
-  { $group: { _id: null, avgPrice: { $avg: "$price" }, maxPrice: { $max: "$price" } } }
+  { $GROUP: { _id: NULL, avgPrice: { $AVG: "$price" }, maxPrice: { $MAX: "$price" } } }
 ])
 
-# Unwind arrays and group by tag
+# Unwind arrays AND GROUP BY tag
 > db.products.aggregate([
   { $unwind: "$tags" },
-  { $group: { _id: "$tags", count: { $sum: 1 } } }
+  { $GROUP: { _id: "$tags", COUNT: { $SUM: 1 } } }
 ])</pre>
     <button class="copy" data-target="code-7">Copy Commands</button>
     <p>For more examples, see <a class="ref-link" href="https://www.mongodb.com/docs/manual/tutorial/aggregation-complete-examples/" target="_blank">MongoDB Aggregation Complete Examples</a>.</p>
@@ -201,12 +207,12 @@ mongosh
   <section class="section">
     <h2>10. Common MongoDB Operators</h2>
     <pre id="code-9">$eq, $ne, $gt, $gte, $lt, $lte
-$in, $nin
-$and, $or, $not
-$exists, $type
-$set, $unset, $inc, $push, $pull
-$regex, $text, $search
-$lookup (for joins), $project, $group, $sort, $limit</pre>
+$IN, $nin
+$AND, $OR, $NOT
+$EXISTS, $type
+$SET, $unset, $inc, $push, $pull
+$regex, $TEXT, $search
+$lookup (FOR joins), $project, $GROUP, $sort, $LIMIT</pre>
   </section>
 
   <footer>

@@ -64,6 +64,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 <h1>Lab 9</h1>
@@ -91,7 +97,7 @@
 </ul>
 <div class="code-block-wrapper">
   <pre><code>|field        | Description                                         |
-<table>
+<TABLE>
   <thead>
     <tr>
       <th>-------------</th>
@@ -101,19 +107,19 @@
   <tbody>
     <tr>
       <td>transactionID</td>
-      <td>The transaction ID on which you will be grouping</td>
+      <td>The TRANSACTION ID ON which you will be grouping</td>
     </tr>
     <tr>
       <td>startTime</td>
-      <td>earliest time stamp of a button in that transaction</td>
+      <td>earliest TIME stamp of a button IN that TRANSACTION</td>
     </tr>
     <tr>
       <td>stopTime</td>
-      <td>latest time stamp of a button in that transaction</td>
+      <td>latest TIME stamp of a button IN that TRANSACTION</td>
     </tr>
     <tr>
       <td>duration</td>
-      <td>difference in seconds of stopTime and startTime</td>
+      <td>difference IN seconds of stopTime AND startTime</td>
     </tr>
     <tr>
       <td>user</td>
@@ -121,10 +127,10 @@
     </tr>
     <tr>
       <td>total</td>
-      <td>total amount in sale</td>
+      <td>total amount IN sale</td>
     </tr>
   </tbody>
-</table>
+</TABLE>
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

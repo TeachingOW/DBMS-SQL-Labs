@@ -77,6 +77,12 @@
     }
     
     </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
 </head>
 <body>
 
@@ -198,8 +204,8 @@ String insert = "INSERT INTO company VALUES ('BMW', 10, 'Germany')";
 try (Connection conn = DriverManager.getConnection(url, user, password);
      Statement stmt = conn.createStatement()) {
 
-    stmt.executeUpdate(insert);
-    conn.commit();  // or automatic if autocommit=true
+    stmt.executeUpdate(INSERT);
+    conn.COMMIT();  // or automatic IF AUTOCOMMIT=true
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -297,7 +303,7 @@ public class Student {
     private String name;
     private int year;
 
-    // getters and setters
+    // getters AND setters
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
@@ -318,7 +324,7 @@ public class Student {
 <div class="code-block-wrapper">
   <pre><code class="language-java">
 EntityManager em = emf.createEntityManager();
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 
 Student s = new Student();
 s.setName("Alice");
@@ -326,8 +332,8 @@ s.setYear(2025);
 
 em.persist(s);
 
-em.getTransaction().commit();
-em.close();
+em.getTransaction().COMMIT();
+em.CLOSE();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,7 +351,7 @@ em.close();
 <p><strong>Generated SQL under the hood:</strong></p>
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
-INSERT INTO student (name, year) VALUES (?, ?);
+INSERT INTO student (name, YEAR) VALUES (?, ?);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -387,10 +393,10 @@ List<Student> list = em.createQuery(jpql, Student.class)
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 Student s = em.find(Student.class, 1L);
-s.setName("Alicia");   // Hibernate detects this change automatically
-em.getTransaction().commit();
+s.setName("Alicia");   // Hibernate detects this CHANGE automatically
+em.getTransaction().COMMIT();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -409,10 +415,10 @@ em.getTransaction().commit();
 
 <div class="code-block-wrapper">
   <pre><code class="language-java">
-em.getTransaction().begin();
+em.getTransaction().BEGIN();
 Student s = em.find(Student.class, 1L);
 em.remove(s);
-em.getTransaction().commit();
+em.getTransaction().COMMIT();
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -480,7 +486,7 @@ public class Order {
   <pre><code class="language-java">
 public interface StudentRepository 
        extends JpaRepository<Student, Long> {
-    List<Student> findByYear(int year);
+    List<Student> findByYear(int YEAR);
 }
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
