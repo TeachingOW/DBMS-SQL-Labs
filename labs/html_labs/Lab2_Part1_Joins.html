@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 2 Part 1: JOINs and Multi-Table Queries</title>
+    <title>Lab 2: JOINs and Multi-Table Queries</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
@@ -76,7 +76,7 @@
   </p>
 </div>
 
-<h1>Lab 2 Part 1: JOINs and Multi-Table Queries</h1>
+<h1>Lab 2: JOINs and Multi-Table Queries</h1>
 <h2>🎯 Learning Objectives</h2>
 <p>By the end of this lab, you will be able to:
 - Work with complex multi-table database schemas
@@ -570,6 +570,165 @@ WHERE  R.A=S.A OR R.A=T.A
       <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+</div>
+
+<h2>🎯 Additional Practice Examples</h2>
+
+<h3>Example 1: Employee-Department Relationships</h3>
+<p>Consider a company database with employees and departments. Find all employees along with their department names, including employees without departments (using LEFT JOIN).</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Sample data structure
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50),
+    location VARCHAR(50)
+);
+
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    salary DECIMAL(10,2),
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+
+-- Query: Find all employees with their department info
+SELECT e.emp_name, d.dept_name, d.location, e.salary
+FROM Employee e
+LEFT JOIN Department d ON e.dept_id = d.dept_id
+ORDER BY d.dept_name, e.emp_name;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 2: Product Catalog with Suppliers</h3>
+<p>Find all products along with their suppliers, showing product details even for products without suppliers.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Sample schema
+CREATE TABLE Supplier (
+    supplier_id INT PRIMARY KEY,
+    supplier_name VARCHAR(100),
+    country VARCHAR(50)
+);
+
+CREATE TABLE Product (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    supplier_id INT,
+    price DECIMAL(10,2),
+    FOREIGN KEY (supplier_id) REFERENCES Supplier(supplier_id)
+);
+
+-- Query: List all products with supplier information
+SELECT 
+    p.product_name,
+    p.price,
+    COALESCE(s.supplier_name, 'No Supplier') AS supplier,
+    COALESCE(s.country, 'N/A') AS supplier_country
+FROM Product p
+LEFT JOIN Supplier s ON p.supplier_id = s.supplier_id
+ORDER BY p.product_name;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 3: Self-Join for Hierarchical Data</h3>
+<p>Find employees and their managers using a self-join on the Employee table.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Employee table with manager reference
+CREATE TABLE EmployeeHierarchy (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES EmployeeHierarchy(emp_id)
+);
+
+-- Query: Show each employee with their manager's name
+SELECT 
+    e.emp_name AS employee,
+    COALESCE(m.emp_name, 'No Manager') AS manager
+FROM EmployeeHierarchy e
+LEFT JOIN EmployeeHierarchy m ON e.manager_id = m.emp_id
+ORDER BY manager, employee;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 4: Complex Multi-Table Join</h3>
+<p>Find customers, their orders, and product details in a sales database.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- E-commerce example with multiple tables
+CREATE TABLE Customer (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100),
+    email VARCHAR(100)
+);
+
+CREATE TABLE OrderHeader (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
+);
+
+CREATE TABLE OrderItem (
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    unit_price DECIMAL(10,2),
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES OrderHeader(order_id),
+    FOREIGN KEY (product_id) REFERENCES Product(product_id)
+);
+
+-- Query: Complete order information with customer and product details
+SELECT 
+    c.customer_name,
+    o.order_date,
+    p.product_name,
+    oi.quantity,
+    oi.unit_price,
+    (oi.quantity * oi.unit_price) AS line_total
+FROM Customer c
+JOIN OrderHeader o ON c.customer_id = o.customer_id
+JOIN OrderItem oi ON o.order_id = oi.order_id
+JOIN Product p ON oi.product_id = p.product_id
+WHERE o.order_date >= '2024-01-01'
+ORDER BY c.customer_name, o.order_date, p.product_name;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<div style="background-color: #fff3cd; padding: 15px; margin: 20px 0; border-left: 4px solid #ffc107; border-radius: 4px;">
+  <h4 style="margin-top: 0;">💡 Key Takeaways</h4>
+  <ul>
+    <li>Use <code>INNER JOIN</code> when you only want matching records from both tables</li>
+    <li>Use <code>LEFT JOIN</code> to keep all records from the left table even without matches</li>
+    <li>Use <code>RIGHT JOIN</code> to keep all records from the right table even without matches</li>
+    <li>Self-joins are powerful for hierarchical or relationship data within the same table</li>
+    <li>Always use table aliases for clarity, especially with multiple joins</li>
+    <li><code>COALESCE</code> function helps handle NULL values in join results</li>
+  </ul>
 </div>
 
 <hr style="margin-top: 40px;">
