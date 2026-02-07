@@ -690,22 +690,34 @@ WHERE NOT EXISTS (SELECT * FROM product p
 Q3:
 For each product list the supplier information.
 
-&lt;details&gt;
-  &lt;summary&gt;Solution&lt;/summary&gt;
+<details>
+  <summary>Solution</summary>
 
-```sql
-SELECT *
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT *
 FROM   supplier s, Product p
 WHERE  s.id = p.supplierid
- ```
-Another way to write the above query
-is by using join clause, as follow:
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
-```sql
-select * from product p 
+Another way to write the above query is by using join clause, as follow:
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">select * from product p 
 join supplier s 
 on p.supplierid=s.id;
 </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
  However, running the above query, you are not returning
 information about Products with no supplier information (e.g., products with id 4 and 5).
