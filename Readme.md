@@ -1,7 +1,19 @@
 # Database Management System (DBMS) SQL Labs
 
+[![GitHub stars](https://img.shields.io/github/stars/TeachingOW/DBMS-SQL-Labs?style=social)](https://github.com/TeachingOW/DBMS-SQL-Labs)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
+
 A comprehensive collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. These labs provide practical experience with SQL, database design, and modern database technologies.
 
+## 📋 Quick Links
+
+- 🚀 **[Getting Started Guide](docs/GETTING_STARTED.md)** - Setup instructions and prerequisites
+- 📚 **[Complete Lab Index](LAB_INDEX.md)** - Detailed list of all labs with descriptions
+- 📖 **[Course Syllabus](docs/COURSE_SYLLABUS.md)** - 16-week structured curriculum
+- 📝 **[SQL Cheat Sheet](docs/SQL_CHEAT_SHEET.md)** - Quick reference for SQL commands
+- 🤝 **[Contributing Guide](docs/CONTRIBUTING.md)** - How to contribute to this project
+- 🌐 **[Project Website](https://teachingow.github.io/DBMS-SQL-Labs/)** - Additional resources
 
 ## 🎯 Learning Objectives
 
@@ -30,7 +42,7 @@ By completing these labs, students will:
 |-----|-------|-------------|----------|
 | 5 | Set Operations & Nested Queries | Learn UNION, INTERSECT, and subquery techniques | [Lab 2 Advanced](html_labs/Lab2.html) |
 | 6 | Aggregate Functions & Grouping | Master COUNT, SUM, AVG, GROUP BY, and HAVING clauses | [Lab 2 Aggregates](html_labs/Lab2.html) |
-| 7 | CASE Expressions | Master conditional logic in SQL with CASE statements | [CASE Expressions Lab](html_labs/Lab_Case_Expression.html) |
+| 7 | CASE Expressions | Master conditional logic in SQL with CASE statements | [CASE Expressions Lab](Lab_Case_Expression.md) ⭐ |
 | 8 | Window Functions  & Recursive Query| Learn advanced analytical functions and partitioning  | [Window Functions](html_labs/Lab4.html) |
 | 9 | Views & Virtual Tables | Create and manage database views for data abstraction | [Views Lab](html_labs/Lab5_views.html) |
 
@@ -80,9 +92,10 @@ The repository includes several real-world datasets for hands-on practice:
 | [Drivers Database](data/drivers.sql) | Complete database schema with sample data | Full database operations, complex relationships |
 
 
-## Cheat Sheet
+## Quick Reference
 
-- [Mysql Cheat Sheet](https://gemini.google.com/share/d3fa0a47a9d0)
+- 📝 **[SQL Cheat Sheet](docs/SQL_CHEAT_SHEET.md)** - Comprehensive SQL commands reference
+- 🔗 [MySQL Cheat Sheet (External)](https://gemini.google.com/share/d3fa0a47a9d0)
 
 ## 🛠️ Tools and Technologies
 
@@ -121,7 +134,9 @@ The repository includes several real-world datasets for hands-on practice:
 
 ## 🤝 Contributing
 
-We welcome contributions to improve these labs! Please:
+We welcome contributions to improve these labs! Please read our **[Contributing Guide](docs/CONTRIBUTING.md)** for detailed information.
+
+**Quick Start:**
 1. Fork the repository
 2. Create a feature branch
 3. Make your improvements
@@ -135,6 +150,58 @@ We welcome contributions to improve these labs! Please:
 
 
 
+
+## 🌐 Project Website
+
+Visit the project website at [https://teachingow.github.io/DBMS-SQL-Labs/](https://teachingow.github.io/DBMS-SQL-Labs/) for additional resources and updates.
+
+---
+
+## 📚 Documentation
+
+This repository now includes comprehensive documentation to help you learn effectively:
+
+### For Students
+- **[Getting Started Guide](docs/GETTING_STARTED.md)** - Complete setup instructions, prerequisites, and troubleshooting
+- **[Lab Index](LAB_INDEX.md)** - Detailed catalog of all labs with learning objectives and prerequisites
+- **[SQL Cheat Sheet](docs/SQL_CHEAT_SHEET.md)** - Quick reference for all SQL commands and syntax
+- **[Course Syllabus](docs/COURSE_SYLLABUS.md)** - 16-week structured curriculum with weekly topics
+
+### For Instructors
+- **[Course Syllabus](docs/COURSE_SYLLABUS.md)** - Complete course structure with grading policy
+- **Weekly schedule** with topics, labs, and assessments
+- **Project ideas** and deliverables
+
+### For Contributors
+- **[Contributing Guide](docs/CONTRIBUTING.md)** - Guidelines for contributing code, content, and documentation
+- Code style guidelines
+- Pull request process
+
+---
+
+## 🎓 How to Use This Repository
+
+### For Complete Beginners
+1. Start with the [Getting Started Guide](docs/GETTING_STARTED.md)
+2. Set up your MySQL environment
+3. Begin with Lab 1 and progress sequentially
+4. Complete the in-class exercise after Lab 1
+5. Use the [SQL Cheat Sheet](docs/SQL_CHEAT_SHEET.md) as reference
+
+### For Self-Paced Learning
+1. Review the [Lab Index](LAB_INDEX.md) to understand all available labs
+2. Choose a learning path that matches your goals
+3. Work through labs at your own pace
+4. Practice with the provided datasets in `/data` directory
+
+### For Instructors
+1. Review the [Course Syllabus](docs/COURSE_SYLLABUS.md)
+2. Adapt the 16-week schedule to your needs
+3. Use the labs sequentially or mix-and-match
+4. Assign projects from the syllabus
+5. Encourage students to contribute back via [Contributing Guide](docs/CONTRIBUTING.md)
+
+---
 
 ## 🌐 Project Website
 

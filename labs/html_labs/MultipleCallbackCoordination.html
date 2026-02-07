@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinating asynchronous calls through multiple callbacks (v2)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+      max-width: 100%;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1>Coordinating asynchronous calls through multiple callbacks (v2)</h1>
+<p>In README.md there is a discussion of coordinating asynchronous calls using a data structure and (implicitly) multiple callback
+functions. This is a second version of that
+code that breaks things up a bit more in an effort to be a little
+clearer about what's doing what, and in particular why we have to
+construct a zillion functions along the way.</p>
+<p>The initial setup is still the same:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">var credentials = require('./credentials.json');
+
+var mysql=require(&quot;mysql&quot;);
+
+credentials.host=&quot;ids&quot;;
+
+var connection = mysql.createConnection(credentials);
+var data={};
+var processed={}
+
+sql = &quot;SHOW DATABASES&quot;;
+connection.query(sql,FUNCTION(err,ROWS,fields){ //connection.connect() IS run automatically FOR a query
+  IF (err) {
+    console.log('Error looking up DATABASES');
+    connection.END();
+  } ELSE {
+    processDBFs(ROWS); //Gets called once... so it IS safe!
+  }
+});
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now we have a somewhat simplified version of <code>processDBFs</code> from the README:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">FUNCTION processDBFs(dbfs){ // Asynchronous ROW HANDLER
+  console.log(&quot;IN processDBFs&quot;);
+  FOR(var INDEX IN dbfs) {
+    var dbf = dbfs[INDEX].DATABASE;
+    var sql = 'SHOW TABLES IN '+ dbf;
+    data[dbf] = Number.POSITIVE_INFINITY; //EXISTS, but NOT SET.
+    var callback = constructTablesCallback(dbf);
+    connection.query(sql, callback);
+  } // DO NOT put a connection.END() here.  It will kill ALL queued queries.
+}
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>The major change here is this uses a new function <code>constructTablesCallback</code> (provided below) to construct the 
+callback used in the query. In the README version, the callback
+function is declared anonymously in the body of <code>processDBFs</code>,
+which rather clutters things up. Here we call a function
+(<code>constructTablesCallback</code>) to construct the desired callback
+function, which is then passed to the query.</p>
+<p>One thing that this helps point out is that we aren't creating
+<em>one</em> callback function – we're creating <em>many</em>, one for
+every database returned by the <code>SHOW DATABASES</code> query. And that's
+arguably the key point here. If we have only one callback
+function, through something like:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">  callback = (err, TABLES, fields) =&gt; {
+    console.log('IN INNER func of processDBFs WITH dbf = ' + dbf);
+    IF (err) {
+      console.log('Error finding TABLES IN dbf ' + dbf);
+      connection.END();
+    } ELSE {
+      console.log('about to process TABLES FOR DB ' + dbf);
+      console.log('WITH TABLES ' + JSON.stringify(TABLES));
+      processTables(TABLES, dbf);
+    }
+  }
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>then that one callback function will have <strong>only one</strong> value of
+the variable <code>dbf</code>, which will be used by <em>all</em> the calls to that
+callback. Because of the evaluation mechanism used by JavaScript,
+the one value of <code>dbf</code> will in fact be the <em>last</em> database name
+we get from <code>SHOW DATABASES</code>. This will lead ot all manner of
+problems because we'll be trying to attach tables from other
+databases to that last database, which will typically fail.</p>
+<p>And here's the code that constructs those callbacks:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">FUNCTION constructTablesCallback(dbf) {
+  console.log('IN dbf FOR ' + dbf);
+  RETURN FUNCTION(err,TABLES, fields) {
+    console.log('IN INNER func of processDBFs WITH dbf = ' + dbf);
+    IF (err) {
+      console.log('Error finding TABLES IN dbf ' + dbf);
+      connection.END();
+    } ELSE {
+      console.log('about to process TABLES FOR DB ' + dbf);
+      processTables(TABLES, dbf);
+    }
+  }
+}
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This constructs and returns a new function, which "captures" the
+variable <code>dbf</code> in its scope. Since that has a different value for every call to <code>constructTablesCallback</code>, each of those callback
+functions will have their own separate value for <code>dbf</code>, avoiding
+the confusing tangle of crazy we'd get if we had a single 
+callback.</p>
+<p>We can then do something similar for <code>processTables()</code>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">FUNCTION processTables(TABLES, dbf) { // Asynchronous ROW HANDLER
+  data[dbf] = TABLES.LENGTH; // Now it IS SET.
+  processed[dbf] = 0;    // AND has NOT yet been used AS a label.
+  FOR(var INDEX IN TABLES){
+    var tableObj = TABLES[INDEX];
+    FOR(KEY IN tableObj) {
+      var TABLE = tableObj[KEY];
+      TABLE = dbf+&quot;.&quot;+TABLE;
+      var sql = 'DESCRIBE '+TABLE;
+      var callback = processDescribeCallback(TABLE, dbf);
+      connection.query(sql, callback);
+    }
+  }
+}
+
+FUNCTION processDescribeCallback(TABLE, dbf) {
+  RETURN FUNCTION(err, DESC, fields) {
+    IF (err) {
+      console.log('Error describing TABLE '+ TABLE);
+    } ELSE {
+      processDescription(DESC,TABLE,dbf);
+    }
+  };
+}
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Add in the printing and bookkeeping and we have a complete working
+version, using datastructures and careful callback construction 
+to handle the asynchrony:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-JavaScript">FUNCTION processDescription(DESC, TABLE, dbf) {
+  data[dbf]--; //Processed one TABLE
+  IF (processed[dbf]==0) {
+    processed[dbf] = 1;
+    console.log('---|'+dbf+'&gt;');
+  }
+  console.log('.....|'+dbf+'.'+TABLE+'&gt;');
+  DESC.map(FUNCTION(field){ // SHOW the fields nicely
+    console.log(&quot;\tFieldName: `&quot;+field.Field+&quot;` \t(&quot;+field.Type+&quot;)&quot;);
+  });
+
+  IF(allZero(data)){connection.END()}
+}
+
+FUNCTION allZero(object){
+  allzero = TRUE;
+  FOR(obj IN object){
+    IF(object[obj]!=0){allzero = FALSE}
+  }
+  RETURN(allzero);
+}
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
+</body>
+</html>

@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 4: SQL 2</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+      max-width: 100%;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<h1>Lab 4: SQL 2</h1>
+<p>Here we will learn substantially more sophisticated types of queries, dig deeper into SQL, and develop high-level techniques for describing a database schema.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#back-to-the-tables-from-lab-3">Back to the tables from Lab 3</a></li>
+<li><a href="#level-two-and-beyond-order-by">Level Two and beyond (<code>ORDER BY</code>)</a></li>
+<li><a href="#the-group-by-clause">The <code>GROUP BY</code> clause</a></li>
+<li><a href="#the-having-clause">The <code>HAVING</code> clause</a></li>
+<li><a href="#subqueries">SubQueries</a><ul>
+<li><a href="#the-union-keyword">The <code>UNION</code> keyword</a></li>
+</ul>
+</li>
+<li><a href="#a-little-more-theory">A little more theory</a></li>
+<li><a href="#data-models">Data Models</a><ul>
+<li><a href="#entity-relationship-model">Entity Relationship Model</a></li>
+</ul>
+</li>
+<li><a href="#relationships-between-tables">Relationships between tables</a></li>
+<li><a href="#introduction-to-indexes">Introduction to indexes</a></li>
+<li><a href="#working-with-indexes">Working with indexes</a></li>
+<li><a href="#some-concrete-examples">Some concrete examples</a></li>
+<li><a href="#some-practice-with-union">Some practice with unions</a></li>
+<li><a href="#some-new-developments">Some new developments</a></li>
+<li><a href="#to-do">To Do</a></li>
+</ul>
+<h2>Level Two and beyond (<code>ORDER BY</code>)</h2>
+<p>The next level of understanding (this is  the first one you learn <em>after</em> Magic Missile [^dnd]) comes from the <code>ORDER BY</code> 
+clause.  As you might expect, this controls the order of the entries in the table.  Try these:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM inventory ORDER BY item;
+SELECT * FROM inventory ORDER BY amount;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>It works with more complicated queries too:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM inventory, prices WHERE inventory.id=prices.id ORDER BY unit;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Additionally, just on the off chance you have enough entries in your tables for this to make sense, you can order by more than one column:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM inventory, prices WHERE inventory.id=prices.id ORDER BY unit, item;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h2>The <code>GROUP BY</code> clause</h2>
+<p>The next clause on our magical mystery tour is the GROUP BY clause (now we're at Fireball level)</p>
+<p>SOME functions are designed to work with <strong>aggregates</strong>.  Try these two commands:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM poorDesign;
+SELECT comboName,COUNT(*) AS COUNT FROM poorDesign GROUP BY comboCode;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>There are several aggregate functions, but the mariaDB manuals certainly doesn't make it easy to figure out exactly what they are.  <a href="http://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html">The list from the mySQL documentation</a> is perhaps more useful. I checked them and they all work.  You should try a few.  Pay attention to the difference between </p>
+<p><code>COUNT(*)`, `COUNT(&lt;col name&gt;)` AND `COUNT(DISTINCT &lt;col name&gt;)</code></p>
+<p>These differences are subtle, but useful.</p>
+<h2>The <code>HAVING</code> clause</h2>
+<p>Here's something a bit more interesting... try these:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT comboCode, COUNT(*) FROM poorDesign WHERE item &gt;=3 GROUP BY comboCode;
+SELECT comboCode, COUNT(*) FROM poorDesign GROUP BY comboCode;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>(you might need to adjust the <code>WHERE</code> clause to fit the values in your data... the point is to ensure that SOMETHING gets filtered.)</p>
+<p>And of course, by saying that, I've highlighted what I wanted to point out... namely that the <code>WHERE</code> clause filters rows <strong>before</strong> grouping.  This means it affects just exactly WHAT gets grouped and can affect the output of the aggregating functions.  </p>
+<p>Now what happens if we want to restrict the <code>GROUPS</code> that we see?  That's where the <code>HAVING</code> clause comes into play.  It controls what GROUPS are displayed.... and even cooler, it can use aggregate functions of its own. Here's a perfectly valid command (which may, or may not, produce anything interesting – depending upon the contents of your tables):</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT comboCode, COUNT(*) FROM poorDesign GROUP BY comboCode HAVING SUM(comboCode)&gt;3;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>You are now ready to read this (although there are still a few missing pieces):</p>
+<p><a href="https://mariadb.com/kb/en/select/">https://mariadb.com/kb/en/select/</a></p>
+<p>And with those pieces in place, go through and do these tutorials:</p>
+<p><a href="http://www.sqlcourse2.com/index.html">http://www.sqlcourse2.com/index.html</a></p>
+<h2>SubQueries</h2>
+<p>So... next level are subqueries (we're looking at Wizard's Eye here).  Here's an example:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM inventory WHERE id IN (SELECT item FROM poorDesign);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Notice the parenthesis and the <code>IN</code> keyword (Note:  <code>IN</code> is <em>not</em> required to make the subquery work).  Notice that the subquery is in parenthesis.</p>
+<p>Read this:  <a href="http://beginner-sql-tutorial.com/sql-subquery.htm">http://beginner-sql-tutorial.com/sql-subquery.htm</a>
+And also this: <a href="http://en.wikipedia.org/wiki/Correlated_subquery">http://en.wikipedia.org/wiki/Correlated_subquery</a></p>
+<p>Now try this, rather stupid, example of a <strong>correlated subquery</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT (SELECT unit FROM inventory WHERE inventory.id=bob.id) FROM inventory AS bob;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>The key to understanding what is happening is to realize that for EVERY row in the outer <code>SELECT</code> statement the INNER query is run.  In order for this sort of nested command to work correctly the inner <code>SELECT</code> needs to return <strong>one value</strong>.  This might make things a bit clearer:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT item,unit,amount,(SELECT unit FROM inventory WHERE inventory.id=bob.id) AS sub 
+   FROM inventory AS bob;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Pay special attention to giving aliases to the table names.  The outer query and inner query need some sort of common reference to be correlated… of course they don't HAVE to be correlated:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT item,unit,amount,(SELECT 'bob' ) AS sub FROM inventory AS bob;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This sort of thing is useful for including aggregate information:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT item,unit,amount,(SELECT AVG(amount) FROM inventory WHERE unit=bob.unit GROUP BY unit) AS sub FROM inventory AS bob;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h2>The <code>UNION</code> keyword</h2>
+<p>So far we have been looking at various ways to combine columns of tables. We can also use functions that transform the contents of a column, or use a function to calculate a value derived from the value of several different columns:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT CONCAT(item,unit) AS together FROM inventory;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>But what if we want to merge ROWS? That's where <code>UNION</code> comes in:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id;
+SELECT * FROM inventory RIGHT JOIN prices ON inventory.id=prices.id;
+
+SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id UNION
+    SELECT * FROM inventory RIGHT JOIN prices ON inventory.id=prices.id;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Pretty spiffy isn't it… and it really DOES act like the union… there were a few rows shared by both of the component queries and they didn't show up more than once in the final output.  You can get around this behavior (which can matter sometimes by adding the option keyword ALL:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM inventory LEFT JOIN prices ON inventory.id=prices.id UNION ALL
+    SELECT * FROM inventory RIGHT JOIN prices ON inventory.id=prices.id;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h1>A little more theory</h1>
+<p>Now that we have started to familiarize ourselves with the <code>SELECT</code> command and its various clauses and keywords, we are going to want to learn a little bit more theory.</p>
+<h2>Data models</h2>
+<p>When designing a database you will want to have some systematic way of indicating what information the database must hold and the relationships between components of that information.  Many authors call the structure of the database a <strong>database schema</strong>.</p>
+<h3>Entity Relationship model</h3>
+<p>A first pass to accomplishing this is to identify <strong>entities</strong> and <strong>relationships</strong>.  Wikipedia has a nice entry on <a href="http://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model">the entity-relationship model</a>.  This is a level of abstraction at which <em>attributes</em>, <em>keys</em> and <em>relations</em> exist.   Pay close attention to the difference between <strong>entity</strong> and <strong>entity set</strong>.</p>
+<p>If I can borrow an analogy from object oriented programming-- entities could be viewed as instances, entity sets as classes (which is a bit of a stretch... but work with me).  Attributes can then be viewed as fields in the class definition.  The idea of <em>relations</em> doesn't really fit this analogy without introducing more complications than are useful.  You might also find the <a href="http://www.cs.sfu.ca/CourseCentral/354/zaiane/material/notes/Chapter2/node1.html">tutorial</a> useful.</p>
+<h4>ER exercise:</h4>
+<ul>
+<li>You only need one repository per group but make sure all the members are collaborators.</li>
+<li>Use Google Drawing to model a few entities and relationships that are related to the Point of Sales system (be certain that every member of the group contributes-- I expect to see rectangles, diamonds, and ovals)</li>
+<li>Add the drawing to your repository</li>
+</ul>
+<h2>Relationships between tables</h2>
+<p>One of the most important ideas is about the <strong>type of relationships</strong> between attributes.  These relationships may be:</p>
+<ul>
+<li>one-to-one (1:1)</li>
+<li>one-to-many (1:n)</li>
+<li>many-to-many (m:n)</li>
+</ul>
+<p>You might be wondering why there is no many-to-one.  There is-- it's just a one-to-many viewed from the other direction.  Now would be a good time to read the following:</p>
+<p><a href="http://www.techrepublic.com/article/relational-databases-defining-relationships-between-database-tables/">http://www.techrepublic.com/article/relational-databases-defining-relationships-between-database-tables/</a></p>
+<p>Now a <strong>primary key</strong> is just a key for a table, and a <strong>foreign key</strong> is a an attribute in one table that corresponds to primary key in another table.  </p>
+<p>Many database systems (mariaDB and mySQL included) allow the user to introduce <strong>constraints</strong> into the system.  Read up on <a href="http://dev.mysql.com/doc/refman/5.6/en/create-table-foreign-keys.html">mysql's foreign keys</a>, for an example.  These constraints help maintain <strong>referential integrity</strong>:  consistency in table spread across multiple tables.</p>
+<p>For example, suppose you had an <code>inventory</code> table with a <code>vendor_id</code> attribute that was a foreign key in the <code>vendor</code> table.  It would probably be a bad idea if you inserted a record into <code>inventory</code> that included an invalid <code>vendor_id</code>.  </p>
+<h4>Foreign Key Exercise</h4>
+<p>Each group should create two tables, one named <code>fk_A</code>, the other <code>fk_B</code>:</p>
+<ul>
+<li>The first table should have a column named <code>idA</code> and <code>foreignID</code>.  The second table should have a column named <code>idB</code> and <code>TEXT</code>.</li>
+<li>The columns <code>idA</code> and <code>idB</code> should be primary keys, and <code>foreignID</code> should be a foreign key that refers to <code>idB</code> in <code>fk_B</code>.  </li>
+<li>Experiment with creating the tables, inserting records, deleting records, and modifying values.</li>
+</ul>
+<p>Read this <a href="http://www.databasejournal.com/sqletc/article.php/1469521/Introduction-to-Relational-Databases.htm">introductory tutorial</a>.  Much of it will be review, but that's okay.</p>
+<h2>Introduction to indexes</h2>
+<p>An <strong>index</strong> is a data structure associated with a table that makes look-ups quicker.  Faster look-ups allow for faster queries, faster updates, and faster deletes.  They do come with a price though – that extra structure has to be maintained.  You pay the cost with increased storage requirements and (occasionally) slower operations;  Operations like inserting, deleting, and updating <em>may</em> take more time because of that overhead, but they <em>may</em> also take less time if <code>WHERE</code> clauses are involved and the indexes speed up the searching.  <strong>Note:</strong>  In Database Land, the plural of index is <strong>indexes</strong>, not indices.  </p>
+<p><a href="https://mariadb.com/kb/en/mariadb/what-is-an-index/">This is a good overview</a>, but be sure to read <a href="https://mariadb.com/kb/en/mariadb/getting-started-with-indexes/">this MariaDB page too</a>.</p>
+<p>In MariaDB, indexes come in three primary forms:</p>
+<ol>
+<li><strong>B-tree</strong></li>
+<li><strong>Hash</strong></li>
+<li><strong>R-tree</strong></li>
+</ol>
+<p><strong>B-trees</strong> are a data-structure (perhaps more accurately a family of data-structures) that were designed to optimize typical data-base style manipulations; lookup data is stored in a way that tries to efficiently use relatively slow physical disk access and minimize the time spent necessary to keep the tree's order in place.  Lookups are <code>O(log n)</code>:  For more information check out the <a href="https://en.wikipedia.org/wiki/B-tree">wikipedia page on B-trees</a>.  I am <strong>not</strong> expecting you to know all the ins-and-outs, but it is worth having an idea of what's going on.  For those of you that have had Algorithms, your text from that class (CLSR) has a good writeup on B-Trees.  B-tree indexes are used for column comparisons using the &gt;, &gt;=, =, &gt;=, &lt; or BETWEEN operators, as well as for LIKE comparisons that begin with a constant.
+For example, the query </p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM Employees WHERE First_Name LIKE 'Maria%'
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>can make use of a B-tree index, while </p>
+<p><code>SELECT * FROM Employees WHERE First_Name LIKE '%aria'</code>
+cannot.</p>
+<p>B-tree indexes also permit leftmost prefixing for searching of rows.</p>
+<p>An index that is a B-tree index can <strong>dramatically</strong> improve query times-- they can also greatly improve performance on <strong>ordering</strong> indexed data.</p>
+<p>In contrast <strong>Hash</strong> indexes use a hash data structure.  They are <strong>very</strong> fast.  Hash indexes can only be used for equality comparisons, so those using the = or &lt;=&gt; operators. They cannot be used for ordering, and provide no information to the optimizer on how many rows exist between two values. Hash indexes do not permit leftmost prefixing - only the whole index can be used.</p>
+<p>The structure of your data should help you determine which one is best to use.</p>
+<p>Professor Michalis Vazigiannis has a <a href="http://www.enseignement.polytechnique.fr/informatique/profs/Michalis.Vazirgiannis/course_slides/4_indexing_hashing.pdf">nice series of powerpoint slides</a> on the topic.  Don't worry too much about implementation details, but you should at least skim through all the slides.</p>
+<p><strong><a href="https://mariadb.com/kb/en/mariadb/spatial-index/">R-tree indexes</a></strong> may be created when a <code>CREATE INDEX</code> (or quivalent) command includes the <code>SPATIAL</code> keyword.  The exact structure used by MariaDB can vary (Both B-trees and R-trees are possible).  These indices are used for data like geographic information.</p>
+<h2>Working with indexes</h2>
+<p>Indexes can be added or removed after a table is created using <code>ALTER TABLE</code>.  They can also be incorporated into a <code>CREATE TABLE</code> command.  The type of index is controlled via the <code>USING</code> keyword.  There are also "shortcut" commands in SQL that simplify things;  <code>CREATE INDEX</code> and <code>DROP INDEX</code> are two of the most commonly used.</p>
+<h3>Some concrete examples</h3>
+<p>So let's see how much of a difference this makes. Go back to the command line, and we will create two
+text files called <code>rndA</code> and <code>rndB</code>. Both will contain two columns of random integers between 0 and 999
+and each will be 2000 lines long. Since I'm not 100% certain what we have on-hand we'll just use stock
+commands:</p>
+<div class="code-block-wrapper">
+  <pre><code>FOR i IN `seq 1 2000`;
+DO
+ echo &quot;scale=0; $RANDOM/32.767&quot;|bc
+done &gt; col1A
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>(Don't be surprised if the prompt changes after the first line). </p>
+<p>Now repeat for <code>col2A</code>, <code>col1B</code>, and <code>col2B</code>.</p>
+<p>At this point you should have 4 files: col1A, col1B, col2A, col2B.  Now we are going to use them to make the files  <code>randA</code> and <code>randB</code>:</p>
+<div class="code-block-wrapper">
+  <pre><code>paste col1A col2A &gt; randA
+paste col1B col2B &gt; randB
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now each group should make two <strong>TABLES</strong> <code>randA</code> and <code>randB</code> with columns A and B both of which contain integers and no primary key. Then use</p>
+<div class="code-block-wrapper">
+  <pre><code>LOAD DATA LOCAL INFILE 'randA' INTO TABLE randA;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>to load one file into the corresponding table. <strong>Make sure to write down the time somewhere.</strong> Now fill the <code>randB</code> table with the corresponding values
+from <code>randB</code>.</p>
+<p>Let's start simply: Find all the rows in <code>randA</code> where A is between 1 and 10. (that takes about 0.01
+seconds for me)</p>
+<p>Now preface that with EXPLAIN:</p>
+<div class="code-block-wrapper">
+  <pre><code>EXPLAIN SELECT * FROM randA WHERE A BETWEEN 1 AND 10;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Pay attention to the rows value.</p>
+<p>Now try this one (it took me FAR too long to come up with a query that confuses the built-in optimizer
+that MariaDB uses):</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT COUNT(*) FROM randA, randB, randA AS C 
+   WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.B) AND
+         C.B=randB.B;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This one takes some time to run... so this is a good time <strong>in another terminal</strong> to open up another connection to the database and use the command <code>SHOW PROCESSLIST;</code>  You can watch your query run.  When you get tired of waiting note the Id (mine was 481) and then use the <code>KILL</code> command.  I used <code>Kill 481;</code></p>
+<p>I got tired after about 5 minutes Now add indices to the relevant columns (well... all of them)</p>
+<div class="code-block-wrapper">
+  <pre><code>ALTER TABLE randA ADD INDEX A (A);
+ALTER TABLE randB ADD INDEX A (A);
+ALTER TABLE randA ADD INDEX B (B);
+ALTER TABLE randB ADD INDEX B (B);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now run the same query again (mine was MUCH faster the second time-- about 5 seconds for me)<br />
+After you've run it a second time, preface it with <code>EXPLAIN</code> and examine the rows. Now go back, remove
+the keys and run it again (just to make sure it's not a side effect of caching):</p>
+<div class="code-block-wrapper">
+  <pre><code>ALTER TABLE randA DROP INDEX A;
+ALTER TABLE randB DROP INDEX A;
+ALTER TABLE randA DROP INDEX B;
+ALTER TABLE randB DROP INDEX B;
+
+SELECT COUNT(*) FROM randA, randB, randA AS C 
+   WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.b) AND
+         C.B=randB.b;
+
+EXPLAIN
+SELECT COUNT(*) FROM randA, randB, randA AS C 
+   WHERE (randA.A&lt;randB.A OR randA.A &gt; randB.b) AND
+         C.B=randB.b;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now, let's drop the tables and recreate them (this time with the keys). Then we'll fill the data (our data
+set is so small this won't make much of a difference-- but it's good for you to know how to do this):</p>
+<div class="code-block-wrapper">
+  <pre><code>DROP TABLE randA; DROP TABLE randB;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now recreate them, but this time with indexes from the beginning (hint:  that's something you'll need to do yourself).</p>
+<p>Now fill the first one without disabling the indexes:</p>
+<div class="code-block-wrapper">
+  <pre><code>LOAD DATA LOCAL INFILE 'randA' INTO TABLE randA;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Before filling the second one, disable the keys:</p>
+<div class="code-block-wrapper">
+  <pre><code>ALTER TABLE randB DISABLE KEYS;
+LOAD DATA LOCAL INFILE 'randB' INTO TABLE randB;
+ALTER TABLE randB ENABLE KEYS;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>The last line re-enabled the keys.  </p>
+<p>It is more efficient to parse and build indexes for the entire file at once, instead of line-by-line.
+A piece of software that I wrote back in 2008 could read in millions of lines, and disabling the keys
+before importing saved over half an hour of time.</p>
+<h3>Some practice with <code>UNION</code></h3>
+<p>We have already seen how to use <code>UNION</code> to combine the results of two queries with similar structures.  Let's practice.  </p>
+<p>First make sure these toy queries don't return anything too long:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9;
+SELECT * FROM randB WHERE B BETWEEN 2 AND 9;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now join them into one:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
+UNION 
+SELECT * FROM randB WHERE B BETWEEN 2 AND 9;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now try this:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
+UNION 
+SELECT * FROM randA WHERE A BETWEEN 2 AND 9;
+
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>The key to understanding that output is to realize that <code>UNION</code> truly does mean <code>UNION</code> (no repeats
+allowed) – in other words the output is, by default, at least in Type 1 Normal Form. </p>
+<p>You can force it to include everything like this:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
+UNION ALL 
+SELECT * FROM randA WHERE A BETWEEN 2 AND 9;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>If you are using <code>UNION</code>, then you are allowed one <code>ORDER BY</code> clause and it must come AFTER the last <code>SELECT</code> (no
+ordering the pieces then joining them together). This will work:</p>
+<div class="code-block-wrapper">
+  <pre><code>SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
+UNION ALL 
+SELECT * FROM randA WHERE A BETWEEN 2 AND 9 
+ORDER BY B;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>And it won't even complain about ambiguity because the ORDER BY is acting on the merged records.</p>
+<h2>Some new developments</h2>
+<p>Each database in MariaDB is stored using a <strong>database engine</strong>.  The defaults are a bit different between MariaDB and mySQL, but we aren't going to worry too much about those right now.</p>
+<p>Different database engines allow for different capabilities.  The <code>innoDB</code> engine (and descendents), for example, allow for <strong>transactions</strong> (we are going to talk about this in more detail in a later lab).  Transactions allow you to attempt to perform a series of actions.  At the end of the sequence the transaction is either <strong>committed</strong> if it succeeds or <strong>rolled-back</strong> if it fails.  This is an extension of the core idea of <strong>atomicity</strong> and forms one of the pillars of the relational database <strong>ACID</strong> concept (<strong>A</strong>tomicity, <strong>C</strong>onsistency, <strong>I</strong>solation, <strong>D</strong>urability).  </p>
+<p>Different database engines also can provide different types of indexes.  The <code>TokuDB</code> engine makes use of <a href="https://en.wikipedia.org/wiki/Fractal_tree_index">fractal tree indexes</a> in a way that makes it particularly well suited to dealing with large data. (Peter has used them in his research)</p>
+<h2>To Do</h2>
+<p>Make sure and complete the following:
+- [ ] Include the URL pointing to your group's github repository via canvas.  Be certain your canvas groups match your github groups
+- [ ] Create the <code>PD_</code> tables during your <code>poorDesign</code> rewrite.
+- [ ] Each student should type up all the samples (NOTE:  copy-and-paste is bad-- just watching is bad:  type them up and talk to your group-mate(s) about what it means).  Nothing to turn in for this-- but a few tables should be generated (see canvas rubric)
+- [ ] Read the contents of these links (see the lab for details of what to skim):
+   * <a href="http://dev.mysql.com/doc/refman/5.7/en/group-by-functions.html">Aggregation functions</a>
+   * <a href="https://mariadb.com/kb/en/mariadb/select/">The SELECT statement</a>
+   * <a href="http://beginner-sql-tutorial.com/sql-subquery.htm">SubQueries</a>
+   * <a href="https://en.wikipedia.org/wiki/Correlated_subquery">Wikipedia page on Correlated subqueries</a>
+   * <a href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model">Wikipedia page on ER models</a>
+   * <a href="http://www.cs.sfu.ca/CourseCentral/354/zaiane/material/notes/Chapter2/node1.html">ER tutorial</a>
+   * <a href="http://www.techrepublic.com/article/relational-databases-defining-relationships-between-database-tables/">Relationships in relational databases</a>
+   * <a href="http://dev.mysql.com/doc/refman/5.6/en/create-table-foreign-keys.html">Creating tables with a foreign key</a>
+   * <a href="http://www.databasejournal.com/sqletc/article.php/1469521/Introduction-to-Relational-Databases.htm">Good overview and recap</a>
+   * <a href="https://mariadb.com/kb/en/mariadb/what-is-an-index/">Overview of indexes</a> <strong>Note:</strong> be sure to read all the pages-- this one has arrows to lead to the next page!
+   * <a href="https://en.wikipedia.org/wiki/B-tree">Wikipedia entry on B Trees</a>
+   * <a href="http://www.enseignement.polytechnique.fr/informatique/profs/Michalis.Vazirgiannis/course_slides/4_indexing_hashing.pdf">Amazing set of slides on indexing and hashing</a>
+   * <a href="https://mariadb.com/kb/en/mariadb/spatial-index/">Spatial indexes in MariaDB</a>
+   * <a href="https://en.wikipedia.org/wiki/Fractal_tree_index">Fractal Tree indexes</a>
+- [ ] Do these tutorials (nothing to turn in-- but do the problems)
+   * <a href="http://www.sqlcourse2.com/">A second SELECT tutorial</a>
+- [ ] Do these exercises:
+   - [ ] <a href="#er-exercise">Entity-Relation Exercise</a>
+   - [ ] <a href="#foreign-key-exercise">Foreign Key Exercise</a>
+   - [ ] Make sure your tables exist for the shell/mysql index and union examples (where applicable).</p>
+<p>[^dnd]: There are several Dungeons and Dragons references in this lab that I had to look up. Don't worry if you don't get them. :-) – Nic</p>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
+</body>
+</html>
