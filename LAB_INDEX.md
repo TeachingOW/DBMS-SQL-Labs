@@ -43,19 +43,52 @@
 
 ---
 
-#### Lab 2: Advanced Queries & Joins
-**Topics**: Multi-table queries, JOIN operations  
-**Duration**: 3-4 hours  
+#### Lab 2: Advanced SQL Queries (Multi-Part)
+**Topics**: JOINs, Aggregates, Set Operations  
+**Duration**: 4-6 hours (split into 3 parts)  
 **Prerequisites**: Lab 1  
-**Link**: [Lab 2](labs/html_labs/Lab2.html)
+**Link**: [Lab 2 Overview](labs/html_labs/Lab2.html)
+
+This lab is divided into three focused parts for better learning:
+
+##### Part 1: JOINs and Multi-Table Queries
+**Duration**: 1.5-2 hours  
+**Link**: [Lab 2 Part 1](labs/html_labs/Lab2_Part1_Joins.html)
 
 **What You'll Learn:**
 - INNER JOIN, LEFT JOIN, RIGHT JOIN
-- Multi-table queries
+- Multi-table queries with 3+ tables
 - Complex WHERE conditions
-- Aliases for tables and columns
+- Table and column aliases
+- String functions with JOINs
 
-**Key Concepts**: `JOIN`, `ON`, `USING`, aliases
+**Key Concepts**: `JOIN`, `ON`, `USING`, `CONCAT`, aliases
+
+##### Part 2: Aggregate Functions and GROUP BY
+**Duration**: 1.5-2 hours  
+**Link**: [Lab 2 Part 2](labs/html_labs/Lab2_Part2_Aggregates.html)
+
+**What You'll Learn:**
+- COUNT, SUM, AVG, MIN, MAX
+- GROUP BY clause
+- HAVING clause for filtering groups
+- COUNT() vs COUNT(DISTINCT)
+- Combining aggregates with JOINs
+
+**Key Concepts**: `COUNT`, `SUM`, `AVG`, `GROUP BY`, `HAVING`
+
+##### Part 3: Set Operations and Advanced Queries
+**Duration**: 1.5-2 hours  
+**Link**: [Lab 2 Part 3](labs/html_labs/Lab2_Part3_SetOperations.html)
+
+**What You'll Learn:**
+- UNION and UNION ALL
+- Set operations (MySQL alternatives for INTERSECT)
+- UPDATE and DELETE with multiple rows
+- Division operation in SQL
+- Complex nested subqueries
+
+**Key Concepts**: `UNION`, `UNION ALL`, nested queries, division
 
 ---
 
@@ -95,7 +128,7 @@
 **Topics**: UNION, INTERSECT, subqueries  
 **Duration**: 3 hours  
 **Prerequisites**: Lab 2  
-**Link**: [Lab 2 Advanced](labs/html_labs/Lab2.html)
+**Link**: [Lab 2 Part 3 - Set Operations](labs/html_labs/Lab2_Part3_SetOperations.html)
 
 **What You'll Learn:**
 - UNION and UNION ALL
@@ -103,7 +136,9 @@
 - Subqueries in FROM clause
 - EXISTS and NOT EXISTS
 
-**Key Concepts**: `UNION`, `INTERSECT`, `EXCEPT`, subqueries, `EXISTS`
+**Key Concepts**: `UNION`, `UNION ALL`, nested subqueries, division, `EXISTS`
+
+**Note**: This content is now part of Lab 2 Part 3
 
 ---
 
@@ -111,7 +146,7 @@
 **Topics**: COUNT, SUM, AVG, GROUP BY, HAVING  
 **Duration**: 3 hours  
 **Prerequisites**: Lab 2  
-**Link**: [Lab 2 Aggregates](labs/html_labs/Lab2.html)
+**Link**: [Lab 2 Part 2 - Aggregates](labs/html_labs/Lab2_Part2_Aggregates.html)
 
 **What You'll Learn:**
 - Aggregate functions
@@ -120,6 +155,8 @@
 - Combining aggregates with joins
 
 **Key Concepts**: `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `GROUP BY`, `HAVING`
+
+**Note**: This content is now part of Lab 2 Part 2
 
 ---
 
