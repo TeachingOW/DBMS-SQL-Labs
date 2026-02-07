@@ -708,9 +708,8 @@ SELECT * FROM Descendant;
 </div>
 Another Example
 
-    <code>
-
-        CREATE TABLE employee(id CHAR, managerid CHAR);
+<pre><code class="language-sql">
+CREATE TABLE employee(id CHAR, managerid CHAR);
 
 INSERT INTO employee VALUES ('a', NULL);
 INSERT INTO employee VALUES ('b', 'a');
@@ -746,7 +745,7 @@ WITH RECURSIVE M AS (
                )
 
 SELECT * FROM M;
-    </code>
+    </code> </pre>
     
 <h2>References</h2>
 <p>https://dev.mysql.com/doc/refman/8.0/en/window-functions-usage.html</p>
