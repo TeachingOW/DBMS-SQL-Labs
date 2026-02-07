@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2 Part 1: JOINs and Multi-Table Queries</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+      max-width: 100%;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.md">📚 Back to Lab Index</a> | 
+    <a href="Lab2.html">Lab 2 Overview</a> |
+    <strong>Part 1: JOINs</strong> |
+    <a href="Lab2_Part2_Aggregates.html">Part 2: Aggregates</a> |
+    <a href="Lab2_Part3_SetOperations.html">Part 3: Set Operations</a>
+  </p>
+</div>
+
+<h1>Lab 2 Part 1: JOINs and Multi-Table Queries</h1>
+<h2>🎯 Learning Objectives</h2>
+<p>By the end of this lab, you will be able to:
+- Work with complex multi-table database schemas
+- Master JOIN operations (INNER, LEFT, RIGHT)
+- Write complex multi-table queries
+- Use string functions with JOINs
+- Handle NULL values in JOIN queries</p>
+
+<h2>📋 Table of Contents</h2>
+<ul>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#scenario">Scenario: University Database System</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#query-exercises">Query Exercises</a></li>
+</ul>
+<h2 id="prerequisites">📋 Prerequisites</h2>
+<ul>
+<li>Completion of <a href="InClassExercises.html">Lab 1</a> or equivalent knowledge</li>
+<li>Understanding of basic SQL operations</li>
+<li>Familiarity with primary and foreign keys</li>
+</ul>
+<h2 id="scenario">🏫 Scenario: University Database System</h2>
+<p>In this lab, we'll work with a university database containing information about students, courses, and enrollments. This realistic scenario will help you understand how databases are used in real-world applications.</p>
+<h3>Database Schema Overview</h3>
+<p>Our database consists of three related tables:
+- <strong>Student</strong>: Contains student information (ID, name, GPA)
+- <strong>Course</strong>: Contains course details (ID, code, name, credit hours)
+- <strong>Enrolled</strong>: Links students to courses with grades (many-to-many relationship)</p>
+<h2 id="getting-started">🚀 Getting Started</h2>
+<h3>Step 1: Create the Database</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Clean slate: DROP existing DATABASE IF it EXISTS
+DROP DATABASE IF EXISTS lab2;
+CREATE DATABASE lab2;
+USE lab2;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Step 2: Create the Table Structure</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- DROP TABLES IN correct ORDER (child TABLES first due to FOREIGN KEY constraints)
+DROP TABLE IF EXISTS Enrolled;  -- Junction TABLE (child)
+DROP TABLE IF EXISTS Student;   -- Parent TABLE
+DROP TABLE IF EXISTS Course;    -- Parent TABLE
+
+-- CREATE Student TABLE
+CREATE TABLE Student (
+    sid INT PRIMARY KEY,           -- Student ID (UNIQUE identifier)
+    fname CHAR(20),               -- First name (fixed LENGTH)
+    lname CHAR(20),               -- Last name (fixed LENGTH)
+    gpa FLOAT                     -- Grade Point Average (can be NULL)
+);
+
+-- CREATE Course TABLE  
+CREATE TABLE Course (
+    cid INT PRIMARY KEY,          -- Course ID (UNIQUE identifier)
+    code CHAR(10),               -- Course code (e.g., &quot;CS101&quot;)
+    name CHAR(40),               -- Course name (e.g., &quot;Intro to Programming&quot;)
+    credithours SMALLINT         -- Credit hours (1-4 typically)
+);
+
+-- CREATE Enrolled TABLE (junction TABLE FOR many-to-many relationship)
+CREATE TABLE Enrolled (
+    sid INT,                     -- Student ID (FOREIGN KEY)
+    cid INT,                     -- Course ID (FOREIGN KEY)
+    grade CHAR(2),               -- Letter grade (A+, A, B+, etc.)
+    PRIMARY KEY (sid, cid),      -- Composite PRIMARY KEY
+    FOREIGN KEY (sid) REFERENCES Student(sid),   -- Link to Student TABLE
+    FOREIGN KEY (cid) REFERENCES Course(cid)     -- Link to Course TABLE
+);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Key Design Concepts</strong>:
+- <strong>Composite Primary Key</strong>: <code>(sid, cid)</code> ensures one grade per student per course
+- <strong>Foreign Key Constraints</strong>: Maintain referential integrity
+- <strong>Many-to-Many Relationship</strong>: Students can enroll in multiple courses, courses can have multiple students</p>
+<h3>Step 3: Populate the Database with Sample Data</h3>
+<h4>Insert Student Data</h4>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- INSERT student records (SOME students have NULL GPA - NOT yet calculated)
+INSERT INTO Student VALUES(1,'Amie','Massey',3.0);
+INSERT INTO Student VALUES(2,'Abigail','Larsen',NULL);
+INSERT INTO Student VALUES(3,'Cora','Rowland',4);
+INSERT INTO Student VALUES(4,'Alesha','Ferrell',3.5);
+INSERT INTO Student VALUES(5,'Nina','Lowery',NULL);
+INSERT INTO Student VALUES(6,'Scarlet','Lane',2.6);
+INSERT INTO Student VALUES(7,'Lukas','Reeves',3.6);
+INSERT INTO Student VALUES(8,'Ray','Chang',3.2);
+INSERT INTO Student VALUES(9,'Ioan','Reid',2.5);
+INSERT INTO Student VALUES(10,'Ryan','Peck',3.1);
+INSERT INTO Student VALUES(11,'Marco','Lowery',3.8);
+INSERT INTO Student VALUES(12,'Pearl', 'Mayo',3.7);
+INSERT INTO Student VALUES(13,'Elmer', 'Cain',2.7);
+INSERT INTO Student VALUES(14,'Isla', 'Mccall',2.2);
+INSERT INTO Student VALUES(15,'Kate', 'Kimmel',NULL);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Verify student data</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM Student ORDER BY sid;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>Insert Course Data</h4>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- INSERT computer science courses WITH varying credit hours
+INSERT INTO Course VALUES(1,'CS101', 'Computer Programming I',3);
+INSERT INTO Course VALUES(2,'CS102', 'Computer Programming II',3);
+INSERT INTO Course VALUES(3,'CS321', 'Data Structures',4);
+INSERT INTO Course VALUES(4,'CS5710', 'Network',4);
+INSERT INTO Course VALUES(5,'CS4550', 'DATABASE',4);
+INSERT INTO Course VALUES(6,'CS5990', 'Capstone Project',4);
+INSERT INTO Course VALUES(7,'CS6020', 'Data Mining',4);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Verify course data</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM Course ORDER BY cid;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>Insert Enrollment Data</h4>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- CS101 enrollments (ALL 15 students enrolled)
+
+INSERT INTO Enrolled VALUES(1,1, 'A+');
+INSERT INTO Enrolled VALUES(2,1, 'A-');
+INSERT INTO Enrolled VALUES(3,1, 'B');
+INSERT INTO Enrolled VALUES(4,1, 'C');
+INSERT INTO Enrolled VALUES(5,1, 'D');
+INSERT INTO Enrolled VALUES(6,1, 'A');
+INSERT INTO Enrolled VALUES(7,1, 'B-');
+INSERT INTO Enrolled VALUES(8,1, 'C+');
+INSERT INTO Enrolled VALUES(9,1, 'D');
+INSERT INTO Enrolled VALUES(10,1, 'C+');
+INSERT INTO Enrolled VALUES(11,1, 'A-');
+INSERT INTO Enrolled VALUES(12,1, 'A');
+INSERT INTO Enrolled VALUES(13,1, 'B+');
+INSERT INTO Enrolled VALUES(14,1, 'C+');
+INSERT INTO Enrolled VALUES(15,1, 'A');
+INSERT INTO Enrolled VALUES(1,2, 'A');
+INSERT INTO Enrolled VALUES(2,2, 'C');
+INSERT INTO Enrolled VALUES(3,2, 'B+');
+INSERT INTO Enrolled VALUES(4,2, 'C-');
+INSERT INTO Enrolled VALUES(5,2, 'D+');
+INSERT INTO Enrolled VALUES(6,2, 'A-');
+INSERT INTO Enrolled VALUES(7,2, 'C-');
+INSERT INTO Enrolled VALUES(8,2, 'C');
+INSERT INTO Enrolled VALUES(9,2, 'D+');
+INSERT INTO Enrolled VALUES(10,2, 'C+');
+INSERT INTO Enrolled VALUES(11,2, 'A-');
+INSERT INTO Enrolled VALUES(12,2, 'A');
+INSERT INTO Enrolled VALUES(13,2, 'B-');
+INSERT INTO Enrolled VALUES(14,2, 'C');
+
+INSERT INTO Enrolled VALUES (1,3,'C-');
+INSERT INTO Enrolled VALUES (2,3,'B-');
+INSERT INTO Enrolled VALUES (3,3,'D+');
+INSERT INTO Enrolled VALUES (4,3,'C');
+INSERT INTO Enrolled VALUES (5,3,'A+');
+INSERT INTO Enrolled VALUES (6,3,'D+');
+INSERT INTO Enrolled VALUES (7,3,'F');
+INSERT INTO Enrolled VALUES (8,3,'A-');
+INSERT INTO Enrolled VALUES (9,3,'D+');
+INSERT INTO Enrolled VALUES (10,3,'D');
+INSERT INTO Enrolled VALUES (11,3,'A+');
+INSERT INTO Enrolled VALUES (12,3,'A');
+INSERT INTO Enrolled VALUES (13,3,'B-');
+INSERT INTO Enrolled VALUES (14,3,'C');
+INSERT INTO Enrolled VALUES (15,3,'B-');
+
+INSERT INTO Enrolled VALUES (1,4,'F');
+INSERT INTO Enrolled VALUES (2,4,'A');
+INSERT INTO Enrolled VALUES (3,4,'D-');
+INSERT INTO Enrolled VALUES (4,4,'A-');
+INSERT INTO Enrolled VALUES (5,4,'B-');
+INSERT INTO Enrolled VALUES (6,4,'A-');
+INSERT INTO Enrolled VALUES (7,4,'D+');
+INSERT INTO Enrolled VALUES (8,4,'B+');
+INSERT INTO Enrolled VALUES (9,4,'C+');
+INSERT INTO Enrolled VALUES (10,4,'B');
+INSERT INTO Enrolled VALUES (11,4,'F');
+INSERT INTO Enrolled VALUES (12,4,'F');
+INSERT INTO Enrolled VALUES (13,4,'A+');
+INSERT INTO Enrolled VALUES (14,4,'A+');
+
+INSERT INTO Enrolled VALUES (1,5,'A+');
+INSERT INTO Enrolled VALUES (2,5,'A+');
+INSERT INTO Enrolled VALUES (3,5,'B');
+INSERT INTO Enrolled VALUES (4,5,'D+');
+INSERT INTO Enrolled VALUES (5,5,'C-');
+INSERT INTO Enrolled VALUES (6,5,'B-');
+INSERT INTO Enrolled VALUES (7,5,'B');
+INSERT INTO Enrolled VALUES (8,5,'B+');
+INSERT INTO Enrolled VALUES (9,5,'A');
+INSERT INTO Enrolled VALUES (10,5,'B');
+INSERT INTO Enrolled VALUES (11,5,'D');
+INSERT INTO Enrolled VALUES (12,5,'B');
+INSERT INTO Enrolled VALUES (13,5,'B');
+INSERT INTO Enrolled VALUES (14,5,'A+');
+
+INSERT INTO Enrolled VALUES (1,6,'A+');
+INSERT INTO Enrolled VALUES (2,6,'D');
+INSERT INTO Enrolled VALUES (3,6,'D-');
+INSERT INTO Enrolled VALUES (4,6,'C-');
+INSERT INTO Enrolled VALUES (5,6,'C');
+INSERT INTO Enrolled VALUES (6,6,'C-');
+INSERT INTO Enrolled VALUES (7,6,'A-');
+INSERT INTO Enrolled VALUES (8,6,'D');
+INSERT INTO Enrolled VALUES (9,6,'B');
+INSERT INTO Enrolled VALUES (10,6,'B-');
+INSERT INTO Enrolled VALUES (11,6,'F');
+INSERT INTO Enrolled VALUES (12,6,'C+');
+INSERT INTO Enrolled VALUES (15,6,'F');
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Verify enrollment data</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- CHECK total enrollments
+SELECT COUNT(*) AS total_enrollments FROM Enrolled;
+
+-- See sample enrollments WITH student AND course names
+SELECT s.fname, s.lname, c.code, c.name, e.grade
+FROM Student s
+JOIN Enrolled e ON s.sid = e.sid
+JOIN Course c ON e.cid = c.cid
+LIMIT 10;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr />
+<h2 id="query-exercises">🔍 Query Exercises</h2>
+<p>Now that we have our database populated, let's practice various types of queries. Each exercise builds on previous concepts while introducing new techniques.</p>
+<h3>Exercise 1: Multi-Table JOIN with String Functions</h3>
+<p><strong>Problem</strong>: Find all students who received an 'A' or 'A+' in the Database course, ordered by their full name.</p>
+<p><strong>Analysis</strong>: 
+- We need data from all three tables:
+  - <code>Student</code> table: for student names
+  - <code>Course</code> table: to identify the Database course
+  - <code>Enrolled</code> table: for grades
+- This requires joining three tables with two join conditions</p>
+<p><strong>Your Solution</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Write your query here
+
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<details>
+<summary>💡 Click to see the solution</summary>
+
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT CONCAT(fname, ' ', lname) AS student_name 
+FROM Student s, Course c, Enrolled e
+WHERE c.cid = e.cid 
+  AND s.sid = e.sid
+  AND (e.grade = 'A+' OR e.grade = 'A')
+  AND c.name LIKE '%DATABASE%' 
+ORDER BY student_name;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Alternative using explicit JOIN syntax</strong>:
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT CONCAT(s.fname, ' ', s.lname) AS student_name
+FROM Student s
+JOIN Enrolled e ON s.sid = e.sid
+JOIN Course c ON e.cid = c.cid
+WHERE (e.grade = 'A+' OR e.grade = 'A')
+  AND c.name LIKE '%DATABASE%'
+ORDER BY student_name;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Expected Output</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>student_name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Abigail Larsen</td>
+    </tr>
+    <tr>
+      <td>Amie Massey</td>
+    </tr>
+    <tr>
+      <td>Isla Mccall</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Key Concepts</strong>:
+- `CONCAT()`: Combines first and last names
+- Multiple table joins: Connect related data across tables
+- `LIKE '%Database%'`: Pattern matching for course names
+- `OR` condition: Multiple grade criteria
+</details>
+
+<h3>Query 2</h3>
+<p>Find all countries that manufacture some product in the ‘Gadgets’ category.
+Assume you have the following data:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS Product;
+
+CREATE TABLE Product(
+    PName CHAR(20) PRIMARY KEY,
+    Price DOUBLE,
+    category CHAR(20),
+    Manufacturer CHAR(20)
+);
+
+CREATE TABLE Company(
+    CName CHAR(20) PRIMARY KEY,
+    StockPrice DOUBLE,
+    Country CHAR(20)
+);
+
+ALTER TABLE Product ADD FOREIGN KEY (Manufacturer) REFERENCES Company(CName);
+
+INSERT INTO Company VALUES('GizmoWorks',25,'USA');
+INSERT INTO Company VALUES('Canon',65,'Japan');
+INSERT INTO Company VALUES('Hitachi',15, 'Japan');
+
+INSERT INTO Product VALUES('Gizmo',19.99,'Gadgets','GizmoWorks');
+INSERT INTO Product VALUES('Powergizmo',29.99,'Gadgets','GizmoWorks');
+INSERT INTO Product VALUES('SingleTouch',149.99,'Photography','Canon');
+INSERT INTO Product VALUES('MultiTouch',203.99,'Household','Hitachi');
+SELECT Country FROM Product, Company
+WHERE Manufacturer=CName AND Category='Gadgets'
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This would return:
+Country
+USA
+USA
+How to get USA only once.</p>
+<h3>Query 3: An Unintuitive Query</h3>
+<p>Prepare the database as follows:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE IF EXISTS R;
+DROP TABLE IF EXISTS T;
+DROP TABLE IF EXISTS S;
+
+CREATE TABLE R(A INT);
+CREATE TABLE S(A INT);
+CREATE TABLE T(A INT);
+
+INSERT INTO R VALUES (1);
+INSERT INTO R VALUES (1);
+INSERT INTO R VALUES (2);
+INSERT INTO R VALUES (3);
+INSERT INTO R VALUES (5);
+INSERT INTO R VALUES (7);
+INSERT INTO R VALUES (7);
+INSERT INTO R VALUES (8);
+
+INSERT INTO S VALUES (1);
+INSERT INTO S VALUES (1);
+INSERT INTO S VALUES (2);
+INSERT INTO S VALUES (3);
+
+INSERT INTO T VALUES (1);
+INSERT INTO T VALUES (2);
+INSERT INTO T VALUES (3);
+INSERT INTO T VALUES (7);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Run this query</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT  DISTINCT R.A
+FROM R, S, T
+WHERE R.A=S.A OR R.A=T.A
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This would return the following</p>
+<table>
+  <thead>
+    <tr>
+      <th>A</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2</td>
+    </tr>
+    <tr>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+<p>Remove all tuples from S</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SET SQL_SAFE_UPDATES = 0;
+DELETE FROM S;
+SET SQL_SAFE_UPDATES = 1;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>MySQL has something called safe mode, to disable it. We run SET SQL_SAFE_UPDATES = 0; and to enable it again SET SQL_SAFE_UPDATES = 1;
+Rerun the query</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT R.A
+FROM   R, S, T
+WHERE  R.A=S.A OR R.A=T.A
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<hr style="margin-top: 40px; margin-bottom: 20px;">
+<div style="background-color: #f0f0f0; padding: 15px; border-radius: 5px;">
+  <p style="margin: 0; text-align: center;">
+    <a href="../../LAB_INDEX.md">⬅️ Lab Index</a> | 
+    <a href="Lab2.html">Lab 2 Overview</a> | 
+    <a href="Lab2_Part2_Aggregates.html">Next: Part 2 - Aggregates ➡️</a>
+  </p>
+</div>
+
+<script>
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+</script>
+</body>
+</html>
