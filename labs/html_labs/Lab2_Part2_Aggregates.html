@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 2 Part 2: Aggregate Functions and GROUP BY</title>
+    <title>Lab 3: Aggregate Functions and GROUP BY</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
@@ -76,7 +76,7 @@
   </p>
 </div>
 
-<h1>Lab 2 Part 2: Aggregate Functions and GROUP BY</h1>
+<h1>Lab 3: Aggregate Functions and GROUP BY</h1>
 
 <h2>🎯 Learning Objectives</h2>
 <p>By the end of this part, you will be able to:
@@ -795,6 +795,172 @@ ON p.supplierid=s.id;
 
   </details>
 
+
+<h2>🎯 Additional Practice Examples</h2>
+
+<h3>Example 1: Sales Analysis</h3>
+<p>Analyze sales data to find total revenue and average order value by month and product category.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Sample schema for sales analysis
+CREATE TABLE Sales (
+    sale_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    sale_date DATE,
+    quantity INT,
+    unit_price DECIMAL(10,2)
+);
+
+-- Query: Monthly sales summary by category
+SELECT 
+    YEAR(sale_date) AS year,
+    MONTH(sale_date) AS month,
+    category,
+    COUNT(*) AS total_transactions,
+    SUM(quantity) AS total_units_sold,
+    SUM(quantity * unit_price) AS total_revenue,
+    AVG(quantity * unit_price) AS avg_transaction_value,
+    MIN(unit_price) AS min_price,
+    MAX(unit_price) AS max_price
+FROM Sales
+GROUP BY YEAR(sale_date), MONTH(sale_date), category
+HAVING total_revenue > 1000
+ORDER BY year DESC, month DESC, total_revenue DESC;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 2: Student Performance Statistics</h3>
+<p>Calculate grade distribution and class statistics for different courses.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Grade analysis example
+CREATE TABLE StudentGrades (
+    student_id INT,
+    course_name VARCHAR(100),
+    grade DECIMAL(5,2),
+    semester VARCHAR(20)
+);
+
+-- Query: Course statistics with grade distribution
+SELECT 
+    course_name,
+    COUNT(DISTINCT student_id) AS num_students,
+    AVG(grade) AS avg_grade,
+    MIN(grade) AS min_grade,
+    MAX(grade) AS max_grade,
+    STDDEV(grade) AS grade_std_dev,
+    SUM(CASE WHEN grade >= 90 THEN 1 ELSE 0 END) AS A_count,
+    SUM(CASE WHEN grade >= 80 AND grade < 90 THEN 1 ELSE 0 END) AS B_count,
+    SUM(CASE WHEN grade >= 70 AND grade < 80 THEN 1 ELSE 0 END) AS C_count,
+    SUM(CASE WHEN grade < 70 THEN 1 ELSE 0 END) AS below_C_count
+FROM StudentGrades
+GROUP BY course_name
+HAVING num_students >= 10
+ORDER BY avg_grade DESC;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 3: Inventory Management Aggregations</h3>
+<p>Track inventory levels and identify products that need reordering.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Inventory analysis
+CREATE TABLE Inventory (
+    product_id INT,
+    warehouse VARCHAR(50),
+    quantity_on_hand INT,
+    reorder_level INT,
+    unit_cost DECIMAL(10,2),
+    last_updated DATE
+);
+
+-- Query: Inventory summary by warehouse with reorder alerts
+SELECT 
+    warehouse,
+    COUNT(DISTINCT product_id) AS total_products,
+    SUM(quantity_on_hand) AS total_units,
+    SUM(quantity_on_hand * unit_cost) AS inventory_value,
+    AVG(quantity_on_hand) AS avg_stock_level,
+    COUNT(CASE WHEN quantity_on_hand <= reorder_level THEN 1 END) AS products_to_reorder,
+    SUM(CASE WHEN quantity_on_hand <= reorder_level 
+        THEN (reorder_level - quantity_on_hand) * unit_cost 
+        ELSE 0 END) AS reorder_cost
+FROM Inventory
+GROUP BY warehouse
+ORDER BY inventory_value DESC;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 4: Customer Purchase Behavior Analysis</h3>
+<p>Analyze customer purchasing patterns with aggregations.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Customer behavior analysis
+CREATE TABLE CustomerPurchases (
+    customer_id INT,
+    customer_name VARCHAR(100),
+    purchase_date DATE,
+    product_category VARCHAR(50),
+    purchase_amount DECIMAL(10,2)
+);
+
+-- Query: Customer segmentation based on purchase behavior
+SELECT 
+    customer_id,
+    customer_name,
+    COUNT(*) AS total_purchases,
+    COUNT(DISTINCT product_category) AS categories_purchased,
+    SUM(purchase_amount) AS total_spent,
+    AVG(purchase_amount) AS avg_purchase_amount,
+    MIN(purchase_date) AS first_purchase,
+    MAX(purchase_date) AS last_purchase,
+    DATEDIFF(MAX(purchase_date), MIN(purchase_date)) AS customer_lifetime_days,
+    CASE 
+        WHEN SUM(purchase_amount) > 10000 THEN 'VIP'
+        WHEN SUM(purchase_amount) > 5000 THEN 'Gold'
+        WHEN SUM(purchase_amount) > 1000 THEN 'Silver'
+        ELSE 'Bronze'
+    END AS customer_tier
+FROM CustomerPurchases
+GROUP BY customer_id, customer_name
+HAVING total_purchases >= 3
+ORDER BY total_spent DESC;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<div style="background-color: #fff3cd; padding: 15px; margin: 20px 0; border-left: 4px solid #ffc107; border-radius: 4px;">
+  <h4 style="margin-top: 0;">💡 Key Takeaways - Aggregate Functions</h4>
+  <ul>
+    <li><code>COUNT(*)</code> counts all rows, while <code>COUNT(column)</code> counts non-NULL values</li>
+    <li><code>COUNT(DISTINCT column)</code> counts unique values only</li>
+    <li>Use <code>GROUP BY</code> to create subgroups for aggregation</li>
+    <li><code>HAVING</code> filters groups after aggregation (unlike WHERE which filters before)</li>
+    <li>You can combine multiple aggregate functions in one query</li>
+    <li>Use <code>CASE</code> statements within aggregates for conditional counting/summing</li>
+    <li>Remember: columns in SELECT must either be in GROUP BY or be aggregated</li>
+  </ul>
+</div>
 
 <hr style="margin-top: 40px;">
 <div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">

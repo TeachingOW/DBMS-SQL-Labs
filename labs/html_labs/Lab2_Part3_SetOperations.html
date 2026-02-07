@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 2 Part 3: Set Operations and Advanced Queries</title>
+    <title>Lab 4: Set Operations and Advanced Queries</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
@@ -76,7 +76,7 @@
   </p>
 </div>
 
-<h1>Lab 2 Part 3: Set Operations and Advanced Queries</h1>
+<h1>Lab 4: Set Operations and Advanced Queries</h1>
 
 <h2>🎯 Learning Objectives</h2>
 <p>By the end of this part, you will be able to:
@@ -377,6 +377,215 @@ SELECT DISTINCT NAME FROM STUDENT S WHERE major='cs’ AND NOT EXISTS
   </button>
 </div>
 </details>
+
+<h2>🎯 Additional Practice Examples</h2>
+
+<h3>Example 1: Combining Customer Data from Multiple Sources</h3>
+<p>Merge customer records from different systems using UNION.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Combining data from multiple customer tables
+CREATE TABLE OnlineCustomers (
+    customer_id INT,
+    customer_name VARCHAR(100),
+    email VARCHAR(100),
+    source VARCHAR(20) DEFAULT 'Online'
+);
+
+CREATE TABLE StoreCustomers (
+    customer_id INT,
+    customer_name VARCHAR(100),
+    phone VARCHAR(20),
+    source VARCHAR(20) DEFAULT 'Store'
+);
+
+-- Query: Get all customers from both sources (no duplicates)
+SELECT customer_id, customer_name, email AS contact, source
+FROM OnlineCustomers
+UNION
+SELECT customer_id, customer_name, phone AS contact, source
+FROM StoreCustomers
+ORDER BY customer_name;
+
+-- Query: Get all customers including duplicates
+SELECT customer_id, customer_name, source
+FROM OnlineCustomers
+UNION ALL
+SELECT customer_id, customer_name, source
+FROM StoreCustomers;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 2: Finding Common Elements (INTERSECT Alternative)</h3>
+<p>Find customers who exist in both online and store systems.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- MySQL doesn't have INTERSECT, so we use subqueries or joins
+-- Method 1: Using IN
+SELECT DISTINCT customer_id, customer_name
+FROM OnlineCustomers
+WHERE customer_id IN (
+    SELECT customer_id FROM StoreCustomers
+);
+
+-- Method 2: Using INNER JOIN (more efficient)
+SELECT DISTINCT o.customer_id, o.customer_name
+FROM OnlineCustomers o
+INNER JOIN StoreCustomers s ON o.customer_id = s.customer_id;
+
+-- Method 3: Using EXISTS
+SELECT DISTINCT customer_id, customer_name
+FROM OnlineCustomers o
+WHERE EXISTS (
+    SELECT 1 FROM StoreCustomers s 
+    WHERE s.customer_id = o.customer_id
+);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 3: Complex Filtering with Subqueries</h3>
+<p>Find products that have never been ordered using NOT EXISTS.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Schema for products and orders
+CREATE TABLE Products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category VARCHAR(50),
+    price DECIMAL(10,2)
+);
+
+CREATE TABLE OrderItems (
+    order_id INT,
+    product_id INT,
+    quantity INT
+);
+
+-- Query: Find products that have never been ordered
+SELECT p.product_id, p.product_name, p.category, p.price
+FROM Products p
+WHERE NOT EXISTS (
+    SELECT 1 FROM OrderItems oi 
+    WHERE oi.product_id = p.product_id
+);
+
+-- Alternative using LEFT JOIN
+SELECT p.product_id, p.product_name, p.category, p.price
+FROM Products p
+LEFT JOIN OrderItems oi ON p.product_id = oi.product_id
+WHERE oi.product_id IS NULL;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 4: Bulk UPDATE with Subquery</h3>
+<p>Update prices based on complex conditions using subqueries.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Increase prices for products in popular categories
+UPDATE Products
+SET price = price * 1.10
+WHERE category IN (
+    SELECT category 
+    FROM (
+        SELECT p.category
+        FROM Products p
+        JOIN OrderItems oi ON p.product_id = oi.product_id
+        GROUP BY p.category
+        HAVING SUM(oi.quantity) > 100
+    ) AS popular_categories
+);
+
+-- Update discontinued products based on last order date
+UPDATE Products p
+SET price = price * 0.50
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM OrderItems oi 
+    JOIN Orders o ON oi.order_id = o.order_id
+    WHERE oi.product_id = p.product_id 
+    AND o.order_date > DATE_SUB(NOW(), INTERVAL 1 YEAR)
+);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<h3>Example 5: SQL Division Pattern - Advanced</h3>
+<p>Find customers who have ordered all products in a specific category.</p>
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Find customers who ordered ALL products from 'Electronics' category
+-- This is the relational division problem
+
+-- Method 1: Using NOT EXISTS with double negation
+SELECT DISTINCT c.customer_id, c.customer_name
+FROM Customers c
+WHERE NOT EXISTS (
+    -- Find products in Electronics category
+    SELECT p.product_id
+    FROM Products p
+    WHERE p.category = 'Electronics'
+    AND NOT EXISTS (
+        -- Check if customer ordered this product
+        SELECT 1
+        FROM Orders o
+        JOIN OrderItems oi ON o.order_id = oi.order_id
+        WHERE o.customer_id = c.customer_id
+        AND oi.product_id = p.product_id
+    )
+);
+
+-- Method 2: Using COUNT and GROUP BY
+SELECT c.customer_id, c.customer_name
+FROM Customers c
+JOIN Orders o ON c.customer_id = o.customer_id
+JOIN OrderItems oi ON o.order_id = oi.order_id
+JOIN Products p ON oi.product_id = p.product_id
+WHERE p.category = 'Electronics'
+GROUP BY c.customer_id, c.customer_name
+HAVING COUNT(DISTINCT p.product_id) = (
+    SELECT COUNT(*) 
+    FROM Products 
+    WHERE category = 'Electronics'
+);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<div style="background-color: #fff3cd; padding: 15px; margin: 20px 0; border-left: 4px solid #ffc107; border-radius: 4px;">
+  <h4 style="margin-top: 0;">💡 Key Takeaways - Set Operations & Advanced Queries</h4>
+  <ul>
+    <li><code>UNION</code> removes duplicates; <code>UNION ALL</code> keeps all rows (faster)</li>
+    <li>MySQL doesn't have INTERSECT/EXCEPT - use <code>IN</code>, <code>EXISTS</code>, or <code>JOIN</code> instead</li>
+    <li><code>NOT EXISTS</code> is often more efficient than <code>NOT IN</code> with NULLs</li>
+    <li>Use subqueries in WHERE for dynamic filtering based on aggregated data</li>
+    <li>Division pattern (A÷B) finds entities related to ALL members of another set</li>
+    <li>Bulk UPDATE/DELETE can use subqueries for complex conditions</li>
+    <li>Always test complex queries on sample data first!</li>
+  </ul>
+</div>
 
 <hr style="margin-top: 40px;">
 <div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">
