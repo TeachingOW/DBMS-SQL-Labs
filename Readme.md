@@ -30,40 +30,41 @@ By completing these labs, students will:
 |-----|-------|-------------|----------|
 | 5 | Set Operations & Nested Queries | Learn UNION, INTERSECT, and subquery techniques | [Lab 2 Advanced](html_labs/Lab2.html) |
 | 6 | Aggregate Functions & Grouping | Master COUNT, SUM, AVG, GROUP BY, and HAVING clauses | [Lab 2 Aggregates](html_labs/Lab2.html) |
-| 7 | Window Functions  & Recursive Query| Learn advanced analytical functions and partitioning  | [Window Functions](html_labs/Lab4.html) |
-| 8 | Views & Virtual Tables | Create and manage database views for data abstraction | [Views Lab](html_labs/Lab5_views.html) |
+| 7 | CASE Expressions | Master conditional logic in SQL with CASE statements | [CASE Expressions Lab](html_labs/Lab_Case_Expression.html) |
+| 8 | Window Functions  & Recursive Query| Learn advanced analytical functions and partitioning  | [Window Functions](html_labs/Lab4.html) |
+| 9 | Views & Virtual Tables | Create and manage database views for data abstraction | [Views Lab](html_labs/Lab5_views.html) |
 
 ### Database Design Labs
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 9 | Database Normalization | Learn 1NF, 2NF, 3NF and database design principles | [Normal Forms](html_labs/Lab3_Normal_forms.html) |
-| 10 | Advanced SQL Techniques | Practice complex queries and optimization | [Advanced SQL](html_labs/Lab4_sql.html) |
+| 10 | Database Normalization | Learn 1NF, 2NF, 3NF and database design principles | [Normal Forms](html_labs/Lab3_Normal_forms.html) |
+| 11 | Advanced SQL Techniques | Practice complex queries and optimization | [Advanced SQL](html_labs/Lab4_sql.html) |
 
 ### Programming Integration Labs
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 11 | Java Database Interface | Connect Java applications to databases  | [Java Lab](html_labs/lab_java_3.html) |
-| 12 | Python Database Interface | Connect Python applications to databases using connectors | [Python Lab](html_labs/Lab_Python.html) |
-| 13 | Jupyter Notebook Integration | Interactive database analysis with Jupyter notebooks | [Jupyter Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb)|
+| 12 | Java Database Interface | Connect Java applications to databases  | [Java Lab](html_labs/lab_java_3.html) |
+| 13 | Python Database Interface | Connect Python applications to databases using connectors | [Python Lab](html_labs/Lab_Python.html) |
+| 14 | Jupyter Notebook Integration | Interactive database analysis with Jupyter notebooks | [Jupyter Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb)|
 
 ### Advanced Database Concepts
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 14 | Analytical Functions | Master ROLLUP, CUBE, and advanced grouping operations | [Rollup Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb) |
-| 15 | Triggers & Stored Procedures | Implement database automation and business logic | [Triggers Lab](html_labs/Triggers.html) |
-| 16 | Transaction Management | Understand ACID properties and concurrency control | [Transactions](html_labs/Transactions.html) |
-| 17 | Isolation Levels | Learn about database isolation and consistency | [Isolation Levels](html_labs/Isolation_Levels.html) |
+| 15 | Analytical Functions | Master ROLLUP, CUBE, and advanced grouping operations | [Rollup Lab](https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb) |
+| 16 | Triggers & Stored Procedures | Implement database automation and business logic | [Triggers Lab](html_labs/Triggers.html) |
+| 17 | Transaction Management | Understand ACID properties and concurrency control | [Transactions](html_labs/Transactions.html) |
+| 18 | Isolation Levels | Learn about database isolation and consistency | [Isolation Levels](html_labs/Isolation_Levels.html) |
 
 ### Modern Database Technologies
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 18 | JSON & XML Processing | Handle semi-structured data in relational databases | [JSON/XML Lab](html_labs/Lab_JSON-XML.html) |
-| 19 | MongoDB (NoSQL) | Introduction to document-based databases | [MongoDB Lab](html_labs/Lab10_mongoDB.html) |
-| 20 | Neo4j (Graph Database) | Explore graph database concepts and Cypher queries | [Neo4j Lab](html_labs/Lab11_neo4j.html) |
+| 19 | JSON & XML Processing | Handle semi-structured data in relational databases | [JSON/XML Lab](html_labs/Lab_JSON-XML.html) |
+| 20 | MongoDB (NoSQL) | Introduction to document-based databases | [MongoDB Lab](html_labs/Lab10_mongoDB.html) |
+| 21 | Neo4j (Graph Database) | Explore graph database concepts and Cypher queries | [Neo4j Lab](html_labs/Lab11_neo4j.html) |
 
 ## 🗃️ Data Sets
 
