@@ -1,2 +1,39 @@
 convert_html.py
 fix_duplicates.py
+
+# Mac OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Credentials and secrets
+credentials.json
+*.key
+*.pem
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Temporary files
+tmp/
+*.tmp
+*.log
