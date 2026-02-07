@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transactions</title>
+    <title>Lab 2 Part 3: Set Operations and Advanced Queries</title>
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
@@ -11,9 +11,6 @@
         th { background-color: #f2f2f2; }
         pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
-    
-    
-    
     
     /* Code block wrapper with copy button */
     .code-block-wrapper {
@@ -79,143 +76,35 @@
   </p>
 </div>
 
-<p>In this short tutorial, we will explore how transcations work in MySQL.</p>
-<p>Now, we would create a simple bank table;</p>
-<div class="code-block-wrapper">
-  <pre><code class="language-sql">CREATE TABLE Bank(
-name VARCHAR(10),
-amnt DECIMAL(10,2),
-CONSTRAINT  AmntC CHECK (amnt&gt;=0) ); 
-</code></pre>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>Add few users to the bank</p>
-<div class="code-block-wrapper">
-  <pre><code class="language-sql">INSERT INTO bank VALUES(&quot;Bob&quot;, 40);
-INSERT INTO bank VALUES (&quot;Joe&quot;, 50);
-</code></pre>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>By default, in mysql shell (or Workbench) each statement is a sperate transcation and it is auto commited (auto commit)</p>
-<div class="code-block-wrapper">
-  <pre><code class="language-sql">SHOW VARIABLES LIKE 'AUTOCOMMIT';
+<h1>Lab 2 Part 3: Set Operations and Advanced Queries</h1>
 
-</code></pre>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>To set autocommit to false</p>
-<div class="code-block-wrapper">
-  <pre><code class="language-sql">SET AUTOCOMMIT = 0;
-</code></pre>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>OR</p>
-<div class="code-block-wrapper">
-  <pre><code class="language-sql">SET AUTOCOMMIT = OFF;
-</code></pre>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>To transfer 10$ from Bob to Joe</p>
-<div class="code-block-wrapper">
-  <pre><code class="language-sql">START TRANSACTION;
+<h2>🎯 Learning Objectives</h2>
+<p>By the end of this part, you will be able to:
+- Understand set operations (UNION, UNION ALL)
+- Work with multiset operations
+- Implement SQL Division pattern
+- Write complex nested queries
+- Handle advanced subquery scenarios
+- Perform bulk UPDATE and DELETE operations</p>
 
-UPDATE bank SET amnt=amnt-10 WHERE name='Bob';
+<h2>📋 Table of Contents</h2>
+<ul>
+<li><a href="#multiset-operations">Multiset Operations</a></li>
+<li><a href="#update-delete">Update and Delete Operations</a></li>
+<li><a href="#division">Division</a></li>
+</ul>
 
-UPDATE bank SET amnt=amnt+10 WHERE name='Joe';
-
-COMMIT;
-</code></pre>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>After executing the statements
-You should get the following when executing 'select * from bank;'</p>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>age</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bob</td>
-<td>30</td>
-</tr>
-<tr>
-<td>Joe</td>
-<td>60</td>
-</tr>
-</tbody>
-</table>
-<p>Execute the following statemnts</p>
+<h3 id="multiset-operations">Multiset Operations</h3>
+<p>MySQL does not have INTERSECT or EXCEPT keyword. In the next lecture, we will explain an alternative.
+*Compare these two queries *</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">START TRANSACTION;
-SELECT * FROM bank;
-UPDATE bank SET amnt=amnt+10 WHERE name='Bob';
-SELECT * FROM bank;
-UPDATE bank SET amnt=amnt-10 WHERE name='Joe';
-SELECT * FROM bank;
-ROLLBACK;
+  <pre><code class="language-sql">SELECT  R.A 
+FROM   R, S 
+WHERE  R.A=S.A
+UNION  
+SELECT R.A 
+FROM   R, T  
+WHERE  R.A=T.A 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -223,21 +112,14 @@ ROLLBACK;
     </svg>
   </button>
 </div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>When we are using rollback, the table is rolled back to the previous state.</p>
-<p>Other instances (or connections would not see these updates until <strong>commit</strong> is executed.)</p>
-<p>The previous transcation can results in a several pitfalls.</p>
-<p>For eaxample, running the following statements</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">START TRANSACTION;
-UPDATE bank SET amnt=amnt-100 WHERE name='bob';
-UPDATE bank SET amnt=amnt+100 WHERE name='joe';
-COMMIT;
+  <pre><code class="language-sql">SELECT  R.A
+FROM   R, S
+WHERE  R.A=S.A
+UNION ALL
+SELECT R.A
+FROM   R, T
+WHERE  R.A=T.A
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -245,49 +127,31 @@ COMMIT;
     </svg>
   </button>
 </div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<table>
-<thead>
-<tr>
-<th>name</th>
-<th>age</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Bob</td>
-<td>30</td>
-</tr>
-<tr>
-<td>Joe</td>
-<td>160</td>
-</tr>
-</tbody>
-</table>
-<p>Basically 100$ has been magically appeared in Joe account.</p>
-<p>To handle that in mysql, we need to create a procedure (so we can use IF and or execption)</p>
+<h4>Try the following SQL code</h4>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">DELIMITER //
+  <pre><code class="language-sql">DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Company;
 
-CREATE PROCEDURE `TRANSFER`(  
-  IN FromACCNT VARCHAR(10),
-  IN ToACCNT VARCHAR(10),
- IN amount DECIMAL(10,2))
-BEGIN
+CREATE TABLE Product(
+  PName CHAR(20) PRIMARY KEY,
+    maker CHAR(20),
+    factory_loc CHAR(20)
+);
+CREATE TABLE Company(
+  CName CHAR(20) PRIMARY KEY,
+    hq_city CHAR(20)
+);
 
-    IF EXISTS(SELECT * FROM bank WHERE name=FromAccnt AND amnt &gt; amount) AND EXISTS(SELECT * FROM bank WHERE name=ToAccnt) THEN
-       START TRANSACTION;
-      UPDATE bank SET amnt=amnt-amount WHERE name=FromAccnt;
-        UPDATE bank SET amnt=amnt+amount WHERE name=ToAccnt;
-      COMMIT;
+ALTER TABLE Product ADD FOREIGN KEY (maker) REFERENCES Company(CName);
 
-    END IF;
-END//
+INSERT INTO Company VALUES('X co.','Seattle');
+INSERT INTO Company VALUES('Y inc.','Seattle');
+INSERT INTO Company VALUES('A co.', 'Tokyo');
+
+INSERT INTO Product VALUES('X','X co.','US');
+INSERT INTO Product VALUES('A','A co.','China');
+INSERT INTO Product VALUES('A+','A co.','US');
+INSERT INTO Product VALUES('Y','Y inc.','China');
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -295,17 +159,18 @@ END//
     </svg>
   </button>
 </div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>TO use it </p>
+<p>Compare the three queries below:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">DELIMITER ;
-
-CALL TRANSFER('Bob','Joe', 100);
+  <pre><code class="language-sql">SELECT hq_city
+FROM   Company, Product
+WHERE  maker = cname 
+  AND factory_loc='US'
+AND hq_city IN (
+SELECT hq_city
+FROM   Company, Product
+WHERE  maker = cname
+AND factory_loc='China'
+);
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -313,35 +178,104 @@ CALL TRANSFER('Bob','Joe', 100);
     </svg>
   </button>
 </div>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT maker, hq_city
+FROM   Company, Product
+WHERE  maker = cname 
+  AND factory_loc='US'
+AND (maker,hq_city) IN (
+SELECT maker, hq_city
+FROM   Company, Product
+WHERE  maker = cname
+AND factory_loc='China'
+);
+</code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
 </div>
-<p>This would not be executed.</p>
-<p>Another Approach is by using Exception, as follows:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
+FROM   Company, Product
+WHERE  maker = cname 
+       AND cname IN (
+        SELECT maker
+        FROM   Product
+        WHERE  factory_loc = 'US')
+     AND cname IN (
+        SELECT maker
+        FROM   Product
+        WHERE  factory_loc = 'China');
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3 id="update-delete">To Delete or update multiple rows</h3>
+<p>To disable safe updates or delete</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SET SQL_SAFE_UPDATES=0;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>To enable them back</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SET SQL_SAFE_UPDATES=1;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h1>Lab2.2</h1>
+<p>Run the following query</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
+FROM   Company, Product
+WHERE  maker = cname 
+       AND cname IN (
+    SELECT maker
+      FROM   Product
+      WHERE  factory_loc = 'US')
+   AND cname IN (
+    SELECT maker
+      FROM   Product
+      WHERE  factory_loc = 'China')
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>To understand the previous query, you may break it into three parts.</p>
+<p>Q1:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">    SELECT maker
+    FROM   Product
+      WHERE  factory_loc = 'US'
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div> 
+Q2:
 <div class="code-block-wrapper">
   <pre><code class="language-sql">
-DELIMITER //
-
-CREATE PROCEDURE Transfer2(
- IN FromACCNT VARCHAR(10),
-  IN ToACCNT VARCHAR(10),
- IN amount DECIMAL(10,2))
-BEGIN
- DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;  -- ROLLBACK ANY error IN the TRANSACTION
-    END;
-
-   START TRANSACTION;
-   UPDATE bank SET amnt=amnt-amount WHERE name=FromAccnt;
-   UPDATE bank SET amnt=amnt+amount WHERE name=ToAccnt;
-   COMMIT;
-END//
-
-DELIMITER ;
+SELECT maker
+      FROM   Product
+      WHERE  factory_loc = 'China'
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -349,14 +283,11 @@ DELIMITER ;
     </svg>
   </button>
 </div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
+<p>Q3:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">CALL TRANSFER2('Bob','Joe', 10);
+  <pre><code class="language-sql">SELECT *
+FROM   Company, Product
+WHERE  maker = cname 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -364,15 +295,17 @@ DELIMITER ;
     </svg>
   </button>
 </div>
-  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </button>
-</div>
-<p>AND</p>
+<p>Another way:</p>
 <div class="code-block-wrapper">
-  <pre><code class="language-sql">CALL TRANSFER2('Bob','Joe', 100);
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
+FROM   Company, (SELECT maker
+      FROM   Product
+      WHERE  factory_loc = 'US') US, 
+      (SELECT maker
+      FROM   Product
+      WHERE  factory_loc = 'China') Ch
+WHERE  us.maker = cname 
+AND    ch.maker= cname 
 </code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -380,15 +313,82 @@ DELIMITER ;
     </svg>
   </button>
 </div>
+<p>Another one:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT hq_city
+FROM   Company, Product p1,   Product p2
+WHERE  p1.maker = cname 
+AND    p2.maker= cname 
+AND  p1.factory_loc = 'US'
+AND  p2.factory_loc = 'China';
+</code></pre>
   <button class="copy-button" onclick="copyCode(this)" title="Copy code">
     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
   </button>
+</div>
+<h2 id="division">Division</h2>
+<p>
+    <div class="code-block-wrapper">
+  <pre><code class="language-sql">
+ CREATE TABLE student (SID INT PRIMARY KEY,Name VARCHAR(10),Major
+ VARCHAR(4)); 
+ CREATE TABLE enrolled (SID INT,cid VARCHAR(5),PRIMARY KEY
+ (sid,cid)); 
+ INSERT INTO student VALUES (40,'alex','cs'), (41, 'john','cs'), (42, 'mat', 'cs'), (43, 'zack', 'math');
+ INSERT INTO Enrolled VALUES (40,'cs101'),(40,  'cs102'),(41, 'cs101'),(41,  'cs404'),(41,'cs405'), (42,'cs101'),(42,'cs102'),(42,'cs203'),(43,'cs101'),(43,'cs102');</p>
+    </code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+Find students who are taking all courses taken by student 40
+
+    <summary>Solution</summary>
+<details>
+    
+
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">
+SELECT DISTINCT NAME FROM STUDENT S WHERE major='cs’ AND NOT EXISTS
+ (SELECT * FROM ENROLLED E2 WHERE SID=40 AND CID NOT IN (SELECT CID
+ FROM ENROLLED E WHERE E.SID=S.SID) )
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+    
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">  SELECT DISTINCT NAME FROM STUDENT S WHERE major=‘cs’ AND  NOT EXISTS
+     (SELECT * FROM ENROLLED E2  WHERE SID=40 AND NOT EXISTS ( SELECT *
+     FROM ENROLLED E WHERE E.SID=S.SID AND E2.CID=E.CID) )
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+</details>
+
+<hr style="margin-top: 40px;">
+<div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.md">📚 Lab Index</a> | 
+    <a href="../../Readme.md">🏠 Home</a> | 
+    <a href="../../docs/GETTING_STARTED.md">🚀 Getting Started</a> | 
+    <a href="../../docs/SQL_CHEAT_SHEET.md">📝 SQL Cheat Sheet</a>
+  </p>
 </div>
 
 <script>
-
     function copyCode(button) {
       const wrapper = button.closest('.code-block-wrapper');
       const codeBlock = wrapper.querySelector('code');
@@ -411,18 +411,6 @@ DELIMITER ;
         alert('Failed to copy code');
       });
     }
-    
-  </script>
-
-<hr style="margin-top: 40px;">
-<div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">
-  <p style="margin: 0;">
-    <a href="../../LAB_INDEX.md">📚 Lab Index</a> | 
-    <a href="../../Readme.md">🏠 Home</a> | 
-    <a href="../../docs/GETTING_STARTED.md">🚀 Getting Started</a> | 
-    <a href="../../docs/SQL_CHEAT_SHEET.md">📝 SQL Cheat Sheet</a>
-  </p>
-</div>
-
+</script>
 </body>
 </html>

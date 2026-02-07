@@ -32,7 +32,9 @@ By completing these labs, students will:
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
 | 1 | Database Creation & Basic Queries | Learn to create databases, tables, and perform simple SELECT operations | [Lab 1](html_labs/InClassExercises.html) |
-| 2 | Advanced Queries & Joins | Master multi-table queries, joins, and complex WHERE clauses | [Lab 2](html_labs/Lab2.html) |
+| 2.1 | JOINs and Multi-Table Queries | Master multi-table queries, INNER/LEFT/RIGHT joins | [Lab 2 Part 1](html_labs/Lab2_Part1_Joins.html) |
+| 2.2 | Aggregate Functions & GROUP BY | Learn COUNT, SUM, AVG, GROUP BY, and HAVING clauses | [Lab 2 Part 2](html_labs/Lab2_Part2_Aggregates.html) |
+| 2.3 | Set Operations & Advanced Queries | Master UNION, division, and complex nested queries | [Lab 2 Part 3](html_labs/Lab2_Part3_SetOperations.html) |
 | 3 | Foreign Keys & Relationships | Understand referential integrity and table relationships | [Foreign Keys](html_labs/Foreign_Keys.html) |
 | 4 | Multi-Table Operations | Practice complex joins and relationship queries | [Multi Tables](html_labs/Multi_Tables.html) |
 
@@ -40,8 +42,8 @@ By completing these labs, students will:
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 5 | Set Operations & Nested Queries | Learn UNION, INTERSECT, and subquery techniques | [Lab 2 Advanced](html_labs/Lab2.html) |
-| 6 | Aggregate Functions & Grouping | Master COUNT, SUM, AVG, GROUP BY, and HAVING clauses | [Lab 2 Aggregates](html_labs/Lab2.html) |
+| 5 | Set Operations & Nested Queries | Learn UNION, division, and subquery techniques | [Lab 2 Part 3](html_labs/Lab2_Part3_SetOperations.html) |
+| 6 | Aggregate Functions & Grouping | Master COUNT, SUM, AVG, GROUP BY, and HAVING clauses | [Lab 2 Part 2](html_labs/Lab2_Part2_Aggregates.html) |
 | 7 | CASE Expressions | Master conditional logic in SQL with CASE statements | [CASE Expressions Lab](Lab_Case_Expression.md) ⭐ |
 | 8 | Window Functions  & Recursive Query| Learn advanced analytical functions and partitioning  | [Window Functions](html_labs/Lab4.html) |
 | 9 | Views & Virtual Tables | Create and manage database views for data abstraction | [Views Lab](html_labs/Lab5_views.html) |
