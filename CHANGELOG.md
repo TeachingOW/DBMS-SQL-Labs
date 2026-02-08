@@ -14,34 +14,34 @@ This release represents a major overhaul of the repository structure and documen
 ### Added
 
 #### 📚 Comprehensive Documentation
-- **Getting Started Guide** (`docs/GETTING_STARTED.md`)
+- **[Getting Started Guide](docs/GETTING_STARTED.md)**
   - Complete setup instructions for MySQL, Python, Java, Node.js
   - Troubleshooting section for common issues
   - Quick start guides for different skill levels
   - Tool installation guides for MongoDB, Neo4j, Jupyter
   
-- **Course Syllabus** (`docs/COURSE_SYLLABUS.md`)
+- **[Course Syllabus](docs/COURSE_SYLLABUS.md)**
   - 16-week structured curriculum
   - Weekly schedule with topics and labs
   - Grading policy and assessment guidelines
   - Project ideas and deliverables
   - Learning outcomes for each module
   
-- **SQL Cheat Sheet** (`docs/SQL_CHEAT_SHEET.md`)
+- **[SQL Cheat Sheet](docs/SQL_CHEAT_SHEET.md)**
   - Comprehensive reference for all SQL commands
   - Organized by topic (DDL, DML, Queries, Joins, etc.)
   - Code examples for every command
   - Best practices and performance tips
   - Window functions and CTEs reference
   
-- **Contributing Guide** (`docs/CONTRIBUTING.md`)
+- **[Contributing Guide](docs/CONTRIBUTING.md)**
   - Detailed contribution guidelines
   - Code style standards for SQL, Python, Java
   - Pull request process
   - Issue reporting templates
   - Commit message conventions
   
-- **Lab Index** (`LAB_INDEX.md`)
+- **[Lab Index](LAB_INDEX.md)**
   - Complete catalog of all 21 labs
   - Detailed descriptions with learning objectives
   - Prerequisites for each lab
@@ -49,13 +49,13 @@ This release represents a major overhaul of the repository structure and documen
   - Difficulty levels (Beginner to Expert)
   - Multiple learning paths
   
-- **Practice Exercises** (`exercises/PRACTICE_EXERCISES.md`)
+- **[Practice Exercises](exercises/PRACTICE_EXERCISES.md)**
   - Additional exercises by topic
   - Challenge problems for advanced learners
   - Difficulty ratings
   - Links to external practice platforms
   
-- **Project Roadmap** (`docs/ROADMAP.md`)
+- **[Project Roadmap](docs/ROADMAP.md)**
   - Short, medium, and long-term goals
   - Feature development timeline
   - Success metrics
