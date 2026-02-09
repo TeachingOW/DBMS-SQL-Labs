@@ -409,7 +409,7 @@ Closes #45
 ## Recognition
 
 ### Contributors
-All contributors are listed in [CONTRIBUTORS.md](CONTRIBUTORS.md)
+All contributors are listed in [CONTRIBUTORS.md](../CONTRIBUTORS.md)
 
 ### Significant Contributions
 Major contributions may be highlighted in:

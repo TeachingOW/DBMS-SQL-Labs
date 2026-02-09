@@ -2,7 +2,7 @@
 
 [![GitHub stars](https://img.shields.io/github/stars/TeachingOW/DBMS-SQL-Labs?style=social)](https://github.com/TeachingOW/DBMS-SQL-Labs)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](docs/CONTRIBUTING.md)
 
 A comprehensive collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. These labs provide practical experience with SQL, database design, and modern database technologies.
 
