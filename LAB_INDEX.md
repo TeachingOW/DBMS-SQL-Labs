@@ -10,12 +10,43 @@
 
 ---
 
-## 🆕 NEW: Reorganized Comprehensive Lab
+## 🆕 NEW: Quick Start & Comprehensive SQL Labs
 
-### SQL Fundamentals - Complete Reorganized Guide ⭐ NEW
+### ⚡ SQL Quick Start Guide ⭐ NEW
+**Topics**: All fundamental SQL concepts in streamlined format  
+**Duration**: 3-4 hours (fast-track)  
+**Prerequisites**: None - Perfect for quick learners!  
+**Link**: [SQL Quick Start Guide](SQL_Quick_Start_Guide.md) | [HTML Version](labs/html_labs/SQL_Quick_Start_Guide.html)
+
+**What You'll Learn:**
+A streamlined, beginner-friendly guide that gets you coding fast! Each section is concise with practical examples:
+
+1. **Create Tables** - Quick setup with essential syntax
+2. **Single Table Query** - Core SELECT queries and filtering
+3. **DISTINCT** - Remove duplicates (1-2 examples)
+4. **ORDER BY** - Sort results efficiently
+5. **Foreign Key** - Link tables with integrity
+6. **Multi Table** - Focus on INNER JOIN
+7. **Aggregate Functions** - COUNT, SUM, AVG, MAX, MIN
+8. **GROUP BY** - Simple grouping examples
+9. **HAVING** - Filter grouped data
+10. **Set Operations** - Combine results with UNION
+
+**Why This Guide?**
+- ✅ **Fast**: Learn SQL in 3-4 hours
+- ✅ **Practical**: Code examples you can run immediately
+- ✅ **Simple**: No information overload - just what you need
+- ✅ **Hands-on**: Practice exercises after each topic
+- ✅ **Reference**: Quick syntax reference included
+
+**Best for:** Complete beginners, fast learners, developers who prefer learning by doing, quick reference needs.
+
+---
+
+### 📚 SQL Fundamentals - Complete Reorganized Guide
 **Topics**: All fundamental SQL concepts in logical order  
 **Duration**: 8-12 hours (self-paced)  
-**Prerequisites**: None - Perfect for beginners!  
+**Prerequisites**: None - Comprehensive for all levels!  
 **Link**: [Reorganized SQL Fundamentals Lab](Lab_Reorganized_SQL_Fundamentals.md) | [HTML Version](labs/html_labs/Lab_Reorganized_SQL_Fundamentals.html)
 
 **What You'll Learn:**
@@ -35,13 +66,15 @@ This comprehensive guide consolidates all fundamental SQL concepts into a single
 **Key Features:**
 - ✅ Progressive learning structure - each topic builds on previous ones
 - ✅ Comprehensive examples with real-world scenarios
-- ✅ Practice exercises for every section
+- ✅ 40+ practice exercises for every section
 - ✅ Common mistakes and best practices
 - ✅ Performance tips and optimization suggestions
 - ✅ Complete code examples ready to run
 
 **Why This Lab?**
 This reorganized lab presents SQL fundamentals in the most logical learning order, making it easier for beginners to grasp concepts progressively while providing a comprehensive reference for all skill levels.
+
+**Best for:** Thorough learners, students preparing for exams, those who want deep understanding, instructors teaching SQL.
 
 ---
 

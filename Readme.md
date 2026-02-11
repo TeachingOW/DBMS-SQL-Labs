@@ -27,11 +27,12 @@ By completing these labs, students will:
 
 ## 📚 Lab Structure
 
-### 🆕 Reorganized Comprehensive Lab
+### 🆕 Quick Start & Comprehensive Labs
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| **NEW** | **SQL Fundamentals - Complete Guide** | **Comprehensive reorganized lab covering all SQL basics in logical order: Create Tables, Single Table Query, DISTINCT, ORDER BY, Foreign Key, Multi Table, Aggregate Functions, GROUP BY, HAVING, Set Operations** | **[Reorganized Lab](Lab_Reorganized_SQL_Fundamentals.md)** ⭐ **NEW** |
+| **QUICK START** | **SQL Quick Start Guide** | **⚡ Streamlined, beginner-friendly guide (3-4 hrs). Perfect for fast learners who want practical examples without extensive theory. Covers all 10 SQL fundamentals in a concise, easy-to-follow format.** | **[Quick Start Guide](SQL_Quick_Start_Guide.md)** ⭐ **NEW** |
+| **COMPREHENSIVE** | **SQL Fundamentals - Complete Guide** | **📚 In-depth comprehensive lab (8-12 hrs). Detailed explanations, multiple examples per concept, best practices, and 40+ exercises. Ideal for thorough learning.** | **[Complete Lab](Lab_Reorganized_SQL_Fundamentals.md)** ⭐ |
 
 ### Foundational Labs (SQL Basics)
 
