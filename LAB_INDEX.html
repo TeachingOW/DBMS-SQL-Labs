@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBMS-SQL-Labs - Complete Lab Index</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.html">📚 Back to Lab Index</a> | 
+    <a href="../../Readme.html">🏠 Home</a>
+  </p>
+</div>
+
+<h1 id="dbms-sql-labs-complete-lab-index">DBMS-SQL-Labs - Complete Lab Index</h1>
+<h2 id="quick-navigation">📑 Quick Navigation</h2>
+<ul>
+<li><a href="docs/GETTING_STARTED.html">Getting Started Guide</a></li>
+<li><a href="docs/COURSE_SYLLABUS.html">Course Syllabus</a></li>
+<li><a href="docs/SQL_CHEAT_SHEET.html">SQL Cheat Sheet</a></li>
+<li><a href="docs/CONTRIBUTING.html">Contributing Guide</a></li>
+<li><a href="Readme.html">Main README</a></li>
+</ul>
+<hr />
+<h2 id="all-labs-by-category">📚 All Labs by Category</h2>
+<h3 id="beginner-level-start-here">🟢 Beginner Level (Start Here!)</h3>
+<h4 id="lab-1-database-creation-basic-queries">Lab 1: Database Creation &amp; Basic Queries</h4>
+<p><strong>Topics</strong>: CREATE DATABASE, CREATE TABLE, INSERT, SELECT basics<br />
+<strong>Duration</strong>: 2-3 hours<br />
+<strong>Prerequisites</strong>: None<br />
+<strong>Link</strong>: <a href="labs/html_labs/InClassExercises.html">Lab 1</a></p>
+<p><strong>What You'll Learn:</strong>
+- Create databases and tables
+- Insert data into tables
+- Select data with WHERE clause
+- Use basic filtering and sorting</p>
+<p><strong>Key Concepts</strong>: <code>CREATE</code>, <code>INSERT</code>, <code>SELECT</code>, <code>WHERE</code>, <code>ORDER BY</code>, <code>LIMIT</code></p>
+<hr />
+<h4 id="in-class-exercise-workers-database">In-Class Exercise: Workers Database</h4>
+<p><strong>Topics</strong>: Practical application of Lab 1 concepts<br />
+<strong>Duration</strong>: 1-2 hours<br />
+<strong>Prerequisites</strong>: Lab 1<br />
+<strong>Link</strong>: <a href="In-Class%20Exercise">Workers Exercise</a></p>
+<p><strong>What You'll Learn:</strong>
+- Apply constraints (PRIMARY KEY, NOT NULL)
+- Work with real-world data relationships
+- Practice data modeling</p>
+<hr />
+<h4 id="lab-2-joins-and-multi-table-queries">Lab 2: JOINs and Multi-Table Queries</h4>
+<p><strong>Topics</strong>: INNER/LEFT/RIGHT joins, multi-table queries<br />
+<strong>Duration</strong>: 1.5-2 hours<br />
+<strong>Prerequisites</strong>: Lab 1<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab2_Part1_Joins.html">Lab 2</a></p>
+<p><strong>What You'll Learn:</strong>
+- INNER JOIN, LEFT JOIN, RIGHT JOIN
+- Multi-table queries with 3+ tables
+- Complex WHERE conditions
+- Table and column aliases
+- String functions with JOINs
+- Combining data from multiple sources</p>
+<p><strong>Key Concepts</strong>: <code>JOIN</code>, <code>ON</code>, <code>USING</code>, <code>CONCAT</code>, aliases</p>
+<p><strong>Examples Included</strong>:
+- University database with students, courses, and enrollments
+- Employee-Department relationships
+- Product catalogs with suppliers</p>
+<hr />
+<h4 id="lab-3-aggregate-functions-and-group-by">Lab 3: Aggregate Functions and GROUP BY</h4>
+<p><strong>Topics</strong>: COUNT, SUM, AVG, GROUP BY, HAVING<br />
+<strong>Duration</strong>: 1.5-2 hours<br />
+<strong>Prerequisites</strong>: Lab 1, Lab 2<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab2_Part2_Aggregates.html">Lab 3</a></p>
+<p><strong>What You'll Learn:</strong>
+- COUNT, SUM, AVG, MIN, MAX
+- GROUP BY clause
+- HAVING clause for filtering groups
+- COUNT() vs COUNT(DISTINCT)
+- Combining aggregates with JOINs
+- Statistical analysis of data</p>
+<p><strong>Key Concepts</strong>: <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>GROUP BY</code>, <code>HAVING</code></p>
+<p><strong>Examples Included</strong>:
+- Sales analysis and revenue calculations
+- Student performance statistics
+- Inventory management aggregations</p>
+<hr />
+<h4 id="lab-4-set-operations-and-advanced-queries">Lab 4: Set Operations and Advanced Queries</h4>
+<p><strong>Topics</strong>: UNION, set operations, complex queries<br />
+<strong>Duration</strong>: 1.5-2 hours<br />
+<strong>Prerequisites</strong>: Lab 2, Lab 3<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab2_Part3_SetOperations.html">Lab 4</a></p>
+<p><strong>What You'll Learn:</strong>
+- UNION and UNION ALL
+- Set operations (MySQL alternatives for INTERSECT)
+- UPDATE and DELETE with multiple rows
+- Division operation in SQL
+- Complex nested subqueries
+- Data merging from multiple sources</p>
+<p><strong>Key Concepts</strong>: <code>UNION</code>, <code>UNION ALL</code>, nested queries, division</p>
+<p><strong>Examples Included</strong>:
+- Combining customer data from multiple sources
+- Finding common elements across tables
+- Complex filtering with subqueries</p>
+<hr />
+<h4 id="lab-5-foreign-keys-relationships">Lab 5: Foreign Keys &amp; Relationships</h4>
+<p><strong>Topics</strong>: Referential integrity, relationships<br />
+<strong>Duration</strong>: 2 hours<br />
+<strong>Prerequisites</strong>: Lab 1, Lab 2<br />
+<strong>Link</strong>: <a href="labs/html_labs/Foreign_Keys.html">Lab 5</a></p>
+<p><strong>What You'll Learn:</strong>
+- Create foreign key constraints
+- Understand parent-child relationships
+- Implement referential integrity
+- CASCADE operations
+- Managing relationships in database design</p>
+<p><strong>Key Concepts</strong>: <code>FOREIGN KEY</code>, <code>REFERENCES</code>, <code>ON DELETE CASCADE</code></p>
+<p><strong>Examples Included</strong>:
+- Customer-Order relationships
+- Department-Employee hierarchies
+- Product-Category associations</p>
+<hr />
+<h4 id="lab-6-multi-table-operations">Lab 6: Multi-Table Operations</h4>
+<p><strong>Topics</strong>: Complex joins, multiple table queries<br />
+<strong>Duration</strong>: 3 hours<br />
+<strong>Prerequisites</strong>: Lab 2, Lab 5<br />
+<strong>Link</strong>: <a href="labs/html_labs/Multi_Tables.html">Lab 6</a></p>
+<p><strong>What You'll Learn:</strong>
+- Join 3+ tables
+- Self-joins
+- Cross joins
+- Query optimization basics
+- Complex relationship navigation</p>
+<p><strong>Examples Included</strong>:
+- Multi-level organizational structures
+- Supply chain queries with multiple vendors
+- Social network friend-of-friend queries</p>
+<hr />
+<h3 id="intermediate-level">🟡 Intermediate Level</h3>
+<h4 id="lab-7-case-expressions">Lab 7: CASE Expressions</h4>
+<p><strong>Topics</strong>: Conditional logic in SQL<br />
+<strong>Duration</strong>: 2-3 hours<br />
+<strong>Prerequisites</strong>: Lab 3<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab_Case_Expression.html">Lab 7</a></p>
+<p><strong>What You'll Learn:</strong>
+- Simple CASE expressions
+- Searched CASE expressions
+- CASE with aggregate functions
+- Conditional counting and summing
+- Real-world data categorization
+- Data transformation techniques</p>
+<p><strong>Key Concepts</strong>: <code>CASE WHEN</code>, conditional logic, data transformation</p>
+<p><strong>Highlights</strong>: 
+- ✨ Comprehensive guide with real-world examples
+- ✨ Compare different query approaches
+- ✨ Practice exercises with solutions</p>
+<p><strong>Examples Included</strong>:
+- Grade categorization (A, B, C, etc.)
+- Sales tier classification
+- Customer segmentation
+- Performance rating systems</p>
+<hr />
+<h4 id="lab-8-window-functions-recursive-queries">Lab 8: Window Functions &amp; Recursive Queries</h4>
+<p><strong>Topics</strong>: Analytical functions, partitioning<br />
+<strong>Duration</strong>: 3-4 hours<br />
+<strong>Prerequisites</strong>: Lab 3<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab4.html">Lab 8</a></p>
+<p><strong>What You'll Learn:</strong>
+- ROW_NUMBER, RANK, DENSE_RANK
+- PARTITION BY clause
+- Running totals
+- Moving averages
+- Recursive CTEs
+- Advanced analytical operations</p>
+<p><strong>Key Concepts</strong>: Window functions, <code>OVER</code>, <code>PARTITION BY</code>, recursion</p>
+<p><strong>Examples Included</strong>:
+- Top N queries per category
+- Running sum calculations
+- Year-over-year comparisons
+- Hierarchical data traversal</p>
+<hr />
+<h4 id="lab-9-views-virtual-tables">Lab 9: Views &amp; Virtual Tables</h4>
+<p><strong>Topics</strong>: Creating and managing views<br />
+<strong>Duration</strong>: 2 hours<br />
+<strong>Prerequisites</strong>: Lab 2<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab5_views.html">Lab 9</a></p>
+<p><strong>What You'll Learn:</strong>
+- Create views
+- Query views
+- Update through views
+- Materialized views concept
+- Security and abstraction benefits</p>
+<p><strong>Key Concepts</strong>: <code>CREATE VIEW</code>, virtual tables, data abstraction</p>
+<p><strong>Examples Included</strong>:
+- Employee summary views
+- Sales dashboard views
+- Filtered data access for different user roles</p>
+<hr />
+<h3 id="database-design-advanced-sql">🟠 Database Design &amp; Advanced SQL</h3>
+<h4 id="lab-10-database-normalization">Lab 10: Database Normalization</h4>
+<p><strong>Topics</strong>: 1NF, 2NF, 3NF, BCNF<br />
+<strong>Duration</strong>: 3-4 hours<br />
+<strong>Prerequisites</strong>: Lab 5<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab3_Normal_forms.html">Lab 10</a></p>
+<p><strong>What You'll Learn:</strong>
+- Database normalization principles
+- First, Second, Third Normal Forms
+- Boyce-Codd Normal Form
+- When to denormalize
+- Design patterns
+- Dependency analysis</p>
+<p><strong>Key Concepts</strong>: Normalization, dependencies, decomposition</p>
+<p><strong>Examples Included</strong>:
+- Poorly designed database transformations
+- Student registration system normalization
+- E-commerce database design</p>
+<hr />
+<h4 id="lab-11-advanced-sql-techniques">Lab 11: Advanced SQL Techniques</h4>
+<p><strong>Topics</strong>: Complex queries and optimization<br />
+<strong>Duration</strong>: 3 hours<br />
+<strong>Prerequisites</strong>: Lab 8<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab4_sql.html">Lab 11</a></p>
+<p><strong>What You'll Learn:</strong>
+- Query optimization
+- Complex analytical queries
+- Advanced subquery techniques
+- Performance considerations
+- Index usage strategies</p>
+<p><strong>Examples Included</strong>:
+- Query execution plan analysis
+- Optimizing slow queries
+- Complex reporting queries</p>
+<hr />
+<h3 id="programming-integration">🔵 Programming Integration</h3>
+<h4 id="lab-12-java-database-interface">Lab 12: Java Database Interface</h4>
+<p><strong>Topics</strong>: JDBC, connecting Java to databases<br />
+<strong>Duration</strong>: 3-4 hours<br />
+<strong>Prerequisites</strong>: Basic Java knowledge<br />
+<strong>Link</strong>: <a href="labs/html_labs/lab_java_3.html">Lab 12</a></p>
+<p><strong>What You'll Learn:</strong>
+- JDBC basics
+- Connection management
+- PreparedStatements
+- ResultSet handling
+- Error handling
+- Connection pooling</p>
+<p><strong>Key Concepts</strong>: JDBC, <code>Connection</code>, <code>Statement</code>, <code>ResultSet</code></p>
+<p><strong>Examples Included</strong>:
+- Simple CRUD operations in Java
+- Database-backed Java applications
+- Transaction management in JDBC</p>
+<hr />
+<h4 id="lab-13-python-database-interface">Lab 13: Python Database Interface</h4>
+<p><strong>Topics</strong>: Python MySQL connector<br />
+<strong>Duration</strong>: 2-3 hours<br />
+<strong>Prerequisites</strong>: Basic Python knowledge<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab_Python.html">Lab 13</a></p>
+<p><strong>What You'll Learn:</strong>
+- mysql-connector-python
+- PyMySQL
+- Connection pooling
+- Parameterized queries
+- Error handling
+- Pandas integration</p>
+<p><strong>Key Concepts</strong>: Python DB-API, connectors, cursors</p>
+<p><strong>Examples Included</strong>:
+- Database operations with Python
+- Data analysis with Pandas
+- Web application database backends</p>
+<hr />
+<h4 id="lab-14-jupyter-notebook-integration">Lab 14: Jupyter Notebook Integration</h4>
+<p><strong>Topics</strong>: Interactive database analysis<br />
+<strong>Duration</strong>: 2 hours<br />
+<strong>Prerequisites</strong>: Lab 13<br />
+<strong>Link</strong>: <a href="https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb">Lab 14</a></p>
+<p><strong>What You'll Learn:</strong>
+- IPython SQL magic
+- Pandas integration
+- Data visualization
+- Interactive queries
+- Exploratory data analysis</p>
+<p><strong>Examples Included</strong>:
+- Interactive SQL queries in Jupyter
+- Data visualization with matplotlib
+- Statistical analysis of database data</p>
+<hr />
+<h3 id="advanced-database-concepts">🟣 Advanced Database Concepts</h3>
+<h4 id="lab-15-analytical-functions">Lab 15: Analytical Functions</h4>
+<p><strong>Topics</strong>: ROLLUP, CUBE, advanced grouping<br />
+<strong>Duration</strong>: 2-3 hours<br />
+<strong>Prerequisites</strong>: Lab 3, Lab 8<br />
+<strong>Link</strong>: <a href="https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb">Lab 15</a></p>
+<p><strong>What You'll Learn:</strong>
+- ROLLUP for subtotals
+- CUBE for multi-dimensional analysis
+- GROUPING function
+- Advanced analytics
+- Cross-tabulation queries</p>
+<p><strong>Key Concepts</strong>: <code>ROLLUP</code>, <code>CUBE</code>, <code>GROUPING SETS</code></p>
+<p><strong>Examples Included</strong>:
+- Sales reports with subtotals
+- Multi-dimensional analysis
+- Pivot table-like queries</p>
+<hr />
+<h4 id="lab-16-triggers-stored-procedures">Lab 16: Triggers &amp; Stored Procedures</h4>
+<p><strong>Topics</strong>: Database automation and business logic<br />
+<strong>Duration</strong>: 3-4 hours<br />
+<strong>Prerequisites</strong>: Lab 11<br />
+<strong>Link</strong>: <a href="labs/html_labs/Triggers.html">Lab 16</a></p>
+<p><strong>What You'll Learn:</strong>
+- Create triggers (BEFORE/AFTER)
+- Stored procedures
+- Functions
+- Parameters
+- Error handling
+- Audit logging</p>
+<p><strong>Key Concepts</strong>: <code>TRIGGER</code>, <code>PROCEDURE</code>, <code>FUNCTION</code>, automation</p>
+<p><strong>Related Assignment</strong>: <a href="labs/html_labs/Bank_Triggers.html">Bank Overdraft System</a></p>
+<p><strong>Examples Included</strong>:
+- Automatic timestamp updates
+- Audit trail implementation
+- Business rule enforcement
+- Data validation triggers</p>
+<hr />
+<h4 id="lab-17-transaction-management">Lab 17: Transaction Management</h4>
+<p><strong>Topics</strong>: ACID properties, concurrency<br />
+<strong>Duration</strong>: 3 hours<br />
+<strong>Prerequisites</strong>: Lab 16<br />
+<strong>Link</strong>: <a href="labs/html_labs/Transactions.html">Lab 17</a></p>
+<p><strong>What You'll Learn:</strong>
+- BEGIN, COMMIT, ROLLBACK
+- ACID properties
+- Transaction isolation
+- Savepoints
+- Deadlock handling
+- Error recovery</p>
+<p><strong>Key Concepts</strong>: Transactions, <code>COMMIT</code>, <code>ROLLBACK</code>, ACID</p>
+<p><strong>Examples Included</strong>:
+- Banking transaction scenarios
+- Multi-step operations
+- Error handling and rollback</p>
+<hr />
+<h4 id="lab-18-isolation-levels">Lab 18: Isolation Levels</h4>
+<p><strong>Topics</strong>: Concurrency control, consistency<br />
+<strong>Duration</strong>: 2-3 hours<br />
+<strong>Prerequisites</strong>: Lab 17<br />
+<strong>Link</strong>: <a href="labs/html_labs/Isolation_Levels.html">Lab 18</a></p>
+<p><strong>What You'll Learn:</strong>
+- READ UNCOMMITTED
+- READ COMMITTED
+- REPEATABLE READ
+- SERIALIZABLE
+- Dirty reads, phantom reads
+- Concurrency issues</p>
+<p><strong>Key Concepts</strong>: Isolation levels, concurrency problems</p>
+<p><strong>Examples Included</strong>:
+- Demonstrating dirty reads
+- Phantom read scenarios
+- Non-repeatable read examples</p>
+<hr />
+<h3 id="modern-database-technologies">🔴 Modern Database Technologies</h3>
+<h4 id="lab-19-json-xml-processing">Lab 19: JSON &amp; XML Processing</h4>
+<p><strong>Topics</strong>: Semi-structured data in SQL<br />
+<strong>Duration</strong>: 2-3 hours<br />
+<strong>Prerequisites</strong>: Lab 2<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab_JSON-XML.html">Lab 19</a></p>
+<p><strong>What You'll Learn:</strong>
+- JSON data type
+- JSON functions
+- XML handling
+- Querying nested data
+- Storing semi-structured data</p>
+<p><strong>Key Concepts</strong>: JSON, XML, semi-structured data</p>
+<p><strong>Examples Included</strong>:
+- Storing and querying JSON documents
+- Extracting values from nested JSON
+- XML data manipulation</p>
+<hr />
+<h4 id="lab-20-mongodb-nosql">Lab 20: MongoDB (NoSQL)</h4>
+<p><strong>Topics</strong>: Document-based databases<br />
+<strong>Duration</strong>: 3-4 hours<br />
+<strong>Prerequisites</strong>: Basic database knowledge<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab10_mongoDB.html">Lab 20</a></p>
+<p><strong>What You'll Learn:</strong>
+- MongoDB basics
+- Document model
+- CRUD operations
+- Aggregation pipeline
+- When to use NoSQL
+- Schema design for documents</p>
+<p><strong>Key Concepts</strong>: NoSQL, documents, collections, MongoDB</p>
+<p><strong>Examples Included</strong>:
+- Blog post storage and retrieval
+- E-commerce product catalogs
+- Social media data modeling</p>
+<hr />
+<h4 id="lab-21-neo4j-graph-database">Lab 21: Neo4j (Graph Database)</h4>
+<p><strong>Topics</strong>: Graph database concepts<br />
+<strong>Duration</strong>: 3-4 hours<br />
+<strong>Prerequisites</strong>: Basic database knowledge<br />
+<strong>Link</strong>: <a href="labs/html_labs/Lab11_neo4j.html">Lab 21</a></p>
+<p><strong>What You'll Learn:</strong>
+- Graph data model
+- Nodes and relationships
+- Cypher query language
+- Path queries
+- Graph algorithms
+- When to use graph databases</p>
+<p><strong>Key Concepts</strong>: Graph databases, Cypher, nodes, edges</p>
+<p><strong>Examples Included</strong>:
+- Social network modeling
+- Recommendation engines
+- Shortest path problems
+- Network analysis</p>
+<hr />
+<h2 id="learning-paths">📊 Learning Paths</h2>
+<h3 id="path-1-complete-beginner-to-sql-master-16-weeks">Path 1: Complete Beginner to SQL Master (16 weeks)</h3>
+<p>Week 1-2: Labs 1-2<br />
+Week 3-4: Labs 3-6<br />
+Week 5-6: Labs 7-9<br />
+Week 7-8: Labs 10-11<br />
+Week 9-10: Labs 12-13, 16-18<br />
+Week 11-12: Labs 14-15<br />
+Week 13-16: Labs 19-21 and capstone project</p>
+<h3 id="path-2-quick-sql-review-4-weeks">Path 2: Quick SQL Review (4 weeks)</h3>
+<p>Week 1: Labs 1-3<br />
+Week 2: Labs 4-8<br />
+Week 3: Labs 16-17<br />
+Week 4: Labs 20-21</p>
+<h3 id="path-3-programming-integration-focus-6-weeks">Path 3: Programming Integration Focus (6 weeks)</h3>
+<p>Week 1-2: Labs 1-3 (refresh)<br />
+Week 3: Labs 12-13 (Python/Java)<br />
+Week 4: Lab 14 (Jupyter)<br />
+Week 5: Labs 16-17 (Triggers/Transactions)<br />
+Week 6: Project work</p>
+<h3 id="path-4-modern-databases-4-weeks">Path 4: Modern Databases (4 weeks)</h3>
+<p>Week 1: Labs 7-8 (SQL advanced)<br />
+Week 2: Lab 19 (JSON/XML)<br />
+Week 3: Lab 20 (MongoDB)<br />
+Week 4: Lab 21 (Neo4j)</p>
+<h3 id="path-5-data-analysis-track-5-weeks">Path 5: Data Analysis Track (5 weeks)</h3>
+<p>Week 1: Labs 1-3 (Foundations)<br />
+Week 2: Labs 7-8 (CASE &amp; Window Functions)<br />
+Week 3: Labs 13-14 (Python &amp; Jupyter)<br />
+Week 4: Lab 15 (ROLLUP/CUBE)<br />
+Week 5: Labs 19-20 (JSON &amp; MongoDB)</p>
+<hr />
+<h2 id="additional-resources">📁 Additional Resources</h2>
+<h3 id="data-files">Data Files</h3>
+<p>All practice datasets are in the <code>/data</code> directory:
+- <code>IMDB-Movie-Data.csv</code> - Movie database
+- <code>employees.csv</code> - HR data
+- <code>drivers.sql</code> - Complete database example
+- <code>grades.csv</code> - Student performance
+- <code>cities.csv</code> - Geographic data
+- <code>airtravel.csv</code> - Flight data</p>
+<h3 id="code-examples">Code Examples</h3>
+<p>Programming examples in <code>/labs/code</code>:
+- Lab 6: Node.js examples
+- Lab 7: Express.js server
+- Lab 8: Web application</p>
+<h3 id="jupyter-notebooks">Jupyter Notebooks</h3>
+<p>Interactive notebooks in <code>/labs/notebooks</code>:
+- Mysql-Jupyter.ipynb
+- Rollup.ipynb
+- Triggers.ipynb</p>
+<hr />
+<h2 id="lab-difficulty-levels">🎯 Lab Difficulty Levels</h2>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Labs</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🟢 Beginner</td>
+<td>1-6</td>
+<td>Basic SQL, tables, joins</td>
+</tr>
+<tr>
+<td>🟡 Intermediate</td>
+<td>7-9</td>
+<td>Advanced queries, window functions</td>
+</tr>
+<tr>
+<td>🟠 Advanced SQL</td>
+<td>10-11</td>
+<td>Design, optimization</td>
+</tr>
+<tr>
+<td>🔵 Programming</td>
+<td>12-14</td>
+<td>Integration with code</td>
+</tr>
+<tr>
+<td>🟣 Expert</td>
+<td>15-18</td>
+<td>Triggers, transactions</td>
+</tr>
+<tr>
+<td>🔴 Modern</td>
+<td>19-21</td>
+<td>NoSQL, Graph databases</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="search-by-topic">🔍 Search by Topic</h2>
+<p><strong>Basic Operations</strong>: Labs 1, 2<br />
+<strong>Joins</strong>: Labs 2, 5, 6<br />
+<strong>Aggregations</strong>: Labs 3, 15<br />
+<strong>Subqueries</strong>: Labs 4, 7<br />
+<strong>Window Functions</strong>: Lab 8<br />
+<strong>Views</strong>: Lab 9<br />
+<strong>Database Design</strong>: Labs 5, 10<br />
+<strong>Stored Procedures</strong>: Lab 16<br />
+<strong>Triggers</strong>: Lab 16<br />
+<strong>Transactions</strong>: Labs 17, 18<br />
+<strong>Python</strong>: Lab 13, 14<br />
+<strong>Java</strong>: Lab 12<br />
+<strong>NoSQL</strong>: Lab 20<br />
+<strong>Graph Databases</strong>: Lab 21<br />
+<strong>JSON/XML</strong>: Lab 19</p>
+<hr />
+<h2 id="recommended-order-for-self-study">✅ Recommended Order for Self-Study</h2>
+<ol>
+<li>Start with <a href="docs/GETTING_STARTED.html">Getting Started Guide</a></li>
+<li>Complete Labs 1-6 (Foundations)</li>
+<li>Continue with Labs 7-9 (Intermediate)</li>
+<li>Study Lab 10 (Design)</li>
+<li>Pick programming language: Lab 12 (Java) or Lab 13 (Python)</li>
+<li>Complete Labs 16-18 (Advanced concepts)</li>
+<li>Explore Labs 19-21 (Modern databases)</li>
+</ol>
+<hr />
+<h2 id="need-help">🆘 Need Help?</h2>
+<ul>
+<li>📖 Check <a href="docs/GETTING_STARTED.html">Getting Started Guide</a></li>
+<li>📝 Review <a href="docs/SQL_CHEAT_SHEET.html">SQL Cheat Sheet</a></li>
+<li>💬 Open an issue on GitHub</li>
+<li>🔍 Search existing issues</li>
+<li>📚 Consult external resources in each lab</li>
+</ul>
+<hr />
+<p><strong>Happy Learning! 🚀</strong></p>
+<p><a href="Readme.html">Back to Main README</a></p>
+
+</body>
+</html>

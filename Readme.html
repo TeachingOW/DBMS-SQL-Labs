@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Management System (DBMS) SQL Labs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.html">📚 Back to Lab Index</a> | 
+    <a href="../../Readme.html">🏠 Home</a>
+  </p>
+</div>
+
+<h1 id="database-management-system-dbms-sql-labs">Database Management System (DBMS) SQL Labs</h1>
+<p><a href="https://github.com/TeachingOW/DBMS-SQL-Labs"><img alt="GitHub stars" src="https://img.shields.io/github/stars/TeachingOW/DBMS-SQL-Labs?style=social" /></a>
+<a href="LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
+<a href="docs/CONTRIBUTING.html"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" /></a></p>
+<p>A comprehensive collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. These labs provide practical experience with SQL, database design, and modern database technologies.</p>
+<h2 id="quick-links">📋 Quick Links</h2>
+<ul>
+<li>🚀 <strong><a href="docs/GETTING_STARTED.html">Getting Started Guide</a></strong> - Setup instructions and prerequisites</li>
+<li>📚 <strong><a href="LAB_INDEX.html">Complete Lab Index</a></strong> - Detailed list of all labs with descriptions</li>
+<li>📖 <strong><a href="docs/COURSE_SYLLABUS.html">Course Syllabus</a></strong> - 16-week structured curriculum</li>
+<li>📝 <strong><a href="docs/SQL_CHEAT_SHEET.html">SQL Cheat Sheet</a></strong> - Quick reference for SQL commands</li>
+<li>🤝 <strong><a href="docs/CONTRIBUTING.html">Contributing Guide</a></strong> - How to contribute to this project</li>
+<li>🌐 <strong><a href="https://teachingow.github.io/DBMS-SQL-Labs/">Project Website</a></strong> - Additional resources</li>
+</ul>
+<h2 id="learning-objectives">🎯 Learning Objectives</h2>
+<p>By completing these labs, students will:
+- Master fundamental SQL operations (SELECT, INSERT, UPDATE, DELETE)
+- Understand database design principles and normalization
+- Learn advanced SQL concepts (joins, subqueries, window functions)
+- Gain experience with database programming and interfaces
+- Explore modern database technologies (NoSQL, Graph databases)
+- Understand transaction management and concurrency control</p>
+<h2 id="lab-structure">📚 Lab Structure</h2>
+<h3 id="foundational-labs-sql-basics">Foundational Labs (SQL Basics)</h3>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+<th>Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Database Creation &amp; Basic Queries</td>
+<td>Learn to create databases, tables, and perform simple SELECT operations</td>
+<td><a href="labs/html_labs/InClassExercises.html">Lab 1</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>JOINs and Multi-Table Queries</td>
+<td>Master multi-table queries, INNER/LEFT/RIGHT joins</td>
+<td><a href="labs/html_labs/Lab2_Part1_Joins.html">Lab 2</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Aggregate Functions &amp; GROUP BY</td>
+<td>Learn COUNT, SUM, AVG, GROUP BY, and HAVING clauses</td>
+<td><a href="labs/html_labs/Lab2_Part2_Aggregates.html">Lab 3</a></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Set Operations &amp; Advanced Queries</td>
+<td>Master UNION, division, and complex nested queries</td>
+<td><a href="labs/html_labs/Lab2_Part3_SetOperations.html">Lab 4</a></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Foreign Keys &amp; Relationships</td>
+<td>Understand referential integrity and table relationships</td>
+<td><a href="labs/html_labs/Foreign_Keys.html">Lab 5</a></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Multi-Table Operations</td>
+<td>Practice complex joins and relationship queries</td>
+<td><a href="labs/html_labs/Multi_Tables.html">Lab 6</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="intermediate-labs-advanced-sql">Intermediate Labs (Advanced SQL)</h3>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+<th>Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>CASE Expressions</td>
+<td>Master conditional logic in SQL with CASE statements</td>
+<td><a href="labs/html_labs/Lab_Case_Expression.html">Lab 7</a> ⭐</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Window Functions &amp; Recursive Query</td>
+<td>Learn advanced analytical functions and partitioning</td>
+<td><a href="labs/html_labs/Lab4.html">Lab 8</a></td>
+</tr>
+<tr>
+<td>9</td>
+<td>Views &amp; Virtual Tables</td>
+<td>Create and manage database views for data abstraction</td>
+<td><a href="labs/html_labs/Lab5_views.html">Lab 9</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="database-design-labs">Database Design Labs</h3>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+<th>Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Database Normalization</td>
+<td>Learn 1NF, 2NF, 3NF and database design principles</td>
+<td><a href="labs/html_labs/Lab3_Normal_forms.html">Lab 10</a></td>
+</tr>
+<tr>
+<td>11</td>
+<td>Advanced SQL Techniques</td>
+<td>Practice complex queries and optimization</td>
+<td><a href="labs/html_labs/Lab4_sql.html">Lab 11</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="programming-integration-labs">Programming Integration Labs</h3>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+<th>Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>12</td>
+<td>Java Database Interface</td>
+<td>Connect Java applications to databases</td>
+<td><a href="labs/html_labs/lab_java_3.html">Lab 12</a></td>
+</tr>
+<tr>
+<td>13</td>
+<td>Python Database Interface</td>
+<td>Connect Python applications to databases using connectors</td>
+<td><a href="labs/html_labs/Lab_Python.html">Lab 13</a></td>
+</tr>
+<tr>
+<td>14</td>
+<td>Jupyter Notebook Integration</td>
+<td>Interactive database analysis with Jupyter notebooks</td>
+<td><a href="https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Mysql-Jupyter.ipynb">Lab 14</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="advanced-database-concepts">Advanced Database Concepts</h3>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+<th>Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15</td>
+<td>Analytical Functions</td>
+<td>Master ROLLUP, CUBE, and advanced grouping operations</td>
+<td><a href="https://nbviewer.org/github/teachingow/DBMS-SQL-Labs/blob/main/inclass/Rollup.ipynb">Lab 15</a></td>
+</tr>
+<tr>
+<td>16</td>
+<td>Triggers &amp; Stored Procedures</td>
+<td>Implement database automation and business logic</td>
+<td><a href="labs/html_labs/Triggers.html">Lab 16</a></td>
+</tr>
+<tr>
+<td>17</td>
+<td>Transaction Management</td>
+<td>Understand ACID properties and concurrency control</td>
+<td><a href="labs/html_labs/Transactions.html">Lab 17</a></td>
+</tr>
+<tr>
+<td>18</td>
+<td>Isolation Levels</td>
+<td>Learn about database isolation and consistency</td>
+<td><a href="labs/html_labs/Isolation_Levels.html">Lab 18</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="modern-database-technologies">Modern Database Technologies</h3>
+<table>
+<thead>
+<tr>
+<th>Lab</th>
+<th>Topic</th>
+<th>Description</th>
+<th>Resource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>19</td>
+<td>JSON &amp; XML Processing</td>
+<td>Handle semi-structured data in relational databases</td>
+<td><a href="labs/html_labs/Lab_JSON-XML.html">Lab 19</a></td>
+</tr>
+<tr>
+<td>20</td>
+<td>MongoDB (NoSQL)</td>
+<td>Introduction to document-based databases</td>
+<td><a href="labs/html_labs/Lab10_mongoDB.html">Lab 20</a></td>
+</tr>
+<tr>
+<td>21</td>
+<td>Neo4j (Graph Database)</td>
+<td>Explore graph database concepts and Cypher queries</td>
+<td><a href="labs/html_labs/Lab11_neo4j.html">Lab 21</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-sets">🗃️ Data Sets</h2>
+<p>The repository includes several real-world datasets for hands-on practice:</p>
+<table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Description</th>
+<th>Use Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="data/IMDB-Movie-Data.csv">IMDB Movie Data</a></td>
+<td>Movie information including ratings, genres, and revenue</td>
+<td>Complex queries, aggregations, data analysis</td>
+</tr>
+<tr>
+<td><a href="data/airtravel.csv">Air Travel Data</a></td>
+<td>Flight and passenger information</td>
+<td>Time-series analysis, grouping operations</td>
+</tr>
+<tr>
+<td><a href="data/cities.csv">Cities Data</a></td>
+<td>Geographic and demographic information</td>
+<td>Joins, geographic queries</td>
+</tr>
+<tr>
+<td><a href="data/employees.csv">Employee Data</a></td>
+<td>HR database with employee information</td>
+<td>Relationship modeling, hierarchical queries</td>
+</tr>
+<tr>
+<td><a href="data/grades.csv">Student Grades</a></td>
+<td>Academic performance data</td>
+<td>Statistical analysis, ranking functions</td>
+</tr>
+<tr>
+<td><a href="data/drivers.sql">Drivers Database</a></td>
+<td>Complete database schema with sample data</td>
+<td>Full database operations, complex relationships</td>
+</tr>
+</tbody>
+</table>
+<h2 id="quick-reference">Quick Reference</h2>
+<ul>
+<li>📝 <strong><a href="docs/SQL_CHEAT_SHEET.html">SQL Cheat Sheet</a></strong> - Comprehensive SQL commands reference</li>
+<li>🔗 <a href="https://gemini.google.com/share/d3fa0a47a9d0">MySQL Cheat Sheet (External)</a></li>
+</ul>
+<h2 id="tools-and-technologies">🛠️ Tools and Technologies</h2>
+<h3 id="database-systems">Database Systems</h3>
+<ul>
+<li><strong>MySQL/MariaDB</strong>: Primary database system for most labs</li>
+<li><strong>MongoDB</strong>: NoSQL document database (Lab 18)</li>
+<li><strong>Neo4j</strong>: Graph database system (Lab 19)</li>
+</ul>
+<h3 id="programming-languages">Programming Languages</h3>
+<ul>
+<li><strong>SQL</strong>: Standard query language for relational databases</li>
+<li><strong>Python</strong>: Database connectivity and data analysis</li>
+<li><strong>Cypher</strong>: Query language for Neo4j graph database</li>
+</ul>
+<h3 id="development-environment">Development Environment</h3>
+<ul>
+<li><strong>Jupyter Notebooks</strong>: Interactive data analysis and visualization</li>
+<li><strong>Command Line Tools</strong>: Direct database interaction</li>
+<li><strong>Database Clients</strong>: GUI tools for database management</li>
+</ul>
+<h2 id="additional-learning-resources">📖 Additional Learning Resources</h2>
+<h3 id="interactive-tutorials">Interactive Tutorials</h3>
+<ul>
+<li><a href="https://sqlzoo.net/wiki/SQL_Tutorial">SQLZoo</a> - Interactive SQL tutorial with exercises</li>
+<li><a href="https://www.w3schools.com/sql/">W3Schools SQL Tutorial</a> - Comprehensive SQL reference</li>
+<li><a href="https://dev.mysql.com/doc/mysql-tutorial-excerpt/8.0/en/">MySQL Tutorial</a> - Official MySQL documentation</li>
+</ul>
+<h3 id="advanced-topics">Advanced Topics</h3>
+<ul>
+<li><a href="https://www.lucidchart.com/pages/database-diagram/database-design">Database Design Principles</a> - ER modeling and normalization</li>
+<li><a href="https://use-the-index-luke.com/">SQL Performance Tuning</a> - Query optimization techniques</li>
+<li><a href="https://www.mongodb.com/nosql-explained">NoSQL Databases</a> - Understanding document and graph databases</li>
+</ul>
+<h3 id="practice-platforms">Practice Platforms</h3>
+<ul>
+<li><a href="https://datalemur.com/">DataLemur</a></li>
+<li><a href="https://www.hackerrank.com/domains/sql">HackerRank SQL</a> - SQL coding challenges</li>
+<li><a href="https://leetcode.com/problemset/database/">LeetCode Database</a> - Database problem solving</li>
+<li><a href="https://sqlbolt.com/">SQLBolt</a> - Interactive SQL lessons</li>
+</ul>
+<h2 id="contributing">🤝 Contributing</h2>
+<p>We welcome contributions to improve these labs! Please read our <strong><a href="docs/CONTRIBUTING.html">Contributing Guide</a></strong> for detailed information.</p>
+<p><strong>Quick Start:</strong>
+1. Fork the repository
+2. Create a feature branch
+3. Make your improvements
+4. Submit a pull request</p>
+<h3 id="areas-for-contribution">Areas for Contribution</h3>
+<ul>
+<li>Additional practice exercises</li>
+<li>New dataset examples</li>
+<li>Improved explanations and documentation</li>
+<li>Bug fixes and corrections</li>
+</ul>
+<h2 id="project-website">🌐 Project Website</h2>
+<p>Visit the project website at <a href="https://teachingow.github.io/DBMS-SQL-Labs/">https://teachingow.github.io/DBMS-SQL-Labs/</a> for additional resources and updates.</p>
+<hr />
+<h2 id="documentation">📚 Documentation</h2>
+<p>This repository now includes comprehensive documentation to help you learn effectively:</p>
+<h3 id="for-students">For Students</h3>
+<ul>
+<li><strong><a href="docs/GETTING_STARTED.html">Getting Started Guide</a></strong> - Complete setup instructions, prerequisites, and troubleshooting</li>
+<li><strong><a href="LAB_INDEX.html">Lab Index</a></strong> - Detailed catalog of all labs with learning objectives and prerequisites</li>
+<li><strong><a href="docs/SQL_CHEAT_SHEET.html">SQL Cheat Sheet</a></strong> - Quick reference for all SQL commands and syntax</li>
+<li><strong><a href="docs/COURSE_SYLLABUS.html">Course Syllabus</a></strong> - 16-week structured curriculum with weekly topics</li>
+</ul>
+<h3 id="for-instructors">For Instructors</h3>
+<ul>
+<li><strong><a href="docs/COURSE_SYLLABUS.html">Course Syllabus</a></strong> - Complete course structure with grading policy</li>
+<li><strong>Weekly schedule</strong> with topics, labs, and assessments</li>
+<li><strong>Project ideas</strong> and deliverables</li>
+</ul>
+<h3 id="for-contributors">For Contributors</h3>
+<ul>
+<li><strong><a href="docs/CONTRIBUTING.html">Contributing Guide</a></strong> - Guidelines for contributing code, content, and documentation</li>
+<li>Code style guidelines</li>
+<li>Pull request process</li>
+</ul>
+<hr />
+<h2 id="how-to-use-this-repository">🎓 How to Use This Repository</h2>
+<h3 id="for-complete-beginners">For Complete Beginners</h3>
+<ol>
+<li>Start with the <a href="docs/GETTING_STARTED.html">Getting Started Guide</a></li>
+<li>Set up your MySQL environment</li>
+<li>Begin with Lab 1 and progress sequentially</li>
+<li>Complete the in-class exercise after Lab 1</li>
+<li>Use the <a href="docs/SQL_CHEAT_SHEET.html">SQL Cheat Sheet</a> as reference</li>
+</ol>
+<h3 id="for-self-paced-learning">For Self-Paced Learning</h3>
+<ol>
+<li>Review the <a href="LAB_INDEX.html">Lab Index</a> to understand all available labs</li>
+<li>Choose a learning path that matches your goals</li>
+<li>Work through labs at your own pace</li>
+<li>Practice with the provided datasets in <code>/data</code> directory</li>
+</ol>
+<h3 id="for-instructors_1">For Instructors</h3>
+<ol>
+<li>Review the <a href="docs/COURSE_SYLLABUS.html">Course Syllabus</a></li>
+<li>Adapt the 16-week schedule to your needs</li>
+<li>Use the labs sequentially or mix-and-match</li>
+<li>Assign projects from the syllabus</li>
+<li>Encourage students to contribute back via <a href="docs/CONTRIBUTING.html">Contributing Guide</a></li>
+</ol>
+<hr />
+<h2 id="project-website_1">🌐 Project Website</h2>
+<p>Visit the project website at <a href="https://teachingow.github.io/DBMS-SQL-Labs/">https://teachingow.github.io/DBMS-SQL-Labs/</a> for additional resources and updates.</p>
+
+</body>
+</html>

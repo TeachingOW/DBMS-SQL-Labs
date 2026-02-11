@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Additional Practice Exercises</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.html">📚 Back to Lab Index</a> | 
+    <a href="../../Readme.html">🏠 Home</a>
+  </p>
+</div>
+
+<h1 id="additional-practice-exercises">Additional Practice Exercises</h1>
+<p>This document contains supplementary exercises to reinforce concepts learned in the labs. These exercises are organized by topic and difficulty level.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#basic-sql-queries">Basic SQL Queries</a></li>
+<li><a href="#joins-and-relationships">Joins and Relationships</a></li>
+<li><a href="#aggregate-functions">Aggregate Functions</a></li>
+<li><a href="#subqueries">Subqueries</a></li>
+<li><a href="#window-functions">Window Functions</a></li>
+<li><a href="#database-design">Database Design</a></li>
+<li><a href="#transactions">Transactions</a></li>
+<li><a href="#challenge-problems">Challenge Problems</a></li>
+</ul>
+<hr />
+<h2 id="basic-sql-queries">Basic SQL Queries</h2>
+<h3 id="exercise-1-simple-select">Exercise 1: Simple SELECT</h3>
+<p><strong>Difficulty</strong>: 🟢 Easy<br />
+<strong>Topics</strong>: SELECT, WHERE, ORDER BY</p>
+<p>Create a table <code>books</code> with columns: id, title, author, year, price.
+1. Select all books published after 2010
+2. Find all books by a specific author
+3. List books ordered by price (highest to lowest)
+4. Find the 5 most expensive books</p>
+<h3 id="exercise-2-pattern-matching">Exercise 2: Pattern Matching</h3>
+<p><strong>Difficulty</strong>: 🟢 Easy<br />
+<strong>Topics</strong>: LIKE, wildcards</p>
+<p>Using the books table:
+1. Find all books with "Python" in the title
+2. Find all books by authors whose last name starts with 'S'
+3. Find all books with exactly 4-letter titles</p>
+<h3 id="exercise-3-multiple-conditions">Exercise 3: Multiple Conditions</h3>
+<p><strong>Difficulty</strong>: 🟡 Medium<br />
+<strong>Topics</strong>: AND, OR, NOT, IN, BETWEEN</p>
+<ol>
+<li>Find books published between 2015 and 2020 with price under $30</li>
+<li>Find books by authors 'Smith', 'Johnson', or 'Williams'</li>
+<li>Find books NOT published in 2018, 2019, or 2020</li>
+</ol>
+<hr />
+<h2 id="joins-and-relationships">Joins and Relationships</h2>
+<h3 id="exercise-4-library-database">Exercise 4: Library Database</h3>
+<p><strong>Difficulty</strong>: 🟡 Medium<br />
+<strong>Topics</strong>: Multiple joins</p>
+<p>Create tables:
+- <code>members</code> (id, name, email, join_date)
+- <code>books</code> (id, title, author, isbn)
+- <code>loans</code> (id, member_id, book_id, loan_date, return_date)</p>
+<p>Write queries to:
+1. List all current loans (books not yet returned)
+2. Find members who have never borrowed a book
+3. List the most popular books (most loans)
+4. Find overdue books (loans &gt; 14 days without return)</p>
+<h3 id="exercise-5-e-commerce-schema">Exercise 5: E-commerce Schema</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: Complex joins, multiple tables</p>
+<p>Create tables for an e-commerce system:
+- <code>customers</code> (id, name, email, city)
+- <code>products</code> (id, name, category, price)
+- <code>orders</code> (id, customer_id, order_date, total)
+- <code>order_items</code> (id, order_id, product_id, quantity, price)</p>
+<p>Write queries to:
+1. Find customers who have spent more than $1000
+2. List products never ordered
+3. Find the best-selling product in each category
+4. Calculate revenue by month
+5. Find customers who ordered in Q1 but not in Q2</p>
+<hr />
+<h2 id="aggregate-functions">Aggregate Functions</h2>
+<h3 id="exercise-6-sales-analysis">Exercise 6: Sales Analysis</h3>
+<p><strong>Difficulty</strong>: 🟡 Medium<br />
+<strong>Topics</strong>: GROUP BY, HAVING, aggregates</p>
+<p>Using the e-commerce tables:
+1. Calculate total revenue by category
+2. Find categories with average product price &gt; $100
+3. Count orders per customer
+4. Find customers with more than 5 orders
+5. Calculate monthly revenue growth rate</p>
+<h3 id="exercise-7-employee-statistics">Exercise 7: Employee Statistics</h3>
+<p><strong>Difficulty</strong>: 🟡 Medium<br />
+<strong>Topics</strong>: Nested aggregates</p>
+<p>Create an <code>employees</code> table (id, name, department, salary, hire_date).</p>
+<ol>
+<li>Find departments with average salary &gt; company average</li>
+<li>Count employees hired each year</li>
+<li>Find the salary range (max - min) in each department</li>
+<li>List departments with more than 10 employees</li>
+<li>Calculate median salary by department</li>
+</ol>
+<hr />
+<h2 id="subqueries">Subqueries</h2>
+<h3 id="exercise-8-correlated-subqueries">Exercise 8: Correlated Subqueries</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: Correlated subqueries, EXISTS</p>
+<p>Using employees table:
+1. Find employees earning more than their department average
+2. List departments with at least one employee earning &gt; $100k
+3. Find employees who are not managers
+4. List products more expensive than average in their category</p>
+<h3 id="exercise-9-subquery-alternatives">Exercise 9: Subquery Alternatives</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: Subqueries vs joins</p>
+<p>For each problem, write solutions using:
+a) Subquery approach
+b) JOIN approach</p>
+<ol>
+<li>Find customers who have placed orders</li>
+<li>Find products in categories that have active orders</li>
+<li>List employees in departments with &gt; 50 people</li>
+</ol>
+<hr />
+<h2 id="window-functions">Window Functions</h2>
+<h3 id="exercise-10-ranking-and-analytics">Exercise 10: Ranking and Analytics</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: ROW_NUMBER, RANK, DENSE_RANK</p>
+<p>Using a <code>sales</code> table (salesperson, region, month, amount):</p>
+<ol>
+<li>Rank salespeople by total sales</li>
+<li>Find top 3 salespeople in each region</li>
+<li>Calculate running total of sales by month</li>
+<li>Find month-over-month sales change</li>
+<li>Identify salespeople whose sales increased every month</li>
+</ol>
+<h3 id="exercise-11-advanced-window-functions">Exercise 11: Advanced Window Functions</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert<br />
+<strong>Topics</strong>: LEAD, LAG, window frames</p>
+<ol>
+<li>Calculate 3-month moving average of sales</li>
+<li>Find the difference between current and previous month sales</li>
+<li>Calculate year-to-date cumulative sales</li>
+<li>Find the percentage of total sales for each salesperson</li>
+<li>Identify gaps in time series data (missing months)</li>
+</ol>
+<hr />
+<h2 id="database-design">Database Design</h2>
+<h3 id="exercise-12-university-database">Exercise 12: University Database</h3>
+<p><strong>Difficulty</strong>: 🟡 Medium<br />
+<strong>Topics</strong>: ER modeling, normalization</p>
+<p>Design a database for a university with:
+- Students (with personal info)
+- Courses (with course details)
+- Instructors (with credentials)
+- Enrollments (students in courses)
+- Grades</p>
+<p>Requirements:
+1. Draw ER diagram
+2. Identify entities and relationships
+3. Normalize to 3NF
+4. Write CREATE TABLE statements with constraints
+5. Write 5 useful queries</p>
+<h3 id="exercise-13-social-media-platform">Exercise 13: Social Media Platform</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: Complex relationships, self-joins</p>
+<p>Design a basic social media database:
+- Users
+- Posts
+- Comments
+- Likes
+- Friendships (mutual relationships)
+- Followers (one-way relationships)</p>
+<p>Include:
+1. ER diagram
+2. Schema in 3NF
+3. Queries for: friend recommendations, trending posts, user feed</p>
+<hr />
+<h2 id="transactions">Transactions</h2>
+<h3 id="exercise-14-banking-system">Exercise 14: Banking System</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: Transactions, ACID</p>
+<p>Create a simple banking system:
+- <code>accounts</code> (id, customer_name, balance)
+- <code>transactions</code> (id, from_account, to_account, amount, timestamp)</p>
+<p>Implement:
+1. Transfer function with transaction control
+2. Handle insufficient funds
+3. Implement transaction history
+4. Add overdraft protection
+5. Implement daily withdrawal limits</p>
+<h3 id="exercise-15-inventory-management">Exercise 15: Inventory Management</h3>
+<p><strong>Difficulty</strong>: 🟠 Hard<br />
+<strong>Topics</strong>: Concurrency, isolation levels</p>
+<p>Create an inventory system:
+- <code>products</code> (id, name, stock_quantity)
+- <code>orders</code> (id, product_id, quantity, status)</p>
+<p>Implement:
+1. Order processing with stock deduction
+2. Handle concurrent orders for same product
+3. Implement stock reservation system
+4. Add reorder alerts
+5. Handle order cancellations</p>
+<hr />
+<h2 id="challenge-problems">Challenge Problems</h2>
+<h3 id="challenge-1-find-consecutive-numbers">Challenge 1: Find Consecutive Numbers</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert  </p>
+<p>Table <code>numbers</code> has a column <code>num</code>.
+Write a query to find all numbers that appear at least 3 consecutive times.</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code>| id | num |
+|----|-----|
+| 1  | 1   |
+| 2  | 1   |
+| 3  | 1   |
+| 4  | 2   |
+| 5  | 1   |
+| 6  | 2   |
+| 7  | 2   |
+</code></pre></div>
+
+<p>Output: <code>1</code> (appears in rows 1, 2, 3)</p>
+<h3 id="challenge-2-department-top-three-salaries">Challenge 2: Department Top Three Salaries</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert  </p>
+<p>Table <code>employee</code> (id, name, salary, department_id).
+Write a query to find top 3 highest salaries in each department.
+If there are fewer than 3 employees, show all.</p>
+<h3 id="challenge-3-friend-recommendations">Challenge 3: Friend Recommendations</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert  </p>
+<p>Table <code>friendships</code> (user_id, friend_id).
+Recommend friends for a user based on mutual friends.
+Recommend users who:
+- Are not already friends
+- Have at least 2 mutual friends
+- Order by number of mutual friends (descending)</p>
+<h3 id="challenge-4-gap-and-islands-problem">Challenge 4: Gap and Islands Problem</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert  </p>
+<p>Table <code>attendance</code> (employee_id, date).
+Find consecutive periods of attendance for each employee.</p>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="o">|</span><span class="w"> </span><span class="n">employee_id</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">date</span><span class="w">       </span><span class="o">|</span>
+<span class="o">|-------------|------------|</span>
+<span class="o">|</span><span class="w"> </span><span class="m">1</span><span class="w">           </span><span class="o">|</span><span class="w"> </span><span class="m">2024-01-01</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w"> </span><span class="m">1</span><span class="w">           </span><span class="o">|</span><span class="w"> </span><span class="m">2024-01-02</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w"> </span><span class="m">1</span><span class="w">           </span><span class="o">|</span><span class="w"> </span><span class="m">2024-01-03</span><span class="w"> </span><span class="o">|</span>
+<span class="o">|</span><span class="w"> </span><span class="m">1</span><span class="w">           </span><span class="o">|</span><span class="w"> </span><span class="m">2024-01-05</span><span class="w"> </span><span class="o">|</span><span class="w">  </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">gap</span>
+<span class="o">|</span><span class="w"> </span><span class="m">1</span><span class="w">           </span><span class="o">|</span><span class="w"> </span><span class="m">2024-01-06</span><span class="w"> </span><span class="o">|</span>
+</code></pre></div>
+
+<p>Output should show "islands" of consecutive days.</p>
+<h3 id="challenge-5-hierarchical-data-query">Challenge 5: Hierarchical Data Query</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert  </p>
+<p>Table <code>employees</code> (id, name, manager_id).
+Write a query to:
+1. Show the full reporting chain for each employee
+2. Calculate depth in the organizational hierarchy
+3. Find all subordinates of a given manager (recursive)
+4. Identify employees with no direct reports</p>
+<h3 id="challenge-6-time-series-analysis">Challenge 6: Time Series Analysis</h3>
+<p><strong>Difficulty</strong>: 🔴 Expert  </p>
+<p>Table <code>stock_prices</code> (date, symbol, price).
+Write queries to:
+1. Find the longest streak of consecutive price increases
+2. Calculate 50-day and 200-day moving averages
+3. Identify "golden cross" (50-day crosses above 200-day)
+4. Find maximum drawdown (peak to trough decline)</p>
+<hr />
+<h2 id="solutions">Solutions</h2>
+<p>Solutions to selected exercises are available in the <code>/solutions</code> directory. Try solving the problems yourself before looking at the solutions!</p>
+<h3 id="tips-for-success">Tips for Success</h3>
+<ol>
+<li><strong>Start Simple</strong>: Begin with easy exercises and gradually increase difficulty</li>
+<li><strong>Test Your Queries</strong>: Always test with sample data</li>
+<li><strong>Optimize</strong>: Try to write efficient queries</li>
+<li><strong>Multiple Approaches</strong>: Try solving the same problem different ways</li>
+<li><strong>Read Documentation</strong>: Consult MySQL documentation when needed</li>
+<li><strong>Practice Regularly</strong>: Consistency is key to mastery</li>
+</ol>
+<hr />
+<h2 id="additional-practice-resources">Additional Practice Resources</h2>
+<ul>
+<li><a href="https://leetcode.com/problemset/database/">LeetCode Database Problems</a></li>
+<li><a href="https://www.hackerrank.com/domains/sql">HackerRank SQL</a></li>
+<li><a href="https://sqlzoo.net/">SQLZoo</a></li>
+<li><a href="https://datalemur.com/">DataLemur SQL Interview Questions</a></li>
+<li><a href="https://www.stratascratch.com/">Stratascratch</a></li>
+</ul>
+<hr />
+<p><strong>Keep practicing! The more SQL you write, the better you'll get.</strong> 💪</p>
+
+</body>
+</html>

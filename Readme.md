@@ -42,7 +42,7 @@ By completing these labs, students will:
 
 | Lab | Topic | Description | Resource |
 |-----|-------|-------------|----------|
-| 7 | CASE Expressions | Master conditional logic in SQL with CASE statements | [Lab 7](Lab_Case_Expression.md) ⭐ |
+| 7 | CASE Expressions | Master conditional logic in SQL with CASE statements | [Lab 7](labs/html_labs/Lab_Case_Expression.html) ⭐ |
 | 8 | Window Functions & Recursive Query | Learn advanced analytical functions and partitioning | [Lab 8](labs/html_labs/Lab4.html) |
 | 9 | Views & Virtual Tables | Create and manage database views for data abstraction | [Lab 9](labs/html_labs/Lab5_views.html) |
 

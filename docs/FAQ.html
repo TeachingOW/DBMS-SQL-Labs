@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions (FAQ)</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.html">📚 Back to Lab Index</a> | 
+    <a href="../../Readme.html">🏠 Home</a>
+  </p>
+</div>
+
+<h1 id="frequently-asked-questions-faq">Frequently Asked Questions (FAQ)</h1>
+<h2 id="general-questions">General Questions</h2>
+<h3 id="what-is-dbms-sql-labs">What is DBMS-SQL-Labs?</h3>
+<p>DBMS-SQL-Labs is a comprehensive, free, open-source collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. It includes 21 labs, multiple datasets, and extensive documentation.</p>
+<h3 id="who-is-this-for">Who is this for?</h3>
+<ul>
+<li><strong>Complete beginners</strong> learning SQL for the first time</li>
+<li><strong>Students</strong> in database courses</li>
+<li><strong>Self-learners</strong> wanting to master SQL</li>
+<li><strong>Developers</strong> refreshing their database skills</li>
+<li><strong>Instructors</strong> looking for teaching materials</li>
+<li><strong>Anyone</strong> interested in databases!</li>
+</ul>
+<h3 id="is-this-really-free">Is this really free?</h3>
+<p>Yes! This project is completely free and open-source. All materials, labs, and resources are available at no cost.</p>
+<h3 id="how-long-does-it-take-to-complete-all-labs">How long does it take to complete all labs?</h3>
+<ul>
+<li><strong>Fast track</strong>: 4-6 weeks (if you study intensively)</li>
+<li><strong>Standard pace</strong>: 16 weeks (following the course syllabus)</li>
+<li><strong>Casual learning</strong>: 6-12 months (learning at your own pace)</li>
+</ul>
+<p>Each lab takes 2-4 hours on average.</p>
+<hr />
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="what-software-do-i-need">What software do I need?</h3>
+<p><strong>Essential:</strong>
+- MySQL or MariaDB (free)
+- A text editor or IDE</p>
+<p><strong>Optional (for specific labs):</strong>
+- Python 3.7+ (Labs 13-15)
+- Java JDK 11+ (Lab 12)
+- Node.js (Labs 7-8)
+- Jupyter Notebook (Lab 14)
+- MongoDB (Lab 20)
+- Neo4j (Lab 21)</p>
+<p>See the <a href="docs/GETTING_STARTED.html">Getting Started Guide</a> for detailed installation instructions.</p>
+<h3 id="which-database-should-i-install">Which database should I install?</h3>
+<p>We recommend <strong>MySQL Community Server</strong> as it's:
+- Free and open-source
+- Widely used in industry
+- Well-documented
+- Compatible with all our labs</p>
+<p><strong>MariaDB</strong> is also fully compatible and works great.</p>
+<h3 id="can-i-use-postgresql-instead-of-mysql">Can I use PostgreSQL instead of MySQL?</h3>
+<p>Most labs will work with PostgreSQL, but some MySQL-specific features might differ slightly. We primarily support MySQL/MariaDB.</p>
+<h3 id="ive-never-programmed-before-can-i-still-learn">I've never programmed before. Can I still learn?</h3>
+<p>Yes! Labs 1-9 require no programming experience, only SQL. For programming integration labs (12-14), basic programming knowledge is helpful but we provide clear instructions.</p>
+<hr />
+<h2 id="using-the-labs">Using the Labs</h2>
+<h3 id="what-order-should-i-follow-the-labs">What order should I follow the labs?</h3>
+<p><strong>For complete beginners:</strong>
+1. Start with <a href="docs/GETTING_STARTED.html">Getting Started Guide</a>
+2. Complete Labs 1-4 in order
+3. Do the In-Class Exercise
+4. Continue with Labs 5-21 sequentially</p>
+<p><strong>If you know basic SQL:</strong>
+Jump to intermediate labs (5-9) or pick topics from the <a href="LAB_INDEX.html">Lab Index</a>.</p>
+<p>See <a href="LAB_INDEX.html">Lab Index</a> for suggested learning paths.</p>
+<h3 id="how-do-i-know-if-im-ready-for-a-lab">How do I know if I'm ready for a lab?</h3>
+<p>Each lab lists prerequisites in the <a href="LAB_INDEX.html">Lab Index</a>. Make sure you understand the concepts from prerequisite labs before proceeding.</p>
+<h3 id="can-i-skip-labs">Can I skip labs?</h3>
+<p>While you can skip labs, we recommend following the sequence as each lab builds on previous concepts. The <a href="LAB_INDEX.html">Lab Index</a> shows dependencies.</p>
+<h3 id="where-are-the-solutions">Where are the solutions?</h3>
+<ul>
+<li>Some labs include solutions in collapsible sections</li>
+<li>The CASE Expressions lab (Lab 7) includes detailed solutions</li>
+<li>Additional solutions are in development</li>
+<li>Try solving problems yourself first!</li>
+</ul>
+<h3 id="can-i-use-these-labs-for-my-class">Can I use these labs for my class?</h3>
+<p>Absolutely! These labs are designed for educational use. See the <a href="docs/COURSE_SYLLABUS.html">Course Syllabus</a> for a complete curriculum. Please consider:
+- Crediting the source
+- Contributing improvements back
+- Sharing your experience with us</p>
+<hr />
+<h2 id="technical-issues">Technical Issues</h2>
+<h3 id="mysql-wont-start-what-should-i-do">MySQL won't start. What should I do?</h3>
+<p><strong>Common solutions:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Linux</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>mysql
+sudo<span class="w"> </span>systemctl<span class="w"> </span>status<span class="w"> </span>mysql
+
+<span class="c1"># Mac</span>
+brew<span class="w"> </span>services<span class="w"> </span>start<span class="w"> </span>mysql
+brew<span class="w"> </span>services<span class="w"> </span>list
+
+<span class="c1"># Windows</span>
+<span class="c1"># Check Services panel or MySQL Workbench</span>
+</code></pre></div>
+
+<p>See the <a href="docs/GETTING_STARTED.md#troubleshooting">Troubleshooting section</a> in Getting Started.</p>
+<h3 id="i-get-access-denied-when-connecting-to-mysql">I get "Access denied" when connecting to MySQL</h3>
+<p><strong>Try:</strong>
+1. Reset your password:
+   <code>bash
+   sudo mysql
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'newpassword';
+   FLUSH PRIVILEGES;</code>
+2. Check if MySQL is running
+3. Verify your username and password
+4. Check if user has necessary permissions</p>
+<h3 id="my-query-works-but-the-output-looks-different-from-the-example">My query works but the output looks different from the example</h3>
+<p>This could be due to:
+- Different MySQL version (usually not a problem)
+- Different data in your tables
+- Different order of results (use ORDER BY)
+- Floating point precision differences</p>
+<h3 id="where-can-i-get-help-with-a-specific-lab">Where can I get help with a specific lab?</h3>
+<ol>
+<li>Check the lab instructions carefully</li>
+<li>Review the <a href="docs/SQL_CHEAT_SHEET.md">SQL Cheat Sheet</a></li>
+<li>Search for your error message online</li>
+<li>Open an issue on GitHub with:</li>
+<li>Lab number</li>
+<li>What you're trying to do</li>
+<li>The error message</li>
+<li>What you've tried</li>
+</ol>
+<hr />
+<h2 id="content-and-learning">Content and Learning</h2>
+<h3 id="are-there-video-tutorials">Are there video tutorials?</h3>
+<p>Not currently, but they're on our <a href="docs/ROADMAP.md">roadmap</a>! For now:
+- YouTube has many SQL tutorials
+- Check the External Resources section in each lab
+- <a href="https://sqlzoo.net/">SQLZoo</a> has interactive tutorials</p>
+<h3 id="can-i-get-a-certificate">Can I get a certificate?</h3>
+<p>Not currently, but we're planning to add a certification program. See our <a href="docs/ROADMAP.md">roadmap</a>.</p>
+<h3 id="how-do-i-practice-more">How do I practice more?</h3>
+<p>Check out:
+- <a href="exercises/PRACTICE_EXERCISES.md">Practice Exercises</a> - Additional problems
+- <a href="https://leetcode.com/problemset/database/">LeetCode Database</a>
+- <a href="https://www.hackerrank.com/domains/sql">HackerRank SQL</a>
+- <a href="https://datalemur.com/">DataLemur</a></p>
+<h3 id="whats-the-difference-between-the-html-labs-and-markdown-files">What's the difference between the HTML labs and markdown files?</h3>
+<ul>
+<li><strong>HTML labs</strong> (<code>labs/html_labs/</code>): Original detailed lab content</li>
+<li><strong>Markdown files</strong> (e.g., <code>Lab_Case_Expression.md</code>): New format, easier to edit</li>
+<li>We're gradually converting to markdown for better maintainability</li>
+</ul>
+<h3 id="are-there-exercises-with-automatic-grading">Are there exercises with automatic grading?</h3>
+<p>Not yet, but this is a planned feature. Currently, you can:
+- Compare your results with provided solutions
+- Use external platforms like LeetCode for auto-graded problems</p>
+<hr />
+<h2 id="contributing">Contributing</h2>
+<h3 id="how-can-i-contribute">How can I contribute?</h3>
+<p>See our <a href="docs/CONTRIBUTING.md">Contributing Guide</a> for details. You can:
+- Fix typos or errors
+- Improve documentation
+- Add new exercises
+- Create solutions
+- Report bugs
+- Suggest improvements</p>
+<h3 id="i-found-an-error-what-should-i-do">I found an error. What should I do?</h3>
+<p>Please <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">open an issue</a> with:
+- Location (which file/lab)
+- Description of the error
+- Suggested correction (if you have one)</p>
+<h3 id="can-i-translate-the-content">Can I translate the content?</h3>
+<p>Yes! Translations are very welcome. See the <a href="docs/CONTRIBUTING.md">Contributing Guide</a> for guidelines.</p>
+<h3 id="i-created-a-great-exercise-can-i-add-it">I created a great exercise. Can I add it?</h3>
+<p>Yes! Submit a pull request with:
+- The exercise description
+- Sample data (if needed)
+- Solution
+- Appropriate difficulty level</p>
+<hr />
+<h2 id="advanced-topics">Advanced Topics</h2>
+<h3 id="when-should-i-learn-nosql">When should I learn NoSQL?</h3>
+<p>After completing the SQL fundamentals (Labs 1-11). Labs 20-21 cover MongoDB and Neo4j.</p>
+<h3 id="do-i-need-to-learn-all-database-types">Do I need to learn all database types?</h3>
+<p>Focus on SQL first (Labs 1-18). NoSQL and graph databases (Labs 19-21) are useful for:
+- Modern web applications
+- Specific use cases
+- Expanding your skill set</p>
+<h3 id="how-do-these-labs-prepare-me-for-real-world-work">How do these labs prepare me for real-world work?</h3>
+<p>These labs teach:
+- ✅ SQL fundamentals used daily in industry
+- ✅ Database design principles
+- ✅ Best practices and patterns
+- ✅ Integration with programming languages
+- ✅ Modern database technologies</p>
+<h3 id="what-should-i-learn-after-completing-all-labs">What should I learn after completing all labs?</h3>
+<p>Consider:
+- Advanced database administration
+- Database performance tuning
+- Data warehousing and BI
+- Big data technologies (Hadoop, Spark)
+- Cloud databases (AWS RDS, Azure SQL)
+- Real-world project work</p>
+<hr />
+<h2 id="project-and-community">Project and Community</h2>
+<h3 id="how-can-i-stay-updated">How can I stay updated?</h3>
+<ul>
+<li>⭐ Star the repository on GitHub</li>
+<li>👀 Watch the repository for updates</li>
+<li>📧 Check the <a href="https://teachingow.github.io/DBMS-SQL-Labs/">website</a></li>
+<li>📰 Read the <a href="CHANGELOG.md">Changelog</a></li>
+</ul>
+<h3 id="can-i-use-this-for-commercial-purposes">Can I use this for commercial purposes?</h3>
+<p>Check the license file, but generally:
+- ✅ Use for learning
+- ✅ Use for teaching
+- ✅ Use in courses
+- ✅ Fork and modify
+- ❌ Claim as your own
+- ⚠️ Check license for commercial use</p>
+<h3 id="who-maintains-this-project">Who maintains this project?</h3>
+<p>The project is maintained by <a href="https://github.com/TeachingOW">@TeachingOW</a> and <a href="https://github.com/khalefa-ow">@khalefa-ow</a>, with contributions from the community. See <a href="CONTRIBUTORS.md">CONTRIBUTORS.md</a>.</p>
+<h3 id="how-can-i-support-this-project">How can I support this project?</h3>
+<ul>
+<li>⭐ Star the repository</li>
+<li>📢 Share with others</li>
+<li>🐛 Report issues</li>
+<li>💻 Contribute code or content</li>
+<li>📝 Write about your experience</li>
+<li>💬 Help others in discussions</li>
+</ul>
+<hr />
+<h2 id="still-have-questions">Still Have Questions?</h2>
+<ul>
+<li><strong>Open an issue</strong>: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">GitHub Issues</a></li>
+<li><strong>Start a discussion</strong>: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/discussions">GitHub Discussions</a></li>
+<li><strong>Check the docs</strong>: <a href="docs/">Documentation</a></li>
+</ul>
+<hr />
+<p><em>This FAQ is continuously updated. Last update: February 2026</em></p>
+
+</body>
+</html>

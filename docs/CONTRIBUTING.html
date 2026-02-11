@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing to DBMS-SQL-Labs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.html">📚 Back to Lab Index</a> | 
+    <a href="../../Readme.html">🏠 Home</a>
+  </p>
+</div>
+
+<h1 id="contributing-to-dbms-sql-labs">Contributing to DBMS-SQL-Labs</h1>
+<p>Thank you for your interest in contributing to DBMS-SQL-Labs! This document provides guidelines and instructions for contributing to this educational repository.</p>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#code-of-conduct">Code of Conduct</a></li>
+<li><a href="#how-can-i-contribute">How Can I Contribute?</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#contribution-guidelines">Contribution Guidelines</a></li>
+<li><a href="#style-guidelines">Style Guidelines</a></li>
+<li><a href="#commit-message-guidelines">Commit Message Guidelines</a></li>
+<li><a href="#pull-request-process">Pull Request Process</a></li>
+</ul>
+<h2 id="code-of-conduct">Code of Conduct</h2>
+<h3 id="our-pledge">Our Pledge</h3>
+<p>We are committed to providing a welcoming and inspiring community for all. Please be respectful and constructive in all interactions.</p>
+<h3 id="expected-behavior">Expected Behavior</h3>
+<ul>
+<li>Be respectful and inclusive</li>
+<li>Provide constructive feedback</li>
+<li>Focus on what's best for the community</li>
+<li>Show empathy towards others</li>
+</ul>
+<h3 id="unacceptable-behavior">Unacceptable Behavior</h3>
+<ul>
+<li>Harassment or discrimination</li>
+<li>Trolling or insulting comments</li>
+<li>Publishing others' private information</li>
+<li>Other unprofessional conduct</li>
+</ul>
+<h2 id="how-can-i-contribute">How Can I Contribute?</h2>
+<h3 id="1-reporting-bugs-or-issues">1. Reporting Bugs or Issues</h3>
+<p>If you find a bug or error in the labs:</p>
+<ol>
+<li>Check if the issue already exists in <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Issues</a></li>
+<li>If not, create a new issue with:</li>
+<li>Clear, descriptive title</li>
+<li>Detailed description of the problem</li>
+<li>Steps to reproduce</li>
+<li>Expected vs actual behavior</li>
+<li>Screenshots (if applicable)</li>
+<li>Your environment (OS, MySQL version, etc.)</li>
+</ol>
+<p><strong>Example:</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="n">Title</span><span class="o">:</span><span class="w"> </span><span class="n">SQL</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">Lab</span><span class="w"> </span><span class="mi">4</span><span class="o">,</span><span class="w"> </span><span class="n">Exercise</span><span class="w"> </span><span class="mi">3</span>
+
+<span class="n">Description</span><span class="o">:</span>
+<span class="n">In</span><span class="w"> </span><span class="n">Lab</span><span class="w"> </span><span class="mi">4</span><span class="o">,</span><span class="w"> </span><span class="n">Exercise</span><span class="w"> </span><span class="mi">3</span><span class="o">,</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="n">SQL</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="n">has</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">syntax</span><span class="w"> </span><span class="n">error</span><span class="o">.</span>
+<span class="n">The</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="n">uses</span><span class="w"> </span><span class="s1">&#39;INNER JOUN&#39;</span><span class="w"> </span><span class="n">instead</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="s1">&#39;INNER JOIN&#39;</span><span class="w"> </span><span class="n">on</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">45</span><span class="o">.</span>
+
+<span class="n">Steps</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">reproduce</span><span class="o">:</span>
+<span class="mi">1</span><span class="o">.</span><span class="w"> </span><span class="n">Open</span><span class="w"> </span><span class="n">Lab</span><span class="w"> </span><span class="mi">4</span>
+<span class="mi">2</span><span class="o">.</span><span class="w"> </span><span class="n">Navigate</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">Exercise</span><span class="w"> </span><span class="mi">3</span>
+<span class="mi">3</span><span class="o">.</span><span class="w"> </span><span class="n">Copy</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">run</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">provided</span><span class="w"> </span><span class="n">query</span>
+
+<span class="n">Expected</span><span class="o">:</span><span class="w"> </span><span class="n">Query</span><span class="w"> </span><span class="n">should</span><span class="w"> </span><span class="n">execute</span><span class="w"> </span><span class="n">successfully</span>
+<span class="n">Actual</span><span class="o">:</span><span class="w"> </span><span class="n">Syntax</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">thrown</span>
+
+<span class="n">Environment</span><span class="o">:</span>
+<span class="o">-</span><span class="w"> </span><span class="n">OS</span><span class="o">:</span><span class="w"> </span><span class="n">Ubuntu</span><span class="w"> </span><span class="mf">20.04</span>
+<span class="o">-</span><span class="w"> </span><span class="n">MySQL</span><span class="o">:</span><span class="w"> </span><span class="mf">8.0</span><span class="o">.</span><span class="mi">27</span>
+</code></pre></div>
+
+<h3 id="2-suggesting-enhancements">2. Suggesting Enhancements</h3>
+<p>Have ideas to improve the labs?</p>
+<ol>
+<li>Open an issue with the "enhancement" label</li>
+<li>Describe your suggestion clearly</li>
+<li>Explain the benefits</li>
+<li>Provide examples if possible</li>
+</ol>
+<h3 id="3-improving-documentation">3. Improving Documentation</h3>
+<p>Documentation improvements are always welcome:
+- Fix typos or grammatical errors
+- Clarify confusing explanations
+- Add missing information
+- Improve code comments
+- Create new guides or tutorials</p>
+<h3 id="4-adding-new-content">4. Adding New Content</h3>
+<p>You can contribute new:
+- Lab exercises
+- Example datasets
+- Code samples
+- Tutorial content
+- Practice problems</p>
+<h3 id="5-fixing-bugs">5. Fixing Bugs</h3>
+<p>Browse the <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Issues</a> for bugs labeled "bug" or "help wanted".</p>
+<h2 id="getting-started">Getting Started</h2>
+<h3 id="1-fork-the-repository">1. Fork the Repository</h3>
+<p>Click the "Fork" button at the top right of the repository page.</p>
+<h3 id="2-clone-your-fork">2. Clone Your Fork</h3>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_USERNAME/DBMS-SQL-Labs.git
+<span class="nb">cd</span><span class="w"> </span>DBMS-SQL-Labs
+</code></pre></div>
+
+<h3 id="3-add-upstream-remote">3. Add Upstream Remote</h3>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/TeachingOW/DBMS-SQL-Labs.git
+</code></pre></div>
+
+<h3 id="4-create-a-branch">4. Create a Branch</h3>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/your-feature-name
+<span class="c1"># or</span>
+git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>fix/your-bug-fix
+</code></pre></div>
+
+<h3 id="5-make-your-changes">5. Make Your Changes</h3>
+<ul>
+<li>Edit files as needed</li>
+<li>Test your changes thoroughly</li>
+<li>Ensure code examples work correctly</li>
+</ul>
+<h3 id="6-commit-your-changes">6. Commit Your Changes</h3>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.
+git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Brief description of changes&quot;</span>
+</code></pre></div>
+
+<h3 id="7-push-to-your-fork">7. Push to Your Fork</h3>
+<div class="codehilite"><pre><span></span><code>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/your-feature-name
+</code></pre></div>
+
+<h3 id="8-create-a-pull-request">8. Create a Pull Request</h3>
+<p>Go to your fork on GitHub and click "New Pull Request".</p>
+<h2 id="contribution-guidelines">Contribution Guidelines</h2>
+<h3 id="lab-content-guidelines">Lab Content Guidelines</h3>
+<h4 id="sql-code">SQL Code</h4>
+<ul>
+<li><strong>Test all SQL queries</strong> before submitting</li>
+<li>Use <strong>clear, descriptive variable names</strong></li>
+<li>Include <strong>comments</strong> for complex queries</li>
+<li>Follow <strong>consistent formatting</strong> (see Style Guidelines)</li>
+<li>Provide <strong>both problem and solution</strong> when appropriate</li>
+</ul>
+<h4 id="examples">Examples</h4>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Good: Clear, commented, formatted</span>
+<span class="c1">-- Calculate average salary by department</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">avg_salary</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">departments</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">department_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">id</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">department_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">avg_salary</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- Avoid: Unclear, no comments, poor formatting</span>
+<span class="k">select</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">,</span><span class="k">avg</span><span class="p">(</span><span class="n">e</span><span class="p">.</span><span class="n">salary</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">employees</span><span class="w"> </span><span class="n">e</span><span class="w"> </span><span class="k">inner</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="n">departments</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">e</span><span class="p">.</span><span class="n">department_id</span><span class="o">=</span><span class="n">d</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">d</span><span class="p">.</span><span class="n">department_name</span><span class="p">;</span>
+</code></pre></div>
+
+<h4 id="lab-structure">Lab Structure</h4>
+<p>Each lab should include:
+1. <strong>Title</strong> - Clear, descriptive title
+2. <strong>Learning Objectives</strong> - What students will learn
+3. <strong>Prerequisites</strong> - Required knowledge
+4. <strong>Introduction</strong> - Concept overview
+5. <strong>Step-by-step instructions</strong> - Clear guidance
+6. <strong>Exercises</strong> - Practice problems
+7. <strong>Solutions</strong> - Example answers (in collapsible sections)
+8. <strong>Additional Resources</strong> - Further reading</p>
+<h4 id="markdown-files">Markdown Files</h4>
+<ul>
+<li>Use <strong>clear headings</strong> (h1 for title, h2 for sections, h3 for subsections)</li>
+<li>Include <strong>code blocks</strong> with syntax highlighting</li>
+<li>Add <strong>tables</strong> for structured data</li>
+<li>Use <strong>lists</strong> for sequential steps</li>
+<li>Include <strong>images</strong> when helpful (store in /images directory)</li>
+</ul>
+<h3 id="code-examples">Code Examples</h3>
+<h4 id="python">Python</h4>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Good: Clear, documented, error handling</span>
+<span class="kn">import</span> <span class="nn">mysql.connector</span>
+<span class="kn">from</span> <span class="nn">mysql.connector</span> <span class="kn">import</span> <span class="n">Error</span>
+
+<span class="k">def</span> <span class="nf">connect_to_database</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Establish connection to MySQL database.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        host: Database host address</span>
+<span class="sd">        database: Database name</span>
+<span class="sd">        user: Username</span>
+<span class="sd">        password: Password</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        connection object or None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">connection</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+            <span class="n">host</span><span class="o">=</span><span class="n">host</span><span class="p">,</span>
+            <span class="n">database</span><span class="o">=</span><span class="n">database</span><span class="p">,</span>
+            <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span>
+            <span class="n">password</span><span class="o">=</span><span class="n">password</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">connection</span><span class="o">.</span><span class="n">is_connected</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Successfully connected to database&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">connection</span>
+    <span class="k">except</span> <span class="n">Error</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+</code></pre></div>
+
+<h4 id="java">Java</h4>
+<div class="codehilite"><pre><span></span><code><span class="c1">// Good: Clear, documented, resource management</span>
+<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DatabaseConnection</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="cm">/**</span>
+<span class="cm">     * Creates a connection to MySQL database</span>
+<span class="cm">     * </span>
+<span class="cm">     * @param url JDBC connection URL</span>
+<span class="cm">     * @param user Database username</span>
+<span class="cm">     * @param password Database password</span>
+<span class="cm">     * @return Connection object</span>
+<span class="cm">     * @throws SQLException if connection fails</span>
+<span class="cm">     */</span>
+<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="n">Connection</span><span class="w"> </span><span class="nf">getConnection</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">user</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">)</span><span class="w"> </span>
+<span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">Class</span><span class="p">.</span><span class="na">forName</span><span class="p">(</span><span class="s">&quot;com.mysql.cj.jdbc.Driver&quot;</span><span class="p">);</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">DriverManager</span><span class="p">.</span><span class="na">getConnection</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">user</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="n">ClassNotFoundException</span><span class="w"> </span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SQLException</span><span class="p">(</span><span class="s">&quot;MySQL JDBC Driver not found&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3 id="dataset-guidelines">Dataset Guidelines</h3>
+<p>When contributing datasets:
+- Use <strong>realistic, educational data</strong>
+- Include <strong>diverse examples</strong>
+- Provide <strong>data dictionary</strong> explaining columns
+- <strong>Anonymize</strong> any potentially sensitive information
+- Include <strong>schema creation scripts</strong>
+- Keep file sizes <strong>reasonable</strong> (&lt; 10MB preferred)</p>
+<h3 id="documentation">Documentation</h3>
+<ul>
+<li>Write in <strong>clear, simple English</strong></li>
+<li>Assume <strong>beginner level knowledge</strong> unless stated otherwise</li>
+<li>Include <strong>examples</strong> for complex concepts</li>
+<li>Link to <strong>external resources</strong> when helpful</li>
+<li>Keep content <strong>up to date</strong></li>
+</ul>
+<h2 id="style-guidelines">Style Guidelines</h2>
+<h3 id="sql-style">SQL Style</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Keywords in UPPERCASE</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span>
+<span class="k">FROM</span><span class="w"> </span><span class="k">table_name</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">condition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">value</span><span class="p">;</span>
+
+<span class="c1">-- Indentation for readability</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="n">t1</span><span class="p">.</span><span class="n">column1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">t2</span><span class="p">.</span><span class="n">column2</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">count</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">table1</span><span class="w"> </span><span class="n">t1</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">table2</span><span class="w"> </span><span class="n">t2</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">foreign_id</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">status</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;active&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">t1</span><span class="p">.</span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">t2</span><span class="p">.</span><span class="n">column2</span>
+<span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">5</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">count</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
+
+<span class="c1">-- Comments for complex logic</span>
+<span class="c1">-- Calculate running total using window function</span>
+<span class="k">SELECT</span><span class="w"> </span>
+<span class="w">    </span><span class="nb">date</span><span class="p">,</span>
+<span class="w">    </span><span class="n">amount</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="nb">date</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">running_total</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">transactions</span><span class="p">;</span>
+</code></pre></div>
+
+<h3 id="markdown-style">Markdown Style</h3>
+<ul>
+<li>Use ATX-style headers (#)</li>
+<li>Leave blank line before and after headers</li>
+<li>Use fenced code blocks with language specification</li>
+<li>Use <code>inline code</code> for code references in text</li>
+<li>Use <strong>bold</strong> for emphasis, <em>italic</em> for slight emphasis</li>
+<li>Keep line length reasonable (80-120 characters)</li>
+</ul>
+<h3 id="file-naming">File Naming</h3>
+<ul>
+<li>Use lowercase</li>
+<li>Use hyphens for spaces</li>
+<li>Be descriptive</li>
+<li>Examples:</li>
+<li><code>getting-started.md</code></li>
+<li><code>lab-window-functions.md</code></li>
+<li><code>exercise-solutions.sql</code></li>
+</ul>
+<h2 id="commit-message-guidelines">Commit Message Guidelines</h2>
+<h3 id="format">Format</h3>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="k">type</span><span class="p">&gt;(&lt;</span><span class="nx">scope</span><span class="p">&gt;):</span><span class="w"> </span><span class="p">&lt;</span><span class="nx">subject</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nx">body</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nx">footer</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<h3 id="types">Types</h3>
+<ul>
+<li><strong>feat</strong>: New feature or lab</li>
+<li><strong>fix</strong>: Bug fix</li>
+<li><strong>docs</strong>: Documentation changes</li>
+<li><strong>style</strong>: Formatting, no code change</li>
+<li><strong>refactor</strong>: Code refactoring</li>
+<li><strong>test</strong>: Adding tests</li>
+<li><strong>chore</strong>: Maintenance tasks</li>
+</ul>
+<h3 id="examples_1">Examples</h3>
+<div class="codehilite"><pre><span></span><code>feat(lab4): Add window functions exercises
+
+Added 5 new exercises covering ROW_NUMBER, RANK, and DENSE_RANK
+functions with solutions.
+
+Closes #123
+
+---
+
+fix(lab2): Correct SQL syntax in JOIN example
+
+Changed &#39;INNER JOUN&#39; to &#39;INNER JOIN&#39; in example query.
+
+---
+
+docs(readme): Update installation instructions
+
+Added troubleshooting section for common MySQL connection issues.
+</code></pre></div>
+
+<h3 id="subject-line">Subject Line</h3>
+<ul>
+<li>Use imperative mood ("Add" not "Added")</li>
+<li>Don't capitalize first letter</li>
+<li>No period at the end</li>
+<li>Limit to 50 characters</li>
+</ul>
+<h3 id="body">Body</h3>
+<ul>
+<li>Explain what and why, not how</li>
+<li>Wrap at 72 characters</li>
+<li>Separate from subject with blank line</li>
+</ul>
+<h2 id="pull-request-process">Pull Request Process</h2>
+<h3 id="before-submitting">Before Submitting</h3>
+<ol>
+<li>✅ <strong>Test your changes</strong> thoroughly</li>
+<li>✅ <strong>Run all affected SQL scripts</strong> to ensure they work</li>
+<li>✅ <strong>Check for typos</strong> and grammatical errors</li>
+<li>✅ <strong>Update documentation</strong> if needed</li>
+<li>✅ <strong>Add yourself</strong> to CONTRIBUTORS.md (if first contribution)</li>
+</ol>
+<h3 id="pr-description">PR Description</h3>
+<p>Include:
+- <strong>Summary</strong> of changes
+- <strong>Motivation</strong> - Why is this change needed?
+- <strong>Testing</strong> - How was it tested?
+- <strong>Screenshots</strong> - If applicable (UI changes)
+- <strong>Related issues</strong> - Link with "Closes #issue_number"</p>
+<h3 id="example-pr">Example PR</h3>
+<div class="codehilite"><pre><span></span><code><span class="gu">## Description</span>
+Added 3 new exercises to Lab 5 covering advanced subquery techniques.
+
+<span class="gu">## Motivation</span>
+Students requested more practice problems for correlated subqueries
+and EXISTS/NOT EXISTS operations.
+
+<span class="gu">## Changes</span>
+<span class="k">-</span><span class="w"> </span>Added Exercise 6: Correlated subquery with aggregates
+<span class="k">-</span><span class="w"> </span>Added Exercise 7: EXISTS vs IN comparison
+<span class="k">-</span><span class="w"> </span>Added Exercise 8: NOT EXISTS with multiple conditions
+<span class="k">-</span><span class="w"> </span>Included solutions for all exercises
+
+<span class="gu">## Testing</span>
+<span class="k">-</span><span class="w"> </span>All SQL queries tested on MySQL 8.0.27
+<span class="k">-</span><span class="w"> </span>Verified queries work with provided sample data
+<span class="k">-</span><span class="w"> </span>Checked markdown rendering on GitHub
+
+<span class="gu">## Related Issues</span>
+Closes <span class="ni">#45</span>
+</code></pre></div>
+
+<h3 id="review-process">Review Process</h3>
+<ol>
+<li>Maintainer will review your PR</li>
+<li>May request changes or clarifications</li>
+<li>Once approved, PR will be merged</li>
+<li>Your contribution will be acknowledged</li>
+</ol>
+<h3 id="after-merge">After Merge</h3>
+<ol>
+<li>Delete your branch</li>
+<li>Pull latest changes from upstream</li>
+<li>Consider contributing again!</li>
+</ol>
+<h2 id="recognition">Recognition</h2>
+<h3 id="contributors">Contributors</h3>
+<p>All contributors are listed in <a href="../CONTRIBUTORS.html">CONTRIBUTORS.md</a></p>
+<h3 id="significant-contributions">Significant Contributions</h3>
+<p>Major contributions may be highlighted in:
+- Repository README
+- Release notes
+- Project announcements</p>
+<h2 id="questions">Questions?</h2>
+<h3 id="getting-help">Getting Help</h3>
+<ul>
+<li>Open an issue for questions</li>
+<li>Check existing issues and documentation first</li>
+<li>Be patient - maintainers are volunteers</li>
+</ul>
+<h3 id="contact">Contact</h3>
+<ul>
+<li>GitHub Issues: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Create an issue</a></li>
+<li>Discussions: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/discussions">GitHub Discussions</a></li>
+</ul>
+<h2 id="license">License</h2>
+<p>By contributing, you agree that your contributions will be licensed under the same license as the project.</p>
+<hr />
+<p><strong>Thank you for contributing to DBMS-SQL-Labs! Your efforts help students worldwide learn database concepts effectively.</strong> 🎓</p>
+
+</body>
+</html>

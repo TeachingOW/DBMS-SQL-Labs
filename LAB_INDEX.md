@@ -160,7 +160,7 @@
 **Topics**: Conditional logic in SQL  
 **Duration**: 2-3 hours  
 **Prerequisites**: Lab 3  
-**Link**: [Lab 7](Lab_Case_Expression.md)
+**Link**: [Lab 7](labs/html_labs/Lab_Case_Expression.html)
 
 **What You'll Learn:**
 - Simple CASE expressions
@@ -384,7 +384,7 @@
 
 **Key Concepts**: `TRIGGER`, `PROCEDURE`, `FUNCTION`, automation
 
-**Related Assignment**: [Bank Overdraft System](bank.md)
+**Related Assignment**: [Bank Overdraft System](labs/html_labs/Bank_Triggers.html)
 
 **Examples Included**:
 - Automatic timestamp updates
