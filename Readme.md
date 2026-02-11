@@ -27,6 +27,12 @@ By completing these labs, students will:
 
 ## 📚 Lab Structure
 
+### 🆕 Reorganized Comprehensive Lab
+
+| Lab | Topic | Description | Resource |
+|-----|-------|-------------|----------|
+| **NEW** | **SQL Fundamentals - Complete Guide** | **Comprehensive reorganized lab covering all SQL basics in logical order: Create Tables, Single Table Query, DISTINCT, ORDER BY, Foreign Key, Multi Table, Aggregate Functions, GROUP BY, HAVING, Set Operations** | **[Reorganized Lab](Lab_Reorganized_SQL_Fundamentals.md)** ⭐ **NEW** |
+
 ### Foundational Labs (SQL Basics)
 
 | Lab | Topic | Description | Resource |

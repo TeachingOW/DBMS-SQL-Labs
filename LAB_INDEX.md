@@ -10,6 +10,41 @@
 
 ---
 
+## 🆕 NEW: Reorganized Comprehensive Lab
+
+### SQL Fundamentals - Complete Reorganized Guide ⭐ NEW
+**Topics**: All fundamental SQL concepts in logical order  
+**Duration**: 8-12 hours (self-paced)  
+**Prerequisites**: None - Perfect for beginners!  
+**Link**: [Reorganized SQL Fundamentals Lab](Lab_Reorganized_SQL_Fundamentals.md) | [HTML Version](labs/html_labs/Lab_Reorganized_SQL_Fundamentals.html)
+
+**What You'll Learn:**
+This comprehensive guide consolidates all fundamental SQL concepts into a single, logically ordered resource:
+
+1. **Create Tables** - Database and table creation with data types and constraints
+2. **Single Table Query** - SELECT statements with WHERE, operators, and pattern matching
+3. **DISTINCT** - Removing duplicates and finding unique values
+4. **ORDER BY** - Sorting data in ascending/descending order
+5. **Foreign Key** - Referential integrity and table relationships
+6. **Multi Table** - JOINs (INNER, LEFT, RIGHT) and multi-table queries
+7. **Aggregate Function** - COUNT, SUM, AVG, MAX, MIN for data analysis
+8. **GROUP BY** - Grouping data for summary statistics
+9. **HAVING** - Filtering grouped results
+10. **Set Operation** - UNION, UNION ALL, and set operations
+
+**Key Features:**
+- ✅ Progressive learning structure - each topic builds on previous ones
+- ✅ Comprehensive examples with real-world scenarios
+- ✅ Practice exercises for every section
+- ✅ Common mistakes and best practices
+- ✅ Performance tips and optimization suggestions
+- ✅ Complete code examples ready to run
+
+**Why This Lab?**
+This reorganized lab presents SQL fundamentals in the most logical learning order, making it easier for beginners to grasp concepts progressively while providing a comprehensive reference for all skill levels.
+
+---
+
 ## 📚 All Labs by Category
 
 ### 🟢 Beginner Level (Start Here!)
