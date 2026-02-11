@@ -16,14 +16,15 @@ This guide covers 10 essential SQL topics in order. Each section is concise with
 
 1. [Create Tables](#1-create-tables)
 2. [Single Table Query](#2-single-table-query)
-3. [DISTINCT](#3-distinct)
-4. [ORDER BY](#4-order-by)
-5. [Foreign Key](#5-foreign-key)
-6. [Multi Table](#6-multi-table)
-7. [Aggregate Functions](#7-aggregate-functions)
-8. [GROUP BY](#8-group-by)
-9. [HAVING](#9-having)
-10. [Set Operations](#10-set-operations)
+3. [Subqueries and Nested Queries](#3-subqueries-and-nested-queries)
+4. [DISTINCT](#4-distinct)
+5. [ORDER BY](#5-order-by)
+6. [Foreign Key](#6-foreign-key)
+7. [Multi Table](#7-multi-table)
+8. [Aggregate Functions](#8-aggregate-functions)
+9. [GROUP BY](#9-group-by)
+10. [HAVING](#10-having)
+11. [Set Operations](#11-set-operations)
 
 ---
 
@@ -115,7 +116,114 @@ Find all furniture items priced between $100 and $300.
 
 ---
 
-## 3. DISTINCT
+## 3. Subqueries and Nested Queries
+
+### What are Subqueries?
+
+A subquery (or nested query) is a query inside another query. Subqueries can be used in WHERE, FROM, or HAVING clauses.
+
+### Basic Subquery
+
+```sql
+-- Find products more expensive than the average price
+SELECT name, price 
+FROM products 
+WHERE price > (SELECT AVG(price) FROM products);
+```
+
+### IN Operator with Subquery
+
+**IN** checks if a value exists in a list or result set.
+
+```sql
+-- Find products in Electronics or Furniture categories
+SELECT * FROM products 
+WHERE category IN ('Electronics', 'Furniture');
+
+-- Using subquery: Find products from USA suppliers
+SELECT * FROM products 
+WHERE supplier_id IN (
+    SELECT id FROM suppliers WHERE country = 'USA'
+);
+```
+
+### NOT IN Operator
+
+**NOT IN** finds values that are NOT in a list or result set.
+
+```sql
+-- Find products NOT from USA suppliers
+SELECT * FROM products 
+WHERE supplier_id NOT IN (
+    SELECT id FROM suppliers WHERE country = 'USA'
+);
+
+-- Find products that haven't been ordered
+-- (assuming we have an orders table)
+SELECT name FROM products 
+WHERE id NOT IN (SELECT DISTINCT product_id FROM orders);
+```
+
+### EXISTS Operator
+
+**EXISTS** checks if a subquery returns any rows (returns TRUE/FALSE).
+
+```sql
+-- Find suppliers that have at least one product
+SELECT name FROM suppliers s
+WHERE EXISTS (
+    SELECT 1 FROM products p 
+    WHERE p.supplier_id = s.id
+);
+
+-- Find categories that have expensive products (over $500)
+SELECT DISTINCT category FROM products p1
+WHERE EXISTS (
+    SELECT 1 FROM products p2 
+    WHERE p2.category = p1.category AND p2.price > 500
+);
+```
+
+### NOT EXISTS Operator
+
+**NOT EXISTS** checks if a subquery returns no rows.
+
+```sql
+-- Find suppliers with NO products listed
+SELECT name FROM suppliers s
+WHERE NOT EXISTS (
+    SELECT 1 FROM products p 
+    WHERE p.supplier_id = s.id
+);
+```
+
+### Complex Nested Query Example
+
+```sql
+-- Find products made by suppliers who also make laptops
+SELECT name, price FROM products
+WHERE supplier_id IN (
+    SELECT supplier_id FROM products 
+    WHERE name = 'Laptop'
+)
+AND name != 'Laptop';
+```
+
+### When to Use Each
+
+- **IN/NOT IN**: When comparing against a list of values
+- **EXISTS/NOT EXISTS**: When checking for existence (often faster for large datasets)
+- **Subquery in SELECT**: For calculated columns
+- **Subquery in FROM**: To create temporary result sets
+
+### ✏️ Practice
+1. Find all products that cost more than the average price
+2. Find suppliers from Canada who have products listed
+3. Find categories with no products under $100
+
+---
+
+## 4. DISTINCT
 
 ### Get Unique Values
 
@@ -134,7 +242,7 @@ Find all unique price values in the products table.
 
 ---
 
-## 4. ORDER BY
+## 5. ORDER BY
 
 ### Sort Results
 
@@ -159,7 +267,7 @@ List all products sorted by category (A-Z) and then by price (high to low).
 
 ---
 
-## 5. Foreign Key
+## 6. Foreign Key
 
 ### Why Foreign Keys?
 Foreign keys link tables together and ensure data integrity.
@@ -205,7 +313,7 @@ Try inserting a product with a supplier_id that doesn't exist. What happens?
 
 ---
 
-## 6. Multi Table
+## 7. Multi Table
 
 ### JOIN Tables
 
@@ -243,7 +351,7 @@ Join customers and orders tables (create these tables first).
 
 ---
 
-## 7. Aggregate Functions
+## 8. Aggregate Functions
 
 ### Common Functions
 
@@ -281,7 +389,7 @@ Calculate the total value of all electronics products.
 
 ---
 
-## 8. GROUP BY
+## 9. GROUP BY
 
 ### Group Data
 
@@ -313,7 +421,7 @@ Find the total value of products in each category.
 
 ---
 
-## 9. HAVING
+## 10. HAVING
 
 ### Filter Grouped Results
 
@@ -351,7 +459,7 @@ Find categories that have at least 1 product and average price under $250.
 
 ---
 
-## 10. Set Operations
+## 11. Set Operations
 
 ### UNION - Combine Results
 
