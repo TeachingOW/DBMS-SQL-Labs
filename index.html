@@ -289,7 +289,7 @@ CREATE TABLE suppliers (
 );
 
 -- Products with foreign key (child)
-CREATE TABLE products_fk (
+CREATE TABLE products (
     id INT PRIMARY KEY,
     name VARCHAR(50),
     price DECIMAL(10,2),
@@ -305,7 +305,7 @@ INSERT INTO suppliers VALUES
 (2, 'FurnitureCo', 'Canada');
 
 -- Add products that reference suppliers
-INSERT INTO products_fk VALUES
+INSERT INTO products VALUES
 (1, 'Laptop', 999.99, 1),
 (2, 'Desk', 299.99, 2);
 </code></pre>
@@ -327,7 +327,7 @@ SELECT
     p.price,
     s.name AS supplier_name,
     s.country
-FROM products_fk p
+FROM products p
 INNER JOIN suppliers s ON p.supplier_id = s.id;
 </code></pre>
 
@@ -335,13 +335,13 @@ INNER JOIN suppliers s ON p.supplier_id = s.id;
 
 <p><strong>INNER JOIN</strong> - Only matching rows</p>
 <pre><code class="language-sql">SELECT p.name, s.name
-FROM products_fk p
+FROM products p
 INNER JOIN suppliers s ON p.supplier_id = s.id;
 </code></pre>
 
 <p><strong>LEFT JOIN</strong> - All from left table, matching from right</p>
 <pre><code class="language-sql">SELECT p.name, s.name
-FROM products_fk p
+FROM products p
 LEFT JOIN suppliers s ON p.supplier_id = s.id;
 </code></pre>
 
