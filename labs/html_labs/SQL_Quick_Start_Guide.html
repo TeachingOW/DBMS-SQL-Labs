@@ -144,7 +144,6 @@
     <ol>
         <li><a href="#create-tables">Create Tables</a></li>
         <li><a href="#single-table">Single Table Query</a></li>
-        <li><a href="#subqueries">Subqueries and Nested Queries</a></li>
         <li><a href="#distinct">DISTINCT</a></li>
         <li><a href="#order-by">ORDER BY</a></li>
         <li><a href="#foreign-key">Foreign Key</a></li>
@@ -153,6 +152,7 @@
         <li><a href="#group-by">GROUP BY</a></li>
         <li><a href="#having">HAVING</a></li>
         <li><a href="#set-operations">Set Operations</a></li>
+        <li><a href="#subqueries">Subqueries and Nested Queries</a></li>
     </ol>
 </div>
 
@@ -234,7 +234,270 @@ SELECT * FROM products WHERE name LIKE '%top%';
 
 <hr>
 
-<h2 id="subqueries">3. Subqueries and Nested Queries</h2>
+<h2 id="distinct">3. DISTINCT</h2>
+
+<h3>Get Unique Values</h3>
+<pre><code class="language-sql">-- List all unique categories
+SELECT DISTINCT category FROM products;
+
+-- Count unique categories
+SELECT COUNT(DISTINCT category) FROM products;
+</code></pre>
+
+<p><strong>When to use:</strong> Eliminate duplicate rows from results.</p>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Find all unique price values in the products table.
+</div>
+
+<hr>
+
+<h2 id="order-by">4. ORDER BY</h2>
+
+<h3>Sort Results</h3>
+<pre><code class="language-sql">-- Sort by price (ascending)
+SELECT * FROM products ORDER BY price;
+
+-- Sort by price (descending)
+SELECT * FROM products ORDER BY price DESC;
+
+-- Sort by multiple columns
+SELECT * FROM products ORDER BY category, price DESC;
+</code></pre>
+
+<div class="tip">
+    <strong>Tips:</strong>
+    <ul>
+        <li><code>ASC</code> = ascending (default)</li>
+        <li><code>DESC</code> = descending</li>
+        <li>Can sort by multiple columns</li>
+    </ul>
+</div>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> List all products sorted by category (A-Z) and then by price (high to low).
+</div>
+
+<hr>
+
+<h2 id="foreign-key">5. Foreign Key</h2>
+
+<h3>Why Foreign Keys?</h3>
+<p>Foreign keys link tables together and ensure data integrity.</p>
+
+<h3>Create Related Tables</h3>
+<pre><code class="language-sql">-- Suppliers table (parent)
+CREATE TABLE suppliers (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    country VARCHAR(30)
+);
+
+-- Products with foreign key (child)
+CREATE TABLE products_fk (
+    id INT PRIMARY KEY,
+    name VARCHAR(50),
+    price DECIMAL(10,2),
+    supplier_id INT,
+    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
+);
+</code></pre>
+
+<h3>Add Data</h3>
+<pre><code class="language-sql">-- Add suppliers first
+INSERT INTO suppliers VALUES
+(1, 'TechCorp', 'USA'),
+(2, 'FurnitureCo', 'Canada');
+
+-- Add products that reference suppliers
+INSERT INTO products_fk VALUES
+(1, 'Laptop', 999.99, 1),
+(2, 'Desk', 299.99, 2);
+</code></pre>
+
+<p><strong>Important:</strong> You must insert parent records (suppliers) before child records (products).</p>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Try inserting a product with a supplier_id that doesn't exist. What happens?
+</div>
+
+<hr>
+
+<h2 id="multi-table">6. Multi Table</h2>
+
+<h3>JOIN Tables</h3>
+<pre><code class="language-sql">-- Show products with their supplier information
+SELECT 
+    p.name AS product_name,
+    p.price,
+    s.name AS supplier_name,
+    s.country
+FROM products_fk p
+INNER JOIN suppliers s ON p.supplier_id = s.id;
+</code></pre>
+
+<h3>Types of JOINs</h3>
+
+<p><strong>INNER JOIN</strong> - Only matching rows</p>
+<pre><code class="language-sql">SELECT p.name, s.name
+FROM products_fk p
+INNER JOIN suppliers s ON p.supplier_id = s.id;
+</code></pre>
+
+<p><strong>LEFT JOIN</strong> - All from left table, matching from right</p>
+<pre><code class="language-sql">SELECT p.name, s.name
+FROM products_fk p
+LEFT JOIN suppliers s ON p.supplier_id = s.id;
+</code></pre>
+
+<div class="tip">
+    <strong>Tip:</strong> Start with INNER JOIN. It's the most common.
+</div>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Join customers and orders tables (create these tables first).
+</div>
+
+<hr>
+
+<h2 id="aggregate">7. Aggregate Functions</h2>
+
+<h3>Common Functions</h3>
+<pre><code class="language-sql">-- Count all products
+SELECT COUNT(*) FROM products;
+
+-- Sum of all prices
+SELECT SUM(price) FROM products;
+
+-- Average price
+SELECT AVG(price) FROM products;
+
+-- Highest price
+SELECT MAX(price) FROM products;
+
+-- Lowest price
+SELECT MIN(price) FROM products;
+</code></pre>
+
+<h3>All in One Query</h3>
+<pre><code class="language-sql">SELECT 
+    COUNT(*) AS total_products,
+    SUM(price) AS total_value,
+    AVG(price) AS average_price,
+    MAX(price) AS highest_price,
+    MIN(price) AS lowest_price
+FROM products;
+</code></pre>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Calculate the total value of all electronics products.
+</div>
+
+<hr>
+
+<h2 id="group-by">8. GROUP BY</h2>
+
+<h3>Group Data</h3>
+<pre><code class="language-sql">-- Count products by category
+SELECT category, COUNT(*) AS count
+FROM products
+GROUP BY category;
+
+-- Average price by category
+SELECT category, AVG(price) AS avg_price
+FROM products
+GROUP BY category;
+
+-- Multiple aggregations
+SELECT 
+    category,
+    COUNT(*) AS count,
+    AVG(price) AS avg_price,
+    MAX(price) AS max_price
+FROM products
+GROUP BY category;
+</code></pre>
+
+<div class="tip">
+    <strong>Rule:</strong> Every column in SELECT must be either in GROUP BY or an aggregate function.
+</div>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Find the total value of products in each category.
+</div>
+
+<hr>
+
+<h2 id="having">9. HAVING</h2>
+
+<h3>Filter Grouped Results</h3>
+
+<p><strong>WHERE</strong> filters rows before grouping<br>
+<strong>HAVING</strong> filters groups after aggregation</p>
+
+<pre><code class="language-sql">-- Categories with more than 2 products
+SELECT category, COUNT(*) AS count
+FROM products
+GROUP BY category
+HAVING COUNT(*) > 2;
+
+-- Categories with average price over $300
+SELECT category, AVG(price) AS avg_price
+FROM products
+GROUP BY category
+HAVING AVG(price) > 300;
+</code></pre>
+
+<h3>Combined Example</h3>
+<pre><code class="language-sql">-- Electronics products, grouped by category, 
+-- only show groups with avg price > $100
+SELECT category, AVG(price) AS avg_price
+FROM products
+WHERE category = 'Electronics'
+GROUP BY category
+HAVING AVG(price) > 100;
+</code></pre>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Find categories that have at least 1 product and average price under $250.
+</div>
+
+<hr>
+
+<h2 id="set-operations">10. Set Operations</h2>
+
+<h3>UNION - Combine Results</h3>
+<pre><code class="language-sql">-- Combine two queries
+SELECT name FROM products WHERE category = 'Electronics'
+UNION
+SELECT name FROM products WHERE price > 500;
+</code></pre>
+
+<p><strong>UNION</strong> removes duplicates<br>
+<strong>UNION ALL</strong> keeps duplicates</p>
+
+<pre><code class="language-sql">-- Keep all rows including duplicates
+SELECT category FROM products WHERE price < 300
+UNION ALL
+SELECT category FROM products WHERE price > 200;
+</code></pre>
+
+<div class="tip">
+    <strong>Rules:</strong>
+    <ul>
+        <li>Same number of columns in each SELECT</li>
+        <li>Compatible data types</li>
+        <li>Column names from first SELECT are used</li>
+    </ul>
+</div>
+
+<div class="practice">
+    <strong>✏️ Practice:</strong> Combine a list of product names under $100 with product names in the Furniture category.
+</div>
+
+<hr>
+
+<h2 id="subqueries">11. Subqueries and Nested Queries</h2>
 
 <h3>What are Subqueries?</h3>
 <p>A subquery (or nested query) is a query inside another query. Subqueries can be used in WHERE, FROM, or HAVING clauses.</p>
@@ -325,269 +588,6 @@ AND name != 'Laptop';
         <li>Find suppliers from Canada who have products listed</li>
         <li>Find categories with no products under $100</li>
     </ol>
-</div>
-
-<hr>
-
-<h2 id="distinct">4. DISTINCT</h2>
-
-<h3>Get Unique Values</h3>
-<pre><code class="language-sql">-- List all unique categories
-SELECT DISTINCT category FROM products;
-
--- Count unique categories
-SELECT COUNT(DISTINCT category) FROM products;
-</code></pre>
-
-<p><strong>When to use:</strong> Eliminate duplicate rows from results.</p>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Find all unique price values in the products table.
-</div>
-
-<hr>
-
-<h2 id="order-by">5. ORDER BY</h2>
-
-<h3>Sort Results</h3>
-<pre><code class="language-sql">-- Sort by price (ascending)
-SELECT * FROM products ORDER BY price;
-
--- Sort by price (descending)
-SELECT * FROM products ORDER BY price DESC;
-
--- Sort by multiple columns
-SELECT * FROM products ORDER BY category, price DESC;
-</code></pre>
-
-<div class="tip">
-    <strong>Tips:</strong>
-    <ul>
-        <li><code>ASC</code> = ascending (default)</li>
-        <li><code>DESC</code> = descending</li>
-        <li>Can sort by multiple columns</li>
-    </ul>
-</div>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> List all products sorted by category (A-Z) and then by price (high to low).
-</div>
-
-<hr>
-
-<h2 id="foreign-key">6. Foreign Key</h2>
-
-<h3>Why Foreign Keys?</h3>
-<p>Foreign keys link tables together and ensure data integrity.</p>
-
-<h3>Create Related Tables</h3>
-<pre><code class="language-sql">-- Suppliers table (parent)
-CREATE TABLE suppliers (
-    id INT PRIMARY KEY,
-    name VARCHAR(50),
-    country VARCHAR(30)
-);
-
--- Products with foreign key (child)
-CREATE TABLE products_fk (
-    id INT PRIMARY KEY,
-    name VARCHAR(50),
-    price DECIMAL(10,2),
-    supplier_id INT,
-    FOREIGN KEY (supplier_id) REFERENCES suppliers(id)
-);
-</code></pre>
-
-<h3>Add Data</h3>
-<pre><code class="language-sql">-- Add suppliers first
-INSERT INTO suppliers VALUES
-(1, 'TechCorp', 'USA'),
-(2, 'FurnitureCo', 'Canada');
-
--- Add products that reference suppliers
-INSERT INTO products_fk VALUES
-(1, 'Laptop', 999.99, 1),
-(2, 'Desk', 299.99, 2);
-</code></pre>
-
-<p><strong>Important:</strong> You must insert parent records (suppliers) before child records (products).</p>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Try inserting a product with a supplier_id that doesn't exist. What happens?
-</div>
-
-<hr>
-
-<h2 id="multi-table">7. Multi Table</h2>
-
-<h3>JOIN Tables</h3>
-<pre><code class="language-sql">-- Show products with their supplier information
-SELECT 
-    p.name AS product_name,
-    p.price,
-    s.name AS supplier_name,
-    s.country
-FROM products_fk p
-INNER JOIN suppliers s ON p.supplier_id = s.id;
-</code></pre>
-
-<h3>Types of JOINs</h3>
-
-<p><strong>INNER JOIN</strong> - Only matching rows</p>
-<pre><code class="language-sql">SELECT p.name, s.name
-FROM products_fk p
-INNER JOIN suppliers s ON p.supplier_id = s.id;
-</code></pre>
-
-<p><strong>LEFT JOIN</strong> - All from left table, matching from right</p>
-<pre><code class="language-sql">SELECT p.name, s.name
-FROM products_fk p
-LEFT JOIN suppliers s ON p.supplier_id = s.id;
-</code></pre>
-
-<div class="tip">
-    <strong>Tip:</strong> Start with INNER JOIN. It's the most common.
-</div>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Join customers and orders tables (create these tables first).
-</div>
-
-<hr>
-
-<h2 id="aggregate">8. Aggregate Functions</h2>
-
-<h3>Common Functions</h3>
-<pre><code class="language-sql">-- Count all products
-SELECT COUNT(*) FROM products;
-
--- Sum of all prices
-SELECT SUM(price) FROM products;
-
--- Average price
-SELECT AVG(price) FROM products;
-
--- Highest price
-SELECT MAX(price) FROM products;
-
--- Lowest price
-SELECT MIN(price) FROM products;
-</code></pre>
-
-<h3>All in One Query</h3>
-<pre><code class="language-sql">SELECT 
-    COUNT(*) AS total_products,
-    SUM(price) AS total_value,
-    AVG(price) AS average_price,
-    MAX(price) AS highest_price,
-    MIN(price) AS lowest_price
-FROM products;
-</code></pre>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Calculate the total value of all electronics products.
-</div>
-
-<hr>
-
-<h2 id="group-by">9. GROUP BY</h2>
-
-<h3>Group Data</h3>
-<pre><code class="language-sql">-- Count products by category
-SELECT category, COUNT(*) AS count
-FROM products
-GROUP BY category;
-
--- Average price by category
-SELECT category, AVG(price) AS avg_price
-FROM products
-GROUP BY category;
-
--- Multiple aggregations
-SELECT 
-    category,
-    COUNT(*) AS count,
-    AVG(price) AS avg_price,
-    MAX(price) AS max_price
-FROM products
-GROUP BY category;
-</code></pre>
-
-<div class="tip">
-    <strong>Rule:</strong> Every column in SELECT must be either in GROUP BY or an aggregate function.
-</div>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Find the total value of products in each category.
-</div>
-
-<hr>
-
-<h2 id="having">10. HAVING</h2>
-
-<h3>Filter Grouped Results</h3>
-
-<p><strong>WHERE</strong> filters rows before grouping<br>
-<strong>HAVING</strong> filters groups after aggregation</p>
-
-<pre><code class="language-sql">-- Categories with more than 2 products
-SELECT category, COUNT(*) AS count
-FROM products
-GROUP BY category
-HAVING COUNT(*) > 2;
-
--- Categories with average price over $300
-SELECT category, AVG(price) AS avg_price
-FROM products
-GROUP BY category
-HAVING AVG(price) > 300;
-</code></pre>
-
-<h3>Combined Example</h3>
-<pre><code class="language-sql">-- Electronics products, grouped by category, 
--- only show groups with avg price > $100
-SELECT category, AVG(price) AS avg_price
-FROM products
-WHERE category = 'Electronics'
-GROUP BY category
-HAVING AVG(price) > 100;
-</code></pre>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Find categories that have at least 1 product and average price under $250.
-</div>
-
-<hr>
-
-<h2 id="set-operations">11. Set Operations</h2>
-
-<h3>UNION - Combine Results</h3>
-<pre><code class="language-sql">-- Combine two queries
-SELECT name FROM products WHERE category = 'Electronics'
-UNION
-SELECT name FROM products WHERE price > 500;
-</code></pre>
-
-<p><strong>UNION</strong> removes duplicates<br>
-<strong>UNION ALL</strong> keeps duplicates</p>
-
-<pre><code class="language-sql">-- Keep all rows including duplicates
-SELECT category FROM products WHERE price < 300
-UNION ALL
-SELECT category FROM products WHERE price > 200;
-</code></pre>
-
-<div class="tip">
-    <strong>Rules:</strong>
-    <ul>
-        <li>Same number of columns in each SELECT</li>
-        <li>Compatible data types</li>
-        <li>Column names from first SELECT are used</li>
-    </ul>
-</div>
-
-<div class="practice">
-    <strong>✏️ Practice:</strong> Combine a list of product names under $100 with product names in the Furniture category.
 </div>
 
 <hr>
