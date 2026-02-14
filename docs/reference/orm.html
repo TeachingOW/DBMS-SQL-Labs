@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>orm</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<p>Below is an expanded, richer Java-focused section <em>with added links</em> and more explanatory text. If you want this merged back into your HTML document, just tell me and I’ll inject it directly.</p>
+<hr>
+<h2><strong>Introduction to ORM and DBMS (Java-Focused)</strong></h2>
+<p>A <strong>Database Management System (DBMS)</strong> is software that stores, organizes, and manages access to data. It provides features such as indexing, transactions, concurrency control, and durability. Popular relational DBMS options include MySQL, PostgreSQL, Oracle, SQL Server, and MariaDB. A DBMS is the foundational layer that ensures data is stored safely and can be retrieved efficiently.</p>
+<p>However, directly interacting with a DBMS using raw SQL can become repetitive and error-prone—especially in large codebases. This is where an <strong>Object-Relational Mapping (ORM)</strong> system becomes valuable.</p>
+<p><strong>Object-Relational Mapping (ORM)</strong> is a programming technique that lets developers interact with a database using objects instead of writing raw SQL. An ORM handles the &quot;mapping&quot; between <strong>Java classes</strong> and <strong>database tables</strong>, converting queries, inserts, updates, and joins into SQL behind the scenes.</p>
+<p>This abstraction allows developers to focus on <strong>business logic</strong>, not SQL boilerplate, while still supporting complex operations such as lazy loading, relationships, caching, and transaction handling.</p>
+<h3><strong>Why ORM Exists (History &amp; Motivation)</strong></h3>
+<p>Originally, Java developers interacted with databases using <strong>JDBC</strong>, writing SQL manually and managing <code>ResultSet</code> objects. As applications grew, developers wanted:</p>
+<ul>
+<li>Less boilerplate</li>
+<li>Stronger type safety</li>
+<li>Automatic mapping between DB rows and Java objects</li>
+<li>Cleaner transaction management</li>
+<li>Built-in caching</li>
+<li>A unified API across database vendors</li>
+</ul>
+<p>This led to early ORM libraries (like Hibernate in the early 2000s), followed by the Java Persistence API (<strong>JPA</strong>) becoming a standard.</p>
+<h3><strong>When to Use ORM</strong></h3>
+<p>ORM is ideal when:</p>
+<ul>
+<li>You have a relational database.</li>
+<li>Your data model fits an object-oriented structure.</li>
+<li>You want to reduce SQL boilerplate.</li>
+<li>You need features like lazy loading, caching, and automatic schema generation.</li>
+<li>You want portable code across multiple DB engines.</li>
+</ul>
+<p>Avoid or limit ORM if:</p>
+<ul>
+<li>You need ultra-high performance with hand-tuned SQL.</li>
+<li>Your schema is extremely complex with many edge-case queries.</li>
+<li>You’re using a non-relational database (MongoDB, Redis, etc.).</li>
+<li>You require massive batch operations or raw SQL optimizations.</li>
+</ul>
+<hr>
+<h2><strong>Popular Java ORM Frameworks (With Links)</strong></h2>
+<h3><strong>1. Hibernate ORM</strong></h3>
+<p>The most widely used ORM in the Java ecosystem. Implements JPA and adds many powerful features.</p>
+<p>🔗 <strong><a href="https://hibernate.org/">https://hibernate.org/</a></strong> 🔗 Hibernate ORM Documentation: <a href="https://docs.jboss.org/hibernate/orm/">https://docs.jboss.org/hibernate/orm/</a></p>
+<h3><strong>2. Java Persistence API (JPA)</strong></h3>
+<p>A standard API for ORM in Java. Hibernate, EclipseLink, and OpenJPA implement it.</p>
+<p>🔗 JPA Overview (Oracle): <a href="https://docs.oracle.com/javaee/7/tutorial/persistence-intro.htm">https://docs.oracle.com/javaee/7/tutorial/persistence-intro.htm</a></p>
+<h3><strong>3. Spring Data JPA</strong></h3>
+<p>A layer on top of JPA that generates repositories automatically.</p>
+<p>🔗 <a href="https://spring.io/projects/spring-data-jpa">https://spring.io/projects/spring-data-jpa</a> 🔗 Reference Guide: <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/">https://docs.spring.io/spring-data/jpa/docs/current/reference/html/</a></p>
+<h3><strong>4. EclipseLink</strong></h3>
+<p>The reference implementation of JPA.</p>
+<p>🔗 <a href="https://www.eclipse.org/eclipselink/">https://www.eclipse.org/eclipselink/</a></p>
+<h3><strong>5. MyBatis</strong></h3>
+<p>Not a full ORM—SQL-centric but supports mapping results to objects.</p>
+<p>🔗 <a href="https://mybatis.org/mybatis-3/">https://mybatis.org/mybatis-3/</a> MyBatis is a great choice when you want more control over SQL.</p>
+<hr>
+<h2><strong>What Happens Under the Hood (Detailed)</strong></h2>
+<p>When you use an ORM in Java, several hidden mechanisms operate behind the scenes:</p>
+<h3><strong>1. Mapping Java Classes to Tables</strong></h3>
+<p>Annotated Java classes like:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-java">@Entity
+@Table(name = &quot;users&quot;)
+public class User {
+    @Id
+    private Long id;
+
+    private String name;
+}</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Are analyzed at runtime. The ORM:</p>
+<ul>
+<li>Reads annotations</li>
+<li>Maps fields → columns</li>
+<li>Builds metadata models</li>
+</ul>
+<h3><strong>2. SQL Generation</strong></h3>
+<p>When you call:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-java">em.find(User.class, 1L);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Hibernate generates SQL such as:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT id, name FROM users WHERE id = ?</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This SQL is cached and optimized.</p>
+<h3><strong>3. Session / Entity Manager</strong></h3>
+<p>ORMs keep track of:</p>
+<ul>
+<li>Managed entities</li>
+<li>Dirty checking (detecting modified objects)</li>
+<li>Caching (first-level, second-level)</li>
+</ul>
+<p>On transaction commit, Hibernate automatically issues the SQL needed to sync the object state.</p>
+<h3><strong>4. Lazy Loading</strong></h3>
+<p>Relationships like:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-java">@OneToMany(mappedBy = &quot;user&quot;, fetch = FetchType.LAZY)
+private List&lt;Order&gt; orders;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Are not loaded until accessed. This uses dynamic proxies or runtime bytecode enhancement.</p>
+<h3><strong>5. Transaction Management</strong></h3>
+<p>ORMS integrate with:</p>
+<ul>
+<li>JTA</li>
+<li>Spring TransactionManager</li>
+<li>JDBC connection pools</li>
+</ul>
+<p>Ensuring consistency, rollback, and isolation levels.</p>
+<h3><strong>6. Database Dialect Handling</strong></h3>
+<p>Hibernate uses dialect classes to support DB-specific SQL differences (MySQL, PostgreSQL, Oracle, etc.).</p>
+<hr>
+<h2><strong>Java ORM Examples (Code-Level Explanation)</strong></h2>
+<h3><strong>Basic Entity Example</strong></h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-java">@Entity
+public class Student {
+
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private String name;
+
+    private int year;
+}</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3><strong>Repository Example (Spring Data JPA)</strong></h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-java">public interface StudentRepository extends JpaRepository&lt;Student, Long&gt; {
+    List&lt;Student&gt; findByYear(int year);
+}</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>This generates SQL automatically: å</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM student WHERE year = ?</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3><strong>Manual MyBatis Example</strong></h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-xml">&lt;select id=&quot;getStudent&quot; parameterType=&quot;long&quot; resultType=&quot;Student&quot;&gt;
+    SELECT * FROM student WHERE id = #{id}
+&lt;/select&gt;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+</body>
+</html>

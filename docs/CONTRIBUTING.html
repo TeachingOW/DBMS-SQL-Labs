@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contributing to DBMS-SQL-Labs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<h1>Contributing to DBMS-SQL-Labs</h1>
+<p>Thank you for your interest in contributing to DBMS-SQL-Labs! This document provides guidelines and instructions for contributing to this educational repository.</p>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#code-of-conduct">Code of Conduct</a></li>
+<li><a href="#how-can-i-contribute">How Can I Contribute?</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#contribution-guidelines">Contribution Guidelines</a></li>
+<li><a href="#style-guidelines">Style Guidelines</a></li>
+<li><a href="#commit-message-guidelines">Commit Message Guidelines</a></li>
+<li><a href="#pull-request-process">Pull Request Process</a></li>
+</ul>
+<h2>Code of Conduct</h2>
+<h3>Our Pledge</h3>
+<p>We are committed to providing a welcoming and inspiring community for all. Please be respectful and constructive in all interactions.</p>
+<h3>Expected Behavior</h3>
+<ul>
+<li>Be respectful and inclusive</li>
+<li>Provide constructive feedback</li>
+<li>Focus on what&#x27;s best for the community</li>
+<li>Show empathy towards others</li>
+</ul>
+<h3>Unacceptable Behavior</h3>
+<ul>
+<li>Harassment or discrimination</li>
+<li>Trolling or insulting comments</li>
+<li>Publishing others&#x27; private information</li>
+<li>Other unprofessional conduct</li>
+</ul>
+<h2>How Can I Contribute?</h2>
+<h3>1. Reporting Bugs or Issues</h3>
+<p>If you find a bug or error in the labs:</p>
+<ol>
+<li>Check if the issue already exists in <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Issues</a></li>
+<li>If not, create a new issue with:</li>
+</ol>
+<ul>
+<li>Clear, descriptive title</li>
+<li>Detailed description of the problem</li>
+<li>Steps to reproduce</li>
+<li>Expected vs actual behavior</li>
+<li>Screenshots (if applicable)</li>
+<li>Your environment (OS, MySQL version, etc.)</li>
+</ul>
+<p><strong>Example:</strong></p>
+<div class="code-block-wrapper">
+  <pre><code>Title: SQL syntax error in Lab 4, Exercise 3
+
+Description:
+In Lab 4, Exercise 3, the provided SQL query has a syntax error.
+The query uses &#x27;INNER JOUN&#x27; instead of &#x27;INNER JOIN&#x27; on line 45.
+
+Steps to reproduce:
+1. Open Lab 4
+2. Navigate to Exercise 3
+3. Copy and run the provided query
+
+Expected: Query should execute successfully
+Actual: Syntax error is thrown
+
+Environment:
+- OS: Ubuntu 20.04
+- MySQL: 8.0.27</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>2. Suggesting Enhancements</h3>
+<p>Have ideas to improve the labs?</p>
+<ol>
+<li>Open an issue with the &quot;enhancement&quot; label</li>
+<li>Describe your suggestion clearly</li>
+<li>Explain the benefits</li>
+<li>Provide examples if possible</li>
+</ol>
+<h3>3. Improving Documentation</h3>
+<p>Documentation improvements are always welcome:</p>
+<ul>
+<li>Fix typos or grammatical errors</li>
+<li>Clarify confusing explanations</li>
+<li>Add missing information</li>
+<li>Improve code comments</li>
+<li>Create new guides or tutorials</li>
+</ul>
+<h3>4. Adding New Content</h3>
+<p>You can contribute new:</p>
+<ul>
+<li>Lab exercises</li>
+<li>Example datasets</li>
+<li>Code samples</li>
+<li>Tutorial content</li>
+<li>Practice problems</li>
+</ul>
+<h3>5. Fixing Bugs</h3>
+<p>Browse the <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Issues</a> for bugs labeled &quot;bug&quot; or &quot;help wanted&quot;.</p>
+<h2>Getting Started</h2>
+<h3>1. Fork the Repository</h3>
+<p>Click the &quot;Fork&quot; button at the top right of the repository page.</p>
+<h3>2. Clone Your Fork</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">git clone https://github.com/YOUR_USERNAME/DBMS-SQL-Labs.git
+cd DBMS-SQL-Labs</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>3. Add Upstream Remote</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">git remote add upstream https://github.com/TeachingOW/DBMS-SQL-Labs.git</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>4. Create a Branch</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">git checkout -b feature/your-feature-name
+# or
+git checkout -b fix/your-bug-fix</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>5. Make Your Changes</h3>
+<ul>
+<li>Edit files as needed</li>
+<li>Test your changes thoroughly</li>
+<li>Ensure code examples work correctly</li>
+</ul>
+<h3>6. Commit Your Changes</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">git add .
+git commit -m &quot;Brief description of changes&quot;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>7. Push to Your Fork</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">git push origin feature/your-feature-name</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>8. Create a Pull Request</h3>
+<p>Go to your fork on GitHub and click &quot;New Pull Request&quot;.</p>
+<h2>Contribution Guidelines</h2>
+<h3>Lab Content Guidelines</h3>
+<h4>SQL Code</h4>
+<ul>
+<li><strong>Test all SQL queries</strong> before submitting</li>
+<li>Use <strong>clear, descriptive variable names</strong></li>
+<li>Include <strong>comments</strong> for complex queries</li>
+<li>Follow <strong>consistent formatting</strong> (see Style Guidelines)</li>
+<li>Provide <strong>both problem and solution</strong> when appropriate</li>
+</ul>
+<h4>Examples</h4>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Good: Clear, commented, formatted
+-- Calculate average salary by department
+SELECT 
+    d.department_name,
+    AVG(e.salary) AS avg_salary
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id
+GROUP BY d.department_name
+ORDER BY avg_salary DESC;
+
+-- Avoid: Unclear, no comments, poor formatting
+select d.department_name,avg(e.salary) from employees e inner join departments d on e.department_id=d.id group by d.department_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>Lab Structure</h4>
+<p>Each lab should include:</p>
+<ol>
+<li><strong>Title</strong> - Clear, descriptive title</li>
+<li><strong>Learning Objectives</strong> - What students will learn</li>
+<li><strong>Prerequisites</strong> - Required knowledge</li>
+<li><strong>Introduction</strong> - Concept overview</li>
+<li><strong>Step-by-step instructions</strong> - Clear guidance</li>
+<li><strong>Exercises</strong> - Practice problems</li>
+<li><strong>Solutions</strong> - Example answers (in collapsible sections)</li>
+<li><strong>Additional Resources</strong> - Further reading</li>
+</ol>
+<h4>Markdown Files</h4>
+<ul>
+<li>Use <strong>clear headings</strong> (h1 for title, h2 for sections, h3 for subsections)</li>
+<li>Include <strong>code blocks</strong> with syntax highlighting</li>
+<li>Add <strong>tables</strong> for structured data</li>
+<li>Use <strong>lists</strong> for sequential steps</li>
+<li>Include <strong>images</strong> when helpful (store in /images directory)</li>
+</ul>
+<h3>Code Examples</h3>
+<h4>Python</h4>
+<div class="code-block-wrapper">
+  <pre><code class="language-python"># Good: Clear, documented, error handling
+import mysql.connector
+from mysql.connector import Error
+
+def connect_to_database(host, database, user, password):
+    &quot;&quot;&quot;
+    Establish connection to MySQL database.
+    
+    Args:
+        host: Database host address
+        database: Database name
+        user: Username
+        password: Password
+    
+    Returns:
+        connection object or None
+    &quot;&quot;&quot;
+    try:
+        connection = mysql.connector.connect(
+            host=host,
+            database=database,
+            user=user,
+            password=password
+        )
+        if connection.is_connected():
+            print(&quot;Successfully connected to database&quot;)
+            return connection
+    except Error as e:
+        print(f&quot;Error: {e}&quot;)
+        return None</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>Java</h4>
+<div class="code-block-wrapper">
+  <pre><code class="language-java">// Good: Clear, documented, resource management
+public class DatabaseConnection {
+    /**
+     * Creates a connection to MySQL database
+     * 
+     * @param url JDBC connection URL
+     * @param user Database username
+     * @param password Database password
+     * @return Connection object
+     * @throws SQLException if connection fails
+     */
+    public static Connection getConnection(String url, String user, String password) 
+            throws SQLException {
+        try {
+            Class.forName(&quot;com.mysql.cj.jdbc.Driver&quot;);
+            return DriverManager.getConnection(url, user, password);
+        } catch (ClassNotFoundException e) {
+            throw new SQLException(&quot;MySQL JDBC Driver not found&quot;, e);
+        }
+    }
+}</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Dataset Guidelines</h3>
+<p>When contributing datasets:</p>
+<ul>
+<li>Use <strong>realistic, educational data</strong></li>
+<li>Include <strong>diverse examples</strong></li>
+<li>Provide <strong>data dictionary</strong> explaining columns</li>
+<li><strong>Anonymize</strong> any potentially sensitive information</li>
+<li>Include <strong>schema creation scripts</strong></li>
+<li>Keep file sizes <strong>reasonable</strong> (&lt; 10MB preferred)</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li>Write in <strong>clear, simple English</strong></li>
+<li>Assume <strong>beginner level knowledge</strong> unless stated otherwise</li>
+<li>Include <strong>examples</strong> for complex concepts</li>
+<li>Link to <strong>external resources</strong> when helpful</li>
+<li>Keep content <strong>up to date</strong></li>
+</ul>
+<h2>Style Guidelines</h2>
+<h3>SQL Style</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Keywords in UPPERCASE
+SELECT column1, column2
+FROM table_name
+WHERE condition = value;
+
+-- Indentation for readability
+SELECT 
+    t1.column1,
+    t2.column2,
+    COUNT(*) AS count
+FROM table1 t1
+INNER JOIN table2 t2 ON t1.id = t2.foreign_id
+WHERE t1.status = &#x27;active&#x27;
+GROUP BY t1.column1, t2.column2
+HAVING COUNT(*) &gt; 5
+ORDER BY count DESC;
+
+-- Comments for complex logic
+-- Calculate running total using window function
+SELECT 
+    date,
+    amount,
+    SUM(amount) OVER (ORDER BY date) AS running_total
+FROM transactions;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Markdown Style</h3>
+<ul>
+<li>Use ATX-style headers (#)</li>
+<li>Leave blank line before and after headers</li>
+<li>Use fenced code blocks with language specification</li>
+<li>Use <code>inline code</code> for code references in text</li>
+<li>Use <strong>bold</strong> for emphasis, <em>italic</em> for slight emphasis</li>
+<li>Keep line length reasonable (80-120 characters)</li>
+</ul>
+<h3>File Naming</h3>
+<ul>
+<li>Use lowercase</li>
+<li>Use hyphens for spaces</li>
+<li>Be descriptive</li>
+<li>Examples:</li>
+<li><code>getting-started.md</code></li>
+<li><code>lab-window-functions.md</code></li>
+<li><code>exercise-solutions.sql</code></li>
+</ul>
+<h2>Commit Message Guidelines</h2>
+<h3>Format</h3>
+<div class="code-block-wrapper">
+  <pre><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+
+&lt;body&gt;
+
+&lt;footer&gt;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Types</h3>
+<ul>
+<li><strong>feat</strong>: New feature or lab</li>
+<li><strong>fix</strong>: Bug fix</li>
+<li><strong>docs</strong>: Documentation changes</li>
+<li><strong>style</strong>: Formatting, no code change</li>
+<li><strong>refactor</strong>: Code refactoring</li>
+<li><strong>test</strong>: Adding tests</li>
+<li><strong>chore</strong>: Maintenance tasks</li>
+</ul>
+<h3>Examples</h3>
+<div class="code-block-wrapper">
+  <pre><code>feat(lab4): Add window functions exercises
+
+Added 5 new exercises covering ROW_NUMBER, RANK, and DENSE_RANK
+functions with solutions.
+
+Closes #123
+
+---
+
+fix(lab2): Correct SQL syntax in JOIN example
+
+Changed &#x27;INNER JOUN&#x27; to &#x27;INNER JOIN&#x27; in example query.
+
+---
+
+docs(readme): Update installation instructions
+
+Added troubleshooting section for common MySQL connection issues.</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Subject Line</h3>
+<ul>
+<li>Use imperative mood (&quot;Add&quot; not &quot;Added&quot;)</li>
+<li>Don&#x27;t capitalize first letter</li>
+<li>No period at the end</li>
+<li>Limit to 50 characters</li>
+</ul>
+<h3>Body</h3>
+<ul>
+<li>Explain what and why, not how</li>
+<li>Wrap at 72 characters</li>
+<li>Separate from subject with blank line</li>
+</ul>
+<h2>Pull Request Process</h2>
+<h3>Before Submitting</h3>
+<ol>
+<li>✅ <strong>Test your changes</strong> thoroughly</li>
+<li>✅ <strong>Run all affected SQL scripts</strong> to ensure they work</li>
+<li>✅ <strong>Check for typos</strong> and grammatical errors</li>
+<li>✅ <strong>Update documentation</strong> if needed</li>
+<li>✅ <strong>Add yourself</strong> to reports/CONTRIBUTORS.md (if first contribution)</li>
+</ol>
+<h3>PR Description</h3>
+<p>Include:</p>
+<ul>
+<li><strong>Summary</strong> of changes</li>
+<li><strong>Motivation</strong> - Why is this change needed?</li>
+<li><strong>Testing</strong> - How was it tested?</li>
+<li><strong>Screenshots</strong> - If applicable (UI changes)</li>
+<li><strong>Related issues</strong> - Link with &quot;Closes #issue_number&quot;</li>
+</ul>
+<h3>Example PR</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-markdown">## Description
+Added 3 new exercises to Lab 5 covering advanced subquery techniques.
+
+## Motivation
+Students requested more practice problems for correlated subqueries
+and EXISTS/NOT EXISTS operations.
+
+## Changes
+- Added Exercise 6: Correlated subquery with aggregates
+- Added Exercise 7: EXISTS vs IN comparison
+- Added Exercise 8: NOT EXISTS with multiple conditions
+- Included solutions for all exercises
+
+## Testing
+- All SQL queries tested on MySQL 8.0.27
+- Verified queries work with provided sample data
+- Checked markdown rendering on GitHub
+
+## Related Issues
+Closes #45</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Review Process</h3>
+<ol>
+<li>Maintainer will review your PR</li>
+<li>May request changes or clarifications</li>
+<li>Once approved, PR will be merged</li>
+<li>Your contribution will be acknowledged</li>
+</ol>
+<h3>After Merge</h3>
+<ol>
+<li>Delete your branch</li>
+<li>Pull latest changes from upstream</li>
+<li>Consider contributing again!</li>
+</ol>
+<h2>Recognition</h2>
+<h3>Contributors</h3>
+<p>All contributors are listed in <a href="../reports/CONTRIBUTORS.md">reports/CONTRIBUTORS.md</a></p>
+<h3>Significant Contributions</h3>
+<p>Major contributions may be highlighted in:</p>
+<ul>
+<li>Repository README</li>
+<li>Release notes</li>
+<li>Project announcements</li>
+</ul>
+<h2>Questions?</h2>
+<h3>Getting Help</h3>
+<ul>
+<li>Open an issue for questions</li>
+<li>Check existing issues and documentation first</li>
+<li>Be patient - maintainers are volunteers</li>
+</ul>
+<h3>Contact</h3>
+<ul>
+<li>GitHub Issues: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Create an issue</a></li>
+<li>Discussions: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/discussions">GitHub Discussions</a></li>
+</ul>
+<h2>License</h2>
+<p>By contributing, you agree that your contributions will be licensed under the same license as the project.</p>
+<hr>
+<p><strong>Thank you for contributing to DBMS-SQL-Labs! Your efforts help students worldwide learn database concepts effectively.</strong> 🎓</p>
+</body>
+</html>

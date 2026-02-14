@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<h1>Changelog</h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>, and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
+<h2>[2.0.0] - 2026-02-07 (s26 Branch)</h2>
+<h3>🎉 Major Release: Enhanced Documentation and Organization</h3>
+<p>This release represents a major overhaul of the repository structure and documentation, making it significantly more accessible and organized for learners and instructors.</p>
+<h3>Added</h3>
+<h4>📚 Comprehensive Documentation</h4>
+<ul>
+<li><strong><a href="docs/GETTING_STARTED.md">Getting Started Guide</a></strong></li>
+<li>Complete setup instructions for MySQL, Python, Java, Node.js</li>
+<li>Troubleshooting section for common issues</li>
+<li>Quick start guides for different skill levels</li>
+<li>Tool installation guides for MongoDB, Neo4j, Jupyter</li>
+</ul>
+<ul>
+<li><strong><a href="docs/COURSE_SYLLABUS.md">Course Syllabus</a></strong></li>
+<li>16-week structured curriculum</li>
+<li>Weekly schedule with topics and labs</li>
+<li>Grading policy and assessment guidelines</li>
+<li>Project ideas and deliverables</li>
+<li>Learning outcomes for each module</li>
+</ul>
+<ul>
+<li><strong><a href="docs/SQL_CHEAT_SHEET.md">SQL Cheat Sheet</a></strong></li>
+<li>Comprehensive reference for all SQL commands</li>
+<li>Organized by topic (DDL, DML, Queries, Joins, etc.)</li>
+<li>Code examples for every command</li>
+<li>Best practices and performance tips</li>
+<li>Window functions and CTEs reference</li>
+</ul>
+<ul>
+<li><strong><a href="docs/CONTRIBUTING.md">Contributing Guide</a></strong></li>
+<li>Detailed contribution guidelines</li>
+<li>Code style standards for SQL, Python, Java</li>
+<li>Pull request process</li>
+<li>Issue reporting templates</li>
+<li>Commit message conventions</li>
+</ul>
+<ul>
+<li><strong><a href="LAB_INDEX.md">Lab Index</a></strong></li>
+<li>Complete catalog of all 21 labs</li>
+<li>Detailed descriptions with learning objectives</li>
+<li>Prerequisites for each lab</li>
+<li>Duration estimates</li>
+<li>Difficulty levels (Beginner to Expert)</li>
+<li>Multiple learning paths</li>
+</ul>
+<ul>
+<li><strong><a href="exercises/PRACTICE_EXERCISES.md">Practice Exercises</a></strong></li>
+<li>Additional exercises by topic</li>
+<li>Challenge problems for advanced learners</li>
+<li>Difficulty ratings</li>
+<li>Links to external practice platforms</li>
+</ul>
+<ul>
+<li><strong><a href="docs/ROADMAP.md">Project Roadmap</a></strong></li>
+<li>Short, medium, and long-term goals</li>
+<li>Feature development timeline</li>
+<li>Success metrics</li>
+<li>How to contribute to roadmap</li>
+</ul>
+<h4>🗂️ Repository Organization</h4>
+<ul>
+<li>Created <code>/labs</code> directory structure</li>
+<li><code>/labs/html_labs</code> - All HTML lab files organized</li>
+<li><code>/labs/notebooks</code> - Jupyter notebook labs</li>
+<li><code>/labs/code</code> - Programming examples</li>
+</ul>
+<ul>
+<li>Created <code>/docs</code> directory for documentation</li>
+<li>Created <code>/exercises</code> directory for practice problems</li>
+<li>Created <code>/solutions</code> directory (structure for future solutions)</li>
+<li>Created <code>/supplementary</code> directory (for additional materials)</li>
+</ul>
+<h4>✨ Enhanced Features</h4>
+<ul>
+<li>Added badges to README (stars, license, PRs welcome)</li>
+<li>Quick links section in README</li>
+<li>Learning paths for different skill levels</li>
+<li>Search by topic in Lab Index</li>
+<li>Multiple ways to navigate content</li>
+</ul>
+<h3>Changed</h3>
+<h4>📝 README Improvements</h4>
+<ul>
+<li>Restructured for better navigation</li>
+<li>Added Quick Links section at the top</li>
+<li>Updated lab references to use new structure</li>
+<li>Added highlights for featured labs (⭐)</li>
+<li>Improved descriptions and organization</li>
+<li>Added &quot;How to Use This Repository&quot; section</li>
+</ul>
+<h4>🔧 Configuration</h4>
+<ul>
+<li>Enhanced <code>.gitignore</code> file</li>
+<li>Exclude Mac .DS_Store files</li>
+<li>Exclude Python cache files</li>
+<li>Exclude node_modules</li>
+<li>Exclude IDE files</li>
+<li>Exclude credentials and secrets</li>
+</ul>
+<h3>Improved</h3>
+<ul>
+<li>Better cross-referencing between documents</li>
+<li>Consistent formatting across all markdown files</li>
+<li>More descriptive file names</li>
+<li>Improved accessibility with clear hierarchy</li>
+<li>Better onboarding for new contributors</li>
+<li>Enhanced discoverability of resources</li>
+</ul>
+<h3>Fixed</h3>
+<ul>
+<li>Fixed CASE Expressions lab link in README</li>
+<li>Corrected file path references</li>
+<li>Improved consistency in documentation style</li>
+</ul>
+<hr>
+<h2>[1.0.0] - Initial Release</h2>
+<h3>Added</h3>
+<ul>
+<li>21 comprehensive SQL labs covering:</li>
+<li>Database Creation &amp; Basic Queries</li>
+<li>Advanced Queries &amp; Joins</li>
+<li>Foreign Keys &amp; Relationships</li>
+<li>Multi-Table Operations</li>
+<li>Set Operations &amp; Nested Queries</li>
+<li>Aggregate Functions &amp; Grouping</li>
+<li>CASE Expressions</li>
+<li>Window Functions &amp; Recursive Queries</li>
+<li>Views &amp; Virtual Tables</li>
+<li>Database Normalization</li>
+<li>Advanced SQL Techniques</li>
+<li>Java Database Interface</li>
+<li>Python Database Interface</li>
+<li>Jupyter Notebook Integration</li>
+<li>Analytical Functions (ROLLUP, CUBE)</li>
+<li>Triggers &amp; Stored Procedures</li>
+<li>Transaction Management</li>
+<li>Isolation Levels</li>
+<li>JSON &amp; XML Processing</li>
+<li>MongoDB (NoSQL)</li>
+<li>Neo4j (Graph Database)</li>
+</ul>
+<ul>
+<li>Dataset Files:</li>
+<li>IMDB Movie Data</li>
+<li>Air Travel Data</li>
+<li>Cities Data</li>
+<li>Employee Data</li>
+<li>Student Grades</li>
+<li>Drivers Database</li>
+</ul>
+<ul>
+<li>Code Examples:</li>
+<li>Node.js database integration</li>
+<li>Express.js server examples</li>
+<li>JavaScript client code</li>
+</ul>
+<ul>
+<li>Jupyter Notebooks:</li>
+<li>MySQL-Jupyter integration</li>
+<li>ROLLUP examples</li>
+<li>Triggers examples</li>
+</ul>
+<ul>
+<li>Supplementary Materials:</li>
+<li>labs/01_foundations/inclass_exercise.html (Workers Database)</li>
+<li>CASE Expression detailed guide (markdown)</li>
+<li>Bank triggers assignment</li>
+<li>ORM introduction document</li>
+</ul>
+<ul>
+<li>Basic Documentation:</li>
+<li>README with lab overview</li>
+<li>GitHub Pages site</li>
+</ul>
+<hr>
+<h2>Upcoming Changes (Planned)</h2>
+<h3>Version 2.1 (Next Minor Release)</h3>
+<ul>
+<li>[ ] Convert HTML labs to Markdown format</li>
+<li>[ ] Add solution guides for all exercises</li>
+<li>[ ] Create video tutorial links</li>
+<li>[ ] Add assessment rubrics</li>
+</ul>
+<h3>Version 3.0 (Next Major Release)</h3>
+<ul>
+<li>[ ] Interactive SQL playground</li>
+<li>[ ] Auto-grading system</li>
+<li>[ ] Video content for each lab</li>
+<li>[ ] Multi-language support</li>
+</ul>
+<hr>
+<h2>Contributing</h2>
+<p>See <a href="docs/CONTRIBUTING.md">CONTRIBUTING.md</a> for details on how to contribute to this changelog.</p>
+<hr>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/TeachingOW/DBMS-SQL-Labs">Repository</a></li>
+<li><a href="https://teachingow.github.io/DBMS-SQL-Labs/">Website</a></li>
+<li><a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">Issues</a></li>
+<li><a href="https://github.com/TeachingOW/DBMS-SQL-Labs/pulls">Pull Requests</a></li>
+</ul>
+<hr>
+<p><strong>Note</strong>: All notable changes to this project will be documented in this file. The format is based on <a href="https://keepachangelog.com/">Keep a Changelog</a>.</p>
+</body>
+</html>

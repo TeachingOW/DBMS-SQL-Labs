@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Quick Reference Cheat Sheet</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<h1>SQL Quick Reference Cheat Sheet</h1>
+<h2>Table of Contents</h2>
+<ul>
+<li><a href="#database-operations">Database Operations</a></li>
+<li><a href="#table-operations">Table Operations</a></li>
+<li><a href="#data-manipulation">Data Manipulation</a></li>
+<li><a href="#querying-data">Querying Data</a></li>
+<li><a href="#joins">Joins</a></li>
+<li><a href="#aggregate-functions">Aggregate Functions</a></li>
+<li><a href="#subqueries">Subqueries</a></li>
+<li><a href="#string-functions">String Functions</a></li>
+<li><a href="#date-functions">Date Functions</a></li>
+<li><a href="#window-functions">Window Functions</a></li>
+<li><a href="#transactions">Transactions</a></li>
+<li><a href="#indexes">Indexes</a></li>
+<li><a href="#views">Views</a></li>
+<li><a href="#stored-procedures">Stored Procedures</a></li>
+<li><a href="#triggers">Triggers</a></li>
+</ul>
+<hr>
+<h2>Database Operations</h2>
+<h3>Create Database</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE DATABASE database_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Use Database</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">USE database_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Show Databases</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SHOW DATABASES;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Drop Database</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP DATABASE database_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Table Operations</h2>
+<h3>Create Table</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE TABLE table_name (
+    column1 datatype PRIMARY KEY,
+    column2 datatype NOT NULL,
+    column3 datatype DEFAULT value,
+    column4 datatype UNIQUE,
+    FOREIGN KEY (column) REFERENCES other_table(column)
+);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Common Data Types</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Numeric
+INT, BIGINT, SMALLINT, TINYINT
+DECIMAL(p,s), NUMERIC(p,s)
+FLOAT, DOUBLE
+
+-- String
+CHAR(n), VARCHAR(n)
+TEXT, MEDIUMTEXT, LONGTEXT
+
+-- Date/Time
+DATE, TIME, DATETIME, TIMESTAMP
+YEAR
+
+-- Boolean
+BOOLEAN (TINYINT(1))
+
+-- Binary
+BLOB, MEDIUMBLOB, LONGBLOB</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Modify Table</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Add column
+ALTER TABLE table_name ADD column_name datatype;
+
+-- Drop column
+ALTER TABLE table_name DROP COLUMN column_name;
+
+-- Modify column
+ALTER TABLE table_name MODIFY COLUMN column_name new_datatype;
+
+-- Rename column
+ALTER TABLE table_name RENAME COLUMN old_name TO new_name;
+
+-- Rename table
+ALTER TABLE old_table_name RENAME TO new_table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Drop Table</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TABLE table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Show Tables</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SHOW TABLES;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Describe Table</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DESCRIBE table_name;
+-- or
+SHOW COLUMNS FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Data Manipulation</h2>
+<h3>INSERT - Add new rows</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Insert single row
+INSERT INTO table_name (column1, column2, column3)
+VALUES (value1, value2, value3);
+
+-- Insert multiple rows
+INSERT INTO table_name (column1, column2, column3)
+VALUES 
+    (value1a, value2a, value3a),
+    (value1b, value2b, value3b),
+    (value1c, value2c, value3c);
+
+-- Insert from another table
+INSERT INTO table_name (column1, column2)
+SELECT column1, column2 FROM other_table
+WHERE condition;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>UPDATE - Modify existing rows</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">UPDATE table_name
+SET column1 = value1, column2 = value2
+WHERE condition;
+
+-- Update with calculation
+UPDATE table_name
+SET price = price * 1.1
+WHERE category = &#x27;electronics&#x27;;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>DELETE - Remove rows</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DELETE FROM table_name
+WHERE condition;
+
+-- Delete all rows (but keep table structure)
+DELETE FROM table_name;
+
+-- Faster delete (cannot be rolled back)
+TRUNCATE TABLE table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Querying Data</h2>
+<h3>Basic SELECT</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Select all columns
+SELECT * FROM table_name;
+
+-- Select specific columns
+SELECT column1, column2 FROM table_name;
+
+-- Select with alias
+SELECT column1 AS alias1, column2 AS alias2
+FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>WHERE Clause</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM table_name
+WHERE condition;
+
+-- Operators: =, !=, &lt;, &gt;, &lt;=, &gt;=, &lt;&gt;, BETWEEN, LIKE, IN, IS NULL</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>WHERE Examples</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Equality
+WHERE age = 25
+
+-- Comparison
+WHERE salary &gt; 50000
+
+-- Range
+WHERE age BETWEEN 18 AND 65
+
+-- Pattern matching
+WHERE name LIKE &#x27;J%&#x27;        -- Starts with J
+WHERE name LIKE &#x27;%son&#x27;      -- Ends with son
+WHERE name LIKE &#x27;%a%&#x27;       -- Contains a
+WHERE name LIKE &#x27;_a%&#x27;       -- Second char is a
+
+-- Multiple values
+WHERE country IN (&#x27;USA&#x27;, &#x27;Canada&#x27;, &#x27;Mexico&#x27;)
+
+-- NULL checking
+WHERE email IS NULL
+WHERE email IS NOT NULL
+
+-- Logical operators
+WHERE age &gt; 18 AND country = &#x27;USA&#x27;
+WHERE city = &#x27;NYC&#x27; OR city = &#x27;LA&#x27;
+WHERE NOT (age &lt; 18)</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>ORDER BY</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Ascending (default)
+SELECT * FROM table_name
+ORDER BY column1;
+
+-- Descending
+SELECT * FROM table_name
+ORDER BY column1 DESC;
+
+-- Multiple columns
+SELECT * FROM table_name
+ORDER BY column1 ASC, column2 DESC;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>LIMIT</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Limit number of rows
+SELECT * FROM table_name
+LIMIT 10;
+
+-- Offset and limit (skip first 10, get next 20)
+SELECT * FROM table_name
+LIMIT 10, 20;
+-- or
+SELECT * FROM table_name
+LIMIT 20 OFFSET 10;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>DISTINCT</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Get unique values
+SELECT DISTINCT column1 FROM table_name;
+
+-- Unique combinations
+SELECT DISTINCT column1, column2 FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Joins</h2>
+<h3>INNER JOIN</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT t1.column1, t2.column2
+FROM table1 t1
+INNER JOIN table2 t2 ON t1.id = t2.foreign_id;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>LEFT JOIN (LEFT OUTER JOIN)</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT t1.column1, t2.column2
+FROM table1 t1
+LEFT JOIN table2 t2 ON t1.id = t2.foreign_id;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>RIGHT JOIN (RIGHT OUTER JOIN)</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT t1.column1, t2.column2
+FROM table1 t1
+RIGHT JOIN table2 t2 ON t1.id = t2.foreign_id;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>FULL OUTER JOIN (MySQL workaround)</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM table1
+LEFT JOIN table2 ON table1.id = table2.id
+UNION
+SELECT * FROM table1
+RIGHT JOIN table2 ON table1.id = table2.id;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>CROSS JOIN</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM table1
+CROSS JOIN table2;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>SELF JOIN</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT e1.name AS employee, e2.name AS manager
+FROM employees e1
+INNER JOIN employees e2 ON e1.manager_id = e2.id;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Aggregate Functions</h2>
+<h3>Basic Aggregates</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Count rows
+SELECT COUNT(*) FROM table_name;
+SELECT COUNT(column) FROM table_name;
+SELECT COUNT(DISTINCT column) FROM table_name;
+
+-- Sum values
+SELECT SUM(column) FROM table_name;
+
+-- Average
+SELECT AVG(column) FROM table_name;
+
+-- Minimum and Maximum
+SELECT MIN(column) FROM table_name;
+SELECT MAX(column) FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>GROUP BY</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT column1, COUNT(*), AVG(column2)
+FROM table_name
+GROUP BY column1;
+
+-- Multiple grouping columns
+SELECT column1, column2, SUM(column3)
+FROM table_name
+GROUP BY column1, column2;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>HAVING</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Filter groups (use after GROUP BY)
+SELECT column1, COUNT(*) as count
+FROM table_name
+GROUP BY column1
+HAVING COUNT(*) &gt; 10;
+
+-- HAVING with multiple conditions
+SELECT category, AVG(price) as avg_price
+FROM products
+GROUP BY category
+HAVING AVG(price) &gt; 100 AND COUNT(*) &gt;= 5;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Subqueries</h2>
+<h3>Subquery in WHERE</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM employees
+WHERE salary &gt; (SELECT AVG(salary) FROM employees);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Subquery with IN</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM employees
+WHERE department_id IN (
+    SELECT id FROM departments WHERE location = &#x27;NY&#x27;
+);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Subquery in FROM (Derived Table)</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT dept_name, avg_salary
+FROM (
+    SELECT department_id, AVG(salary) as avg_salary
+    FROM employees
+    GROUP BY department_id
+) AS dept_avg
+JOIN departments ON dept_avg.department_id = departments.id;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Correlated Subquery</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT e1.name, e1.salary
+FROM employees e1
+WHERE salary &gt; (
+    SELECT AVG(salary)
+    FROM employees e2
+    WHERE e2.department_id = e1.department_id
+);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>EXISTS</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM customers c
+WHERE EXISTS (
+    SELECT 1 FROM orders o
+    WHERE o.customer_id = c.id
+);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>String Functions</h2>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Concatenation
+SELECT CONCAT(first_name, &#x27; &#x27;, last_name) AS full_name FROM users;
+
+-- Length
+SELECT LENGTH(column) FROM table_name;
+
+-- Substring
+SELECT SUBSTRING(column, start, length) FROM table_name;
+SELECT LEFT(column, n) FROM table_name;
+SELECT RIGHT(column, n) FROM table_name;
+
+-- Case conversion
+SELECT UPPER(column) FROM table_name;
+SELECT LOWER(column) FROM table_name;
+
+-- Trim whitespace
+SELECT TRIM(column) FROM table_name;
+SELECT LTRIM(column) FROM table_name;
+SELECT RTRIM(column) FROM table_name;
+
+-- Replace
+SELECT REPLACE(column, &#x27;old&#x27;, &#x27;new&#x27;) FROM table_name;
+
+-- Position
+SELECT POSITION(&#x27;substring&#x27; IN column) FROM table_name;
+SELECT LOCATE(&#x27;substring&#x27;, column) FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Date Functions</h2>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Current date/time
+SELECT NOW();           -- Current datetime
+SELECT CURDATE();       -- Current date
+SELECT CURTIME();       -- Current time
+
+-- Extract parts
+SELECT YEAR(date_column) FROM table_name;
+SELECT MONTH(date_column) FROM table_name;
+SELECT DAY(date_column) FROM table_name;
+SELECT HOUR(datetime_column) FROM table_name;
+
+-- Date arithmetic
+SELECT DATE_ADD(date_column, INTERVAL 7 DAY) FROM table_name;
+SELECT DATE_SUB(date_column, INTERVAL 1 MONTH) FROM table_name;
+
+-- Date difference
+SELECT DATEDIFF(date1, date2) FROM table_name;
+SELECT TIMESTAMPDIFF(MINUTE, datetime1, datetime2) FROM table_name;
+
+-- Format date
+SELECT DATE_FORMAT(date_column, &#x27;%Y-%m-%d&#x27;) FROM table_name;
+SELECT DATE_FORMAT(datetime_column, &#x27;%W, %M %d, %Y %H:%i:%s&#x27;) FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Window Functions</h2>
+<h3>ROW_NUMBER</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    name,
+    salary,
+    ROW_NUMBER() OVER (ORDER BY salary DESC) as row_num
+FROM employees;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>RANK and DENSE_RANK</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    name,
+    score,
+    RANK() OVER (ORDER BY score DESC) as rank,
+    DENSE_RANK() OVER (ORDER BY score DESC) as dense_rank
+FROM students;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>PARTITION BY</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    department,
+    name,
+    salary,
+    ROW_NUMBER() OVER (PARTITION BY department ORDER BY salary DESC) as dept_rank
+FROM employees;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Aggregate Window Functions</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    name,
+    salary,
+    AVG(salary) OVER (PARTITION BY department) as dept_avg_salary,
+    salary - AVG(salary) OVER (PARTITION BY department) as diff_from_avg
+FROM employees;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>LEAD and LAG</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    date,
+    revenue,
+    LAG(revenue, 1) OVER (ORDER BY date) as prev_day_revenue,
+    LEAD(revenue, 1) OVER (ORDER BY date) as next_day_revenue
+FROM daily_sales;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Transactions</h2>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Start transaction
+START TRANSACTION;
+-- or
+BEGIN;
+
+-- Execute queries
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+
+-- Commit changes
+COMMIT;
+
+-- Or rollback if error
+ROLLBACK;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Transaction with Savepoint</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+SAVEPOINT sp1;
+
+UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+SAVEPOINT sp2;
+
+-- Rollback to savepoint
+ROLLBACK TO sp1;
+
+COMMIT;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Indexes</h2>
+<h3>Create Index</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Single column index
+CREATE INDEX idx_name ON table_name (column);
+
+-- Multiple column index
+CREATE INDEX idx_name ON table_name (column1, column2);
+
+-- Unique index
+CREATE UNIQUE INDEX idx_name ON table_name (column);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Drop Index</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP INDEX idx_name ON table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Show Indexes</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SHOW INDEX FROM table_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Views</h2>
+<h3>Create View</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE VIEW view_name AS
+SELECT column1, column2
+FROM table_name
+WHERE condition;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Use View</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM view_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Update View</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE OR REPLACE VIEW view_name AS
+SELECT new_columns
+FROM table_name
+WHERE new_condition;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Drop View</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP VIEW view_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Stored Procedures</h2>
+<h3>Create Procedure</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DELIMITER //
+CREATE PROCEDURE procedure_name(IN param1 INT, OUT param2 VARCHAR(100))
+BEGIN
+    -- SQL statements
+    SELECT column INTO param2
+    FROM table_name
+    WHERE id = param1;
+END //
+DELIMITER ;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Call Procedure</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CALL procedure_name(value1, @result);
+SELECT @result;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Drop Procedure</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP PROCEDURE procedure_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Triggers</h2>
+<h3>Create Trigger</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DELIMITER //
+CREATE TRIGGER trigger_name
+BEFORE INSERT ON table_name
+FOR EACH ROW
+BEGIN
+    -- Trigger logic
+    SET NEW.created_at = NOW();
+END //
+DELIMITER ;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Trigger Types</h3>
+<ul>
+<li><code>BEFORE INSERT</code>, <code>AFTER INSERT</code></li>
+<li><code>BEFORE UPDATE</code>, <code>AFTER UPDATE</code></li>
+<li><code>BEFORE DELETE</code>, <code>AFTER DELETE</code></li>
+</ul>
+<h3>Drop Trigger</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">DROP TRIGGER trigger_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>CASE Expression</h2>
+<h3>Simple CASE</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    name,
+    CASE grade
+        WHEN &#x27;A&#x27; THEN &#x27;Excellent&#x27;
+        WHEN &#x27;B&#x27; THEN &#x27;Good&#x27;
+        WHEN &#x27;C&#x27; THEN &#x27;Average&#x27;
+        ELSE &#x27;Needs Improvement&#x27;
+    END AS performance
+FROM students;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Searched CASE</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT 
+    name,
+    salary,
+    CASE
+        WHEN salary &gt; 100000 THEN &#x27;High&#x27;
+        WHEN salary &gt; 50000 THEN &#x27;Medium&#x27;
+        ELSE &#x27;Low&#x27;
+    END AS salary_range
+FROM employees;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Set Operations</h2>
+<h3>UNION</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Combine results, remove duplicates
+SELECT column FROM table1
+UNION
+SELECT column FROM table2;
+
+-- Keep duplicates
+SELECT column FROM table1
+UNION ALL
+SELECT column FROM table2;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>INTERSECT (MySQL 8.0+)</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT column FROM table1
+INTERSECT
+SELECT column FROM table2;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>EXCEPT (MySQL workaround)</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT column FROM table1
+WHERE column NOT IN (SELECT column FROM table2);</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Common Table Expressions (CTEs)</h2>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">WITH cte_name AS (
+    SELECT column1, column2
+    FROM table_name
+    WHERE condition
+)
+SELECT * FROM cte_name
+WHERE another_condition;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Recursive CTE</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">WITH RECURSIVE cte_name AS (
+    -- Base case
+    SELECT id, name, parent_id, 1 as level
+    FROM table_name
+    WHERE parent_id IS NULL
+    
+    UNION ALL
+    
+    -- Recursive case
+    SELECT t.id, t.name, t.parent_id, c.level + 1
+    FROM table_name t
+    JOIN cte_name c ON t.parent_id = c.id
+)
+SELECT * FROM cte_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<hr>
+<h2>Best Practices</h2>
+<ol>
+<li><strong>Use appropriate data types</strong> - Choose the smallest type that fits your data</li>
+<li><strong>Index strategically</strong> - Index columns used in WHERE, JOIN, ORDER BY</li>
+<li><strong>Avoid SELECT </strong>* - Specify only needed columns</li>
+<li><strong>Use LIMIT</strong> - When you don&#x27;t need all rows</li>
+<li><strong>Use transactions</strong> - For multiple related updates</li>
+<li><strong>Normalize your database</strong> - Reduce redundancy</li>
+<li><strong>Use meaningful names</strong> - For tables, columns, and constraints</li>
+<li><strong>Comment complex queries</strong> - Explain non-obvious logic</li>
+<li><strong>Test with small datasets first</strong> - Before running on production data</li>
+<li><strong>Back up before major changes</strong> - Always have a recovery plan</li>
+</ol>
+<hr>
+<h2>Performance Tips</h2>
+<ul>
+<li><strong>Use indexes</strong> on columns in WHERE, JOIN, ORDER BY clauses</li>
+<li><strong>Avoid functions in WHERE</strong> - They prevent index usage</li>
+<li><strong>Use EXPLAIN</strong> to analyze query performance</li>
+<li><strong>Limit returned rows</strong> with WHERE and LIMIT</li>
+<li><strong>Use EXISTS instead of IN</strong> for large subqueries</li>
+<li><strong>Avoid wildcard at start</strong> of LIKE pattern (<code>%abc</code> prevents index use)</li>
+<li><strong>Use appropriate JOIN types</strong> - Don&#x27;t use LEFT JOIN when INNER JOIN suffices</li>
+<li><strong>Batch operations</strong> instead of row-by-row updates</li>
+<li><strong>Optimize subqueries</strong> - Consider using JOINs or EXISTS</li>
+<li><strong>Keep statistics updated</strong> - Run ANALYZE TABLE regularly</li>
+</ul>
+<hr>
+<p><strong>For more details, visit the <a href="https://dev.mysql.com/doc/">MySQL Documentation</a></strong></p>
+</body>
+</html>

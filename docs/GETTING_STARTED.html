@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with DBMS-SQL-Labs</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<h1>Getting Started with DBMS-SQL-Labs</h1>
+<h2>📋 Table of Contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#prerequisites">Prerequisites</a></li>
+<li><a href="#installation--setup">Installation &amp; Setup</a></li>
+<li><a href="#quick-start-guide">Quick Start Guide</a></li>
+<li><a href="#lab-navigation">Lab Navigation</a></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#additional-resources">Additional Resources</a></li>
+</ul>
+<h2>Introduction</h2>
+<p>Welcome to DBMS-SQL-Labs! This repository contains a comprehensive collection of hands-on SQL laboratories designed to teach database concepts from basic queries to advanced database management techniques. Whether you&#x27;re a beginner learning SQL for the first time or an experienced developer looking to sharpen your database skills, these labs provide structured, practical experience.</p>
+<h2>Prerequisites</h2>
+<h3>Required Knowledge</h3>
+<ul>
+<li>Basic understanding of computer programming concepts</li>
+<li>Familiarity with command-line interfaces</li>
+<li>Basic understanding of data structures</li>
+</ul>
+<h3>Software Requirements</h3>
+<h4>1. Database Management System</h4>
+<p>You&#x27;ll need at least one of the following:</p>
+<p><strong>MySQL/MariaDB</strong> (Recommended for most labs)</p>
+<ul>
+<li>Download: <a href="https://dev.mysql.com/downloads/mysql/">MySQL Community Server</a></li>
+<li>Or install via package manager:</li>
+</ul>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">  # Ubuntu/Debian
+  sudo apt-get update
+  sudo apt-get install mysql-server
+  
+  # macOS (using Homebrew)
+  brew install mysql
+  
+  # Windows
+  # Download installer from MySQL website</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>PostgreSQL</strong> (Alternative option)</p>
+<ul>
+<li>Download: <a href="https://www.postgresql.org/download/">PostgreSQL</a></li>
+</ul>
+<h4>2. Programming Languages (for integration labs)</h4>
+<p><strong>Python</strong> (Labs 13-15)</p>
+<ul>
+<li>Python 3.7 or higher</li>
+<li>Install MySQL connector:</li>
+</ul>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">  pip install mysql-connector-python
+  pip install pymysql</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Java</strong> (Lab 12)</p>
+<ul>
+<li>JDK 11 or higher</li>
+<li>MySQL Connector/J library</li>
+<li>Maven or Gradle (recommended)</li>
+</ul>
+<p><strong>Node.js</strong> (Labs 7-8)</p>
+<ul>
+<li>Node.js 14 or higher</li>
+<li>Install MySQL package:</li>
+</ul>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">  npm install mysql2</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>3. Additional Tools</h4>
+<p><strong>Jupyter Notebooks</strong> (For interactive labs)</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">pip install jupyter
+pip install ipython-sql
+pip install pymysql</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>MongoDB</strong> (Lab 20)</p>
+<ul>
+<li>Download: <a href="https://www.mongodb.com/try/download/community">MongoDB Community Edition</a></li>
+</ul>
+<p><strong>Neo4j</strong> (Lab 21)</p>
+<ul>
+<li>Download: <a href="https://neo4j.com/download/">Neo4j Desktop</a></li>
+</ul>
+<p><strong>Database GUI Tools</strong> (Optional but recommended)</p>
+<ul>
+<li><a href="https://dev.mysql.com/downloads/workbench/">MySQL Workbench</a></li>
+<li><a href="https://dbeaver.io/">DBeaver</a> (Universal database tool)</li>
+<li><a href="https://www.jetbrains.com/datagrip/">DataGrip</a> (Commercial)</li>
+</ul>
+<h2>Installation &amp; Setup</h2>
+<h3>Step 1: Clone the Repository</h3>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">git clone https://github.com/TeachingOW/DBMS-SQL-Labs.git
+cd DBMS-SQL-Labs</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Step 2: Set Up MySQL</h3>
+<ol>
+<li>Start MySQL service:</li>
+</ol>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">   # Linux
+   sudo systemctl start mysql
+   
+   # macOS
+   brew services start mysql
+   
+   # Windows
+   # Use MySQL Workbench or Services panel</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<ol>
+<li>Secure your installation (recommended):</li>
+</ol>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">   sudo mysql_secure_installation</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<ol>
+<li>Log into MySQL:</li>
+</ol>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash">   mysql -u root -p</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<ol>
+<li>Create a database for practice:</li>
+</ol>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">   CREATE DATABASE practice_db;
+   USE practice_db;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Step 3: Test Your Setup</h3>
+<p>Run a simple query to verify everything works:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT &#x27;Hello, SQL!&#x27; AS greeting;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>If you see the output, you&#x27;re ready to start!</p>
+<h2>Quick Start Guide</h2>
+<h3>For Complete Beginners</h3>
+<p>Start with these labs in order:</p>
+<ol>
+<li><strong>Lab 1</strong>: <a href="../labs/01_foundations/foundations_lab.html">Database Creation &amp; Basic Queries</a></li>
+</ol>
+<ul>
+<li>Learn to create databases and tables</li>
+<li>Master SELECT statements</li>
+<li>Understand basic data types</li>
+</ul>
+<ol>
+<li><strong>labs/01_foundations/inclass_exercise.html</strong>: <a href="../labs/01_foundations/inclass_exercise.html">Workers Database</a></li>
+</ol>
+<ul>
+<li>Practice CREATE TABLE and INSERT</li>
+<li>Apply what you learned in Lab 1</li>
+</ul>
+<ol>
+<li><strong>Lab 2</strong>: <a href="../labs/02_single_table/single_table_queries.html">Advanced Queries &amp; Joins</a></li>
+</ol>
+<ul>
+<li>Multi-table queries</li>
+<li>JOIN operations</li>
+<li>Complex WHERE clauses</li>
+</ul>
+<h3>For Intermediate Users</h3>
+<p>If you already know basic SQL:</p>
+<ol>
+<li><strong>Lab 7</strong>: <a href="../labs/06_case_expression/case_expression.html">CASE Expressions</a></li>
+<li><strong>Lab 8</strong>: <a href="../labs/07_window_recursive/window_recursive.html">Window Functions</a></li>
+<li><strong>Lab 9</strong>: <a href="../labs/09_views/views.html">Views</a></li>
+</ol>
+<h3>For Advanced Users</h3>
+<p>Jump to these advanced topics:</p>
+<ol>
+<li><strong>Lab 16</strong>: <a href="../labs/12_transactions_triggers/triggers.html">Triggers &amp; Stored Procedures</a></li>
+<li><strong>Lab 17</strong>: <a href="../labs/12_transactions_triggers/transactions.html">Transaction Management</a></li>
+<li><strong>Lab 20</strong>: <a href="../labs/13_nosql/mongodb.html">MongoDB (NoSQL)</a></li>
+<li><strong>Lab 21</strong>: <a href="../labs/13_nosql/neo4j.html">Neo4j (Graph Database)</a></li>
+</ol>
+<h2>Lab Navigation</h2>
+<h3>Lab Structure</h3>
+<p>Each lab follows this structure:</p>
+<ul>
+<li><strong>Learning Objectives</strong>: What you&#x27;ll learn</li>
+<li><strong>Prerequisites</strong>: Required knowledge</li>
+<li><strong>Introduction</strong>: Concept overview</li>
+<li><strong>Exercises</strong>: Hands-on practice</li>
+<li><strong>Solutions</strong>: Example solutions (where applicable)</li>
+<li><strong>Additional Resources</strong>: Further reading</li>
+</ul>
+<h3>Lab Categories</h3>
+<h4>📘 Foundational Labs (Weeks 1-4)</h4>
+<ul>
+<li>Basic SQL operations</li>
+<li>Table creation and data manipulation</li>
+<li>Simple queries and filtering</li>
+</ul>
+<h4>📗 Intermediate Labs (Weeks 5-8)</h4>
+<ul>
+<li>Complex queries and joins</li>
+<li>Aggregate functions</li>
+<li>Set operations</li>
+<li>Window functions</li>
+</ul>
+<h4>📙 Advanced SQL (Weeks 9-12)</h4>
+<ul>
+<li>Stored procedures and triggers</li>
+<li>Transaction management</li>
+<li>Optimization techniques</li>
+<li>Database design</li>
+</ul>
+<h4>📕 Programming Integration (Weeks 13-14)</h4>
+<ul>
+<li>Python database connectivity</li>
+<li>Java database integration</li>
+<li>Web application development</li>
+</ul>
+<h4>📓 Modern Databases (Weeks 15-16)</h4>
+<ul>
+<li>NoSQL databases</li>
+<li>Graph databases</li>
+<li>JSON/XML handling</li>
+</ul>
+<h2>Troubleshooting</h2>
+<h3>Common Issues</h3>
+<h4>1. &quot;Access denied for user&quot;</h4>
+<p><strong>Problem</strong>: Can&#x27;t connect to MySQL <strong>Solution</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash"># Reset MySQL root password
+sudo mysql
+ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; IDENTIFIED WITH mysql_native_password BY &#x27;newpassword&#x27;;
+FLUSH PRIVILEGES;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>2. &quot;Can&#x27;t connect to local MySQL server&quot;</h4>
+<p><strong>Problem</strong>: MySQL service not running <strong>Solution</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-bash"># Start MySQL service
+sudo systemctl start mysql  # Linux
+brew services start mysql   # macOS</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>3. &quot;Unknown database&quot;</h4>
+<p><strong>Problem</strong>: Database doesn&#x27;t exist <strong>Solution</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Create the database first
+CREATE DATABASE your_database_name;
+USE your_database_name;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>4. &quot;Table doesn&#x27;t exist&quot;</h4>
+<p><strong>Problem</strong>: Trying to query a table that hasn&#x27;t been created <strong>Solution</strong>:</p>
+<ul>
+<li>Make sure you&#x27;ve run the CREATE TABLE statement</li>
+<li>Check you&#x27;re in the correct database: <code>SELECT DATABASE();</code></li>
+<li>List all tables: <code>SHOW TABLES;</code></li>
+</ul>
+<h4>5. Jupyter Notebook can&#x27;t connect to MySQL</h4>
+<p><strong>Problem</strong>: Jupyter can&#x27;t find MySQL connection <strong>Solution</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python"># Install required packages
+!pip install pymysql ipython-sql
+
+# Load SQL extension
+%load_ext sql
+
+# Connect to MySQL
+%sql mysql+pymysql://username:password@localhost/database_name</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h3>Getting Help</h3>
+<ul>
+<li>Check the <a href="../Readme.md">Main README</a> for overview</li>
+<li>Review specific lab instructions carefully</li>
+<li>Search for error messages online</li>
+<li>Post issues on the <a href="https://github.com/TeachingOW/DBMS-SQL-Labs/issues">GitHub repository</a></li>
+</ul>
+<h2>Additional Resources</h2>
+<h3>Learning Platforms</h3>
+<ul>
+<li><a href="https://sqlzoo.net/">SQLZoo</a> - Interactive SQL tutorials</li>
+<li><a href="https://www.w3schools.com/sql/">W3Schools SQL</a> - SQL reference and examples</li>
+<li><a href="https://leetcode.com/problemset/database/">LeetCode Database</a> - Practice problems</li>
+<li><a href="https://www.hackerrank.com/domains/sql">HackerRank SQL</a> - SQL challenges</li>
+</ul>
+<h3>Documentation</h3>
+<ul>
+<li><a href="https://dev.mysql.com/doc/">MySQL Official Documentation</a></li>
+<li><a href="https://www.postgresql.org/docs/">PostgreSQL Documentation</a></li>
+<li><a href="https://docs.mongodb.com/manual/">MongoDB Manual</a></li>
+<li><a href="https://neo4j.com/docs/">Neo4j Documentation</a></li>
+</ul>
+<h3>Video Tutorials</h3>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=7S_tz1z_5bA">MySQL Tutorial for Beginners</a> (Programming with Mosh)</li>
+<li><a href="https://www.youtube.com/watch?v=HXV3zeQKqGY">SQL Full Course</a> (freeCodeCamp)</li>
+</ul>
+<h3>Books</h3>
+<ul>
+<li>&quot;SQL in 10 Minutes&quot; by Ben Forta</li>
+<li>&quot;Learning SQL&quot; by Alan Beaulieu</li>
+<li>&quot;Database System Concepts&quot; by Silberschatz, Korth, and Sudarshan</li>
+</ul>
+<h3>Practice Datasets</h3>
+<p>The <code>data/</code> directory contains several datasets for practice:</p>
+<ul>
+<li><strong>IMDB Movie Data</strong>: Movie ratings and information</li>
+<li><strong>Employee Data</strong>: HR database with hierarchies</li>
+<li><strong>Drivers Database</strong>: Complete relational database example</li>
+<li><strong>Student Grades</strong>: Academic performance data</li>
+</ul>
+<h2>Next Steps</h2>
+<p>Once you&#x27;ve completed the setup:</p>
+<ol>
+<li>✅ Start with <a href="../labs/01_foundations/foundations_lab.html">Lab 1: Basic Queries</a></li>
+<li>✅ Complete the <a href="../labs/01_foundations/inclass_exercise.html">labs/01_foundations/inclass_exercise.html</a></li>
+<li>✅ Progress through labs sequentially</li>
+<li>✅ Practice with the provided datasets</li>
+<li>✅ Try the challenge exercises</li>
+<li>✅ Build your own projects using learned concepts</li>
+</ol>
+<p>Happy Learning! 🚀</p>
+<hr>
+<p><strong>Need Help?</strong></p>
+<ul>
+<li>Open an issue on GitHub</li>
+<li>Check the troubleshooting section above</li>
+<li>Review the main README for additional guidance</li>
+</ul>
+</body>
+</html>

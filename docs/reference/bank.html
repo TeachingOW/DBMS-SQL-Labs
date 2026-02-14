@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bank</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<h3>Assignment: Implement Overdraft Fees in a Bank Account System</h3>
+<h4>Background:</h4>
+<p>You are tasked with simulating the transactions of a bank account. You have been given a starting schema that keeps track of user transactions, including deposits and withdrawals, and automatically calculates the running balance for each user.</p>
+<h4>Task:</h4>
+<p>Currently, when a user withdraws money from their account, the balance is updated accordingly. However, if a withdrawal causes the balance to go below zero, an <strong>overdraft fee</strong> should be applied. The overdraft fee should be added to the transaction table as a separate line item.</p>
+<p>You are required to implement the following:</p>
+<ol>
+<li><strong>Overdraft Fee Logic</strong>: If a user’s account balance goes below zero after a withdrawal, an overdraft fee of $25.00 should be charged.</li>
+<li><strong>Separate Overdraft Transaction</strong>: The overdraft fee should appear as a separate transaction with a type of <code>&#x27;overdraft_fee&#x27;</code> and a negative amount in the transaction table.</li>
+</ol>
+<h4>Given Schema:</h4>
+<p>You are provided with the following code to get started. This code creates the necessary table (<code>TR</code>) to store transactions and a trigger that calculates the running balance after each transaction.</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE TABLE TR (
+	tid INT AUTO_INCREMENT PRIMARY KEY,
+	userid INT,
+	amount DECIMAL(10,2),
+	type CHAR(10)
+);
+
+ALTER TABLE TR ADD COLUMN balance DECIMAL(10,2);
+
+DELIMITER //
+CREATE TRIGGER running_balance 
+BEFORE INSERT ON TR
+FOR EACH ROW
+BEGIN
+DECLARE user_balance DECIMAL(10,2);
+
+SELECT balance INTO user_balance FROM TR  WHERE userid=NEW.userid ORDER BY tid DESC LIMIT 1;
+IF user_balance IS NULL THEN 
+SET user_balance=0;
+END IF;
+IF NEW.type=&#x27;withdraw&#x27; THEN
+SET user_balance=user_balance -NEW.amount;
+END IF;
+
+IF NEW.type=&#x27;deposit&#x27; THEN
+	SET user_balance=user_balance + NEW.amount;
+END IF;
+
+SET NEW.balance=user_balance;
+
+END //
+DELIMITER ;
+
+INSERT INTO TR (userid, amount, type) VALUES (1,20,&#x27;deposit&#x27;);
+INSERT INTO TR (userid, amount, type) VALUES (2,30,&#x27;deposit&#x27;);
+INSERT INTO TR (userid, amount, type) VALUES (2,10,&#x27;withdraw&#x27;);
+INSERT INTO TR (userid, amount, type) VALUES (2,30,&#x27;withdraw&#x27;);
+
+SELECT * FROM TR;</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<h4>Instructions:</h4>
+<ol>
+<li><strong>Modify the Trigger</strong>: Update the <code>running_balance</code> trigger to check if the account balance goes below zero after a withdrawal. If it does, add an overdraft fee transaction.</li>
+</ol>
+<ol>
+<li><strong>Overdraft Fee Transaction</strong>: Add a new transaction with:</li>
+</ol>
+<ul>
+<li>A type of <code>&#x27;overdraft_fee&#x27;</code></li>
+<li>A negative amount of <code>-25.00</code> (this represents the fee charged for overdrafting).</li>
+</ul>
+<ol>
+<li><strong>Test Your Implementation</strong>: Insert several transactions, including withdrawals that will cause the balance to go negative, and verify that the overdraft fee is correctly applied as a separate transaction.</li>
+</ol>
+<h4>Example:</h4>
+<p>After running the following series of transactions:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">INSERT INTO TR (userid, amount, type) VALUES (1, 50, &#x27;deposit&#x27;);  -- User 1 deposits $50
+INSERT INTO TR (userid, amount, type) VALUES (1, 70, &#x27;withdraw&#x27;); -- User 1 withdraws $70
+INSERT INTO TR (userid, amount, type) VALUES (1, 10, &#x27;withdraw&#x27;); -- User 1 withdraws another $10 (total balance -30)</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>The expected output in the <code>TR</code> table should look like:</p>
+<table>
+  <thead>
+    <tr>
+      <th>tid</th>
+      <th>userid</th>
+      <th>amount</th>
+      <th>type</th>
+      <th>balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1</td>
+      <td>50.00</td>
+      <td>deposit</td>
+      <td>50.00</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1</td>
+      <td>70.00</td>
+      <td>withdraw</td>
+      <td>-20.00</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>1</td>
+      <td>10.00</td>
+      <td>withdraw</td>
+      <td>-30.00</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1</td>
+      <td>25.00</td>
+      <td>overdraft_fee</td>
+      <td>-55.00</td>
+    </tr>
+  </tbody>
+</table>
+<h4>Submission:</h4>
+<p>Submit the SQL code for the trigger and any necessary modifications to the schema. Be sure to include sample test cases that demonstrate how your solution works.</p>
+<hr>
+</body>
+</html>

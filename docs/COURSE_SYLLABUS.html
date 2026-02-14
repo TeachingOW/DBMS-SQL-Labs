@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Management Systems - Course Syllabus</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        /* Code block wrapper with copy button */
+        .code-block-wrapper {
+          position: relative;
+          margin: 20px 0;
+          max-width: 100%;
+        }
+        
+        .code-block-wrapper pre {
+          margin: 0;
+          overflow-x: auto;
+          max-width: 100%;
+        }
+        
+        .copy-button {
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          padding: 6px 8px;
+          background-color: rgba(255, 255, 255, 0.9);
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+          opacity: 0.7;
+          transition: opacity 0.2s, background-color 0.2s;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+        }
+        
+        .copy-button:hover {
+          opacity: 1;
+          background-color: #fff;
+        }
+        
+        .copy-button:active {
+          background-color: #e0e0e0;
+        }
+        
+        .copy-button.copied {
+          background-color: #4caf50;
+          color: white;
+          border-color: #4caf50;
+        }
+        
+        .copy-button svg {
+          display: block;
+        }
+        
+        h1, h2, h3, h4 { color: #333; }
+        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        ul, ol { margin-left: 20px; }
+        blockquote { 
+            border-left: 4px solid #ddd; 
+            margin-left: 0; 
+            padding-left: 20px; 
+            color: #666; 
+        }
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    
+    <script>
+    function copyCode(button) {
+        const wrapper = button.closest('.code-block-wrapper');
+        const codeBlock = wrapper.querySelector('code');
+        const text = codeBlock.textContent;
+        
+        navigator.clipboard.writeText(text).then(() => {
+            button.classList.add('copied');
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.classList.remove('copied');
+                button.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>`;
+            }, 2000);
+        });
+    }
+    </script>
+</head>
+<body>
+<h1>Database Management Systems - Course Syllabus</h1>
+<h2>Course Information</h2>
+<p><strong>Course Title</strong>: Database Management Systems with SQL <strong>Course Code</strong>: DBMS-SQL-Labs <strong>Duration</strong>: 16 Weeks <strong>Credit Hours</strong>: 3-4 credits <strong>Prerequisites</strong>: Basic programming knowledge</p>
+<h2>Course Description</h2>
+<p>This course provides comprehensive hands-on experience with database systems, from fundamental SQL operations to advanced database concepts and modern database technologies. Students will learn to design, implement, query, and manage relational databases while also exploring NoSQL and graph database systems.</p>
+<h2>Learning Outcomes</h2>
+<p>Upon successful completion of this course, students will be able to:</p>
+<ol>
+<li>Design and implement normalized relational database schemas</li>
+<li>Write complex SQL queries using joins, subqueries, and aggregate functions</li>
+<li>Create and manage database objects (tables, views, triggers, stored procedures)</li>
+<li>Implement database transactions with appropriate isolation levels</li>
+<li>Connect applications to databases using multiple programming languages</li>
+<li>Understand and apply database optimization techniques</li>
+<li>Work with modern database technologies including NoSQL and graph databases</li>
+<li>Implement database security and integrity constraints</li>
+</ol>
+<h2>Course Structure</h2>
+<h3>Module 1: Database Fundamentals (Weeks 1-4)</h3>
+<p><strong>Topics:</strong></p>
+<ul>
+<li>Database concepts and architecture</li>
+<li>SQL basics: CREATE, INSERT, SELECT, UPDATE, DELETE</li>
+<li>Data types and constraints</li>
+<li>Primary and foreign keys</li>
+<li>Basic queries and filtering</li>
+</ul>
+<p><strong>Labs:</strong></p>
+<ul>
+<li>Lab 1: Database Creation &amp; Basic Queries</li>
+<li>Lab 2: Advanced Queries &amp; Joins</li>
+<li>Lab 3: Foreign Keys &amp; Relationships</li>
+<li>Lab 4: Multi-Table Operations</li>
+<li>labs/01_foundations/inclass_exercise.html: Workers Database</li>
+</ul>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Quiz 1: SQL Basics</li>
+<li>Assignment 1: Create a database schema</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>Create databases and tables with appropriate data types</li>
+<li>Write SELECT queries with WHERE, ORDER BY, and LIMIT</li>
+<li>Understand primary and foreign key relationships</li>
+<li>Perform basic INSERT, UPDATE, and DELETE operations</li>
+</ul>
+<hr>
+<h3>Module 2: Advanced SQL Queries (Weeks 5-8)</h3>
+<p><strong>Topics:</strong></p>
+<ul>
+<li>Set operations (UNION, INTERSECT, EXCEPT)</li>
+<li>Subqueries and nested queries</li>
+<li>Aggregate functions and GROUP BY</li>
+<li>HAVING clause</li>
+<li>CASE expressions</li>
+<li>Window functions and analytical queries</li>
+<li>Common Table Expressions (CTEs)</li>
+<li>Recursive queries</li>
+</ul>
+<p><strong>Labs:</strong></p>
+<ul>
+<li>Lab 5: Set Operations &amp; Nested Queries</li>
+<li>Lab 6: Aggregate Functions &amp; Grouping</li>
+<li>Lab 7: CASE Expressions</li>
+<li>Lab 8: Window Functions &amp; Recursive Queries</li>
+</ul>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Quiz 2: Advanced SQL</li>
+<li>Assignment 2: Complex query problems</li>
+<li>Midterm Project: Database analysis report</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>Write complex multi-table queries</li>
+<li>Use aggregate functions effectively</li>
+<li>Apply window functions for analytical queries</li>
+<li>Implement conditional logic with CASE expressions</li>
+</ul>
+<hr>
+<h3>Module 3: Database Design &amp; Normalization (Weeks 9-10)</h3>
+<p><strong>Topics:</strong></p>
+<ul>
+<li>Entity-Relationship (ER) modeling</li>
+<li>Database normalization (1NF, 2NF, 3NF, BCNF)</li>
+<li>Denormalization and when to use it</li>
+<li>Database design patterns</li>
+<li>Views and virtual tables</li>
+</ul>
+<p><strong>Labs:</strong></p>
+<ul>
+<li>Lab 9: Views &amp; Virtual Tables</li>
+<li>Lab 10: Database Normalization</li>
+<li>Lab 11: Advanced SQL Techniques</li>
+</ul>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Quiz 3: Database Design</li>
+<li>Assignment 3: Design and normalize a database</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>Create ER diagrams</li>
+<li>Apply normalization principles</li>
+<li>Design efficient database schemas</li>
+<li>Create and use views for data abstraction</li>
+</ul>
+<hr>
+<h3>Module 4: Database Programming (Weeks 11-12)</h3>
+<p><strong>Topics:</strong></p>
+<ul>
+<li>Stored procedures</li>
+<li>Functions</li>
+<li>Triggers</li>
+<li>Cursors</li>
+<li>Transaction management</li>
+<li>ACID properties</li>
+<li>Concurrency control</li>
+<li>Isolation levels</li>
+</ul>
+<p><strong>Labs:</strong></p>
+<ul>
+<li>Lab 12: Java Database Interface</li>
+<li>Lab 13: Python Database Interface</li>
+<li>Lab 14: Jupyter Notebook Integration</li>
+<li>Lab 15: Analytical Functions</li>
+<li>Lab 16: Triggers &amp; Stored Procedures</li>
+<li>Lab 17: Transaction Management</li>
+<li>Lab 18: Isolation Levels</li>
+</ul>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Quiz 4: Database Programming</li>
+<li>Assignment 4: Implement triggers and stored procedures</li>
+<li>Assignment 5: Bank transaction system</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>Write stored procedures and functions</li>
+<li>Implement database triggers</li>
+<li>Manage transactions with proper isolation levels</li>
+<li>Connect databases to applications using Python and Java</li>
+</ul>
+<hr>
+<h3>Module 5: Modern Database Technologies (Weeks 13-16)</h3>
+<p><strong>Topics:</strong></p>
+<ul>
+<li>Semi-structured data (JSON, XML)</li>
+<li>NoSQL databases</li>
+<li>Document databases (MongoDB)</li>
+<li>Graph databases (Neo4j)</li>
+<li>Database optimization and indexing</li>
+<li>Query performance tuning</li>
+</ul>
+<p><strong>Labs:</strong></p>
+<ul>
+<li>Lab 19: JSON &amp; XML Processing</li>
+<li>Lab 20: MongoDB (NoSQL)</li>
+<li>Lab 21: Neo4j (Graph Database)</li>
+</ul>
+<p><strong>Deliverables:</strong></p>
+<ul>
+<li>Quiz 5: Modern Databases</li>
+<li>Assignment 6: NoSQL project</li>
+<li>Final Project: Complete database application</li>
+</ul>
+<p><strong>Learning Objectives:</strong></p>
+<ul>
+<li>Work with JSON and XML data in SQL</li>
+<li>Understand NoSQL database concepts</li>
+<li>Perform CRUD operations in MongoDB</li>
+<li>Write Cypher queries for Neo4j</li>
+<li>Choose appropriate database types for different use cases</li>
+</ul>
+<hr>
+<h2>Grading Policy</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Lab Assignments</td>
+      <td>30%</td>
+    </tr>
+    <tr>
+      <td>Quizzes (5)</td>
+      <td>20%</td>
+    </tr>
+    <tr>
+      <td>Midterm Project</td>
+      <td>15%</td>
+    </tr>
+    <tr>
+      <td>Final Project</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>Class Participation</td>
+      <td>10%</td>
+    </tr>
+  </tbody>
+</table>
+<h3>Grading Scale</h3>
+<ul>
+<li>A: 90-100%</li>
+<li>B: 80-89%</li>
+<li>C: 70-79%</li>
+<li>D: 60-69%</li>
+<li>F: Below 60%</li>
+</ul>
+<h2>Required Materials</h2>
+<h3>Software (All Free/Open Source)</h3>
+<ul>
+<li>MySQL Community Server or MariaDB</li>
+<li>Python 3.7+ with MySQL connector</li>
+<li>Java JDK 11+</li>
+<li>Jupyter Notebook</li>
+<li>MongoDB Community Edition</li>
+<li>Neo4j Desktop</li>
+<li>A code editor (VS Code, IntelliJ IDEA, or similar)</li>
+</ul>
+<h3>Optional Tools</h3>
+<ul>
+<li>MySQL Workbench (GUI tool)</li>
+<li>DBeaver (Universal database tool)</li>
+<li>Postman (API testing)</li>
+</ul>
+<h3>Textbooks &amp; Resources</h3>
+<p><strong>Primary Resource:</strong></p>
+<ul>
+<li>Course Repository: <a href="https://github.com/TeachingOW/DBMS-SQL-Labs">DBMS-SQL-Labs</a></li>
+</ul>
+<p><strong>Recommended Reading:</strong></p>
+<ul>
+<li>&quot;Learning SQL&quot; by Alan Beaulieu (O&#x27;Reilly)</li>
+<li>&quot;Database System Concepts&quot; by Silberschatz, Korth, and Sudarshan</li>
+<li>MySQL Official Documentation</li>
+</ul>
+<p><strong>Online Resources:</strong></p>
+<ul>
+<li>SQLZoo (https://sqlzoo.net/)</li>
+<li>W3Schools SQL Tutorial</li>
+<li>DataLemur SQL Interview Questions</li>
+</ul>
+<h2>Course Policies</h2>
+<h3>Attendance</h3>
+<ul>
+<li>Regular attendance expected for lab sessions</li>
+<li>More than 3 unexcused absences may affect your grade</li>
+</ul>
+<h3>Late Work</h3>
+<ul>
+<li>Assignments submitted late will incur a 10% penalty per day</li>
+<li>No submissions accepted after 5 days past the deadline</li>
+<li>Extensions may be granted for extenuating circumstances</li>
+</ul>
+<h3>Academic Integrity</h3>
+<ul>
+<li>Collaboration is encouraged for learning, but all submitted work must be your own</li>
+<li>Plagiarism or cheating will result in a zero for the assignment and possible disciplinary action</li>
+<li>Cite any external resources used</li>
+</ul>
+<h3>Accessibility</h3>
+<ul>
+<li>Students with disabilities should contact the instructor to discuss accommodations</li>
+<li>All course materials will be made available in accessible formats upon request</li>
+</ul>
+<h2>Weekly Schedule</h2>
+<h3>Week 1: Introduction to Databases</h3>
+<ul>
+<li>Topics: Database concepts, DBMS overview, SQL introduction</li>
+<li>Lab: Lab 1 - Database Creation &amp; Basic Queries</li>
+<li>Reading: Getting Started Guide</li>
+</ul>
+<h3>Week 2: Basic SQL Operations</h3>
+<ul>
+<li>Topics: SELECT, INSERT, UPDATE, DELETE, WHERE clause</li>
+<li>Lab: labs/01_foundations/inclass_exercise.html - Workers Database</li>
+<li>Quiz: SQL Basics Concepts</li>
+</ul>
+<h3>Week 3: Relationships and Joins</h3>
+<ul>
+<li>Topics: Primary keys, Foreign keys, JOIN operations</li>
+<li>Lab: Lab 3 - Foreign Keys &amp; Relationships</li>
+<li>Assignment 1 Due</li>
+</ul>
+<h3>Week 4: Multi-Table Queries</h3>
+<ul>
+<li>Topics: Inner joins, Outer joins, Cross joins</li>
+<li>Lab: Lab 4 - Multi-Table Operations</li>
+<li>Quiz 1: SQL Fundamentals</li>
+</ul>
+<h3>Week 5: Set Operations</h3>
+<ul>
+<li>Topics: UNION, INTERSECT, EXCEPT, Subqueries</li>
+<li>Lab: Lab 5 - Set Operations &amp; Nested Queries</li>
+</ul>
+<h3>Week 6: Aggregate Functions</h3>
+<ul>
+<li>Topics: COUNT, SUM, AVG, GROUP BY, HAVING</li>
+<li>Lab: Lab 6 - Aggregate Functions &amp; Grouping</li>
+<li>Assignment 2 Due</li>
+</ul>
+<h3>Week 7: Conditional Logic</h3>
+<ul>
+<li>Topics: CASE expressions, IF statements</li>
+<li>Lab: Lab 7 - CASE Expressions</li>
+<li>Quiz 2: Advanced SQL</li>
+</ul>
+<h3>Week 8: Analytical Queries</h3>
+<ul>
+<li>Topics: Window functions, ROW_NUMBER, RANK, PARTITION BY</li>
+<li>Lab: Lab 8 - Window Functions &amp; Recursive Queries</li>
+<li><strong>Midterm Project Due</strong></li>
+</ul>
+<h3>Week 9: Database Design</h3>
+<ul>
+<li>Topics: ER modeling, Normalization (1NF, 2NF, 3NF)</li>
+<li>Lab: Lab 10 - Database Normalization</li>
+</ul>
+<h3>Week 10: Views and Virtual Tables</h3>
+<ul>
+<li>Topics: Creating views, Updatable views, Materialized views</li>
+<li>Lab: Lab 9 - Views &amp; Virtual Tables</li>
+<li>Quiz 3: Database Design</li>
+</ul>
+<h3>Week 11: Database Programming I</h3>
+<ul>
+<li>Topics: Stored procedures, Functions, Parameters</li>
+<li>Lab: Lab 16 - Triggers &amp; Stored Procedures</li>
+<li>Assignment 3 Due</li>
+</ul>
+<h3>Week 12: Database Programming II</h3>
+<ul>
+<li>Topics: Transactions, ACID, Isolation levels</li>
+<li>Lab: Lab 17 - Transaction Management</li>
+<li>Lab: Lab 18 - Isolation Levels</li>
+<li>Assignment 4 Due</li>
+</ul>
+<h3>Week 13: Application Integration</h3>
+<ul>
+<li>Topics: JDBC, Python DB-API, Connection pooling</li>
+<li>Lab: Lab 12 - Java Database Interface</li>
+<li>Lab: Lab 13 - Python Database Interface</li>
+<li>Quiz 4: Database Programming</li>
+</ul>
+<h3>Week 14: Analytical Tools</h3>
+<ul>
+<li>Topics: Jupyter notebooks, ROLLUP, CUBE</li>
+<li>Lab: Lab 14 - Jupyter Notebook Integration</li>
+<li>Lab: Lab 15 - Analytical Functions</li>
+</ul>
+<h3>Week 15: NoSQL Databases</h3>
+<ul>
+<li>Topics: JSON/XML, MongoDB, Document databases</li>
+<li>Lab: Lab 19 - JSON &amp; XML Processing</li>
+<li>Lab: Lab 20 - MongoDB</li>
+<li>Assignment 5 Due</li>
+</ul>
+<h3>Week 16: Graph Databases</h3>
+<ul>
+<li>Topics: Graph theory, Neo4j, Cypher language</li>
+<li>Lab: Lab 21 - Neo4j (Graph Database)</li>
+<li>Quiz 5: Modern Databases</li>
+<li><strong>Final Project Due</strong></li>
+</ul>
+<h2>Projects</h2>
+<h3>Midterm Project: Database Analysis Report</h3>
+<p>Create a comprehensive database for a real-world scenario, including:</p>
+<ul>
+<li>ER diagram</li>
+<li>Normalized schema (3NF minimum)</li>
+<li>10+ complex SQL queries</li>
+<li>Analysis and insights from the data</li>
+<li>Documentation</li>
+</ul>
+<h3>Final Project: Complete Database Application</h3>
+<p>Build a full-stack application with:</p>
+<ul>
+<li>Well-designed database backend</li>
+<li>Application in Python or Java</li>
+<li>User interface (web or desktop)</li>
+<li>CRUD operations</li>
+<li>Transaction management</li>
+<li>Documentation and presentation</li>
+</ul>
+<h3>Project Ideas</h3>
+<ul>
+<li>E-commerce platform</li>
+<li>Library management system</li>
+<li>Hospital patient management</li>
+<li>Social media clone</li>
+<li>Inventory management system</li>
+<li>Online learning platform</li>
+<li>Banking system</li>
+<li>Restaurant ordering system</li>
+</ul>
+<h2>Additional Support</h2>
+<h3>Office Hours</h3>
+<ul>
+<li>Monday &amp; Wednesday: 2:00 PM - 4:00 PM</li>
+<li>Or by appointment</li>
+</ul>
+<h3>Online Resources</h3>
+<ul>
+<li>Course repository: GitHub</li>
+<li>Discussion forum: Course website</li>
+<li>Email response time: Within 24 hours on weekdays</li>
+</ul>
+<h3>Study Groups</h3>
+<p>Students are encouraged to form study groups for:</p>
+<ul>
+<li>Lab assignments</li>
+<li>Project work</li>
+<li>Exam preparation</li>
+</ul>
+<h2>Tips for Success</h2>
+<ol>
+<li><strong>Practice Regularly</strong>: SQL is a skill that improves with practice</li>
+<li><strong>Complete Labs on Time</strong>: Each lab builds on previous concepts</li>
+<li><strong>Ask Questions</strong>: Don&#x27;t hesitate to seek help when stuck</li>
+<li><strong>Use Real Data</strong>: Practice with the provided datasets</li>
+<li><strong>Read Documentation</strong>: Get comfortable with official database documentation</li>
+<li><strong>Experiment</strong>: Try variations of queries to understand behavior</li>
+<li><strong>Start Projects Early</strong>: Don&#x27;t wait until the deadline</li>
+<li><strong>Backup Your Work</strong>: Use version control (Git) for projects</li>
+</ol>
+<h2>Course Evaluation</h2>
+<p>Students will have the opportunity to provide feedback:</p>
+<ul>
+<li>Mid-semester evaluation (anonymous)</li>
+<li>End-of-course evaluation</li>
+<li>Continuous feedback welcome</li>
+</ul>
+<hr>
+<p><strong>Note</strong>: This syllabus is subject to change. Any modifications will be announced in advance.</p>
+<p><strong>Last Updated</strong>: Spring 2026</p>
+<p><strong>Instructor Contact</strong>: Available through course repository issues or email</p>
+</body>
+</html>

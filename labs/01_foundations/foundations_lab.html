@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 1: Database Creation and Basic SQL Operations</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+    
+    
+    
+    
+    /* Code block wrapper with copy button */
+    .code-block-wrapper {
+      position: relative;
+      margin: 20px 0;
+      max-width: 100%;
+    }
+    
+    .code-block-wrapper pre {
+      margin: 0;
+      overflow-x: auto;
+      max-width: 100%;
+    }
+    
+    .copy-button {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      padding: 6px 8px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s, background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .copy-button:hover {
+      opacity: 1;
+      background-color: #fff;
+    }
+    
+    .copy-button:active {
+      background-color: #e0e0e0;
+    }
+    
+    .copy-button.copied {
+      background-color: #4caf50;
+      color: white;
+      border-color: #4caf50;
+    }
+    
+    .copy-button svg {
+      display: block;
+    }
+    
+    </style>
+
+    <!-- Syntax highlighting with highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/sql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.md">📚 Lab Index</a> | 
+    <a href="../../index.html">🏠 Portal</a>
+  </p>
+</div>
+
+<h1>Lab 1: Database Creation and Basic SQL Operations</h1>
+<h2>🎯 Learning Objectives</h2>
+<p>By the end of this lab, you will be able to:
+- Create and manage databases in MySQL/MariaDB
+- Design and create tables with appropriate data types
+- Insert data into tables
+- Write basic SELECT queries with filtering and sorting
+- Understand primary keys and constraints</p>
+<h2>📋 Prerequisites</h2>
+<ul>
+<li>MySQL or MariaDB server installed and running</li>
+<li>Basic understanding of relational database concepts</li>
+<li>Access to a SQL client (command line, MySQL Workbench, etc.)</li>
+</ul>
+<h2>🚀 Getting Started</h2>
+<h3>Step 1: Create Your First Database</h3>
+<p>A database is a container that holds related tables. Let's create one for our exercises:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- CREATE a NEW DATABASE (only needed once)
+CREATE DATABASE lab1_exercises;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Note</strong>: Database names are case-sensitive on some systems. Use lowercase for consistency.</p>
+<h3>Step 2: Select the Database</h3>
+<p>Before creating tables, you must specify which database to use:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Switch to our NEW DATABASE
+USE lab1_exercises;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Important</strong>: You need to run <code>USE database_name;</code> every time you start a new session.</p>
+<h3>Step 3: Create Your First Table</h3>
+<p>Let's create a product catalog table with proper data types and constraints:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- CREATE the product TABLE WITH detailed comments
+CREATE TABLE product(
+    pname        VARCHAR(20) PRIMARY KEY,  -- Product name (UNIQUE identifier)
+    price        DECIMAL(10,2),            -- Price WITH 2 DECIMAL places
+    category     VARCHAR(20),              -- Product category
+    manufacturer VARCHAR(20) NOT NULL      -- Manufacturer (required field)
+);
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Key Concepts</strong>:
+- <code>PRIMARY KEY</code>: Ensures each product name is unique
+- <code>DECIMAL(10,2)</code>: Stores numbers with up to 10 digits, 2 after decimal point
+- <code>NOT NULL</code>: This field cannot be empty
+- <code>VARCHAR(20)</code>: Variable-length string up to 20 characters</p>
+<h3>Step 4: Insert Sample Data</h3>
+<p>Now let's add some products to our table:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- INSERT sample products
+INSERT INTO product VALUES('Gizmo', 19.99, 'Gadgets', 'GizmoWorks');
+INSERT INTO product VALUES('PowerGizmo', 29.99, 'Gadgets', 'GizmoWorks');
+INSERT INTO product VALUES('MultiTouch', 203.99, 'Household', 'Hitachi');
+INSERT INTO product VALUES('SingleTouch', 149.99, 'Photography', 'Canon');
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Verify your data</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- VIEW ALL products
+SELECT * FROM product;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Expected Output</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>pname</th>
+      <th>price</th>
+      <th>category</th>
+      <th>manufacturer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gizmo</td>
+      <td>19.99</td>
+      <td>Gadgets</td>
+      <td>GizmoWorks</td>
+    </tr>
+    <tr>
+      <td>PowerGizmo</td>
+      <td>29.99</td>
+      <td>Gadgets</td>
+      <td>GizmoWorks</td>
+    </tr>
+    <tr>
+      <td>MultiTouch</td>
+      <td>203.99</td>
+      <td>Household</td>
+      <td>Hitachi</td>
+    </tr>
+    <tr>
+      <td>SingleTouch</td>
+      <td>149.99</td>
+      <td>Photography</td>
+      <td>Canon</td>
+      <td></p></td>
+    </tr>
+  </tbody>
+</table>
+<h2>💡 Practice Exercises</h2>
+<h3>Exercise #1: Filtering and Sorting</h3>
+<p><strong>Task</strong>: Write a query to get all products with "Touch" in the name, showing only their name and price, sorted alphabetically by manufacturer.</p>
+<p><strong>Step-by-step approach</strong>:
+1. First, let's see all our products to understand the data:
+   <code>sql
+   SELECT * FROM product;</code></p>
+<ol>
+<li>
+<p>Now identify products with "Touch" in the name:
+   <code>sql
+   SELECT * FROM product WHERE pname LIKE '%Touch%';</code></p>
+</li>
+<li>
+<p><strong>Your turn</strong>: Write the complete query here:
+   ```sql
+   -- Write your solution here</p>
+</li>
+</ol>
+<p>```</p>
+<details>
+<summary>💡 Click to see the solution</summary>
+
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT pname, price 
+FROM product 
+WHERE pname LIKE '%Touch%' 
+ORDER BY manufacturer;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Expected Output</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>pname</th>
+      <th>price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SingleTouch</td>
+      <td>149.99</td>
+    </tr>
+    <tr>
+      <td>MultiTouch</td>
+      <td>203.99</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Explanation</strong>:
+- `LIKE '%Touch%'`: Finds any product name containing "Touch"
+- `ORDER BY manufacturer`: Sorts by manufacturer (Canon comes before Hitachi alphabetically)
+</details>
+
+<h3>Exercise #1b: Distinct Values</h3>
+<p><strong>Task</strong>: Write a query that returns the distinct names of manufacturers that make products with "Gizmo" in the name.</p>
+<p><strong>Your solution</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Write your solution here
+
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<details>
+<summary>💡 Click to see the solution</summary>
+
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT manufacturer 
+FROM product 
+WHERE pname LIKE '%Gizmo%';
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Expected Output</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>manufacturer</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GizmoWorks</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Explanation</strong>:
+- `DISTINCT`: Removes duplicate manufacturer names
+- Only GizmoWorks makes products with "Gizmo" in the name
+</details>
+
+<h3>Exercise #2: Understanding DISTINCT and ORDER BY</h3>
+<p><strong>Task</strong>: Before running these queries, predict what each will return. Then run them to check your understanding.</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Query A
+SELECT DISTINCT category FROM product ORDER BY category;
+
+-- Query B  
+SELECT category FROM product ORDER BY pname;
+
+-- Query C
+SELECT DISTINCT category FROM product ORDER BY pname;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Predictions</strong>:
+- Query A will return: <strong><em>_</em></strong><strong><em>_</em></strong><strong>
+- Query B will return: <strong><em>_</em></strong><strong><em>_</em></strong></strong><br />
+- Query C will return: <strong><em>_</em></strong><strong><em>_</em></strong>__</p>
+<details>
+<summary>💡 Click to see the answers</summary>
+
+<strong>Query A Results</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gadgets</td>
+    </tr>
+    <tr>
+      <td>Household</td>
+    </tr>
+    <tr>
+      <td>Photography</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Explanation</strong>: Returns unique categories sorted alphabetically.
+
+<strong>Query B Results</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Gadgets</td>
+    </tr>
+    <tr>
+      <td>Household</td>
+    </tr>
+    <tr>
+      <td>Photography</td>
+    </tr>
+    <tr>
+      <td>Gadgets</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Explanation</strong>: Returns all categories (including duplicates) in the order of product names.
+
+<strong>Query C Results</strong>:
+This query will produce an <strong>ERROR</strong>! You cannot use `ORDER BY pname` when `pname` is not in the SELECT list and you're using DISTINCT.
+
+<strong>Key Learning</strong>: When using DISTINCT, you can only ORDER BY columns that are in the SELECT clause.
+</details>
+
+<h3>Exercise #3: Multi-Table Relationships and Foreign Keys</h3>
+<p><strong>Learning Focus</strong>: Understanding table relationships, foreign keys, and multi-table queries.</p>
+<h4>Setting Up the Database Schema</h4>
+<p>We need to recreate our tables to demonstrate foreign key relationships:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Clean up existing TABLES (ORDER matters due to FOREIGN KEY constraints!)
+DROP TABLE IF EXISTS product;  -- DROP child TABLE first
+DROP TABLE IF EXISTS company;   -- THEN DROP parent TABLE
+
+-- CREATE the parent TABLE (company)
+CREATE TABLE company (
+    cname VARCHAR(20) PRIMARY KEY,    -- Company name (UNIQUE identifier)
+    stockprice DECIMAL(10,2),         -- Stock price IN dollars
+    country VARCHAR(10)               -- Country of origin
+);
+
+-- INSERT company data
+INSERT INTO company VALUES ('ToyWorks', 25.0, 'USA');
+INSERT INTO company VALUES ('ToyFriends', 65.0, 'China');
+INSERT INTO company VALUES ('ToyCo', 15.0, 'China');
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Verify company data</strong>:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT * FROM company;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p>Now create the product table with a foreign key relationship:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- CREATE the child TABLE (product) WITH FOREIGN KEY CONSTRAINT
+CREATE TABLE product(
+    pname VARCHAR(10),                -- Product name
+    price DECIMAL(10,2),              -- Product price
+    category VARCHAR(10),             -- Product category
+    manufacturer VARCHAR(10),         -- Manufacturer (REFERENCES company)
+    PRIMARY KEY (pname, manufacturer), -- Composite PRIMARY KEY
+    FOREIGN KEY (manufacturer) REFERENCES company(cname)  -- FOREIGN KEY CONSTRAINT
+);
+
+-- INSERT product data
+INSERT INTO product VALUES('Pikachu', 19.99, 'Toy', 'ToyWorks');
+INSERT INTO product VALUES('Pikachu', 19.99, 'Toy', 'ToyFriends');
+INSERT INTO product VALUES('Pokeball', 29.99, 'Electronic', 'ToyCo');
+INSERT INTO product VALUES('Bulbasaur', 149.99, 'Toy', 'ToyFriends');
+INSERT INTO product VALUES('Charizard', 203.99, 'Toy', 'ToyCo');
+INSERT INTO product VALUES('PokeCamera', 19.99, 'Electronic', 'ToyWorks');
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<p><strong>Key Concepts Explained</strong>:
+- <strong>Composite Primary Key</strong>: <code>(pname, manufacturer)</code> together uniquely identify each row
+- <strong>Foreign Key</strong>: <code>manufacturer</code> must exist in the <code>company</code> table
+- <strong>Referential Integrity</strong>: You cannot insert a product with a non-existent manufacturer</p>
+<h4>The Challenge</h4>
+<p><strong>Task</strong>: Find all categories of products that are made by Chinese companies.</p>
+<p><strong>Step-by-step approach</strong>:</p>
+<ol>
+<li><strong>First, explore the data</strong>:
+   ```sql
+   -- See all companies
+   SELECT * FROM company;</li>
+</ol>
+<p>-- See all products<br />
+   SELECT * FROM product;</p>
+<p>-- See which companies are Chinese
+   SELECT * FROM company WHERE country = 'China';
+   ```</p>
+<ol>
+<li><strong>Your turn</strong>: Write the query to find categories made by Chinese companies:
+   ```sql
+   -- Write your solution here</li>
+</ol>
+<p>```</p>
+<details>
+<summary>💡 Click to see the solution</summary>
+
+<strong>Solution using JOIN</strong>:
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT p.category
+FROM product p
+JOIN company c ON p.manufacturer = c.cname
+WHERE c.country = 'China';
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Alternative solution using WHERE clause</strong>:
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT DISTINCT category
+FROM product, company
+WHERE manufacturer = cname 
+  AND country = 'China';
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Expected Output</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>category</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Toy</td>
+    </tr>
+    <tr>
+      <td>Electronic</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Explanation</strong>:
+- We need to connect the `product` and `company` tables
+- Filter for companies where `country = 'China'`
+- Use `DISTINCT` to avoid duplicate categories
+- Chinese companies (ToyFriends, ToyCo) make both Toy and Electronic products
+</details>
+
+<h4>Bonus Challenge</h4>
+<p><strong>Task</strong>: Find the names of all products made by companies with stock price &gt; $20.</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">-- Write your solution here
+
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+<details>
+<summary>💡 Click to see the bonus solution</summary>
+
+
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">SELECT p.pname
+FROM product p
+JOIN company c ON p.manufacturer = c.cname
+WHERE c.stockprice &gt; 20;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+
+<strong>Expected Output</strong>:
+<table>
+  <thead>
+    <tr>
+      <th>pname</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Pikachu</td>
+    </tr>
+    <tr>
+      <td>Pikachu</td>
+    </tr>
+    <tr>
+      <td>Bulbasaur</td>
+    </tr>
+    <tr>
+      <td>PokeCamera</td>
+    </tr>
+  </tbody>
+</table>
+
+<strong>Note</strong>: Pikachu appears twice because it's made by two different companies (ToyWorks and ToyFriends), both with stock prices > $20.
+</details>
+
+<h2>🎓 Summary</h2>
+<p>Congratulations! You've completed Lab 1. You should now be comfortable with:</p>
+<p>✅ <strong>Database Operations</strong>:
+- Creating and using databases
+- Understanding database vs. table concepts</p>
+<p>✅ <strong>Table Management</strong>:
+- Creating tables with appropriate data types
+- Understanding primary keys and constraints
+- Using foreign keys for referential integrity</p>
+<p>✅ <strong>Basic Queries</strong>:
+- SELECT statements with filtering (WHERE)
+- Using LIKE for pattern matching
+- Sorting results with ORDER BY
+- Removing duplicates with DISTINCT</p>
+<p>✅ <strong>Multi-table Concepts</strong>:
+- Understanding table relationships
+- Basic JOIN operations
+- Foreign key constraints</p>
+<h2>🔗 Additional Resources</h2>
+<h3>Essential References</h3>
+<ul>
+<li><strong>MySQL Data Types</strong>: <a href="https://dev.mysql.com/doc/refman/8.0/en/data-types.html">Official Documentation</a></li>
+<li>Learn about VARCHAR, DECIMAL, INT, DATE, and other data types</li>
+<li><strong>CREATE TABLE Syntax</strong>: <a href="https://dev.mysql.com/doc/refman/8.0/en/create-table.html">MySQL Reference</a></li>
+<li>Complete guide to table creation options</li>
+<li><strong>INSERT Statement</strong>: <a href="https://mariadb.com/kb/en/mariadb/how-to-quickly-insert-data-into-mariadb/">MariaDB Guide</a></li>
+<li>Various ways to insert data efficiently</li>
+</ul>
+<h3>Practice Resources</h3>
+<ul>
+<li><strong>SQLZoo</strong>: <a href="https://sqlzoo.net/wiki/SQL_Tutorial">Interactive SQL Tutorial</a></li>
+<li>Practice SELECT statements with immediate feedback</li>
+<li><strong>W3Schools SQL</strong>: <a href="https://www.w3schools.com/sql/">Comprehensive Tutorial</a></li>
+<li>Step-by-step learning with examples</li>
+</ul>
+<h3>Next Steps</h3>
+<p>Ready for more advanced topics? Continue with:
+- <strong><a href="../02_single_table/single_table_queries.html">Lab 2</a></strong>: Advanced queries, joins, and aggregations
+- <strong><a href="../03_joins_foreign_keys/foreign_keys.html">Foreign Keys Lab</a></strong>: Deep dive into referential integrity
+- <strong><a href="../03_joins_foreign_keys/multi_tables.html">Multi-table Queries</a></strong>: Complex JOIN operations</p>
+<h2>🐛 Troubleshooting</h2>
+<p><strong>Common Issues and Solutions</strong>:</p>
+<ol>
+<li>
+<p><strong>"Database doesn't exist" error</strong>:
+   <code>sql
+   -- Make sure you created AND selected the DATABASE
+   CREATE DATABASE lab1_exercises;
+   USE lab1_exercises;</code></p>
+</li>
+<li>
+<p><strong>"Table already exists" error</strong>:
+   <code>sql
+   -- DROP the TABLE first, THEN recreate
+   DROP TABLE IF EXISTS table_name;</code></p>
+</li>
+<li>
+<p><strong>Foreign key constraint fails</strong>:</p>
+</li>
+<li>Ensure the parent table exists before creating child table</li>
+<li>
+<p>Check that referenced values exist in parent table</p>
+</li>
+<li>
+<p><strong>Syntax errors</strong>:</p>
+</li>
+<li>Check for missing semicolons</li>
+<li>Verify proper quotation marks around strings</li>
+<li>Ensure correct spelling of keywords</li>
+</ol>
+<p>Need help? Check the <a href="../../index.html">main README</a> for additional resources and support options.</p>
+
+<script>
+
+    function copyCode(button) {
+      const wrapper = button.closest('.code-block-wrapper');
+      const codeBlock = wrapper.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      // Copy to clipboard
+      navigator.clipboard.writeText(text).then(() => {
+        // Show success feedback
+        button.classList.add('copied');
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13 4L6 11L3 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          button.classList.remove('copied');
+          button.innerHTML = originalHTML;
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy:', err);
+        alert('Failed to copy code');
+      });
+    }
+    
+  </script>
+
+<hr style="margin-top: 40px;">
+<div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.md">📚 Lab Index</a> | 
+    <a href="../../index.html">🏠 Portal</a> | 
+    <a href="../../docs/GETTING_STARTED.md">🚀 Getting Started</a> | 
+    <a href="../../docs/SQL_CHEAT_SHEET.md">📝 SQL Cheat Sheet</a>
+  </p>
+</div>
+
+</body>
+</html>
