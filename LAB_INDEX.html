@@ -4,13 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lab Index (Reorganized)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
-        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
-        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+      :root {
+        --ow-green: #0b5d3b;
+        --ow-green-dark: #07442b;
+        --ow-gold: #c7a34a;
+        --ow-cream: #f6f2e9;
+        --ow-ink: #122019;
+        --ow-moss: #1f7a56;
+      }
+      * { box-sizing: border-box; }
+      body {
+        font-family: "Spline Sans", "Trebuchet MS", sans-serif;
+        margin: 0;
+        line-height: 1.6;
+        color: var(--ow-ink);
+        background:
+          radial-gradient(circle at 12% 8%, rgba(199, 163, 74, 0.16), transparent 40%),
+          radial-gradient(circle at 80% 0%, rgba(11, 93, 59, 0.18), transparent 45%),
+          linear-gradient(160deg, #fdfbf6, var(--ow-cream));
+        min-height: 100vh;
+      }
+      .page {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 22px 64px;
+      }
+      table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+      th, td { border: 1px solid rgba(11, 93, 59, 0.2); padding: 8px; text-align: left; }
+      th { background-color: rgba(11, 93, 59, 0.08); }
+      pre { background-color: #fff; padding: 10px; border-radius: 8px; overflow-x: auto; border: 1px solid rgba(11, 93, 59, 0.12); }
+      code { background-color: rgba(11, 93, 59, 0.08); padding: 2px 4px; border-radius: 3px; }
         
         /* Code block wrapper with copy button */
         .code-block-wrapper {
@@ -60,15 +87,31 @@
           display: block;
         }
         
-        h1, h2, h3, h4 { color: #333; }
-        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
+        h1, h2, h3, h4 { color: var(--ow-green-dark); font-family: "Fraunces", "Georgia", serif; }
+        h1 { border-bottom: 3px solid var(--ow-gold); padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid rgba(11, 93, 59, 0.2); padding-bottom: 6px; margin-top: 32px; }
         ul, ol { margin-left: 20px; }
         blockquote { 
-            border-left: 4px solid #ddd; 
+          border-left: 4px solid var(--ow-gold); 
             margin-left: 0; 
             padding-left: 20px; 
-            color: #666; 
+          color: #3d4d45; 
+        }
+        .card {
+          background: rgba(255, 255, 255, 0.8);
+          border-radius: 16px;
+          border: 1px solid rgba(11, 93, 59, 0.18);
+          box-shadow: 0 12px 28px rgba(16, 32, 25, 0.08);
+          padding: 20px;
+          margin-top: 18px;
+          animation: fadeUp 0.7s ease both;
+        }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .card { animation: none; }
         }
     </style>
 
@@ -98,67 +141,69 @@
     </script>
 </head>
 <body>
+<div class="page">
 <h1>Lab Index (Reorganized)</h1>
-<p>All labs are organized in numbered folders under <code>labs/</code>.</p>
-<h2>Sequential Lab Folders</h2>
+<p>All labs are organized by topic under <code>labs/</code>.</p>
+<div class="card">
+<h2>Lab Folders</h2>
 <ol>
 <li><code>labs/quick-start/</code></li>
 </ol>
 <ul>
-<li><code>quick_start_guide.html</code></li>
+<li><code>quick-start-guide.html</code></li>
 </ul>
 <ol>
 <li><code>labs/foundations/</code></li>
 </ol>
 <ul>
-<li><code>foundations_lab.html</code></li>
-<li><code>inclass_exercise.html</code></li>
+<li><code>foundations-lab.html</code></li>
+<li><code>inclass-exercise.html</code></li>
 </ul>
 <ol>
 <li><code>labs/single-table/</code></li>
 </ol>
 <ul>
-<li><code>single_table_queries.html</code></li>
+<li><code>single-table-queries.html</code></li>
 </ul>
 <ol>
 <li><code>labs/joins-foreign-keys/</code></li>
 </ol>
 <ul>
-<li><code>foreign_keys.html</code></li>
-<li><code>joins_part1.html</code></li>
-<li><code>multi_tables.html</code></li>
+<li><code>foreign-keys.html</code></li>
+<li><code>joins-part1.html</code></li>
+<li><code>multi-tables.html</code></li>
 </ul>
 <ol>
 <li><code>labs/set-nested/</code></li>
 </ol>
 <ul>
-<li><code>set_nested_queries.html</code></li>
+<li><code>set-nested-queries.html</code></li>
 </ul>
 <ol>
 <li><code>labs/aggregation/</code></li>
 </ol>
 <ul>
-<li><code>aggregation_grouping.html</code></li>
+<li><code>aggregation-grouping.html</code></li>
 </ul>
 <ol>
 <li><code>labs/case-expression/</code></li>
 </ol>
 <ul>
-<li><code>case_expression.html</code></li>
+<li><code>case-expression.html</code></li>
 </ul>
 <ol>
 <li><code>labs/window-recursive/</code></li>
 </ol>
 <ul>
-<li><code>window_recursive.html</code></li>
+<li><code>window-recursive.html</code></li>
 </ul>
 <ol>
 <li><code>labs/advanced-sql/</code></li>
 </ol>
 <ul>
-<li><code>advanced_sql_techniques.html</code></li>
+<li><code>advanced-sql-techniques.html</code></li>
 <li><code>cursors.html</code></li>
-<li><code>query_patterns.html</code> - Compare CASE vs CTEs and other query approaches</li>
+<li><code>query-patterns.html</code> - Compare CASE vs CTEs and other query approaches</li>
 </ul>
 <ol>
 <li><code>labs/views/</code></li>
@@ -170,19 +215,19 @@
 <li><code>labs/normalization/</code></li>
 </ol>
 <ul>
-<li><code>normal_forms.html</code></li>
+<li><code>normal-forms.html</code></li>
 </ul>
 <ol>
 <li><code>labs/programming/</code></li>
 </ol>
 <ul>
-<li><code>python_db_interface.html</code></li>
-<li><code>java_db_interface_1.html</code></li>
-<li><code>java_db_interface_2.html</code></li>
-<li><code>java_db_interface_3.html</code></li>
-<li><code>nodejs_db_interface.html</code></li>
+<li><code>python-db-interface.html</code></li>
+<li><code>java-db-interface-1.html</code></li>
+<li><code>java-db-interface-2.html</code></li>
+<li><code>java-db-interface-3.html</code></li>
+<li><code>nodejs-db-interface.html</code></li>
 <li><code>orm.html</code></li>
-<li><code>multiple_callback_coordination.html</code></li>
+<li><code>multiple-callback-coordination.html</code></li>
 </ul>
 <ol>
 <li><code>labs/transactions-triggers/</code></li>
@@ -190,14 +235,14 @@
 <ul>
 <li><code>transactions.html</code></li>
 <li><code>triggers.html</code></li>
-<li><code>bank_triggers.html</code></li>
-<li><code>isolation_levels.html</code></li>
+<li><code>bank-triggers.html</code></li>
+<li><code>isolation-levels.html</code></li>
 </ul>
 <ol>
 <li><code>labs/nosql/</code></li>
 </ol>
 <ul>
-<li><code>json_xml.html</code></li>
+<li><code>json-xml.html</code></li>
 <li><code>mongodb.html</code></li>
 <li><code>neo4j.html</code></li>
 </ul>
@@ -215,15 +260,13 @@
 <ul>
 <li><code>lab6/</code>, <code>lab7/</code>, <code>lab8/</code></li>
 </ul>
-<h2>Archive</h2>
-<ul>
-<li><code>labs/archive/</code> contains legacy materials kept for reference.</li>
-</ul>
+</div>
 <h2>Related Indexes</h2>
 <ul>
 <li><a href="FOCUSED_LABS.html">Focused Lab Topics</a></li>
 <li><a href="MATERIALS_INDEX.html">Materials Map</a></li>
 <li><a href="Readme.html">Repository Readme</a></li>
 </ul>
+</div>
 </body>
 </html>

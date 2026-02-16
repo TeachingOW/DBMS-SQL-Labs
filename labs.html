@@ -4,37 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Labs - DBMS SQL Course</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ow-green: #0b5d3b;
+            --ow-green-dark: #07442b;
+            --ow-gold: #c7a34a;
+            --ow-cream: #f6f2e9;
+            --ow-ink: #122019;
+            --ow-moss: #1f7a56;
+        }
+        * { box-sizing: border-box; }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Spline Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f5f5f5;
+            background:
+                radial-gradient(circle at 10% 10%, rgba(199, 163, 74, 0.14), transparent 40%),
+                radial-gradient(circle at 75% 0%, rgba(11, 93, 59, 0.16), transparent 45%),
+                linear-gradient(160deg, #fdfbf6, var(--ow-cream));
+            color: var(--ow-ink);
             line-height: 1.6;
         }
+        h1, h2, h3 { font-family: "Fraunces", "Georgia", serif; letter-spacing: 0.2px; }
         h1 {
-            color: #2c3e50;
-            border-bottom: 3px solid #3498db;
+            color: var(--ow-green-dark);
+            border-bottom: 3px solid var(--ow-gold);
             padding-bottom: 10px;
             margin-bottom: 30px;
         }
         h2 {
-            color: #34495e;
+            color: var(--ow-green-dark);
             margin-top: 30px;
             margin-bottom: 15px;
             padding-left: 10px;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--ow-green);
         }
         .lab-section {
-            background: white;
+            background: rgba(255, 255, 255, 0.85);
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(16, 32, 25, 0.09);
+            border: 1px solid rgba(11, 93, 59, 0.12);
         }
         .lab-section h3 {
-            color: #2980b9;
+            color: var(--ow-green);
             margin-top: 0;
             margin-bottom: 15px;
         }
@@ -45,25 +63,26 @@
         .lab-list li {
             margin: 8px 0;
             padding: 10px;
-            background: #f8f9fa;
-            border-radius: 4px;
+            background: rgba(11, 93, 59, 0.06);
+            border-radius: 6px;
+            border: 1px solid rgba(11, 93, 59, 0.08);
             transition: background-color 0.2s;
         }
         .lab-list li:hover {
-            background: #e9ecef;
+            background: rgba(11, 93, 59, 0.12);
         }
         .lab-list a {
             text-decoration: none;
-            color: #2980b9;
+            color: var(--ow-green);
             font-weight: 500;
             display: block;
         }
         .lab-list a:hover {
-            color: #3498db;
+            color: var(--ow-moss);
         }
         .badge {
             display: inline-block;
-            background: #3498db;
+            background: var(--ow-green);
             color: white;
             padding: 2px 8px;
             border-radius: 3px;
@@ -73,17 +92,18 @@
         .back-link {
             display: inline-block;
             margin-bottom: 20px;
-            color: #7f8c8d;
+            color: var(--ow-ink);
             text-decoration: none;
         }
         .back-link:hover {
-            color: #2c3e50;
+            color: var(--ow-green);
         }
         .intro {
-            background: #ecf0f1;
+            background: rgba(11, 93, 59, 0.08);
             padding: 15px;
             border-radius: 5px;
             margin-bottom: 30px;
+            border: 1px solid rgba(11, 93, 59, 0.12);
         }
     </style>
 </head>
@@ -240,19 +260,6 @@
             <li><a href="labs/code-samples/lab6/showDatabases.js">Lab 6 - Show Databases</a></li>
             <li><a href="labs/code-samples/lab7/index.html">Lab 7 - Example (index.html)</a></li>
             <li><a href="labs/code-samples/lab8/index.html">Lab 8 - Example (index.html)</a></li>
-        </ul>
-    </div>
-
-    <!-- Archive -->
-    <h2>📦 Archive</h2>
-    <div class="lab-section">
-        <h3>99. Legacy Materials</h3>
-        <ul class="lab-list">
-            <li><a href="labs/archive/lab2-original-backup.html">Lab 2 Original Backup</a></li>
-            <li><a href="labs/archive/lab8-legacy.html">Lab 8 Legacy</a></li>
-            <li><a href="labs/archive/lab9-legacy.html">Lab 9 Legacy</a></li>
-            <li><a href="labs/archive/lecture-example-1.html">Lecture Example 1</a></li>
-            <li><a href="labs/archive/old.html">Old Materials</a></li>
         </ul>
     </div>
 
