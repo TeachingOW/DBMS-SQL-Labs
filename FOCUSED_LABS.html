@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focused Lab Topics - DBMS SQL Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #1f2933;
+      --muted: #52606d;
+      --brand: #0f766e;
+      --accent: #f59e0b;
+      --card: #ffffff;
+      --shadow: rgba(15, 23, 42, 0.08);
+      --bg-top: #fef3c7;
+      --bg-bottom: #ecfeff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Source Sans 3", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top left, var(--bg-top), transparent 55%),
+                  radial-gradient(circle at bottom right, var(--bg-bottom), #f8fafc 60%);
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 48px 20px 24px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-family: "Source Serif 4", "Georgia", serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0 0 12px;
+      color: var(--ink);
+    }
+
+    header p {
+      margin: 0 auto;
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--brand);
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: #115e59;
+      border-color: var(--accent);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .section-card {
+      background: var(--card);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 24px var(--shadow);
+      border: 1px solid rgba(15, 118, 110, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-card::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      top: -40px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.18), transparent 70%);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      color: var(--brand);
+    }
+
+    .section-title span {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .topic {
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid rgba(15, 118, 110, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .topic:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+    }
+
+    .topic a {
+      text-decoration: none;
+      color: var(--ink);
+      font-weight: 600;
+      display: block;
+    }
+
+    .topic small {
+      color: var(--muted);
+      display: block;
+      margin-top: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 20px 48px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    footer a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    @media (max-width: 640px) {
+      header { padding-top: 36px; }
+      .section-card { padding: 18px; }
+      .topic { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Focused Lab Topics</h1>
+    <p>Browse labs by learning focus. Each section links to a single, well-scoped topic so students can zero in on one skill at a time.</p>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="labs.html">All Labs</a>
+      <a href="LAB_INDEX.html">Lab Index</a>
+      <a href="MATERIALS_INDEX.html">Materials Index</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Start Here</h2>
+        <span>Onboarding and setup</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/00_quick_start/quick_start_guide.html">Quick Start Guide</a>
+          <small>Environment setup, workflow, and first queries.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/01_foundations/inclass_exercise.html">Foundations Practice</a>
+          <small>Short guided exercises to warm up.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Query Fundamentals</h2>
+        <span>Core SQL building blocks</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/01_foundations/foundations_lab.html">Foundations Lab</a>
+          <small>Schema basics, SELECTs, and filtering.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/02_single_table/single_table_queries.html">Single-Table Queries</a>
+          <small>Filtering, sorting, and projections.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/04_set_nested/set_nested_queries.html">Set and Nested Queries</a>
+          <small>UNION, INTERSECT, and subqueries.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/05_aggregation/aggregation_grouping.html">Aggregation and GROUP BY</a>
+          <small>COUNT, SUM, GROUP BY, HAVING.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/06_case_expression/case_expression.html">CASE Expressions</a>
+          <small>Conditional logic in queries.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Relationships and Joins</h2>
+        <span>Working across tables</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/03_joins_foreign_keys/joins_part1.html">Join Strategies</a>
+          <small>INNER, LEFT, and multi-step joins.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/03_joins_foreign_keys/foreign_keys.html">Foreign Keys</a>
+          <small>Constraints and referential integrity.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/03_joins_foreign_keys/multi_tables.html">Multi-Table Queries</a>
+          <small>Joining more than two relations.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Windowing and Advanced SQL</h2>
+        <span>Power features</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/07_window_recursive/window_recursive.html">Window + Recursive Queries</a>
+          <small>Analytics, ranking, and recursion.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/08_advanced_sql/advanced_sql_techniques.html">Advanced SQL Techniques</a>
+          <small>Patterns, CTEs, and optimization.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/08_advanced_sql/query_patterns.html">Query Patterns</a>
+          <small>CASE vs CTEs and query comparisons.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/08_advanced_sql/cursors.html">Cursors</a>
+          <small>Procedural control in SQL.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Modeling and Design</h2>
+        <span>Structure, constraints, and reuse</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/09_views/views.html">Views</a>
+          <small>Reusable query layers.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/10_normalization/normal_forms.html">Normalization</a>
+          <small>Normal forms and schema quality.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Transactions and Triggers</h2>
+        <span>Reliability and automation</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/12_transactions_triggers/transactions.html">Transactions</a>
+          <small>ACID behavior and transaction blocks.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/12_transactions_triggers/isolation_levels.html">Isolation Levels</a>
+          <small>Concurrency control and anomalies.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/12_transactions_triggers/triggers.html">Triggers</a>
+          <small>Automated actions on data changes.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/12_transactions_triggers/bank_triggers.html">Bank Trigger Case Study</a>
+          <small>End-to-end trigger example.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Database Programming</h2>
+        <span>Connecting apps to SQL</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/11_programming/python_db_interface.html">Python Interface</a>
+          <small>Connect, query, and iterate results.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/11_programming/java_db_interface_1.html">Java Interface Part 1</a>
+          <small>JDBC fundamentals and setup.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/11_programming/java_db_interface_2.html">Java Interface Part 2</a>
+          <small>Prepared statements and queries.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/11_programming/java_db_interface_3.html">Java Interface Part 3</a>
+          <small>Transactions and advanced usage.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/11_programming/nodejs_db_interface.html">Node.js Interface</a>
+          <small>Async query flows in Node.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/11_programming/orm.html">ORM Basics</a>
+          <small>Mapping objects to relations.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/11_programming/multiple_callback_coordination.html">Callback Coordination</a>
+          <small>Managing multiple DB callbacks.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>NoSQL and Beyond</h2>
+        <span>Alternative data models</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/13_nosql/json_xml.html">JSON and XML</a>
+          <small>Document data handling.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/13_nosql/mongodb.html">MongoDB</a>
+          <small>Collections, queries, and aggregations.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/13_nosql/neo4j.html">Neo4j</a>
+          <small>Graph queries and relationships.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Notebooks and Samples</h2>
+        <span>Hands-on references</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/14_notebooks/mysql_jupyter.ipynb">MySQL with Jupyter</a>
+          <small>Interactive SQL notebook.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/14_notebooks/rollup.ipynb">ROLLUP Notebook</a>
+          <small>Aggregation patterns in practice.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/14_notebooks/triggers.ipynb">Triggers Notebook</a>
+          <small>Trigger examples in a notebook.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/15_code_samples/lab6/showDatabases.js">Lab 6 Sample</a>
+          <small>Listing databases in MySQL.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/15_code_samples/lab7/index.html">Lab 7 Sample</a>
+          <small>Browser-based example.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/15_code_samples/lab8/index.html">Lab 8 Sample</a>
+          <small>Express-based example.</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-card">
+      <div class="section-title">
+        <h2>Archive</h2>
+        <span>Legacy and reference</span>
+      </div>
+      <div class="topic-grid">
+        <div class="topic">
+          <a href="labs/99_archive/lab2_original_backup.html">Lab 2 Original Backup</a>
+          <small>Historical reference.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/99_archive/lab8_legacy.html">Lab 8 Legacy</a>
+          <small>Archived material.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/99_archive/lab9_legacy.html">Lab 9 Legacy</a>
+          <small>Archived material.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/99_archive/lecture_example_1.html">Lecture Example 1</a>
+          <small>Older lecture demo.</small>
+        </div>
+        <div class="topic">
+          <a href="labs/99_archive/old.html">Old Materials</a>
+          <small>Legacy archive index.</small>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>Need the full sequential list? Visit <a href="labs.html">All Labs</a>.</span>
+  </footer>
+</body>
+</html>
