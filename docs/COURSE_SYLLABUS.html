@@ -4,72 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Database Management Systems - Course Syllabus</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Spline+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        :root {
+          --ow-green: #0b5d3b;
+          --ow-green-dark: #07442b;
+          --ow-gold: #c7a34a;
+          --ow-cream: #f6f2e9;
+          --ow-ink: #122019;
+          --ow-moss: #1f7a56;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: "Spline Sans", "Trebuchet MS", sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--ow-ink);
+            background:
+                radial-gradient(circle at 10% 10%, rgba(199, 163, 74, 0.14), transparent 40%),
+                radial-gradient(circle at 80% 0%, rgba(11, 93, 59, 0.16), transparent 45%),
+                linear-gradient(160deg, #fdfbf6, var(--ow-cream));
+            min-height: 100vh;
+        }
+        .page { max-width: 1100px; margin: 0 auto; padding: 40px 20px 60px; }
         table { border-collapse: collapse; width: 100%; margin: 20px 0; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; overflow-x: auto; }
-        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        th, td { border: 1px solid rgba(11, 93, 59, 0.2); padding: 8px; text-align: left; }
+        th { background-color: rgba(11, 93, 59, 0.08); }
+        pre { background-color: #fff; padding: 10px; border-radius: 8px; overflow-x: auto; border: 1px solid rgba(11, 93, 59, 0.12); }
+        code { background-color: rgba(11, 93, 59, 0.08); padding: 2px 4px; border-radius: 3px; }
         
-        /* Code block wrapper with copy button */
-        .code-block-wrapper {
-          position: relative;
-          margin: 20px 0;
-          max-width: 100%;
-        }
+        h1, h2, h3, h4 { color: var(--ow-green-dark); font-family: "Fraunces", "Georgia", serif; letter-spacing: 0.2px; }
+        h1 { border-bottom: 3px solid var(--ow-gold); padding-bottom: 10px; margin-bottom: 20px; }
+        h2 { border-bottom: 1px solid rgba(11, 93, 59, 0.2); padding-bottom: 8px; margin-top: 32px; }
+        h3 { color: var(--ow-green); margin-top: 24px; }
         
-        .code-block-wrapper pre {
-          margin: 0;
-          overflow-x: auto;
-          max-width: 100%;
-        }
+        a { color: var(--ow-green); text-decoration: none; font-weight: 600; }
+        a:hover { color: var(--ow-moss); }
         
-        .copy-button {
-          position: absolute;
-          top: 8px;
-          right: 8px;
-          padding: 6px 8px;
-          background-color: rgba(255, 255, 255, 0.9);
-          border: 1px solid #ddd;
-          border-radius: 4px;
-          cursor: pointer;
-          opacity: 0.7;
-          transition: opacity 0.2s, background-color 0.2s;
-          display: flex;
-          align-items: center;
-          gap: 4px;
-        }
-        
-        .copy-button:hover {
-          opacity: 1;
-          background-color: #fff;
-        }
-        
-        .copy-button:active {
-          background-color: #e0e0e0;
-        }
-        
-        .copy-button.copied {
-          background-color: #4caf50;
-          color: white;
-          border-color: #4caf50;
-        }
-        
-        .copy-button svg {
-          display: block;
-        }
-        
-        h1, h2, h3, h4 { color: #333; }
-        h1 { border-bottom: 2px solid #ddd; padding-bottom: 10px; }
-        h2 { border-bottom: 1px solid #eee; padding-bottom: 5px; margin-top: 30px; }
         ul, ol { margin-left: 20px; }
         blockquote { 
-            border-left: 4px solid #ddd; 
-            margin-left: 0; 
-            padding-left: 20px; 
-            color: #666; 
+            border-left: 4px solid var(--ow-gold);
+            margin-left: 0;
+            padding-left: 20px;
+            color: #3d4d45;
         }
+        
+        .lab-link {
+            display: inline-block;
+            background: rgba(11, 93, 59, 0.08);
+            border: 1px solid rgba(11, 93, 59, 0.2);
+            padding: 6px 12px;
+            border-radius: 6px;
+            margin-right: 8px;
+            margin-bottom: 6px;
+            color: var(--ow-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .lab-link:hover {
+            background: rgba(11, 93, 59, 0.14);
+            border-color: rgba(11, 93, 59, 0.3);
+        }
+        
+        .nav-header {
+            text-align: center;
+            padding: 12px;
+            margin-bottom: 24px;
+            background: rgba(11, 93, 59, 0.06);
+            border-radius: 8px;
+            border: 1px solid rgba(11, 93, 59, 0.12);
+        }
+        .nav-header a { margin: 0 12px; }
     </style>
 
     <!-- Syntax highlighting with highlight.js -->
@@ -98,6 +107,12 @@
     </script>
 </head>
 <body>
+<div class="page">
+<div class="nav-header">
+    <a href="../../index.html">← Home</a> | 
+    <a href="../../FOCUSED_LABS.html">All Labs</a> | 
+    <a href="../../labs/quick-start/quick-start-guide.html">Quick Start</a>
+</div>
 <h1>Database Management Systems - Course Syllabus</h1>
 <h2>Course Information</h2>
 <p><strong>Course Title</strong>: Database Management Systems with SQL <strong>Course Code</strong>: DBMS-SQL-Labs <strong>Duration</strong>: 16 Weeks <strong>Credit Hours</strong>: 3-4 credits <strong>Prerequisites</strong>: Basic programming knowledge</p>
@@ -127,11 +142,12 @@
 </ul>
 <p><strong>Labs:</strong></p>
 <ul>
-<li>Lab 1: Database Creation &amp; Basic Queries</li>
-<li>Lab 2: Advanced Queries &amp; Joins</li>
-<li>Lab 3: Foreign Keys &amp; Relationships</li>
-<li>Lab 4: Multi-Table Operations</li>
-<li>labs/foundations/inclass-exercise.html: Workers Database</li>
+<li><a href="../../labs/quick-start/quick-start-guide.html" class="lab-link">Quick Start Guide</a></li>
+<li><a href="../../labs/foundations/foundations-lab.html" class="lab-link">Foundations Lab</a></li>
+<li><a href="../../labs/foundations/inclass-exercise.html" class="lab-link">In-Class Exercise</a></li>
+<li><a href="../../labs/single-table/single-table-queries.html" class="lab-link">Single Table Queries</a></li>
+<li><a href="../../labs/joins-foreign-keys/foreign-keys.html" class="lab-link">Foreign Keys</a></li>
+<li><a href="../../labs/joins-foreign-keys/joins-part1.html" class="lab-link">Joins Part 1</a></li>
 </ul>
 <p><strong>Deliverables:</strong></p>
 <ul>
@@ -160,10 +176,11 @@
 </ul>
 <p><strong>Labs:</strong></p>
 <ul>
-<li>Lab 5: Set Operations &amp; Nested Queries</li>
-<li>Lab 6: Aggregate Functions &amp; Grouping</li>
-<li>Lab 7: CASE Expressions</li>
-<li>Lab 8: Window Functions &amp; Recursive Queries</li>
+<li><a href="../../labs/joins-foreign-keys/multi-tables.html" class="lab-link">Multi-Table Queries</a></li>
+<li><a href="../../labs/set-nested/set-nested-queries.html" class="lab-link">Set Operations &amp; Nested Queries</a></li>
+<li><a href="../../labs/aggregation/aggregation-grouping.html" class="lab-link">Aggregation &amp; GROUP BY</a></li>
+<li><a href="../../labs/case-expression/case-expression.html" class="lab-link">CASE Expressions</a></li>
+<li><a href="../../labs/window-recursive/window-recursive.html" class="lab-link">Window Functions &amp; Recursive Queries</a></li>
 </ul>
 <p><strong>Deliverables:</strong></p>
 <ul>
@@ -190,9 +207,10 @@
 </ul>
 <p><strong>Labs:</strong></p>
 <ul>
-<li>Lab 9: Views &amp; Virtual Tables</li>
-<li>Lab 10: Database Normalization</li>
-<li>Lab 11: Advanced SQL Techniques</li>
+<li><a href="../../labs/views/views.html" class="lab-link">Views &amp; Virtual Tables</a></li>
+<li><a href="../../labs/normalization/normal-forms.html" class="lab-link">Database Normalization</a></li>
+<li><a href="../../labs/advanced-sql/advanced-sql-techniques.html" class="lab-link">Advanced SQL Techniques</a></li>
+<li><a href="../../labs/advanced-sql/query-patterns.html" class="lab-link">Query Patterns</a></li>
 </ul>
 <p><strong>Deliverables:</strong></p>
 <ul>
@@ -221,13 +239,15 @@
 </ul>
 <p><strong>Labs:</strong></p>
 <ul>
-<li>Lab 12: Java Database Interface</li>
-<li>Lab 13: Python Database Interface</li>
-<li>Lab 14: Jupyter Notebook Integration</li>
-<li>Lab 15: Analytical Functions</li>
-<li>Lab 16: Triggers &amp; Stored Procedures</li>
-<li>Lab 17: Transaction Management</li>
-<li>Lab 18: Isolation Levels</li>
+<li><a href="../../labs/advanced-sql/cursors.html" class="lab-link">Cursors</a></li>
+<li><a href="../../labs/transactions-triggers/transactions.html" class="lab-link">Transactions</a></li>
+<li><a href="../../labs/transactions-triggers/triggers.html" class="lab-link">Triggers</a></li>
+<li><a href="../../labs/transactions-triggers/bank-triggers.html" class="lab-link">Bank Triggers Example</a></li>
+<li><a href="../../labs/transactions-triggers/isolation-levels.html" class="lab-link">Isolation Levels</a></li>
+<li><a href="../../labs/programming/python-db-interface.html" class="lab-link">Python Database Interface</a></li>
+<li><a href="../../labs/programming/java-db-interface-1.html" class="lab-link">Java Interface - Part 1</a></li>
+<li><a href="../../labs/programming/java-db-interface-2.html" class="lab-link">Java Interface - Part 2</a></li>
+<li><a href="../../labs/programming/java-db-interface-3.html" class="lab-link">Java Interface - Part 3</a></li>
 </ul>
 <p><strong>Deliverables:</strong></p>
 <ul>
@@ -255,9 +275,11 @@
 </ul>
 <p><strong>Labs:</strong></p>
 <ul>
-<li>Lab 19: JSON &amp; XML Processing</li>
-<li>Lab 20: MongoDB (NoSQL)</li>
-<li>Lab 21: Neo4j (Graph Database)</li>
+<li><a href="../../labs/nosql/json-xml.html" class="lab-link">JSON &amp; XML Processing</a></li>
+<li><a href="../../labs/nosql/mongodb.html" class="lab-link">MongoDB (NoSQL)</a></li>
+<li><a href="../../labs/nosql/neo4j.html" class="lab-link">Neo4j (Graph Database)</a></li>
+<li><a href="../../labs/programming/orm.html" class="lab-link">ORM (Object-Relational Mapping)</a></li>
+<li><a href="../../labs/programming/nodejs-db-interface.html" class="lab-link">Node.js Database Interface</a></li>
 </ul>
 <p><strong>Deliverables:</strong></p>
 <ul>
@@ -374,98 +396,98 @@
 <h3>Week 1: Introduction to Databases</h3>
 <ul>
 <li>Topics: Database concepts, DBMS overview, SQL introduction</li>
-<li>Lab: Lab 1 - Database Creation &amp; Basic Queries</li>
+<li>Lab: <a href="../../labs/quick-start/quick-start-guide.html">Quick Start Guide</a></li>
 <li>Reading: Getting Started Guide</li>
 </ul>
 <h3>Week 2: Basic SQL Operations</h3>
 <ul>
 <li>Topics: SELECT, INSERT, UPDATE, DELETE, WHERE clause</li>
-<li>Lab: labs/foundations/inclass-exercise.html - Workers Database</li>
+<li>Lab: <a href="../../labs/foundations/inclass-exercise.html">Workers Database</a></li>
 <li>Quiz: SQL Basics Concepts</li>
 </ul>
 <h3>Week 3: Relationships and Joins</h3>
 <ul>
 <li>Topics: Primary keys, Foreign keys, JOIN operations</li>
-<li>Lab: Lab 3 - Foreign Keys &amp; Relationships</li>
+<li>Lab: <a href="../../labs/joins-foreign-keys/foreign-keys.html">Foreign Keys</a></li>
 <li>Assignment 1 Due</li>
 </ul>
 <h3>Week 4: Multi-Table Queries</h3>
 <ul>
 <li>Topics: Inner joins, Outer joins, Cross joins</li>
-<li>Lab: Lab 4 - Multi-Table Operations</li>
+<li>Lab: <a href="../../labs/joins-foreign-keys/multi-tables.html">Multi-Table Operations</a></li>
 <li>Quiz 1: SQL Fundamentals</li>
 </ul>
 <h3>Week 5: Set Operations</h3>
 <ul>
 <li>Topics: UNION, INTERSECT, EXCEPT, Subqueries</li>
-<li>Lab: Lab 5 - Set Operations &amp; Nested Queries</li>
+<li>Lab: <a href="../../labs/set-nested/set-nested-queries.html">Set Operations &amp; Nested Queries</a></li>
 </ul>
 <h3>Week 6: Aggregate Functions</h3>
 <ul>
 <li>Topics: COUNT, SUM, AVG, GROUP BY, HAVING</li>
-<li>Lab: Lab 6 - Aggregate Functions &amp; Grouping</li>
+<li>Lab: <a href="../../labs/aggregation/aggregation-grouping.html">Aggregate Functions &amp; Grouping</a></li>
 <li>Assignment 2 Due</li>
 </ul>
 <h3>Week 7: Conditional Logic</h3>
 <ul>
 <li>Topics: CASE expressions, IF statements</li>
-<li>Lab: Lab 7 - CASE Expressions</li>
+<li>Lab: <a href="../../labs/case-expression/case-expression.html">CASE Expressions</a></li>
 <li>Quiz 2: Advanced SQL</li>
 </ul>
 <h3>Week 8: Analytical Queries</h3>
 <ul>
 <li>Topics: Window functions, ROW_NUMBER, RANK, PARTITION BY</li>
-<li>Lab: Lab 8 - Window Functions &amp; Recursive Queries</li>
+<li>Lab: <a href="../../labs/window-recursive/window-recursive.html">Window Functions &amp; Recursive Queries</a></li>
 <li><strong>Midterm Project Due</strong></li>
 </ul>
 <h3>Week 9: Database Design</h3>
 <ul>
 <li>Topics: ER modeling, Normalization (1NF, 2NF, 3NF)</li>
-<li>Lab: Lab 10 - Database Normalization</li>
+<li>Lab: <a href="../../labs/normalization/normal-forms.html">Database Normalization</a></li>
 </ul>
 <h3>Week 10: Views and Virtual Tables</h3>
 <ul>
 <li>Topics: Creating views, Updatable views, Materialized views</li>
-<li>Lab: Lab 9 - Views &amp; Virtual Tables</li>
+<li>Lab: <a href="../../labs/views/views.html">Views &amp; Virtual Tables</a></li>
 <li>Quiz 3: Database Design</li>
 </ul>
 <h3>Week 11: Database Programming I</h3>
 <ul>
 <li>Topics: Stored procedures, Functions, Parameters</li>
-<li>Lab: Lab 16 - Triggers &amp; Stored Procedures</li>
+<li>Lab: <a href="../../labs/transactions-triggers/triggers.html">Triggers &amp; Stored Procedures</a></li>
 <li>Assignment 3 Due</li>
 </ul>
 <h3>Week 12: Database Programming II</h3>
 <ul>
 <li>Topics: Transactions, ACID, Isolation levels</li>
-<li>Lab: Lab 17 - Transaction Management</li>
-<li>Lab: Lab 18 - Isolation Levels</li>
+<li>Lab: <a href="../../labs/transactions-triggers/transactions.html">Transaction Management</a></li>
+<li>Lab: <a href="../../labs/transactions-triggers/isolation-levels.html">Isolation Levels</a></li>
 <li>Assignment 4 Due</li>
 </ul>
 <h3>Week 13: Application Integration</h3>
 <ul>
 <li>Topics: JDBC, Python DB-API, Connection pooling</li>
-<li>Lab: Lab 12 - Java Database Interface</li>
-<li>Lab: Lab 13 - Python Database Interface</li>
+<li>Lab: <a href="../../labs/programming/java-db-interface-1.html">Java Database Interface</a></li>
+<li>Lab: <a href="../../labs/programming/python-db-interface.html">Python Database Interface</a></li>
 <li>Quiz 4: Database Programming</li>
 </ul>
 <h3>Week 14: Analytical Tools</h3>
 <ul>
 <li>Topics: Jupyter notebooks, ROLLUP, CUBE</li>
-<li>Lab: Lab 14 - Jupyter Notebook Integration</li>
-<li>Lab: Lab 15 - Analytical Functions</li>
+<li>Lab: <a href="../../labs/advanced-sql/advanced-sql-techniques.html">Advanced SQL Techniques</a></li>
+<li>Lab: <a href="../../labs/programming/orm.html">ORM &amp; Database Patterns</a></li>
 </ul>
 <h3>Week 15: NoSQL Databases</h3>
 <ul>
 <li>Topics: JSON/XML, MongoDB, Document databases</li>
-<li>Lab: Lab 19 - JSON &amp; XML Processing</li>
-<li>Lab: Lab 20 - MongoDB</li>
+<li>Lab: <a href="../../labs/nosql/json-xml.html">JSON &amp; XML Processing</a></li>
+<li>Lab: <a href="../../labs/nosql/mongodb.html">MongoDB</a></li>
 <li>Assignment 5 Due</li>
 </ul>
 <h3>Week 16: Graph Databases</h3>
 <ul>
 <li>Topics: Graph theory, Neo4j, Cypher language</li>
-<li>Lab: Lab 21 - Neo4j (Graph Database)</li>
+<li>Lab: <a href="../../labs/nosql/neo4j.html">Neo4j (Graph Database)</a></li>
 <li>Quiz 5: Modern Databases</li>
 <li><strong>Final Project Due</strong></li>
 </ul>
@@ -541,5 +563,6 @@
 <p><strong>Note</strong>: This syllabus is subject to change. Any modifications will be announced in advance.</p>
 <p><strong>Last Updated</strong>: Spring 2026</p>
 <p><strong>Instructor Contact</strong>: Available through course repository issues or email</p>
+</div>
 </body>
 </html>
