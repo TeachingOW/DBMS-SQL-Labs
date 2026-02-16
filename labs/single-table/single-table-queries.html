@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 2: Advanced SQL Queries - Overview</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        table { border-collapse: collapse; width: 100%; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f4f4f4; padding: 10px; border-radius: 4px; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        
+        .lab-part {
+            background-color: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .lab-part h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        
+        .lab-part a {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        
+        .lab-part a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.md">📚 Lab Index</a> | 
+    <a href="../../index.html">🏠 Portal</a>
+  </p>
+</div>
+
+<h1>Labs 2-4: Advanced SQL Queries - Overview</h1>
+
+<h2>🎯 About These Labs</h2>
+<p>The original Lab 2 has been restructured into three separate labs (Labs 2, 3, and 4) to make learning easier and more manageable. Each lab covers a specific aspect of advanced SQL queries and can be completed independently.</p>
+
+<h2>📚 Lab Structure</h2>
+
+<div class="lab-part">
+    <h3>Lab 2: JOINs and Multi-Table Queries</h3>
+    <p><strong>Topics Covered:</strong></p>
+    <ul>
+        <li>Multi-table database schemas</li>
+        <li>INNER, LEFT, and RIGHT JOINs</li>
+        <li>String functions with JOINs</li>
+        <li>Complex multi-table queries</li>
+        <li>Handling NULL values in JOINs</li>
+    </ul>
+    <p><strong>Database:</strong> University database (Student, Course, Enrolled)</p>
+    <p><strong>Examples:</strong> Employee-Department relationships, Product catalogs</p>
+    <a href="../joins-foreign-keys/joins-part1.html">Start Lab 2 →</a>
+</div>
+
+<div class="lab-part">
+    <h3>Lab 3: Aggregate Functions and GROUP BY</h3>
+    <p><strong>Topics Covered:</strong></p>
+    <ul>
+        <li>Aggregate functions (COUNT, SUM, AVG, MAX, MIN)</li>
+        <li>GROUP BY clause</li>
+        <li>HAVING clause for filtering grouped results</li>
+        <li>COUNT() vs COUNT(DISTINCT)</li>
+        <li>Nested aggregates and complex queries</li>
+    </ul>
+    <p><strong>Database:</strong> Company-Product-Purchase database</p>
+    <p><strong>Examples:</strong> Sales analysis, Inventory management, Performance statistics</p>
+    <a href="../aggregation/aggregation-grouping.html">Start Lab 3 →</a>
+</div>
+
+<div class="lab-part">
+    <h3>Lab 4: Set Operations and Advanced Queries</h3>
+    <p><strong>Topics Covered:</strong></p>
+    <ul>
+        <li>UNION and UNION ALL operations</li>
+        <li>Multiset operations</li>
+        <li>UPDATE and DELETE with multiple rows</li>
+        <li>SQL Division pattern</li>
+        <li>Complex nested queries and subqueries</li>
+    </ul>
+    <p><strong>Databases:</strong> Multiple examples including Product/Company and Student/Enrolled</p>
+    <p><strong>Examples:</strong> Data merging, Common elements across tables, Complex filtering</p>
+    <a href="../set-nested/set-nested-queries.html">Start Lab 4 →</a>
+</div>
+
+<h2>💡 Learning Path</h2>
+<p>We recommend completing the labs in order (Lab 2 → Lab 3 → Lab 4) as each builds on concepts from the previous labs. However, Lab 3 and Lab 4 include their own database setup sections, so they can be completed independently if needed.</p>
+
+<h2>📋 Prerequisites</h2>
+<ul>
+<li>Completion of <a href="../foundations/foundations-lab.html">Lab 1</a> or equivalent knowledge</li>
+<li>Understanding of basic SQL operations</li>
+<li>Familiarity with primary and foreign keys</li>
+</ul>
+
+<hr style="margin-top: 40px;">
+<div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">
+  <p style="margin: 0;">
+    <a href="../../LAB_INDEX.md">📚 Lab Index</a> | 
+    <a href="../../index.html">🏠 Portal</a> | 
+    <a href="../../docs/GETTING_STARTED.md">🚀 Getting Started</a> | 
+    <a href="../../docs/SQL_CHEAT_SHEET.md">📝 SQL Cheat Sheet</a>
+  </p>
+</div>
+
+</body>
+</html>
