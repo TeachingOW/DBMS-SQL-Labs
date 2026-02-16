@@ -5,8 +5,19 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MySQL 8.0 + JSON — A Practical Tutorial</title>
   <style>
-    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; max-width:980px;margin:24px auto;padding:24px;color:#0b1220;background:#f7fafc}
-    header{display:flex;align-items:center;gap:16px}
+    :root {
+      --ow-green: #0b5d3b;
+      --ow-green-dark: #07442b;
+      --ow-gold: #c7a34a;
+      --ow-cream: #f6f2e9;
+      --ow-ink: #122019;
+      --ow-moss: #1f7a56;
+    }
+
+    body{font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; max-width:980px;margin:24px auto;padding:24px;color:#0b1220;background:
+        radial-gradient(circle at 10% 10%, rgba(199, 163, 74, 0.14), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(11, 93, 59, 0.16), transparent 45%),
+        linear-gradient(160deg, #fdfbf6, var(--ow-cream));align-items:center;gap:16px}
     h1{margin:0;font-size:28px}
     p.lead{color:#334155}
     pre{background:#0b1220;color:#e6eef8;padding:12px;border-radius:8px;overflow:auto}
@@ -78,7 +89,6 @@
 <body>
 <div style="background-color: #e7f3ff; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
   <p style="margin: 0;">
-    <a href="../../LAB_INDEX.html">📚 Lab Index</a> | 
     <a href="../../index.html">🏠 Portal</a>
   </p>
 </div>
@@ -244,7 +254,6 @@ JSON_TABLE(json_doc, path COLUMNS (...))
 <hr style="margin-top: 40px;">
 <div style="background-color: #f0f0f0; padding: 15px; margin-top: 20px; border-radius: 5px; text-align: center;">
   <p style="margin: 0;">
-    <a href="../../LAB_INDEX.html">📚 Lab Index</a> | 
     <a href="../../index.html">🏠 Portal</a> | 
     <a href="../../docs/GETTING_STARTED.html">🚀 Getting Started</a> | 
     <a href="../../docs/SQL_CHEAT_SHEET.html">📝 SQL Cheat Sheet</a>

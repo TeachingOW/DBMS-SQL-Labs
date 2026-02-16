@@ -9,14 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #1f2933;
-      --muted: #52606d;
-      --brand: #0f766e;
-      --accent: #f59e0b;
-      --card: #ffffff;
-      --shadow: rgba(15, 23, 42, 0.08);
-      --bg-top: #fef3c7;
-      --bg-bottom: #ecfeff;
+      --ow-green: #0b5d3b;
+      --ow-green-dark: #07442b;
+      --ow-gold: #c7a34a;
+      --ow-cream: #f6f2e9;
+      --ow-ink: #122019;
+      --ow-moss: #1f7a56;
     }
 
     * { box-sizing: border-box; }
@@ -24,9 +22,11 @@
     body {
       margin: 0;
       font-family: "Source Sans 3", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      color: var(--ink);
-      background: radial-gradient(circle at top left, var(--bg-top), transparent 55%),
-                  radial-gradient(circle at bottom right, var(--bg-bottom), #f8fafc 60%);
+      color: var(--ow-ink);
+      background:
+        radial-gradient(circle at 10% 10%, rgba(199, 163, 74, 0.14), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(11, 93, 59, 0.16), transparent 45%),
+        linear-gradient(160deg, #fdfbf6, var(--ow-cream));
       line-height: 1.6;
     }
 
@@ -40,13 +40,13 @@
       font-weight: 600;
       font-size: clamp(2rem, 4vw, 3rem);
       margin: 0 0 12px;
-      color: var(--ink);
+      color: var(--ow-ink);
     }
 
     header p {
       margin: 0 auto;
       max-width: 680px;
-      color: var(--muted);
+      color: var(--ow-moss);
       font-size: 1.05rem;
     }
 
@@ -60,7 +60,7 @@
 
     .nav-links a {
       text-decoration: none;
-      color: var(--brand);
+      color: var(--ow-green);
       font-weight: 600;
       border-bottom: 2px solid transparent;
       transition: border-color 0.2s ease, color 0.2s ease;
@@ -68,7 +68,7 @@
 
     .nav-links a:hover {
       color: #115e59;
-      border-color: var(--accent);
+      border-color: var(--ow-gold);
     }
 
     main {
@@ -80,10 +80,10 @@
     }
 
     .section-card {
-      background: var(--card);
+      background: #fff;
       border-radius: 16px;
       padding: 24px;
-      box-shadow: 0 10px 24px var(--shadow);
+      box-shadow: 0 10px 24px rgba(16, 32, 25, 0.08);
       border: 1px solid rgba(15, 118, 110, 0.08);
       position: relative;
       overflow: hidden;
@@ -109,12 +109,12 @@
     .section-title h2 {
       margin: 0;
       font-size: 1.4rem;
-      color: var(--brand);
+      color: var(--ow-green);
     }
 
     .section-title span {
       font-size: 0.95rem;
-      color: var(--muted);
+      color: var(--ow-moss);
     }
 
     .topic-grid {
@@ -138,13 +138,13 @@
 
     .topic a {
       text-decoration: none;
-      color: var(--ink);
+      color: var(--ow-ink);
       font-weight: 600;
       display: block;
     }
 
     .topic small {
-      color: var(--muted);
+      color: var(--ow-moss);
       display: block;
       margin-top: 6px;
     }
@@ -152,12 +152,12 @@
     footer {
       text-align: center;
       padding: 24px 20px 48px;
-      color: var(--muted);
+      color: var(--ow-moss);
       font-size: 0.95rem;
     }
 
     footer a {
-      color: var(--brand);
+      color: var(--ow-green);
       text-decoration: none;
     }
 

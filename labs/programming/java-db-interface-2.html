@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interacting with Databases in Java – JDBC, ORM, and JPA</title>
     <style>
+    :root {
+      --ow-green: #0b5d3b;
+      --ow-green-dark: #07442b;
+      --ow-gold: #c7a34a;
+      --ow-cream: #f6f2e9;
+      --ow-ink: #122019;
+      --ow-moss: #1f7a56;
+    }
+
         body { 
             font-family: Arial, sans-serif; 
             margin: 40px;
@@ -14,7 +23,10 @@
             color: #333;
         }
         pre {
-            background: #f4f4f4;
+            background:
+        radial-gradient(circle at 10% 10%, rgba(199, 163, 74, 0.14), transparent 40%),
+        radial-gradient(circle at 80% 0%, rgba(11, 93, 59, 0.16), transparent 45%),
+        linear-gradient(160deg, #fdfbf6, var(--ow-cream));
             padding: 12px;
             border-radius: 5px;
             overflow-x: auto;
