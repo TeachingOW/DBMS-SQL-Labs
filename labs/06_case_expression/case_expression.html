@@ -108,17 +108,17 @@
 <h1 id="lab-sql-case-expressions">Lab: SQL CASE Expressions</h1>
 <h2 id="learning-objectives">🎯 Learning Objectives</h2>
 <p>By the end of this lab, you will be able to:
-- Understand and use SQL CASE expressions effectively
-- Compare CASE expressions with alternative query approaches
-- Apply CASE expressions in SELECT, WHERE, and HAVING clauses
-- Use CASE with aggregate functions for conditional counting
-- Understand when CASE expressions improve query readability and performance</p>
+- Understand and use both Simple and Searched CASE expressions
+- Apply CASE expressions in SELECT, WHERE, HAVING, and ORDER BY clauses
+- Use CASE with aggregate functions for conditional counting and summing
+- Transform and categorize data using CASE expressions
+- Apply CASE expressions to solve real-world business problems</p>
 <h2 id="prerequisites">📋 Prerequisites</h2>
 <ul>
 <li>Understanding of basic SQL SELECT statements</li>
 <li>Knowledge of aggregate functions (COUNT, SUM, AVG)</li>
 <li>Familiarity with GROUP BY and HAVING clauses</li>
-<li>Basic understanding of subqueries and CTEs (Common Table Expressions)</li>
+<li>Basic understanding of WHERE clause and filtering</li>
 </ul>
 <h2 id="introduction">📚 Introduction</h2>
 <p>The <strong>CASE expression</strong> is one of SQL's most powerful and versatile tools. It allows you to implement conditional logic directly within your SQL queries, making your code more readable and often more efficient.</p>
@@ -232,8 +232,8 @@
 <li>Click-to-scroll ratio &lt; 0.2 (less than 20% clicks relative to scrolls)</li>
 <li>No purchase events</li>
 </ol>
-<h2 id="solution-1-using-case-expressions-clean-efficient">💡 Solution 1: Using CASE Expressions (Clean &amp; Efficient)</h2>
-<p>This approach uses CASE expressions to conditionally count events directly within the query:</p>
+<h2 id="solution-using-case-expressions">💡 Solution: Using CASE Expressions</h2>
+<p>CASE expressions allow us to conditionally count and filter events directly within the query. Let's break down the solution step by step:</p>
 <div class="codehilite"><pre><span></span><code><span class="c1">-- Write your MySQL query statement below</span>
 <span class="k">SELECT</span><span class="w"> </span>
 <span class="w">    </span><span class="n">session_id</span><span class="p">,</span>
@@ -282,120 +282,18 @@
 </li>
 <li>Ensures no purchase events exist in the session</li>
 </ol>
-<h3 id="advantages-of-case-expression-approach">Advantages of CASE Expression Approach:</h3>
+<h3 id="why-case-expressions-are-powerful">Why CASE Expressions Are Powerful:</h3>
 <ul>
 <li>✅ <strong>Concise</strong>: Single query, easy to read</li>
 <li>✅ <strong>Performant</strong>: Single pass through the data</li>
 <li>✅ <strong>Maintainable</strong>: Logic is clear and straightforward</li>
 <li>✅ <strong>Flexible</strong>: Easy to add more conditions</li>
+<li>✅ <strong>Versatile</strong>: Can be used in SELECT, WHERE, HAVING, and ORDER BY clauses</li>
 </ul>
-<h2 id="solution-2-using-ctes-complex-but-educational">🔄 Solution 2: Using CTEs (Complex but Educational)</h2>
-<p>This alternative approach uses Common Table Expressions to achieve the same result. While more verbose, it demonstrates how queries can be decomposed into logical steps:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="c1">-- Count events by type for each session</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">event_type</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">c</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_events</span>
-<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span>
-<span class="p">),</span><span class="w"> </span>
-<span class="n">E</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="c1">-- Ensure all sessions have a &#39;click&#39; row (even if count is 0)</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">A</span><span class="w"> </span>
-<span class="w">    </span><span class="k">UNION</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">A</span><span class="w"> </span>
-<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">session_id</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
-<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">session_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">A</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;click&#39;</span>
-<span class="w">    </span><span class="p">)</span>
-<span class="p">),</span>
-<span class="n">T</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="c1">-- Calculate session duration in seconds</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w">  </span>
-<span class="w">        </span><span class="n">session_id</span><span class="p">,</span><span class="w">  </span>
-<span class="w">        </span><span class="n">UNIX_TIMESTAMP</span><span class="p">(</span><span class="k">MAX</span><span class="p">(</span><span class="n">event_timestamp</span><span class="p">))</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">UNIX_TIMESTAMP</span><span class="p">(</span><span class="k">MIN</span><span class="p">(</span><span class="n">event_timestamp</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">d</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_events</span>
-<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">session_id</span>
-<span class="p">),</span>
-<span class="n">TT</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="c1">-- Join everything together</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span>
-<span class="w">        </span><span class="n">T</span><span class="p">.</span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span>
-<span class="w">        </span><span class="n">E_c</span><span class="p">.</span><span class="n">user_id</span><span class="p">,</span><span class="w">  </span>
-<span class="w">        </span><span class="n">E_s</span><span class="p">.</span><span class="k">c</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">scroll_count</span><span class="p">,</span><span class="w"> </span>
-<span class="w">        </span><span class="n">E_c</span><span class="p">.</span><span class="k">c</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">clicks</span><span class="p">,</span>
-<span class="w">        </span><span class="n">T</span><span class="p">.</span><span class="n">d</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">duration</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="n">E_c</span>
-<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="n">E_s</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">E_c</span><span class="p">.</span><span class="n">session_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">E_s</span><span class="p">.</span><span class="n">session_id</span>
-<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">E_c</span><span class="p">.</span><span class="n">session_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">T</span><span class="p">.</span><span class="n">session_id</span>
-<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">E_s</span><span class="p">.</span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;scroll&#39;</span>
-<span class="w">        </span><span class="k">AND</span><span class="w"> </span><span class="n">E_c</span><span class="p">.</span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;click&#39;</span>
-<span class="p">)</span>
 
-<span class="c1">-- Final selection with filters</span>
-<span class="k">SELECT</span><span class="w"> </span>
-<span class="w">    </span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="n">duration</span><span class="o">/</span><span class="mi">60</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">session_duration_minutes</span><span class="p">,</span><span class="w"> </span>
-<span class="w">    </span><span class="n">scroll_count</span><span class="w">  </span>
-<span class="k">FROM</span><span class="w"> </span><span class="n">TT</span>
-<span class="k">WHERE</span><span class="w"> </span><span class="n">session_id</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">session_id</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">E</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;purchase&#39;</span>
-<span class="p">)</span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">duration</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">30</span><span class="o">*</span><span class="mi">60</span><span class="w"> </span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">scroll_count</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span>
-<span class="w">    </span><span class="k">AND</span><span class="w"> </span><span class="n">clicks</span><span class="o">/</span><span class="n">scroll_count</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">2</span>
-<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">scroll_count</span><span class="w"> </span><span class="k">DESC</span><span class="p">,</span><span class="w"> </span><span class="n">session_id</span><span class="p">;</span>
-</code></pre></div>
-
-<h3 id="how-this-cte-approach-works">How This CTE Approach Works:</h3>
-<ol>
-<li><strong>CTE A</strong>: Groups events by type and counts them</li>
-<li><strong>CTE E</strong>: Handles sessions with no clicks by adding a zero-count row</li>
-<li><strong>CTE T</strong>: Calculates session duration in seconds</li>
-<li><strong>CTE TT</strong>: Joins all CTEs together to create a comprehensive view</li>
-<li><strong>Final SELECT</strong>: Applies filters and formats output</li>
-</ol>
-<h3 id="comparison-case-vs-cte-approach">Comparison: CASE vs CTE Approach</h3>
-<table>
-<thead>
-<tr>
-<th>Aspect</th>
-<th>CASE Expression</th>
-<th>CTE Approach</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Lines of Code</strong></td>
-<td>10 lines</td>
-<td>40+ lines</td>
-</tr>
-<tr>
-<td><strong>Readability</strong></td>
-<td>High - logic is clear</td>
-<td>Medium - requires understanding multiple CTEs</td>
-</tr>
-<tr>
-<td><strong>Performance</strong></td>
-<td>Better - single scan</td>
-<td>Potentially slower - multiple scans/joins</td>
-</tr>
-<tr>
-<td><strong>Debugging</strong></td>
-<td>Harder to debug intermediate steps</td>
-<td>Easier - can query each CTE separately</td>
-</tr>
-<tr>
-<td><strong>Maintainability</strong></td>
-<td>Better - less code</td>
-<td>More complex - multiple dependencies</td>
-</tr>
-<tr>
-<td><strong>Use Case</strong></td>
-<td>Production queries</td>
-<td>Learning/debugging complex logic</td>
-</tr>
-</tbody>
-</table>
+<blockquote>
+<p><strong>💡 Note</strong>: For students interested in comparing CASE expressions with alternative query approaches like CTEs (Common Table Expressions), see the <strong>Query Patterns and Optimization</strong> lab in the advanced section.</p>
+</blockquote>
 <h2 id="practice-exercises">🧪 Practice Exercises</h2>
 <h3 id="exercise-1-basic-case-usage">Exercise 1: Basic CASE Usage</h3>
 <p>Write a query to categorize sessions as 'short' (&lt; 15 min), 'medium' (15-45 min), or 'long' (&gt; 45 min):</p>
@@ -485,34 +383,30 @@
 
 </details>
 
-<h3 id="exercise-4-convert-cte-to-case">Exercise 4: Convert CTE to CASE</h3>
-<p>Try rewriting the following CTE query using CASE expressions:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">event_counts</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span>
-<span class="w">        </span><span class="n">session_id</span><span class="p">,</span>
-<span class="w">        </span><span class="n">user_id</span><span class="p">,</span>
-<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;scroll&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">scrolls</span><span class="p">,</span>
-<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;click&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">ELSE</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">clicks</span>
-<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">app_events</span>
-<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span>
-<span class="p">)</span>
-<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">event_counts</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">scrolls</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">clicks</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<h3 id="exercise-4-user-activity-levels">Exercise 4: User Activity Levels</h3>
+<p>Write a query to classify users based on their total activity across all sessions:
+- 'Highly Active': &gt;= 30 total events
+- 'Moderately Active': 15-29 total events
+- 'Low Activity': &lt; 15 total events</p>
+<p>Include user_id, total_events, and activity_level in the output.</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Your solution here</span>
 </code></pre></div>
 
-<p>Can this be written more efficiently without the CTE?</p>
 <details>
 <summary>Solution</summary>
 
 
 <div class="codehilite"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span>
-<span class="w">    </span><span class="n">session_id</span><span class="p">,</span>
 <span class="w">    </span><span class="n">user_id</span><span class="p">,</span>
-<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;scroll&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">scrolls</span><span class="p">,</span>
-<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;click&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">clicks</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">total_events</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CASE</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Highly Active&#39;</span>
+<span class="w">        </span><span class="k">WHEN</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">15</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="s1">&#39;Moderately Active&#39;</span>
+<span class="w">        </span><span class="k">ELSE</span><span class="w"> </span><span class="s1">&#39;Low Activity&#39;</span>
+<span class="w">    </span><span class="k">END</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">activity_level</span>
 <span class="k">FROM</span><span class="w"> </span><span class="n">app_events</span>
-<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">session_id</span><span class="p">,</span><span class="w"> </span><span class="n">user_id</span>
-<span class="k">HAVING</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;scroll&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span>
-<span class="w">       </span><span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;click&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">user_id</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">total_events</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 </code></pre></div>
 
 
@@ -548,29 +442,22 @@
 <span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="k">CASE</span><span class="w"> </span><span class="k">WHEN</span><span class="w"> </span><span class="n">event_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;scroll&#39;</span><span class="w"> </span><span class="k">THEN</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">END</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span>
 </code></pre></div>
 
-<h2 id="performance-considerations">📊 Performance Considerations</h2>
-<h3 id="when-to-use-case">When to Use CASE:</h3>
+<h2 id="performance-tips">⚡ Performance Tips</h2>
 <ul>
-<li>✅ When you need conditional aggregation</li>
-<li>✅ When transforming data in the same query</li>
-<li>✅ When the logic is straightforward</li>
-<li>✅ When performance is critical (single pass through data)</li>
-</ul>
-<h3 id="when-ctes-might-be-better">When CTEs Might Be Better:</h3>
-<ul>
-<li>✅ When debugging complex logic step by step</li>
-<li>✅ When the same subquery is needed multiple times</li>
-<li>✅ When logic needs to be clearly separated for readability</li>
-<li>✅ For teaching/learning purposes</li>
+<li><strong>Index Wisely</strong>: Ensure columns used in CASE conditions are indexed if they appear frequently in WHERE clauses</li>
+<li><strong>Avoid in SELECT for Large Result Sets</strong>: CASE in SELECT is evaluated for every row; consider filtering first</li>
+<li><strong>Simple is Better</strong>: Keep CASE expressions simple; complex nested CASE expressions can be hard to optimize</li>
+<li><strong>Use with Aggregates</strong>: CASE shines when used with aggregate functions for conditional counting/summing</li>
 </ul>
 <h2 id="key-takeaways">🔑 Key Takeaways</h2>
 <ol>
-<li><strong>CASE expressions</strong> are powerful tools for conditional logic in SQL</li>
-<li>They can be used in SELECT, WHERE, HAVING, and ORDER BY clauses</li>
-<li>CASE with aggregate functions enables conditional counting/summing</li>
-<li>The CASE approach is often <strong>more concise and performant</strong> than alternatives</li>
-<li>CTEs can make complex queries more <strong>readable for debugging</strong></li>
-<li>Choose the approach that best balances <strong>performance and maintainability</strong></li>
+<li><strong>CASE expressions</strong> implement conditional logic directly in SQL queries</li>
+<li><strong>Two forms</strong>: Simple CASE (equality checks) and Searched CASE (complex conditions)</li>
+<li>Can be used in <strong>SELECT, WHERE, HAVING, and ORDER BY</strong> clauses</li>
+<li><strong>Conditional Aggregation</strong>: CASE with COUNT/SUM enables powerful data analysis</li>
+<li><strong>Data Transformation</strong>: Perfect for categorizing and pivoting data</li>
+<li><strong>Performance</strong>: Efficient single-pass through data</li>
+<li><strong>Readability</strong>: Makes conditional logic explicit and maintainable</li>
 </ol>
 <h2 id="additional-resources">📚 Additional Resources</h2>
 <ul>
@@ -581,11 +468,21 @@
 <h2 id="summary">🎯 Summary</h2>
 <p>In this lab, you learned:
 - How to use CASE expressions for conditional logic
-- The difference between simple and searched CASE
-- How CASE expressions work with aggregate functions
-- When to use CASE vs alternative approaches like CTEs
-- Real-world applications of CASE expressions in data analysis</p>
-<p>Practice these concepts with your own datasets to master conditional logic in SQL!</p>
+- The difference between Simple and Searched CASE
+- How CASE expressions work with aggregate functions for conditional counting
+- Using CASE in different query clauses (SELECT, WHERE, HAVING, ORDER BY)
+- Real-world applications of CASE expressions in data analysis
+- Performance considerations when using CASE expressions</p>
+
+<h2 id="next-steps">📖 Next Steps</h2>
+<ul>
+<li>Practice with your own datasets</li>
+<li>Explore <strong>Window Functions</strong> combined with CASE for advanced analytics</li>
+<li>Learn about <strong>Query Optimization Patterns</strong> (see advanced labs)</li>
+<li>Try implementing data pivoting using CASE expressions</li>
+</ul>
+
+<p><strong>Keep practicing!</strong> CASE expressions are fundamental to becoming proficient in SQL data analysis.</p>
 
 </body>
 </html>
