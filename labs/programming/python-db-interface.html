@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interacting with Python</title>
+    <title>Interacting with Python (MySQL &amp; PostgreSQL)</title>
     <style>
     :root {
       --ow-green: #0b5d3b;
@@ -88,6 +88,8 @@
 </div>
 
 <h1>Interacting with Python</h1>
+
+<h2 id="mysql">MySQL</h2>
 <p>We will use mysql connector with python</p>
 <div class="code-block-wrapper">
   <pre><code>pip install mysql-connector-python
@@ -196,7 +198,163 @@ cursor.execute(iquery)
     </svg>
   </button>
 </div>
-<p>Becuase we have commited the changes, it would presist.</p>
+<p>Because we have committed the changes, it would persist.</p>
+
+<hr>
+<h2 id="postgresql">PostgreSQL</h2>
+<p>We will use <strong>psycopg2</strong>, the most popular PostgreSQL adapter for Python.</p>
+<div class="code-block-wrapper">
+  <pre><code>pip install psycopg2-binary
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>Connect to a PostgreSQL database</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">import psycopg2
+
+cnx = psycopg2.connect(
+    host="127.0.0.1",
+    port=5432,
+    dbname="dbms",
+    user="sammy",
+    password="password"
+)
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>You may need to create a dedicated PostgreSQL role. Run the following in <code>psql</code> as a superuser:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-sql">CREATE USER sammy WITH PASSWORD 'password';
+CREATE DATABASE dbms OWNER sammy;
+GRANT ALL PRIVILEGES ON DATABASE dbms TO sammy;
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>To run a query</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">cursor = cnx.cursor()
+cursor.execute("SELECT * FROM company;")
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>Print the results:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">for row in cursor:
+    print(row)
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>Insert data into the database</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">cursor = cnx.cursor()
+cursor.execute("INSERT INTO company VALUES ('BMW', 10, 'Germany');")
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>psycopg2 opens a transaction automatically. Changes are not visible to other sessions until you commit.</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">cnx.commit()
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>Use a parameterised query to safely pass values and avoid SQL injection:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">cursor = cnx.cursor()
+cursor.execute(
+    "INSERT INTO company VALUES (%s, %s, %s);",
+    ("BMW", 10, "Germany")
+)
+cnx.commit()
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>Closing the connection</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">cursor.close()
+cnx.close()
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
+
+<p>A complete example putting it all together:</p>
+<div class="code-block-wrapper">
+  <pre><code class="language-python">import psycopg2
+
+cnx = psycopg2.connect(
+    host="127.0.0.1",
+    port=5432,
+    dbname="dbms",
+    user="sammy",
+    password="password"
+)
+
+cursor = cnx.cursor()
+
+# Insert a row
+cursor.execute(
+    "INSERT INTO company VALUES (%s, %s, %s);",
+    ("BMW", 10, "Germany")
+)
+cnx.commit()
+
+# Query and print all rows
+cursor.execute("SELECT * FROM company;")
+for row in cursor:
+    print(row)
+
+cursor.close()
+cnx.close()
+</code></pre>
+  <button class="copy-button" onclick="copyCode(this)" title="Copy code">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 2h8a2 2 0 0 1 2 2v8M4 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </button>
+</div>
 
 <script>
 
