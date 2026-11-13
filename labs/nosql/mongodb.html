@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>MongoDB — A Practical Tutorial</title>
+  <title>MongoDB Lab</title>
   <style>
     :root {
       --ow-green: #0b5d3b;
@@ -97,150 +97,213 @@
 
   <header>
     <div>
-      <h1>MongoDB </h1>
-      <p class="lead">Learn MongoDB basics including CRUD operations, indexing, and aggregation using modern MongoDB 6.x features.</p>
+      <h1>MongoDB Lab</h1>
+      <p class="lead">Build a small shop database in <code>mongosh</code>. Query BSON documents, update nested fields, summarize products, and join orders to the product catalog.</p>
     </div>
   </header>
 
   <section class="section">
-    <h2>1. What is MongoDB?</h2>
-    <p>MongoDB is a NoSQL, document-oriented database that stores data as <code>BSON</code> (binary JSON). Collections hold documents, similar to how tables hold rows in SQL.</p>
-    <div class="note"><strong>Tip:</strong> Use <code>mongosh</code> (MongoDB Shell) to run these commands interactively.</div>
+    <h2>1. Documents and collections</h2>
+    <p>MongoDB stores documents in collections. A collection is roughly comparable to a SQL table, a document to a row, and a field to a column. A document can hold scalars, nested documents, and arrays. MongoDB stores these values as BSON, which supports types such as dates and ObjectIds alongside the types familiar from JSON.</p>
+    <p>Every document in a regular collection has an <code>_id</code> that identifies it. MongoDB supplies an ObjectId when you omit <code>_id</code>. This lab uses readable string IDs for products so that you can see exactly what an order references.</p>
+    <p>Documents in a collection can have different fields. Here, phones and tablets have a nested <code>specs</code> document, while chargers omit it. Applications can enforce required fields and types with <a href="https://www.mongodb.com/docs/manual/core/schema-validation/">schema validation</a>.</p>
   </section>
 
   <section class="section">
-    <h2>2. Starting MongoDB and Connecting</h2>
-    <pre id="code-1"># START the MongoDB service
-mongod --dbpath /data/db
-
-# Connect USING Mongo Shell
-mongosh
-
-# CHECK the CURRENT DATABASE
-> db</pre>
+    <h2>2. Connect to MongoDB</h2>
+    <p>Use a running local MongoDB server or the Atlas deployment provided for your class. For a local server on the default port, run this command in your system terminal. For Atlas, use the shell command from your deployment’s Connect dialog. See the <a href="https://www.mongodb.com/docs/mongodb-shell/connect/">mongosh connection guide</a> for setup details.</p>
+    <pre id="code-1">mongosh "mongodb://127.0.0.1:27017"</pre>
     <button class="copy" data-target="code-1">Copy Commands</button>
+    <p>Run the remaining code blocks inside that same <code>mongosh</code> session, in order.</p>
   </section>
 
   <section class="section">
-    <h2>3. Creating and Using Databases</h2>
-    <pre id="code-2"># Switch OR CREATE a NEW DATABASE
-> USE shop
-
-# SHOW ALL DATABASES
-> SHOW dbs</pre>
+    <h2>3. Select a practice database</h2>
+    <p>Start with an empty database for this lab. The first insert creates the database and collection if they do not exist. To repeat the lab from the beginning, choose a fresh database name in the block below.</p>
+    <pre id="code-2">db = db.getSiblingDB("mongodb_shop_lab");
+print(db.getName());</pre>
     <button class="copy" data-target="code-2">Copy Commands</button>
   </section>
 
   <section class="section">
-    <h2>4. Inserting Documents</h2>
-    <pre id="code-3"># INSERT a single document
-> db.products.insertOne({ name: "Laptop", price: 1200, tags: ["electronics", "sale"] })
+    <h2>4. Insert documents</h2>
+    <p>Use <code>insertOne()</code> for one document and <code>insertMany()</code> for an array of documents. Each price is numeric, and each <code>tags</code> field is an array of strings.</p>
+    <pre id="code-3">printjson(db.products.insertOne({
+  _id: "laptop", name: "Laptop", price: 1200, tags: ["electronics", "sale"]
+}));
 
-# INSERT multiple documents
-> db.products.insertMany([
-  { name: "Phone", price: 800, specs: { color: "black", memory: "128GB" } },
-  { name: "Tablet", price: 600, specs: { color: "white", memory: "256GB" } }
-])</pre>
+printjson(db.products.insertMany([
+  {
+    _id: "phone", name: "Phone", price: 800, tags: ["electronics", "sale"],
+    specs: { color: "black", memory: "128GB" }
+  },
+  {
+    _id: "tablet", name: "Tablet", price: 600, tags: ["electronics"],
+    specs: { color: "white", memory: "256GB" }
+  },
+  { _id: "charger", name: "Charger", price: 40, tags: ["accessory"] }
+]));
+
+print(db.products.countDocuments({})); // 4</pre>
     <button class="copy" data-target="code-3">Copy Commands</button>
   </section>
 
   <section class="section">
-    <h2>5. Querying Documents</h2>
-    <pre id="code-4"># RETURN ALL documents
-> db.products.find()
+    <h2>5. Filter, project, and sort</h2>
+    <p>In <code>find(filter, projection)</code>, the filter plays the role of SQL’s <code>WHERE</code>. The projection chooses the fields to return, like the SQL <code>SELECT</code> list. Set <code>_id: 0</code> to omit the ID. <code>find()</code> returns a cursor, and <code>toArray()</code> collects its results for these small examples.</p>
+    <pre id="code-4">// Like SELECT name, price FROM products WHERE price &gt; 700 ORDER BY price DESC.
+printjson(db.products.find(
+  { price: { $gt: 700 } },
+  { _id: 0, name: 1, price: 1 }
+).sort({ price: -1 }).toArray());
 
-# Find WITH a filter
-> db.products.find({ price: { $gt: 700 } })
+// Dot notation reaches the memory field in the specs document.
+printjson(db.products.findOne(
+  { "specs.memory": "128GB" },
+  { _id: 0, name: 1 }
+));
 
-# Project specific fields
-> db.products.find({}, { name: 1, price: 1 })
-
-# Find USING nested field
-> db.products.find({ "specs.memory": "128GB" })</pre>
+// A scalar equality filter on an array checks for a matching element.
+printjson(db.products.find(
+  { tags: "sale" },
+  { _id: 0, name: 1 }
+).sort({ name: 1 }).toArray());</pre>
     <button class="copy" data-target="code-4">Copy Commands</button>
+    <p>Expect Laptop and Phone in the first result, Phone in the second, and Laptop and Phone in the third.</p>
   </section>
 
   <section class="section">
-    <h2>6. Updating and Deleting Documents</h2>
-    <pre id="code-5"># UPDATE one document
-> db.products.updateOne(
-  { name: "Phone" },
-  { $SET: { price: 850, "specs.color": "blue" } }
-)
+    <h2>6. Update and delete documents</h2>
+    <p><code>$set</code> assigns field values, and <code>$inc</code> adds to a numeric field. MongoDB operator names are case sensitive. The dotted path in the first update changes the color while preserving <code>specs.memory</code>. Check <code>matchedCount</code>, <code>modifiedCount</code>, and <code>deletedCount</code> in the results.</p>
+    <pre id="code-5">printjson(db.products.updateOne(
+  { _id: "phone" },
+  { $set: { price: 850, "specs.color": "blue" } }
+));
 
-# UPDATE many
-> db.products.updateMany({ price: { $lt: 1000 } }, { $inc: { price: 50 } })
+printjson(db.products.updateMany(
+  { price: { $lt: 1000 } },
+  { $inc: { price: 50 } }
+));
 
-# DELETE a document
-> db.products.deleteOne({ name: "Tablet" })</pre>
+printjson(db.products.deleteOne({ _id: "tablet" }));
+printjson(db.products.findOne({ _id: "phone" }));</pre>
     <button class="copy" data-target="code-5">Copy Commands</button>
+    <p>The first update modifies one document. The second modifies three. The delete removes Tablet. Phone now costs 900 and has blue color and 128GB memory.</p>
+    <p>To replace the entire document body, use <code>replaceOne(filter, replacement)</code>. An upsert, requested with <code>{ upsert: true }</code> on an update or replacement, inserts a document when the filter matches none.</p>
   </section>
 
   <section class="section">
-    <h2>7. Indexing and Query Optimization</h2>
-    <pre id="code-6"># CREATE an INDEX ON price
-> db.products.createIndex({ price: 1 })
+    <h2>7. Create an index and inspect the query plan</h2>
+    <p>An index can help MongoDB locate matching documents or return them in order. A compound index orders its entries by the first field and then by the next field. The example below also creates an index for queries that filter by color and then sort by price.</p>
+    <pre id="code-6">printjson(db.products.createIndex({ price: 1 }));
+printjson(db.products.createIndex({ "specs.color": 1, price: 1 }));
+printjson(db.products.getIndexes());
 
-# CREATE a compound INDEX
-> db.products.createIndex({ name: 1, price: -1 })
-
-# VIEW indexes
-> db.products.getIndexes()</pre>
+printjson(db.products.find({ price: { $gt: 700 } })
+  .sort({ price: 1 })
+  .explain("executionStats"));</pre>
     <button class="copy" data-target="code-6">Copy Commands</button>
+    <p>Look for <code>IXSCAN</code> (index scan) or <code>COLLSCAN</code> (collection scan) in the plan. Compare the number of documents examined with the number returned. A dataset this small is useful for reading the plan.</p>
   </section>
 
   <section class="section">
-    <h2>8. Aggregation Pipeline</h2>
-    <pre id="code-7"># Simple aggregation
-> db.products.aggregate([
+    <h2>8. Summarize data with an aggregation pipeline</h2>
+    <p>A pipeline passes the output of one stage to the next. <code>$match</code> filters the input. <code>$group</code> combines documents by a key, like SQL’s <code>GROUP BY</code>. Use <code>_id: null</code> for one group containing every matched document. In a pipeline expression, <code>"$price"</code> refers to the price field.</p>
+    <pre id="code-7">printjson(db.products.aggregate([
   { $match: { price: { $gt: 700 } } },
-  { $GROUP: { _id: NULL, avgPrice: { $AVG: "$price" }, maxPrice: { $MAX: "$price" } } }
-])
+  {
+    $group: {
+      _id: null,
+      count: { $sum: 1 },
+      avgPrice: { $avg: "$price" },
+      maxPrice: { $max: "$price" }
+    }
+  }
+]).toArray());
 
-# Unwind arrays AND GROUP BY tag
-> db.products.aggregate([
+// Emit one document per tag, then count the documents for each tag.
+printjson(db.products.aggregate([
   { $unwind: "$tags" },
-  { $GROUP: { _id: "$tags", COUNT: { $SUM: 1 } } }
-])</pre>
+  { $group: { _id: "$tags", count: { $sum: 1 } } },
+  { $sort: { count: -1, _id: 1 } }
+]).toArray());</pre>
     <button class="copy" data-target="code-7">Copy Commands</button>
-    <p>For more examples, see <a class="ref-link" href="https://www.mongodb.com/docs/manual/tutorial/aggregation-complete-examples/" target="_blank">MongoDB Aggregation Complete Examples</a>.</p>
+    <p>The first pipeline returns one group with count 2, average price 1050, and maximum price 1200. The second returns <code>electronics</code> and <code>sale</code> with count 2 each, then <code>accessory</code> with count 1.</p>
   </section>
 
   <section class="section">
-    <h2>9. Relationships and Embedded Documents</h2>
-    <p>MongoDB encourages embedding related data when it makes sense. However, referencing via ObjectId is possible too:</p>
-    <pre id="code-8"># Example of embedding
-> db.orders.insertOne({
-  order_id: 1,
+    <h2>9. Embed order details and reference products</h2>
+    <p>Embed data you usually read together, such as an order’s line items and customer details at the time of purchase. Reference data that has its own lifecycle, such as products in a shared catalog. Each <code>productId</code> below stores the same value and BSON type as the corresponding product’s <code>_id</code>. The application is responsible for keeping these references valid.</p>
+    <pre id="code-8">printjson(db.orders.insertOne({
+  _id: "order-1001",
   customer: { name: "Alice", email: "alice@example.com" },
   items: [
-    { product_id: ObjectId("..."), quantity: 2 },
-    { product_id: ObjectId("..."), quantity: 1 }
+    { productId: "laptop", quantity: 2 },
+    { productId: "phone", quantity: 1 }
   ]
-})</pre>
+}));</pre>
     <button class="copy" data-target="code-8">Copy Commands</button>
+    <p><code>$elemMatch</code> requires both conditions to hold for the same array element. The Phone line has quantity 1 and the Laptop line has quantity 2. This query returns an empty array.</p>
+    <pre id="code-9">printjson(db.orders.find({
+  items: { $elemMatch: { productId: "phone", quantity: { $gte: 2 } } }
+}).toArray());</pre>
+    <button class="copy" data-target="code-9">Copy Commands</button>
+    <p><code>$lookup</code> performs a left outer join and returns the matches in an array. Here <code>$unwind</code> first creates one document per line item. The result shows the catalog name and current price for each line. To preserve the price at purchase, store it in the line item when the order is placed.</p>
+    <pre id="code-10">printjson(db.orders.aggregate([
+  { $match: { _id: "order-1001" } },
+  { $unwind: "$items" },
+  {
+    $lookup: {
+      from: "products",
+      localField: "items.productId",
+      foreignField: "_id",
+      as: "product"
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      productId: "$items.productId",
+      quantity: "$items.quantity",
+      product: { name: 1, price: 1 }
+    }
+  },
+  { $sort: { productId: 1 } }
+]).toArray());</pre>
+    <button class="copy" data-target="code-10">Copy Commands</button>
+    <p>Expect a Laptop line with quantity 2 and catalog price 1200, and a Phone line with quantity 1 and catalog price 900. Each <code>product</code> array contains one catalog match.</p>
   </section>
 
   <section class="section">
-    <h2>10. Common MongoDB Operators</h2>
-    <pre id="code-9">$eq, $ne, $gt, $gte, $lt, $lte
-$IN, $nin
-$AND, $OR, $NOT
-$EXISTS, $type
-$SET, $unset, $inc, $push, $pull
-$regex, $TEXT, $search
-$lookup (FOR joins), $project, $GROUP, $sort, $LIMIT</pre>
+    <h2>10. Practice</h2>
+    <ol>
+      <li>Find products that still have a <code>specs</code> field using <code>$exists</code>. Expect only Phone.</li>
+      <li>Change the <code>$elemMatch</code> example to find an order with at least two laptops. Expect order <code>order-1001</code>.</li>
+      <li>Change the first aggregation to compute the average price across all remaining products. Expect 730 across three products.</li>
+      <li>Explain what the join would return for a line item whose product was deleted, and why an order might still need its own price field.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <h2>11. How MongoDB runs across servers</h2>
+    <p>A <a href="https://www.mongodb.com/docs/manual/replication/">replica set</a> keeps copies of the same data on several servers. The primary accepts writes and secondaries copy the changes. If the primary becomes unavailable, an eligible secondary can be elected when a majority can communicate. Reads directed to a secondary can lag behind the primary.</p>
+    <p><a href="https://www.mongodb.com/docs/manual/sharding/">Sharding</a> distributes a collection’s documents across shards using a shard key. Replication gives you redundant copies, while sharding distributes storage and work. A single document write is atomic. MongoDB also supports <a href="https://www.mongodb.com/docs/manual/core/transactions/">transactions across documents</a> on replica sets and sharded clusters.</p>
   </section>
 
   <footer>
-    <p>Based on <a class="ref-link" href="https://www.openmymind.net/mongodb.pdf" target="_blank">OpenMyMind.net MongoDB Guide</a>. This tutorial covers MongoDB basics, CRUD operations, aggregation, and indexing for developers new to document databases.</p>
+    <p>Further reading</p>
+    <ul>
+      <li>Mohamed Eltabakh, WPI, <a class="ref-link" href="https://web.cs.wpi.edu/~cs585/s15/Lectures/W12/MongoDB-1.pdf">MongoDB-1</a>. The lecture introduces BSON, document modeling, and CRUD.</li>
+      <li>MongoDB Educator Center, <a class="ref-link" href="https://www.mongodb.com/academia/courses/mongodb-101-getting-started">MongoDB 101: Getting Started</a>. The teaching slides cover the document model, CRUD, aggregation, indexing, and schema design.</li>
+      <li>MongoDB Manual, <a class="ref-link" href="https://www.mongodb.com/docs/manual/crud/">CRUD operations</a>, <a class="ref-link" href="https://www.mongodb.com/docs/manual/data-modeling/">data modeling</a>, and <a class="ref-link" href="https://www.mongodb.com/docs/manual/tutorial/aggregation-complete-examples/">aggregation examples</a>.</li>
+    </ul>
   </footer>
 
   <script>
     document.querySelectorAll('button.copy').forEach(btn => {
       btn.addEventListener('click', async () => {
         const id = btn.getAttribute('data-target');
-        const code = document.getElementById(id).innerText;
+        const code = document.getElementById(id).textContent;
         try{
           await navigator.clipboard.writeText(code);
           btn.innerText = 'Copied!';
